@@ -1,4 +1,4 @@
-// Copyright 2005, Google Inc.
+﻿// Copyright 2005, Google Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -63,6 +63,12 @@
 #include "gtest/internal/gtest-filepath.h"
 #include "gtest/internal/gtest-string.h"
 #include "gtest/internal/gtest-type-util.h"
+
+#include <cppunit/extensions/HelperMacros.h>
+#include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit/extensions/TestNamer.h>
+#include "gtest-caller.h"
+#include "gtest-manual-end-caller.h"
 
 // Due to C++ preprocessor weirdness, we need double indirection to
 // concatenate two tokens when one of them is __LINE__.  Writing
@@ -154,7 +160,7 @@ namespace edit_distance {
 // Returns the optimal edits to go from 'left' to 'right'.
 // All edits cost the same, with replace having lower priority than
 // add/remove.
-// Simple implementation of the Wagner–Fischer algorithm.
+// Simple implementation of the Wagner鈥揊ischer algorithm.
 // See http://en.wikipedia.org/wiki/Wagner-Fischer_algorithm
 enum EditType { kMatch, kAdd, kRemove, kReplace };
 GTEST_API_ std::vector<EditType> CalculateOptimalEdits(
@@ -1214,7 +1220,7 @@ class NativeArray {
 // Expands to the name of the class that implements the given test.
 #define GTEST_TEST_CLASS_NAME_(test_case_name, test_name) \
   test_case_name##_##test_name##_Test
-
+/*
 // Helper macro for defining tests.
 #define GTEST_TEST_(test_case_name, test_name, parent_class, parent_id)\
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class {\
@@ -1237,6 +1243,66 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class {\
         parent_class::TearDownTestCase, \
         new ::testing::internal::TestFactoryImpl<\
             GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>);\
+void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
+*/
+
+// GTEST_TEST_的mod版本
+#define GTEST_TEST_(test_case_name, test_name, parent_class, parent_id) \
+class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { \
+  friend class CPPUNIT_NS::GTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
+ public: \
+  GTEST_TEST_CLASS_NAME_(test_case_name, test_name)() {} \
+  static class TestFactory : public CPPUNIT_NS::TestFactory { \
+   public: \
+    TestFactory() { \
+      CPPUNIT_NS::TestFactoryRegistry &registry = CPPUNIT_NS::TestFactoryRegistry::getRegistry(#test_case_name); \
+      registry.registerFactory(this); \
+      CPPUNIT_NS::TestFactoryRegistry::getRegistry().registerFactory(&registry); \
+    } \
+    virtual CPPUNIT_NS::Test* makeTest() { \
+      CPPUNIT_NS::TestNamer namer(#test_case_name); \
+      return new CPPUNIT_NS::GTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
+          namer.getTestNameFor(#test_name), \
+          &GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody); \
+      } \
+    } factory; \
+ private: \
+  virtual void TestBody(); \
+}; \
+GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestFactory \
+    GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::factory; \
+void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
+
+#define GTEST_SUITE_NAMED_REGISTRATION(ATestFixtureType, suiteName) \
+  static CPPUNIT_NS::AutoRegisterRegistry \
+      CPPUNIT_MAKE_UNIQUE_NAME(autoRegisterRegistry__)(#ATestFixtureType, suiteName)
+
+#define GTEST_REGISTRY_ADD_TO_DEFAULT(which) CPPUNIT_REGISTRY_ADD_TO_DEFAULT(which)
+
+#define GTEST_MANUAL_END_TEST_(test_case_name, test_name, parent_class) \
+class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { \
+  friend class CPPUNIT_NS::GTestManualEndCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
+ public: \
+  GTEST_TEST_CLASS_NAME_(test_case_name, test_name)() {} \
+  static class TestFactory : public CPPUNIT_NS::TestFactory { \
+   public: \
+    TestFactory() { \
+      CPPUNIT_NS::TestFactoryRegistry &registry = CPPUNIT_NS::TestFactoryRegistry::getRegistry(#test_case_name); \
+      registry.registerFactory(this); \
+      CPPUNIT_NS::TestFactoryRegistry::getRegistry().registerFactory(&registry); \
+    } \
+    virtual CPPUNIT_NS::Test* makeTest() { \
+      CPPUNIT_NS::TestNamer namer(#test_case_name); \
+      return new CPPUNIT_NS::GTestManualEndCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
+          namer.getTestNameFor(#test_name), \
+          &GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody); \
+      } \
+    } factory; \
+private: \
+    virtual void TestBody(); \
+}; \
+GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestFactory \
+GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::factory; \
 void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 
 #endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_

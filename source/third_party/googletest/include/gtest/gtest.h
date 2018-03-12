@@ -65,6 +65,8 @@
 #include "gtest/gtest-test-part.h"
 #include "gtest/gtest-typed-test.h"
 
+#include "cutest/ManualEndTest.h"
+
 // Depending on the platform, different string classes are available.
 // On Linux, in addition to ::std::string, Google also makes use of
 // class ::string, which has the same interface as ::std::string, but
@@ -491,6 +493,17 @@ class GTEST_API_ Test {
 
   // We disallow copying Tests.
   GTEST_DISALLOW_COPY_AND_ASSIGN_(Test);
+};
+
+class GTEST_API_ ManualEndTest
+  : public Test
+  , public CUTEST_NS::ManualEndTest {
+ public:
+  ManualEndTest() {
+  }
+
+ private:
+  GTEST_DISALLOW_COPY_AND_ASSIGN_(ManualEndTest);
 };
 
 typedef internal::TimeInMillis TimeInMillis;
@@ -2279,6 +2292,9 @@ bool StaticAssertTypeEq() {
 #define TEST_F(test_fixture, test_name)\
   GTEST_TEST_(test_fixture, test_name, test_fixture, \
               ::testing::internal::GetTypeId<test_fixture>())
+
+#define MANUAL_END_TEST_F(test_fixture, test_name) \
+  GTEST_MANUAL_END_TEST_(test_fixture, test_name, test_fixture)
 
 // Returns a path to temporary directory.
 // Tries to determine an appropriate directory for the platform.

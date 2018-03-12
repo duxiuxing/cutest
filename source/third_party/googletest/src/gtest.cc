@@ -31,9 +31,12 @@
 //
 // The Google C++ Testing Framework (Google Test)
 
-#include "gtest/gtest.h"
+// #include "gtest/gtest.h"
+#include "gtest/gtest-export.h"
 #include "gtest/internal/custom/gtest.h"
 #include "gtest/gtest-spi.h"
+
+#include "cutest/Runner.h"
 
 #include <ctype.h>
 #include <math.h>
@@ -370,6 +373,7 @@ AssertHelper::~AssertHelper() {
 }
 
 // Message assignment, for assertion streaming support.
+#if 0 // 屏蔽原来的实现
 void AssertHelper::operator=(const Message& message) const {
   UnitTest::GetInstance()->
     AddTestPartResult(data_->type, data_->file, data_->line,
@@ -379,6 +383,32 @@ void AssertHelper::operator=(const Message& message) const {
                       // Skips the stack frame for this function itself.
                       );  // NOLINT
 }
+#else
+void AssertHelper::operator=(const Message& message) const {
+  // 把gtest的断言错误输出到cppunit
+  CPPUNIT_NS::Message msg(data_->message);
+  const std::string user_msg_string = message.GetString();
+  if (!user_msg_string.empty())
+      msg.addDetail(user_msg_string);
+
+  switch (data_->type) {
+  case TestPartResult::kNonFatalFailure: { // Failed but the test can continue.
+        CPPUNIT_NS::Exception* exception = new CPPUNIT_NS::Exception(msg,
+          CPPUNIT_NS::SourceLine(data_->file, data_->line));
+        CUTEST_NS::Runner::instance()->addFailure(false, exception);
+      }
+      break;
+  case TestPartResult::kFatalFailure: { // Failed and the test should be terminated.
+        CPPUNIT_NS::Exception* exception = new CPPUNIT_NS::Exception(msg,
+          CPPUNIT_NS::SourceLine(data_->file, data_->line));
+        CUTEST_NS::Runner::instance()->addFailure(true, exception);
+      }
+      break;
+  default:
+      break;
+  }
+}
+#endif
 
 // Mutex for linked pointers.
 GTEST_API_ GTEST_DEFINE_STATIC_MUTEX_(g_linked_ptr_mutex);
@@ -428,13 +458,22 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
   if (gtest_output_flag == NULL)
     return "";
 
+#if 0 // 屏蔽原有实现，去除对UnitTest::GetInstance()的依赖
   const char* const colon = strchr(gtest_output_flag, ':');
   if (colon == NULL)
     return internal::FilePath::ConcatPaths(
         internal::FilePath(
             UnitTest::GetInstance()->original_working_dir()),
         internal::FilePath(kDefaultOutputFile)).string();
+#else
+  internal::FilePath workingDir = FilePath::GetCurrentDir();
+  const char* const colon = strchr(gtest_output_flag, ':');
+  if (colon == NULL)
+    return internal::FilePath::ConcatPaths(workingDir,
+        internal::FilePath(kDefaultOutputFile)).string();
+#endif
 
+#if 0 // 屏蔽原有实现，去除对UnitTest::GetInstance()的依赖
   internal::FilePath output_name(colon + 1);
   if (!output_name.IsAbsolutePath())
     // TODO(wan@google.com): on Windows \some\path is not an absolute
@@ -444,6 +483,13 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
     output_name = internal::FilePath::ConcatPaths(
         internal::FilePath(UnitTest::GetInstance()->original_working_dir()),
         internal::FilePath(colon + 1));
+#else
+  internal::FilePath output_name(colon + 1);
+  if (!output_name.IsAbsolutePath())
+    output_name = internal::FilePath::ConcatPaths(
+        workingDir,
+        internal::FilePath(colon + 1));
+#endif
 
   if (!output_name.IsDirectory())
     return output_name.string();
@@ -2809,7 +2855,7 @@ static std::string FormatCountableNoun(int count,
 }
 
 // Formats the count of tests.
-static std::string FormatTestCount(int test_count) {
+std::string FormatTestCount(int test_count) {
   return FormatCountableNoun(test_count, "test", "tests");
 }
 
@@ -2871,13 +2917,14 @@ static void PrintTestPartResult(const TestPartResult& test_part_result) {
 }
 
 // class PrettyUnitTestResultPrinter
-
+#if 0 // 把声明挪到了gtest-export.h
 enum GTestColor {
   COLOR_DEFAULT,
   COLOR_RED,
   COLOR_GREEN,
   COLOR_YELLOW
 };
+#endif
 
 #if GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_MOBILE && \
     !GTEST_OS_WINDOWS_PHONE && !GTEST_OS_WINDOWS_RT && !GTEST_OS_WINDOWS_MINGW
@@ -5350,7 +5397,8 @@ void InitGoogleTestImpl(int* argc, CharType** argv) {
   }
 
   ParseGoogleTestFlagsOnly(argc, argv);
-  GetUnitTestImpl()->PostFlagParsingInit();
+  // gtest_mod：注释掉UnitTest的创建代码
+  // GetUnitTestImpl()->PostFlagParsingInit();
 }
 
 }  // namespace internal
