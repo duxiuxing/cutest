@@ -51,7 +51,7 @@ ProtectorChain::pop()
 int 
 ProtectorChain::count() const
 {
-  return m_protectors.size();
+  return (int)m_protectors.size();
 }
 
 
@@ -63,7 +63,7 @@ ProtectorChain::protect( const Functor &functor,
     return functor();
 
   Functors functors;
-  for ( int index = m_protectors.size()-1; index >= 0; --index )
+  for ( int index = (int)m_protectors.size()-1; index >= 0; --index )
   {
     const Functor &protectedFunctor = 
               functors.empty() ? functor : *functors.back();

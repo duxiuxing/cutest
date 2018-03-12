@@ -7,6 +7,8 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( OrthodoxTest,
                                        extensionSuiteName() );
 
 OrthodoxTest::OrthodoxTest()
+  : m_result(NULL)
+  , m_testListener(NULL)
 {
 }
 

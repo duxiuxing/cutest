@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		440A87EA1E25C98F00A5201D /* cppunit_all.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 440A87E91E25C98F00A5201D /* cppunit_all.cpp */; };
+		440A87EC1E25C9A700A5201D /* MainTestRunnerImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 440A87EB1E25C9A700A5201D /* MainTestRunnerImpl.mm */; };
+		44BEBDCD1F1A03B70001FDA5 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 44BEBDCC1F1A03B70001FDA5 /* gtest-all.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DA8FFEDF1D645BED009C5B10 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		440A87E91E25C98F00A5201D /* cppunit_all.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cppunit_all.cpp; path = ../src/cppunit/ios/cppunit_all.cpp; sourceTree = "<group>"; };
+		440A87EB1E25C9A700A5201D /* MainTestRunnerImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MainTestRunnerImpl.mm; path = ../src/cppunit/ios/MainTestRunnerImpl.mm; sourceTree = "<group>"; };
+		44BEBDCC1F1A03B70001FDA5 /* gtest-all.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-all.cc"; path = "../../../googletest/src/gtest-all.cc"; sourceTree = "<group>"; };
+		DA8FFEE11D645BED009C5B10 /* libcppunit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcppunit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DA8FFEDE1D645BED009C5B10 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		44BEBDCB1F1A039D0001FDA5 /* gtest */ = {
+			isa = PBXGroup;
+			children = (
+				44BEBDCC1F1A03B70001FDA5 /* gtest-all.cc */,
+			);
+			name = gtest;
+			sourceTree = "<group>";
+		};
+		DA8FFED81D645BED009C5B10 = {
+			isa = PBXGroup;
+			children = (
+				DA8FFEEE1D645CE9009C5B10 /* cppunit */,
+				44BEBDCB1F1A039D0001FDA5 /* gtest */,
+				DA8FFEE21D645BED009C5B10 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DA8FFEE21D645BED009C5B10 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA8FFEE11D645BED009C5B10 /* libcppunit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DA8FFEEE1D645CE9009C5B10 /* cppunit */ = {
+			isa = PBXGroup;
+			children = (
+				440A87E91E25C98F00A5201D /* cppunit_all.cpp */,
+				440A87EB1E25C9A700A5201D /* MainTestRunnerImpl.mm */,
+			);
+			name = cppunit;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DA8FFEE01D645BED009C5B10 /* cppunit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA8FFEEA1D645BED009C5B10 /* Build configuration list for PBXNativeTarget "cppunit" */;
+			buildPhases = (
+				DA8FFEDD1D645BED009C5B10 /* Sources */,
+				DA8FFEDE1D645BED009C5B10 /* Frameworks */,
+				DA8FFEDF1D645BED009C5B10 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = cppunit;
+			productName = cppunit;
+			productReference = DA8FFEE11D645BED009C5B10 /* libcppunit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DA8FFED91D645BED009C5B10 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = tencent;
+				TargetAttributes = {
+					DA8FFEE01D645BED009C5B10 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 63SRX744N6;
+					};
+				};
+			};
+			buildConfigurationList = DA8FFEDC1D645BED009C5B10 /* Build configuration list for PBXProject "cppunit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DA8FFED81D645BED009C5B10;
+			productRefGroup = DA8FFEE21D645BED009C5B10 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DA8FFEE01D645BED009C5B10 /* cppunit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DA8FFEDD1D645BED009C5B10 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				440A87EC1E25C9A700A5201D /* MainTestRunnerImpl.mm in Sources */,
+				440A87EA1E25C98F00A5201D /* cppunit_all.cpp in Sources */,
+				44BEBDCD1F1A03B70001FDA5 /* gtest-all.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DA8FFEE81D645BED009C5B10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../third_party/cppunit/cppunit/include,
+					../../third_party/cppunit/cppunit/src,
+					../../third_party/googletest,
+					../../third_party/googletest/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DA8FFEE91D645BED009C5B10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../third_party/cppunit/cppunit/include,
+					../../third_party/cppunit/cppunit/src,
+					../../third_party/googletest,
+					../../third_party/googletest/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DA8FFEEB1D645BED009C5B10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					../include,
+					../src/cppunit,
+					../../../googletest,
+					../../../googletest/include,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DA8FFEEC1D645BED009C5B10 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					../include,
+					../src/cppunit,
+					../../../googletest,
+					../../../googletest/include,
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DA8FFEDC1D645BED009C5B10 /* Build configuration list for PBXProject "cppunit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA8FFEE81D645BED009C5B10 /* Debug */,
+				DA8FFEE91D645BED009C5B10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA8FFEEA1D645BED009C5B10 /* Build configuration list for PBXNativeTarget "cppunit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA8FFEEB1D645BED009C5B10 /* Debug */,
+				DA8FFEEC1D645BED009C5B10 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DA8FFED91D645BED009C5B10 /* Project object */;
+}

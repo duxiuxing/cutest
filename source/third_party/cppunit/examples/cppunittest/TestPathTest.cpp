@@ -7,6 +7,15 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestPathTest,
 
 
 TestPathTest::TestPathTest()
+  : m_path(NULL)
+  , m_test1(NULL)
+  , m_test2(NULL)
+  , m_test3(NULL)
+  , m_test4(NULL)
+  , m_suite1(NULL)
+  , m_suite2(NULL)
+  , m_testSuite2a(NULL)
+  , m_testSuite2b(NULL)
 {
 }
 

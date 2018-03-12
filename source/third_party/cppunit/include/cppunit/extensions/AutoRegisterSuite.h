@@ -68,6 +68,7 @@ public:
   AutoRegisterRegistry( const std::string &which,
                         const std::string &to )
   {
+    TestFactoryRegistry::getRegistry().unregisterFactory( &TestFactoryRegistry::getRegistry( which ) );
     TestFactoryRegistry::getRegistry( to ).addRegistry( which );
   }
 

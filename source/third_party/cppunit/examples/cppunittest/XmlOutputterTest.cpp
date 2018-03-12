@@ -12,7 +12,7 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( XmlOutputterTest,
                                        outputSuiteName() );
 
 
-XmlOutputterTest::XmlOutputterTest()
+XmlOutputterTest::XmlOutputterTest() : m_result(NULL)
 {
 }
 

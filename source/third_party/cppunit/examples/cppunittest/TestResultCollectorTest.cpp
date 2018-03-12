@@ -8,6 +8,12 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestResultCollectorTest,
 
 
 TestResultCollectorTest::TestResultCollectorTest()
+  : m_result(NULL)
+  , m_synchronizedResult(NULL)
+  , m_test(NULL)
+  , m_test2(NULL)
+  , m_lockCount(0)
+  , m_unlockCount(0)
 {
 }
 

@@ -6,6 +6,7 @@
 #ifndef CPPUNIT_EXTENSIONS_HELPERMACROS_H
 #define CPPUNIT_EXTENSIONS_HELPERMACROS_H
 
+#include <cppunit/ManualEndTestCaller.h>
 #include <cppunit/TestCaller.h>
 #include <cppunit/TestSuite.h>
 #include <cppunit/extensions/AutoRegisterSuite.h>
@@ -297,8 +298,7 @@
     CPPUNIT_TEST_SUITE_ADD_TEST(                           \
         ( new CPPUNIT_NS::TestCaller<TestFixtureType>(    \
                   context.getTestNameFor( #testMethod),   \
-                  &TestFixtureType::testMethod,           \
-                  context.makeFixture() ) ) )
+                  &TestFixtureType::testMethod ) ) )
 
 /*! \brief Add a test which fail if the specified exception is not caught.
  *
@@ -329,8 +329,19 @@
       (new CPPUNIT_NS::ExceptionTestCaseDecorator< ExceptionType >(  \
           new CPPUNIT_NS::TestCaller< TestFixtureType >(             \
                                context.getTestNameFor( #testMethod ),  \
-                               &TestFixtureType::testMethod,         \
-                               context.makeFixture() ) ) ) )
+                               &TestFixtureType::testMethod))))
+
+#define CPPUNIT_MANUAL_END_TEST(testMethod) \
+    CPPUNIT_TEST_SUITE_ADD_TEST( \
+        (new CPPUNIT_NS::ManualEndTestCaller<TestFixtureType>( \
+            context.getTestNameFor(#testMethod), \
+            &TestFixtureType::testMethod)))
+
+#define CPPUNIT_MANUAL_END_TEST_WITH_TIMEOUT(testMethod, timeoutMs) \
+    CPPUNIT_TEST_SUITE_ADD_TEST( \
+        (new CPPUNIT_NS::ManualEndTestCaller<TestFixtureType, timeoutMs>( \
+            context.getTestNameFor(#testMethod), \
+            &TestFixtureType::testMethod)))
 
 /*! \brief Adds a test case which is excepted to fail.
  *
@@ -532,6 +543,8 @@
 #define CU_TEST_SUITE(tc) CPPUNIT_TEST_SUITE(tc)
 #define CU_TEST_SUB_SUITE(tc,sc) CPPUNIT_TEST_SUB_SUITE(tc,sc)
 #define CU_TEST(tm) CPPUNIT_TEST(tm)
+#define CU_MANUAL_END_TEST(tm) CPPUNIT_MANUAL_END_TEST(tm)
+#define CU_MANUAL_END_TEST_WITH_TIMEOUT(tm, ms) CPPUNIT_MANUAL_END_TEST_WITH_TIMEOUT(tm, ms)
 #define CU_TEST_SUITE_END() CPPUNIT_TEST_SUITE_END()
 #define CU_TEST_SUITE_REGISTRATION(tc) CPPUNIT_TEST_SUITE_REGISTRATION(tc)
 

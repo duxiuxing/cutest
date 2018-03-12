@@ -6,6 +6,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION( CommandLineParserTest );
 
 CommandLineParserTest::CommandLineParserTest()
 {
+  _parser = NULL;
 }
 
 

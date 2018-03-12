@@ -12,6 +12,10 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( ExceptionTestCaseDecoratorTest,
 
 
 ExceptionTestCaseDecoratorTest::ExceptionTestCaseDecoratorTest()
+  : m_result(NULL)
+  , m_testListener(NULL)
+  , m_test(NULL)
+  , m_decorator(NULL)
 {
 }
 

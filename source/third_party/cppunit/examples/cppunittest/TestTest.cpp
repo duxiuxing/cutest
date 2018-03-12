@@ -6,8 +6,12 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestTest,
                                        coreSuiteName() );
 
 
-TestTest::TestTest() : 
-    CPPUNIT_NS::TestFixture()
+TestTest::TestTest()
+  : CPPUNIT_NS::TestFixture()
+  , m_suite(NULL)
+  , m_test1(NULL)
+  , m_test2(NULL)
+  , m_path(NULL)
 {
 }
 

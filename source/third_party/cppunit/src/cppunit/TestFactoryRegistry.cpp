@@ -4,6 +4,8 @@
 #include <cppunit/TestSuite.h>
 #include <assert.h>
 
+// 支持按照声明顺序排序
+#include "TestFactorySort.h"
 
 CPPUNIT_NS_BEGIN
 
@@ -112,6 +114,7 @@ void
 TestFactoryRegistry::registerFactory( TestFactory *factory )
 {
   m_factories.insert( factory );
+  TestFactorySort::getInstance()->allocWeigth(factory);
 }
 
 
@@ -119,6 +122,7 @@ void
 TestFactoryRegistry::unregisterFactory( TestFactory *factory )
 {
   m_factories.erase( factory );
+  TestFactorySort::getInstance()->deallocWeigth(factory);
 }
 
 
@@ -137,7 +141,7 @@ TestFactoryRegistry::makeTest()
   return suite;
 }
 
-
+#if 0 // 支持按照声明顺序排序
 void 
 TestFactoryRegistry::addTestToSuite( TestSuite *suite )
 {
@@ -149,7 +153,21 @@ TestFactoryRegistry::addTestToSuite( TestSuite *suite )
     suite->addTest( factory->makeTest() );
   }
 }
+#else
+void
+TestFactoryRegistry::addTestToSuite( TestSuite *suite )
+{
+  CppUnitVector<TestFactory *> result;
+  TestFactorySort::getInstance()->sort( m_factories, result );
 
+  for ( CppUnitVector<TestFactory *>::const_iterator it = result.begin();
+        it != result.end();
+        ++it )
+  {
+    suite->addTest( ( *it )->makeTest() );
+  }
+}
+#endif
 
 bool 
 TestFactoryRegistry::isValid()

@@ -14,6 +14,9 @@
 
 TestRunnerModel::TestRunnerModel( CPPUNIT_NS::Test *rootTest ) :
     _rootTest( rootTest ),
+    _numberOfTestCase( 0 ),
+    _numberOfTestCaseRun( 0 ),
+    _numberOfTestCaseFailure( 0 )
     _runnerThread( NULL ),
     _result( NULL )
 {

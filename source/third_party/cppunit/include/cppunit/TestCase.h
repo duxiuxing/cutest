@@ -5,6 +5,7 @@
 #include <cppunit/TestLeaf.h>
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestFixture.h>
+#include <cppunit/TestResult.h>
 #include <string>
 
 #if CPPUNIT_NEED_DLL_DECL
@@ -37,7 +38,7 @@ public:
 
     TestCase();
 
-    ~TestCase();
+    virtual ~TestCase();
     
     virtual void run(TestResult *result);
 
@@ -47,11 +48,16 @@ public:
     virtual void runTest();
     
 private:
-    TestCase( const TestCase &other ); 
-    TestCase &operator=( const TestCase &other ); 
+    //TestCase( const TestCase &other ); 
+    //TestCase &operator=( const TestCase &other ); 
     
 private:
     const std::string m_name;
+
+protected:
+    friend class TestCaseDecorator;
+    void setTestResult(TestResult *result);
+    TestResult* m_result;
 };
 
 CPPUNIT_NS_END

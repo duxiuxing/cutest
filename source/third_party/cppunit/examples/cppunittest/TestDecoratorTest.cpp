@@ -8,6 +8,8 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestDecoratorTest,
 
 
 TestDecoratorTest::TestDecoratorTest()
+  : m_test(NULL)
+  , m_decorator(NULL)
 {
 }
 

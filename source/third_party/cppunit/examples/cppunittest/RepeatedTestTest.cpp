@@ -7,8 +7,10 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( RepeatedTestTest,
                                        extensionSuiteName() );
 
 
-RepeatedTestTest::RepeatedTestTest() :
-    m_repeatCount( 17 )
+RepeatedTestTest::RepeatedTestTest()
+  : m_test( NULL )
+  , m_repeatedTest( NULL )
+  , m_repeatCount( 17 )
 {
 }
 

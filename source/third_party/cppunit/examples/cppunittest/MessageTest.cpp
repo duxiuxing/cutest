@@ -5,7 +5,7 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( MessageTest,
                                        coreSuiteName() );
 
 
-MessageTest::MessageTest()
+MessageTest::MessageTest() : m_message(NULL)
 {
 }
 

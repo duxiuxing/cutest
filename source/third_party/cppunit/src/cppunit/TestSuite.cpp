@@ -49,7 +49,7 @@ TestSuite::getTests() const
 int 
 TestSuite::getChildTestCount() const
 {
-  return m_tests.size();
+  return (int)m_tests.size();
 }
 
 

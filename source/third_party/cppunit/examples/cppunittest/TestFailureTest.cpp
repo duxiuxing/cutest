@@ -8,7 +8,7 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestFailureTest,
                                        coreSuiteName() );
 
 
-TestFailureTest::TestFailureTest()
+TestFailureTest::TestFailureTest() : m_exceptionDestroyed(false)
 {
 }
 

@@ -15,7 +15,7 @@ protected:
   GAMECLASS	*m_game;
   
 public:
-  BoardGameTest()
+  BoardGameTest() : m_game(NULL)
   {
   }
 

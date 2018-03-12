@@ -14,6 +14,8 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestCaseTest,
 
 
 TestCaseTest::TestCaseTest()
+  : m_result(NULL)
+  , m_testListener(NULL)
 {
 }
 

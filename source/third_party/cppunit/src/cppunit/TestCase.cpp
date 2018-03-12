@@ -2,7 +2,6 @@
 #include <cppunit/Exception.h>
 #include <cppunit/Protector.h>
 #include <cppunit/TestCase.h>
-#include <cppunit/TestResult.h>
 #include <stdexcept>
 
 #if CPPUNIT_USE_TYPEINFO_NAME
@@ -44,6 +43,7 @@ private:
  **/
 TestCase::TestCase( const std::string &name )
     : m_name(name)
+    , m_result(NULL)
 {
 }
 
@@ -52,6 +52,7 @@ TestCase::TestCase( const std::string &name )
 void 
 TestCase::run( TestResult *result )
 {
+  m_result = result;
   result->startTest(this);
 /*
   try {
@@ -133,5 +134,11 @@ TestCase::getName() const
   return m_name; 
 }
   
+// 供TestCaseDecorator调用，传递TestResult
+void
+TestCase::setTestResult(TestResult *result)
+{
+  m_result = result;
+}
 
 CPPUNIT_NS_END

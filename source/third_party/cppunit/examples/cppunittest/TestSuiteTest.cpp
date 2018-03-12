@@ -8,7 +8,7 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestSuiteTest,
                                        coreSuiteName() );
 
 
-TestSuiteTest::TestSuiteTest()
+TestSuiteTest::TestSuiteTest() : m_suite(NULL)
 {
 }
 

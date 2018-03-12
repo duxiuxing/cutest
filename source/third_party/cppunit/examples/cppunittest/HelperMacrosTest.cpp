@@ -103,6 +103,8 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( HelperMacrosTest,
 
 
 HelperMacrosTest::HelperMacrosTest()
+  : m_result(NULL)
+  , m_testListener(NULL)
 {
 }
 

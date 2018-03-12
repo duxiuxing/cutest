@@ -29,8 +29,15 @@ TestCallerTest::ExceptionThrower::testThrowNothing()
 
 
 
-TestCallerTest::TestCallerTest() : 
-    m_testName( "TrackedTestCaseCaller" )
+TestCallerTest::TestCallerTest()
+  : m_constructorCount( 0 )
+  , m_destructorCount( 0 )
+  , m_setUpCount( 0 )
+  , m_tearDownCount( 0 )
+  , m_testCount( 0 )
+  , m_testName( "TrackedTestCaseCaller" )
+  , m_testListener( NULL )
+  , m_result( NULL )
 {
 }
 

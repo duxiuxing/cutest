@@ -10,6 +10,10 @@ CPPUNIT_TEST_SUITE_NAMED_REGISTRATION( TestResultTest,
 
 
 TestResultTest::TestResultTest()
+  : m_result(NULL)
+  , m_listener1(NULL)
+  , m_listener2(NULL)
+  , m_dummyTest(NULL)
 {
 }
 
