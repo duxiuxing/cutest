@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DynamicWindow">
+      <UniqueIdentifier>{0ec481b4-1102-4878-9728-3b439395918e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestConfig">
+      <UniqueIdentifier>{4c4781b9-c687-4966-af09-339211cf459e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestRunnerDlg">
+      <UniqueIdentifier>{dbd054d3-1e5d-4f3d-bd42-fb8ed5a19e1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestRunnerDlg\ProgressBar">
+      <UniqueIdentifier>{f4d00435-d994-4099-903e-09cedfd1998d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestRunnerDlg\Settings">
+      <UniqueIdentifier>{c712ea86-0059-4ab6-a04a-b1dbe0751c2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestRunnerDlg\ListCtrl">
+      <UniqueIdentifier>{4c857b2e-6a01-40e1-893a-6e4cf2d9b246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TreeHierarchyDlg">
+      <UniqueIdentifier>{b2c5fa8f-0d69-4e2f-a8b2-76a7aefeaecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MFC Application Dialog based">
+      <UniqueIdentifier>{0fbd1d31-7f42-4b95-8444-1dfec0636595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MFC Application Dialog based\Source Files">
+      <UniqueIdentifier>{1a7cfbdb-4b4e-47ad-92fe-baf94dcd4ebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MFC Application Dialog based\Resource Files">
+      <UniqueIdentifier>{6ba372f4-408a-4223-b990-5326cefde6e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>MFC Application Dialog based\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>MFC Application Dialog based\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicDialog.h">
+      <Filter>DynamicWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicWnd.h">
+      <Filter>DynamicWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicWndEx.h">
+      <Filter>DynamicWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DynamicWindow\cdxCSizeIconCtrl.h">
+      <Filter>DynamicWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\resource.h">
+      <Filter>MFC Application Dialog based\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestRunnerApp.h">
+      <Filter>MFC Application Dialog based\Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestConfig.h">
+      <Filter>TestConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestConfigImpl.h">
+      <Filter>TestConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestRunnerDlg.h">
+      <Filter>TestRunnerDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ProgressBar.h">
+      <Filter>TestRunnerDlg\ProgressBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestRunnerModel.h">
+      <Filter>TestRunnerDlg\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ListCtrlFormatter.h">
+      <Filter>TestRunnerDlg\ListCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ListCtrlSetter.h">
+      <Filter>TestRunnerDlg\ListCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MsDevCallerListCtrl.h">
+      <Filter>TestRunnerDlg\ListCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TreeHierarchyDlg.h">
+      <Filter>TreeHierarchyDlg</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>MFC Application Dialog based\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DynamicWindow\cdxCDynamicDialog.cpp">
+      <Filter>DynamicWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DynamicWindow\cdxCDynamicWnd.cpp">
+      <Filter>DynamicWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DynamicWindow\cdxCDynamicWndEx.cpp">
+      <Filter>DynamicWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DynamicWindow\cdxCSizeIconCtrl.cpp">
+      <Filter>DynamicWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestRunnerApp.cpp">
+      <Filter>MFC Application Dialog based\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestConfigImpl.cpp">
+      <Filter>TestConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestRunnerDlg.cpp">
+      <Filter>TestRunnerDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ProgressBar.cpp">
+      <Filter>TestRunnerDlg\ProgressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestRunnerModel.cpp">
+      <Filter>TestRunnerDlg\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ListCtrlFormatter.cpp">
+      <Filter>TestRunnerDlg\ListCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ListCtrlSetter.cpp">
+      <Filter>TestRunnerDlg\ListCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MsDevCallerListCtrl.cpp">
+      <Filter>TestRunnerDlg\ListCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TreeHierarchyDlg.cpp">
+      <Filter>TreeHierarchyDlg</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\TestRunnerApp.rc">
+      <Filter>MFC Application Dialog based\Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\errortype.bmp">
+      <Filter>MFC Application Dialog based\Resource Files</Filter>
+    </None>
+    <None Include="..\res\TestRunnerApp.ico">
+      <Filter>MFC Application Dialog based\Resource Files</Filter>
+    </None>
+    <None Include="..\res\TestRunnerApp.rc2">
+      <Filter>MFC Application Dialog based\Resource Files</Filter>
+    </None>
+    <None Include="..\res\test_type.bmp">
+      <Filter>MFC Application Dialog based\Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\..\..\..\test_config.xml">
+      <Filter>TestConfig</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,127 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestRunnerApp", "source\runner\mfc\vs2010\TestRunnerApp.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample1", "source\test\sample1\vs2010\sample1.vcxproj", "{1E22C36B-C9DC-4294-B68D-2921E20A5EB9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample2", "source\test\sample2\vs2010\sample2.vcxproj", "{1E22C36B-C9DC-4294-B68D-2921E20A1712}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample3", "source\test\sample3\vs2010\sample3.vcxproj", "{3A8BAD66-1670-4EC1-AC6E-37F5BE521729}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample4", "source\test\sample4\vs2010\sample4.vcxproj", "{1E22C36B-C9DC-4294-B68D-2921E20A1734}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample5", "source\test\sample5\vs2010\sample5.vcxproj", "{1E22C36B-C9DC-4294-B68D-2921E20A1855}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cppunit sample", "cppunit sample", "{76457E6A-B5A6-468F-92C8-8BB836D958DF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "money", "source\test\money\vs2010\money.vcxproj", "{778438C4-4F9B-441B-B5E1-A4ABE2A2BDED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gtest sample", "gtest sample", "{E1AA8642-5BAE-4BAE-AF32-81F1D0CA10F3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple", "source\test\simple\vs2010\simple.vcxproj", "{F23E9839-ACFF-4B13-B546-7CFB236A354F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutest", "source\third_party\cutest\vs2010\cutest.vcxproj", "{32562F02-FC8D-4FB3-BF69-B57590B01B08}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hierarchy", "source\test\hierarchy\vs2010\hierarchy.vcxproj", "{1645984D-0F12-474A-AEF6-4C0A0AB079FD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cutest sample", "cutest sample", "{732540B1-EBD3-4D5F-BDA1-12A2D5B720CD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "manualend", "source\test\manualend\vs2010\manualend.vcxproj", "{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AABD35C3-3F4F-4CCC-AFF9-201605302224}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AABD35C3-3F4F-4CCC-AFF9-201605302224}.Debug|Win32.Build.0 = Debug|Win32
+		{AABD35C3-3F4F-4CCC-AFF9-201605302224}.Release|Win32.ActiveCfg = Release|Win32
+		{AABD35C3-3F4F-4CCC-AFF9-201605302224}.Release|Win32.Build.0 = Release|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A5EB9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A5EB9}.Debug|Win32.Build.0 = Debug|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A5EB9}.Release|Win32.ActiveCfg = Release|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A5EB9}.Release|Win32.Build.0 = Release|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1712}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1712}.Debug|Win32.Build.0 = Debug|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1712}.Release|Win32.ActiveCfg = Release|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1712}.Release|Win32.Build.0 = Release|Win32
+		{3A8BAD66-1670-4EC1-AC6E-37F5BE521729}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3A8BAD66-1670-4EC1-AC6E-37F5BE521729}.Debug|Win32.Build.0 = Debug|Win32
+		{3A8BAD66-1670-4EC1-AC6E-37F5BE521729}.Release|Win32.ActiveCfg = Release|Win32
+		{3A8BAD66-1670-4EC1-AC6E-37F5BE521729}.Release|Win32.Build.0 = Release|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1734}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1734}.Debug|Win32.Build.0 = Debug|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1734}.Release|Win32.ActiveCfg = Release|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1734}.Release|Win32.Build.0 = Release|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1855}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1855}.Debug|Win32.Build.0 = Debug|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1855}.Release|Win32.ActiveCfg = Release|Win32
+		{1E22C36B-C9DC-4294-B68D-2921E20A1855}.Release|Win32.Build.0 = Release|Win32
+		{778438C4-4F9B-441B-B5E1-A4ABE2A2BDED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{778438C4-4F9B-441B-B5E1-A4ABE2A2BDED}.Debug|Win32.Build.0 = Debug|Win32
+		{778438C4-4F9B-441B-B5E1-A4ABE2A2BDED}.Release|Win32.ActiveCfg = Release|Win32
+		{778438C4-4F9B-441B-B5E1-A4ABE2A2BDED}.Release|Win32.Build.0 = Release|Win32
+		{F23E9839-ACFF-4B13-B546-7CFB236A354F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F23E9839-ACFF-4B13-B546-7CFB236A354F}.Debug|Win32.Build.0 = Debug|Win32
+		{F23E9839-ACFF-4B13-B546-7CFB236A354F}.Release|Win32.ActiveCfg = Release|Win32
+		{F23E9839-ACFF-4B13-B546-7CFB236A354F}.Release|Win32.Build.0 = Release|Win32
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08}.Debug|Win32.ActiveCfg = Debug|Win32
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08}.Debug|Win32.Build.0 = Debug|Win32
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08}.Release|Win32.ActiveCfg = Release|Win32
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08}.Release|Win32.Build.0 = Release|Win32
+		{1645984D-0F12-474A-AEF6-4C0A0AB079FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1645984D-0F12-474A-AEF6-4C0A0AB079FD}.Debug|Win32.Build.0 = Debug|Win32
+		{1645984D-0F12-474A-AEF6-4C0A0AB079FD}.Release|Win32.ActiveCfg = Release|Win32
+		{1645984D-0F12-474A-AEF6-4C0A0AB079FD}.Release|Win32.Build.0 = Release|Win32
+		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}.Debug|Win32.Build.0 = Debug|Win32
+		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}.Release|Win32.ActiveCfg = Release|Win32
+		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1E22C36B-C9DC-4294-B68D-2921E20A1712} = {E1AA8642-5BAE-4BAE-AF32-81F1D0CA10F3}
+		{3A8BAD66-1670-4EC1-AC6E-37F5BE521729} = {E1AA8642-5BAE-4BAE-AF32-81F1D0CA10F3}
+		{1E22C36B-C9DC-4294-B68D-2921E20A1734} = {E1AA8642-5BAE-4BAE-AF32-81F1D0CA10F3}
+		{1E22C36B-C9DC-4294-B68D-2921E20A1855} = {E1AA8642-5BAE-4BAE-AF32-81F1D0CA10F3}
+		{1E22C36B-C9DC-4294-B68D-2921E20A5EB9} = {E1AA8642-5BAE-4BAE-AF32-81F1D0CA10F3}
+		{778438C4-4F9B-441B-B5E1-A4ABE2A2BDED} = {76457E6A-B5A6-468F-92C8-8BB836D958DF}
+		{F23E9839-ACFF-4B13-B546-7CFB236A354F} = {76457E6A-B5A6-468F-92C8-8BB836D958DF}
+		{1645984D-0F12-474A-AEF6-4C0A0AB079FD} = {76457E6A-B5A6-468F-92C8-8BB836D958DF}
+		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0} = {732540B1-EBD3-4D5F-BDA1-12A2D5B720CD}
+	EndGlobalSection
+EndGlobal

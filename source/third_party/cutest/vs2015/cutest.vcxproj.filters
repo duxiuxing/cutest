@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Win32 DLL">
+      <UniqueIdentifier>{bc9906ec-c52b-4991-9dce-d6b76daa01c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win32 DLL\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Win32 DLL\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="cppunit">
+      <UniqueIdentifier>{faf23f9c-acb6-4b5e-922b-9440be3be338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest">
+      <UniqueIdentifier>{0bda0797-979b-4d2e-98b6-b5386698e22f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\Logger">
+      <UniqueIdentifier>{0e3d669a-a16e-4936-94a1-b72d9d007acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\Progress">
+      <UniqueIdentifier>{644ece67-6cac-4078-9cf9-bc0e95c07482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\Result">
+      <UniqueIdentifier>{9cf4f505-29af-40b2-8666-0e162af8ccb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\Runner">
+      <UniqueIdentifier>{6214ab37-09fa-43a1-87b2-756e1bdcd26a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\Thread">
+      <UniqueIdentifier>{198dcd0f-03a3-45a0-9c4a-99713cb9408e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\Thread\Decorator">
+      <UniqueIdentifier>{ebf61c65-84e1-4b2b-b0b4-0d9647de4fcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\Thread\Event">
+      <UniqueIdentifier>{8647789f-ede0-4b99-a162-f3ebc0f0b3cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\Thread\Lock">
+      <UniqueIdentifier>{ec3341aa-7260-401b-a364-98ea5abeebf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gtest">
+      <UniqueIdentifier>{c8b1b1aa-27b7-430b-91ba-7ffcb13ad080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\ManualEndTest">
+      <UniqueIdentifier>{635e6d40-cd03-45b9-a8b7-dc7e06978e3e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Win32 DLL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Win32 DLL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Logger.h">
+      <Filter>cutest\Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cutest\ProgressListener.h">
+      <Filter>cutest\Progress</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ProgressListenerManager.h">
+      <Filter>cutest\Progress</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Result.h">
+      <Filter>cutest\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RunnerBase.h">
+      <Filter>cutest\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\win\RunnerImpl.h">
+      <Filter>cutest\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cutest\Runner.h">
+      <Filter>cutest\Runner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Decorator.h">
+      <Filter>cutest\Thread\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\win\DecoratorImpl.h">
+      <Filter>cutest\Thread\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\win\EventImpl.h">
+      <Filter>cutest\Thread\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cutest\Event.h">
+      <Filter>cutest\Thread\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\win\SynchronizationObjectImpl.h">
+      <Filter>cutest\Thread\Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cutest\Runnable.h">
+      <Filter>cutest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\AutoEndTest.h">
+      <Filter>cutest\ManualEndTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cutest\ManualEndTest.h">
+      <Filter>cutest\ManualEndTest</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Win32 DLL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Win32 DLL\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
+      <Filter>cppunit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\Logger.cpp">
+      <Filter>cutest\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ProgressListenerManager.cpp">
+      <Filter>cutest\Progress</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Result.cpp">
+      <Filter>cutest\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RunnerBase.cpp">
+      <Filter>cutest\Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\RunnerImpl.cpp">
+      <Filter>cutest\Runner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\DecoratorImpl.cpp">
+      <Filter>cutest\Thread\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\EventImpl.cpp">
+      <Filter>cutest\Thread\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\SynchronizationObjectImpl.cpp">
+      <Filter>cutest\Thread\Lock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\googletest\src\gtest-all.cc">
+      <Filter>gtest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\AutoEndTest.cpp">
+      <Filter>cutest\ManualEndTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ManualEndTest.cpp">
+      <Filter>cutest\ManualEndTest</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
