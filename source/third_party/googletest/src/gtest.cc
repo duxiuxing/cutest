@@ -230,9 +230,15 @@ GTEST_DEFINE_string_(
 GTEST_DEFINE_bool_(list_tests, false,
                    "List all tests without running them.");
 
+// The net priority order after flag processing is thus:
+//   --gtest_output command line flag
+//   GTEST_OUTPUT environment variable
+//   XML_OUTPUT_FILE environment variable
+//   ''
 GTEST_DEFINE_string_(
     output,
-    internal::StringFromGTestEnv("output", ""),
+    internal::StringFromGTestEnv("output",
+      internal::OutputFlagAlsoCheckEnvVar().c_str()),
     "A format (defaults to \"xml\" but can be specified to be \"json\"), "
     "optionally followed by a colon and an output file name or directory. "
     "A directory is indicated by a trailing pathname separator. "
@@ -4543,6 +4549,11 @@ void UnitTest::AddTestPartResult(
       // when a failure happens and both the --gtest_break_on_failure and
       // the --gtest_catch_exceptions flags are specified.
       DebugBreak();
+#elif (!defined(__native_client__)) &&            \
+    ((defined(__clang__) || defined(__GNUC__)) && \
+     (defined(__x86_64__) || defined(__i386__)))
+      // with clang/gcc we can achieve the same effect on x86 by invoking int3
+      asm("int3");
 #else
       // Dereference NULL through a volatile pointer to prevent the compiler
       // from removing. We use this rather than abort() or __builtin_trap() for
@@ -5185,8 +5196,8 @@ bool ShouldRunTestOnShard(int total_shards, int shard_index, int test_id) {
 // each TestCase and TestInfo object.
 // If shard_tests == true, further filters tests based on sharding
 // variables in the environment - see
-// https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md .
-// Returns the number of tests that should run.
+// https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md
+// . Returns the number of tests that should run.
 int UnitTestImpl::FilterTests(ReactionToSharding shard_tests) {
   const Int32 total_shards = shard_tests == HONOR_SHARDING_PROTOCOL ?
       Int32FromEnvOrDie(kTestTotalShards, -1) : -1;
