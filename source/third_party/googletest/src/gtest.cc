@@ -233,9 +233,15 @@ GTEST_DEFINE_string_(
 GTEST_DEFINE_bool_(list_tests, false,
                    "List all tests without running them.");
 
+// The net priority order after flag processing is thus:
+//   --gtest_output command line flag
+//   GTEST_OUTPUT environment variable
+//   XML_OUTPUT_FILE environment variable
+//   ''
 GTEST_DEFINE_string_(
     output,
-    internal::StringFromGTestEnv("output", ""),
+    internal::StringFromGTestEnv("output",
+      internal::OutputFlagAlsoCheckEnvVar().c_str()),
     "A format (defaults to \"xml\" but can be specified to be \"json\"), "
     "optionally followed by a colon and an output file name or directory. "
     "A directory is indicated by a trailing pathname separator. "
@@ -375,7 +381,7 @@ AssertHelper::~AssertHelper() {
 }
 
 // Message assignment, for assertion streaming support.
-#if 0 // 屏蔽原来的实现
+#if 0 // gtest_mod : replace the original implement
 void AssertHelper::operator=(const Message& message) const {
   UnitTest::GetInstance()->
     AddTestPartResult(data_->type, data_->file, data_->line,
@@ -385,9 +391,8 @@ void AssertHelper::operator=(const Message& message) const {
                       // Skips the stack frame for this function itself.
                       );  // NOLINT
 }
-#else
+#else // gtest_mod : output message to cutest
 void AssertHelper::operator=(const Message& message) const {
-  // 把gtest的断言错误输出到cppunit
   CPPUNIT_NS::Message msg(data_->message);
   const std::string user_msg_string = message.GetString();
   if (!user_msg_string.empty())
@@ -467,7 +472,7 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
   if (format.empty())
     format = std::string(kDefaultOutputFormat);
 
-#if 0 // 屏蔽原有实现，去除对UnitTest::GetInstance()的依赖
+#if 0 // gtest_mod : replace the original implement
   const char* const colon = strchr(gtest_output_flag, ':');
   if (colon == NULL)
     return internal::FilePath::MakeFileName(
@@ -475,7 +480,7 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
             UnitTest::GetInstance()->original_working_dir()),
         internal::FilePath(kDefaultOutputFile), 0,
         format.c_str()).string();
-#else
+#else // gtest_mod : no need to depend on UnitTest::GetInstance()
   internal::FilePath workingDir = FilePath::GetCurrentDir();
   const char* const colon = strchr(gtest_output_flag, ':');
   if (colon == NULL)
@@ -484,7 +489,7 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
         format.c_str()).string();
 #endif
 
-#if 0 // 屏蔽原有实现，去除对UnitTest::GetInstance()的依赖
+#if 0 // gtest_mod : replace the original implement
   internal::FilePath output_name(colon + 1);
   if (!output_name.IsAbsolutePath())
     // TODO(wan@google.com): on Windows \some\path is not an absolute
@@ -494,7 +499,7 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
     output_name = internal::FilePath::ConcatPaths(
         internal::FilePath(UnitTest::GetInstance()->original_working_dir()),
         internal::FilePath(colon + 1));
-#else
+#else // gtest_mod : no need to depend on UnitTest::GetInstance()
   internal::FilePath output_name(colon + 1);
   if (!output_name.IsAbsolutePath())
     output_name = internal::FilePath::ConcatPaths(
@@ -2928,7 +2933,7 @@ static void PrintTestPartResult(const TestPartResult& test_part_result) {
 }
 
 // class PrettyUnitTestResultPrinter
-#if 0 // 把声明挪到了gtest-export.h
+#if 0 // gtest_mod : move to gtest-export.h
 enum GTestColor {
   COLOR_DEFAULT,
   COLOR_RED,
@@ -4591,6 +4596,11 @@ void UnitTest::AddTestPartResult(
       // when a failure happens and both the --gtest_break_on_failure and
       // the --gtest_catch_exceptions flags are specified.
       DebugBreak();
+#elif (!defined(__native_client__)) &&            \
+    ((defined(__clang__) || defined(__GNUC__)) && \
+     (defined(__x86_64__) || defined(__i386__)))
+      // with clang/gcc we can achieve the same effect on x86 by invoking int3
+      asm("int3");
 #else
       // Dereference NULL through a volatile pointer to prevent the compiler
       // from removing. We use this rather than abort() or __builtin_trap() for
@@ -5233,8 +5243,8 @@ bool ShouldRunTestOnShard(int total_shards, int shard_index, int test_id) {
 // each TestCase and TestInfo object.
 // If shard_tests == true, further filters tests based on sharding
 // variables in the environment - see
-// https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md .
-// Returns the number of tests that should run.
+// https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md
+// . Returns the number of tests that should run.
 int UnitTestImpl::FilterTests(ReactionToSharding shard_tests) {
   const Int32 total_shards = shard_tests == HONOR_SHARDING_PROTOCOL ?
       Int32FromEnvOrDie(kTestTotalShards, -1) : -1;
@@ -5802,7 +5812,7 @@ void InitGoogleTestImpl(int* argc, CharType** argv) {
   }
 
   ParseGoogleTestFlagsOnly(argc, argv);
-  // gtest_mod：注释掉UnitTest的创建代码
+  // gtest_mod : comment the gtest logic
   // GetUnitTestImpl()->PostFlagParsingInit();
 }
 
