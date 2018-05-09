@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="WTL Application Dialog based">
+      <UniqueIdentifier>{fb50bf67-0b2e-45bb-968a-13db728490c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WTL Application Dialog based\Header Files">
+      <UniqueIdentifier>{7f306bce-060f-435b-97b7-2178ac9ee206}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="WTL Application Dialog based\Resource Files">
+      <UniqueIdentifier>{256f4501-a2ac-4630-b387-976af21ee0f6}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;manifest</Extensions>
+    </Filter>
+    <Filter Include="WTL Application Dialog based\Source Files">
+      <UniqueIdentifier>{7bfdc2f1-ff1c-4d62-be0d-b81c967a983a}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="TestRunnerDlg">
+      <UniqueIdentifier>{1f6cf934-38e2-4318-92c5-1e8183bac69b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>WTL Application Dialog based\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestRunnerApp.cpp">
+      <Filter>WTL Application Dialog based\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestRunnerDlg.cpp">
+      <Filter>TestRunnerDlg</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>WTL Application Dialog based\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\resource.h">
+      <Filter>WTL Application Dialog based\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TestRunnerDlg.h">
+      <Filter>TestRunnerDlg</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\TestRunnerApp.rc">
+      <Filter>WTL Application Dialog based\Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\res\TestRunnerApp.ico">
+      <Filter>WTL Application Dialog based\Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\errortype.bmp">
+      <Filter>WTL Application Dialog based\Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\test_type.bmp">
+      <Filter>WTL Application Dialog based\Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\TestRunnerApp.rc2">
+      <Filter>WTL Application Dialog based\Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
