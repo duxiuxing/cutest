@@ -28,7 +28,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //
-// The Google C++ Testing Framework (Google Test)
+// The Google C++ Testing and Mocking Framework (Google Test)
 //
 // This header file declares functions and macros used internally by
 // Google Test.  They are subject to change without notice.
@@ -1255,7 +1255,8 @@ class NativeArray {
 // Expands to the name of the class that implements the given test.
 #define GTEST_TEST_CLASS_NAME_(test_case_name, test_name) \
   test_case_name##_##test_name##_Test
-/*
+
+#if 0 // gtest_mod : replace the original implement
 // Helper macro for defining tests.
 #define GTEST_TEST_(test_case_name, test_name, parent_class, parent_id)\
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class {\
@@ -1279,9 +1280,7 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class {\
         new ::testing::internal::TestFactoryImpl<\
             GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>);\
 void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
-*/
-
-// GTEST_TEST_的mod版本
+#else // gtest_mod : call google test case in cppunit framework
 #define GTEST_TEST_(test_case_name, test_name, parent_class, parent_id) \
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { \
   friend class CPPUNIT_NS::GTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
@@ -1307,6 +1306,7 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { 
 GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestFactory \
     GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::factory; \
 void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
+#endif
 
 #define GTEST_SUITE_NAMED_REGISTRATION(ATestFixtureType, suiteName) \
   static CPPUNIT_NS::AutoRegisterRegistry \

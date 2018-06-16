@@ -14,6 +14,7 @@
 *.suo
 dte80a.tlh
 *.tlog
+*.unsuccessfulbuild
 *.VC.db
 *.VC.opendb
 *.vcxproj.user
