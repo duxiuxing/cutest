@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="money"
-	ProjectGUID="{BF284D0B-FE64-4EF2-8C36-E6E38F5E6DDB}"
-	RootNamespace="money"
+	Name="sample1"
+	ProjectGUID="{9FD9D394-CB84-48D6-A18B-CFAA59DC72B9}"
+	RootNamespace="sample1"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include"
+				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include;../../../third_party/googletest/include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -117,7 +117,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include"
+				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include;../../../third_party/googletest/include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -174,8 +174,20 @@
 	</References>
 	<Files>
 		<Filter
-			Name="money"
+			Name="sample1"
 			>
+			<File
+				RelativePath="..\..\..\third_party\googletest\samples\sample1.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\googletest\samples\sample1.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\googletest\samples\sample1_unittest.cc"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Win32 DLL"
