@@ -8,7 +8,7 @@ Event::createInstance()
   return new EventImpl;
 }
 
-EventImpl::EventImpl() : event_handle(NULL)
+EventImpl::EventImpl() : event_handle( NULL )
 {
   this->event_handle = ::CreateEvent( NULL, FALSE, FALSE, NULL );
 }

@@ -60,17 +60,17 @@ RunnerImpl::RunnerImpl()
 
   // Create a message window.
   RunnerImpl::message_window = ::CreateWindow(
-                      wcx.lpszClassName,  // name of window class
-                      NULL,               // title-bar string
-                      0,                  // top-level window
-                      0,                  // default horizontal position
-                      0,                  // default vertical position
-                      0,                  // default width
-                      0,                  // default height
-                      HWND_MESSAGE,       // message window
-                      NULL,               // use class menu
-                      wcx.hInstance,      // handle to application instance
-                      NULL );             // no window-creation data
+                                 wcx.lpszClassName,  // name of window class
+                                 NULL,               // title-bar string
+                                 0,                  // top-level window
+                                 0,                  // default horizontal position
+                                 0,                  // default vertical position
+                                 0,                  // default width
+                                 0,                  // default height
+                                 HWND_MESSAGE,       // message window
+                                 NULL,               // use class menu
+                                 wcx.hInstance,      // handle to application instance
+                                 NULL );             // no window-creation data
 
   // 通过这个异步方法给s_mainThreadId赋值
   asyncRunOnMainThread( this, false );

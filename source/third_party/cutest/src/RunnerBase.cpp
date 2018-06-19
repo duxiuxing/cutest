@@ -29,9 +29,9 @@ Runner::version()
       int fix     = FIX_VERSION;
       int build   = BUILD_NUMBER;
       version = testing::internal::StreamableToString( major ) + "."
-                  + testing::internal::StreamableToString( minor ) + "."
-                  + testing::internal::StreamableToString( fix ) + "."
-                  + testing::internal::StreamableToString( build );
+                + testing::internal::StreamableToString( minor ) + "."
+                + testing::internal::StreamableToString( fix ) + "."
+                + testing::internal::StreamableToString( build );
     }
   }
 

@@ -78,7 +78,7 @@ DecoratorImpl::start()
   this->run_completed->reset();
 
   HANDLE source_handle = ( HANDLE )_beginthreadex( NULL, 0,
-                   threadFunction, this, CREATE_SUSPENDED, NULL );
+                         threadFunction, this, CREATE_SUSPENDED, NULL );
 
   ::SetThreadPriority( source_handle, THREAD_PRIORITY_NORMAL );
 
