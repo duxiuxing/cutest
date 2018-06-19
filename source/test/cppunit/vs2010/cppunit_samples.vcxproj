@@ -96,8 +96,8 @@
     <ClInclude Include="..\..\..\third_party\cppunit\examples\cppunittest\TestFailureTest.h" />
     <ClInclude Include="..\..\..\third_party\cppunit\examples\cppunittest\TestResultCollectorTest.h" />
     <ClInclude Include="..\..\..\third_party\cppunit\examples\cppunittest\TestResultTest.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\stdafx.h" />
+    <ClInclude Include="..\targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\sample_test\cppunit\mobile_test.cpp" />
@@ -112,7 +112,7 @@
     <ClCompile Include="..\..\..\third_party\cppunit\examples\cppunittest\TestFailureTest.cpp" />
     <ClCompile Include="..\..\..\third_party\cppunit\examples\cppunittest\TestResultCollectorTest.cpp" />
     <ClCompile Include="..\..\..\third_party\cppunit\examples\cppunittest\TestResultTest.cpp" />
-    <ClCompile Include="dllmain.cpp">
+    <ClCompile Include="..\dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
@@ -120,7 +120,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="..\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
