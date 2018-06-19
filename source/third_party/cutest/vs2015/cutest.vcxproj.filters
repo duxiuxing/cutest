@@ -78,9 +78,6 @@
     <ClInclude Include="..\src\win\SynchronizationObjectImpl.h">
       <Filter>cutest\Thread\Lock</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\Runnable.h">
-      <Filter>cutest</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\AutoEndTest.h">
       <Filter>cutest\ManualEndTest</Filter>
     </ClInclude>
@@ -92,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="..\src\win\targetver.h">
       <Filter>Win32 DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\cutest\Runnable.h">
+      <Filter>cutest\Thread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

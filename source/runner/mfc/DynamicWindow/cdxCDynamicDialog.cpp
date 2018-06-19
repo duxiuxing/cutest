@@ -14,13 +14,13 @@ static char THIS_FILE[] = __FILE__;
 // cdxCDynamicDialog dialog
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_DYNAMIC(cdxCDynamicDialog,CDialogEx);
+IMPLEMENT_DYNAMIC(cdxCDynamicDialog, CDialog);
 
 /////////////////////////////////////////////////////////////////////////////
 // message map
 /////////////////////////////////////////////////////////////////////////////
 
-BEGIN_MESSAGE_MAP(cdxCDynamicDialog, CDialogEx)
+BEGIN_MESSAGE_MAP(cdxCDynamicDialog, CDialog)
 	//{{AFX_MSG_MAP(cdxCDynamicDialog)
 	ON_WM_GETMINMAXINFO()
 	ON_WM_DESTROY()
@@ -37,7 +37,7 @@ END_MESSAGE_MAP()
 
 BOOL cdxCDynamicDialog::OnInitDialog() 
 {
-	BOOL	bOK	=	CDialogEx::OnInitDialog();
+	BOOL	bOK	=	CDialog::OnInitDialog();
 	DoInitWindow(*this);
 
 	return bOK;
@@ -46,42 +46,42 @@ BOOL cdxCDynamicDialog::OnInitDialog()
 BOOL cdxCDynamicDialog::DestroyWindow()
 {
 	DoOnDestroy();
-	return CDialogEx::DestroyWindow();
+	return CDialog::DestroyWindow();
 }
 
 void cdxCDynamicDialog::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI) 
 {
-	CDialogEx::OnGetMinMaxInfo(lpMMI);
+	CDialog::OnGetMinMaxInfo(lpMMI);
 	DoOnGetMinMaxInfo(lpMMI);
 }
 
 void cdxCDynamicDialog::OnDestroy() 
 {
 	DoOnDestroy();
-	CDialogEx::OnDestroy();
+	CDialog::OnDestroy();
 }
 
 void cdxCDynamicDialog::OnParentNotify(UINT message, LPARAM lParam) 
 {
-	CDialogEx::OnParentNotify(message, lParam);
+	CDialog::OnParentNotify(message, lParam);
 	DoOnParentNotify(message, lParam);
 }
 
 void cdxCDynamicDialog::OnSize(UINT nType, int cx, int cy) 
 {
-	CDialogEx::OnSize(nType, cx, cy);
+	CDialog::OnSize(nType, cx, cy);
 	DoOnSize(nType, cx, cy);
 }
 
 void cdxCDynamicDialog::OnSizing(UINT fwSide, LPRECT pRect) 
 {
-	CDialogEx::OnSizing(fwSide, pRect);
+	CDialog::OnSizing(fwSide, pRect);
 	DoOnSizing(fwSide, pRect);
 }
 
 void cdxCDynamicDialog::OnTimer(UINT_PTR idEvent)
 {
-	CDialogEx::OnTimer(idEvent);
+	CDialog::OnTimer(idEvent);
 	DoOnTimer(idEvent);
 }
 
@@ -90,7 +90,7 @@ void cdxCDynamicDialog::OnTimer(UINT_PTR idEvent)
 // cdxCDynamicChildDlg dialog
 /////////////////////////////////////////////////////////////////////////////
 
-IMPLEMENT_DYNAMIC(cdxCDynamicChildDlg,cdxCDynamicDialog);
+IMPLEMENT_DYNAMIC(cdxCDynamicChildDlg, cdxCDynamicDialog);
 
 /////////////////////////////////////////////////////////////////////////////
 // message map

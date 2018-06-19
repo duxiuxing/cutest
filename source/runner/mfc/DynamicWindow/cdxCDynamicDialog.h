@@ -22,7 +22,7 @@
  *   the Dynamic child control system DcCS by codex design
  */
 
-class cdxCDynamicDialog : public CDialogEx, public cdxCDynamicWndEx
+class cdxCDynamicDialog : public CDialog, public cdxCDynamicWndEx
 {
 	DECLARE_DYNAMIC(cdxCDynamicDialog);
 
@@ -82,7 +82,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 
 inline cdxCDynamicDialog::cdxCDynamicDialog(UINT idd, CWnd* pParent, Freedom fd, UINT nFlags)
-:	CDialogEx(idd,pParent),
+:	CDialog(idd,pParent),
 	cdxCDynamicWndEx(fd,nFlags)
 {
 	if(idd)
@@ -90,7 +90,7 @@ inline cdxCDynamicDialog::cdxCDynamicDialog(UINT idd, CWnd* pParent, Freedom fd,
 }
 
 inline cdxCDynamicDialog::cdxCDynamicDialog(LPCTSTR lpszTemplateName, CWnd* pParent, Freedom fd, UINT nFlags)
-:	CDialogEx(lpszTemplateName,pParent),
+:	CDialog(lpszTemplateName,pParent),
 	cdxCDynamicWndEx(fd,nFlags)
 {
 	if(lpszTemplateName && *lpszTemplateName)

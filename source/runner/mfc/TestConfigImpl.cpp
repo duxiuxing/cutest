@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "TestConfigImpl.h"
 
+#include <Shlwapi.h>
+
 #include <atlpath.h>
 #include <strsafe.h>
 
