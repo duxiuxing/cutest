@@ -131,7 +131,7 @@ TestConfigImpl::load()
       // 根据title的值来设置窗口的标题
       CComVariant title;
       attrNode->get_nodeValue( &title );
-      _title = title.bstrVal;
+      m_title = title.bstrVal;
     }
   }
 
@@ -173,5 +173,5 @@ TestConfigImpl::load()
 LPCTSTR
 TestConfigImpl::title()
 {
-  return _title;
+  return m_title;
 }

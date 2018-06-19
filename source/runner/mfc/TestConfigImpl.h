@@ -15,5 +15,5 @@ protected:
   static void loadFailedMsgBox( LPTSTR lib_name );
 
 protected:
-  CString _title;
+  CString m_title;
 };
