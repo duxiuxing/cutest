@@ -18,7 +18,7 @@ public:
   bool isTestEnd();
 
 protected:
-  Event *m_event;
+  Event *event;
 
 private:
   ManualEndTest( const ManualEndTest &other );

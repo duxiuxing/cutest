@@ -7,7 +7,7 @@ CPPUNIT_NS_BEGIN
 
 class SynchronizationObjectImpl : public SynchronizedObject::SynchronizationObject
 {
-  CRITICAL_SECTION m_sect;
+  CRITICAL_SECTION section;
 public:
   SynchronizationObjectImpl();
   virtual ~SynchronizationObjectImpl();

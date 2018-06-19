@@ -8,33 +8,33 @@ Event::createInstance()
   return new EventImpl;
 }
 
-EventImpl::EventImpl()
+EventImpl::EventImpl() : event_handle(NULL)
 {
-  m_event = ::CreateEvent( NULL, FALSE, FALSE, NULL );
+  this->event_handle = ::CreateEvent( NULL, FALSE, FALSE, NULL );
 }
 
 void
 EventImpl::wait()
 {
-  ::WaitForSingleObjectEx( m_event, INFINITE, FALSE );
+  ::WaitForSingleObjectEx( this->event_handle, INFINITE, FALSE );
 }
 
 void
 EventImpl::reset()
 {
-  ::ResetEvent( m_event );
+  ::ResetEvent( this->event_handle );
 }
 
 void
 EventImpl::post()
 {
-  ::SetEvent( m_event );
+  ::SetEvent( this->event_handle );
 }
 
 void
 EventImpl::destroy()
 {
-  ::CloseHandle( m_event );
+  ::CloseHandle( this->event_handle );
   delete this;
 }
 

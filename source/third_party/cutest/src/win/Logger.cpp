@@ -26,14 +26,14 @@ printString( const char *format, ... )
   ::OutputDebugStringA( "\r\n" );
 }
 
-Logger::Logger() : m_passedTestCases( 0 )
+Logger::Logger() : passed_test_cases( 0 )
 {}
 
 void
 Logger::onRunnerStart( CPPUNIT_NS::Test *test )
 {
-  m_passedTestCases = 0;
-  m_failedTestCases.clear();
+  this->passed_test_cases = 0;
+  this->failed_test_cases.clear();
 
   printString( "[==========] Running %s from %s.",
                testing::FormatTestCount( test->countTestCases() ).c_str(),
@@ -48,21 +48,21 @@ Logger::onRunnerEnd( CPPUNIT_NS::Test *test, unsigned int elapsed_ms )
                test->getName().c_str(),
                elapsed_ms );
 
-  printString( "[  PASSED  ] %s.", testing::FormatTestCount( m_passedTestCases ).c_str() );
+  printString( "[  PASSED  ] %s.", testing::FormatTestCount( this->passed_test_cases ).c_str() );
 
-  if ( m_failedTestCases.size() )
+  if ( this->failed_test_cases.size() )
   {
-    printString( "[  FAILED  ] %s, listed below:", testing::FormatTestCount( ( int )m_failedTestCases.size() ).c_str() );
+    printString( "[  FAILED  ] %s, listed below:", testing::FormatTestCount( ( int )this->failed_test_cases.size() ).c_str() );
 
-    std::list<std::string>::iterator it = m_failedTestCases.begin();
-    while ( it != m_failedTestCases.end() )
+    std::list<std::string>::iterator it = this->failed_test_cases.begin();
+    while ( it != this->failed_test_cases.end() )
     {
       printString( "[  FAILED  ] %s", it->c_str() );
       ++it;
     }
 
-    printString( "\n%2d FAILED %s", m_failedTestCases.size(),
-                 m_failedTestCases.size() == 1 ? "TEST" : "TESTS" );
+    printString( "\n%2d FAILED %s", this->failed_test_cases.size(),
+                 this->failed_test_cases.size() == 1 ? "TEST" : "TESTS" );
   }
 }
 
@@ -120,14 +120,14 @@ Logger::onTestEnd(
     printString( "[       OK ] %s (%u ms)",
                  test->getName().c_str(),
                  elapsed_ms );
-    ++m_passedTestCases;
+    ++this->passed_test_cases;
   }
   else
   {
     printString( "[  FAILED  ] %s (%u ms)",
                  test->getName().c_str(),
                  elapsed_ms );
-    m_failedTestCases.push_back( test->getName() );
+    this->failed_test_cases.push_back( test->getName() );
   }
 }
 

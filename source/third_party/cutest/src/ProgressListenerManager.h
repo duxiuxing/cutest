@@ -24,7 +24,7 @@ public:
 
 protected:
   typedef std::set<ProgressListener *> TestProgressListeners;
-  TestProgressListeners m_listeners;
+  TestProgressListeners listeners;
 
 public:
   //////////////////////////////////////////////////////////////////////////
@@ -53,21 +53,21 @@ public:
   class TaskBase : public Runnable
   {
   protected:
-    ProgressListenerManager *m_manager;
-    Event *m_event;
+    ProgressListenerManager *manager;
+    Event *event;
 
   public:
-    TaskBase( ProgressListenerManager *manager, Event *event )
-      : m_manager( manager )
-      , m_event( event )
+    TaskBase( ProgressListenerManager *manager_in, Event *event_in )
+      : manager( manager_in )
+      , event( event_in )
     {
     }
 
     virtual ~TaskBase()
     {
-      if ( m_event )
+      if ( this->event )
       {
-        m_event->post();
+        this->event->post();
       }
     }
   };
@@ -75,17 +75,17 @@ public:
 protected:
   struct TestRecord
   {
-    TestRecord() : startMs( 0 ), errors( 0 ), failures( 0 )
+    TestRecord() : start_ms( 0 ), errors( 0 ), failures( 0 )
     {}
 
-    unsigned long long startMs;
+    unsigned long long start_ms;
     int errors;
     int failures;
   };
 
-  std::stack<TestRecord> m_testRecord;
+  std::stack<TestRecord> test_record;
 
-  unsigned int m_failureIndex;
+  unsigned int failure_index;
 };
 
 CUTEST_NS_END

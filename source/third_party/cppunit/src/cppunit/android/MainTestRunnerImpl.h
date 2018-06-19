@@ -22,7 +22,7 @@ public:
   MainTestRunnerImpl();
 
 protected:
-  TestProgressLogger _testProgressLogger;
+  TestProgressLogger test_progress_logger;
 
 public:
   // MainTestRunner的接口实现
@@ -30,7 +30,7 @@ public:
   virtual void delayRunOnMainThread( unsigned int delay_ms, Runnable *runnable, bool is_auto_delete );
 
 protected:
-  static thread_id s_mainThreadId;
+  static thread_id main_thread_id;
 
   // 实现Runnable::run()
   virtual void run();

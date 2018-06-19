@@ -18,7 +18,7 @@ public:
   virtual ~RunnerImpl();
 
 protected:
-  Logger m_testProgressLogger;
+  Logger test_progress_logger;
 
 public:
   // Runner的接口实现
@@ -32,14 +32,14 @@ protected:
     WM_DELAY_RUN_AUTO_DELETE,
     WM_DELAY_RUN,
   };
-  static HWND s_messageWindow;
-  static LRESULT CALLBACK messageWindowProc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam );
+  static HWND message_window;
+  static LRESULT CALLBACK messageWindowProc( HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam );
 
-  static VOID CALLBACK onTimer4DelayRunAutoDelete( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime );
-  static VOID CALLBACK onTimer4DelayRun( HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime );
+  static VOID CALLBACK onTimer4DelayRunAutoDelete( HWND wnd, UINT msg, UINT_PTR id_event, DWORD elapse_ms );
+  static VOID CALLBACK onTimer4DelayRun( HWND wnd, UINT uMsg, UINT_PTR id_event, DWORD elapse_ms );
 
-  static std::set<Runnable *> s_autoDeleteRunnables; // 用于缓存delayRunOnMainThread()中尚未执行且需要auto delete的Runnable对象
-  static thread_id s_mainThreadId;
+  static std::set<Runnable *> auto_delete_runnables; // 用于缓存delayRunOnMainThread()中尚未执行且需要auto delete的Runnable对象
+  static thread_id main_thread_id;
 
   // 实现Runnable::run()
   virtual void run();

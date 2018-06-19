@@ -30,8 +30,8 @@ public:
   //////////////////////////////////////////////////////////////////////////
 
 protected:
-  unsigned int m_passedTestCases; // 通过的用例记个数就行
-  std::list<std::string> m_failedTestCases; // 不通过的要把名字记录下来
+  unsigned int passed_test_cases; // 通过的用例记个数就行
+  std::list<std::string> failed_test_cases; // 不通过的要把名字记录下来
 };
 
 CUTEST_NS_END

@@ -7,8 +7,8 @@ CPPUNIT_NS_BEGIN
 
 JClassManager *JClassManager::instance()
 {
-  static JClassManager s_jClassManager;
-  return &s_jClassManager;
+  static JClassManager jclass_manager;
+  return &jclass_manager;
 }
 
 JClassManager::JClassManager()

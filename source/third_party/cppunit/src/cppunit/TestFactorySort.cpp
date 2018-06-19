@@ -6,8 +6,8 @@ CPPUNIT_NS_BEGIN
 TestFactorySort *
 TestFactorySort::getInstance()
 {
-  static TestFactorySort s_testFactorySort;
-  return &s_testFactorySort;
+  static TestFactorySort test_factory_sort;
+  return &test_factory_sort;
 }
 
 TestFactorySort::TestFactorySort() : m_weigth( 0 )

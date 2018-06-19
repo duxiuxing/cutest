@@ -23,10 +23,10 @@ public:
   void addFailure();
 
 protected:
-  ManualEndTest *m_test;
-  Callback *m_callback;
-  unsigned int m_timeoutMs;     // 记录start()的入参，即ManualEndTest的超时时长
-  unsigned long long m_startMs; // 记录调用start()的时刻，用于计算ManualEndTest的实际执行时长
+  ManualEndTest *test;
+  Callback *callback;
+  unsigned int timeout_ms;     // 记录start()的入参，即ManualEndTest的超时时长
+  unsigned long long start_ms; // 记录调用start()的时刻，用于计算ManualEndTest的实际执行时长
 
 public:
   // Runnable::run()的实现
@@ -48,8 +48,8 @@ public:
   void cancel();
 
 protected:
-  ManualEndTest *m_test;
-  TestTimeoutCounter *m_counter;
+  ManualEndTest *test;
+  TestTimeoutCounter *counter;
 
 public:
   // TestTimeoutCounter::Callback::OnTimeout()的实现

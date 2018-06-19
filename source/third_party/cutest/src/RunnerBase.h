@@ -20,7 +20,7 @@ public: // Runner接口族的实现
   virtual void removeListener( ProgressListener *listener );
 
 protected:
-  ProgressListenerManager m_listenerManager;
+  ProgressListenerManager listener_manager;
 
 
 public:
@@ -35,7 +35,7 @@ public:
   virtual const CPPUNIT_NS::TestFailure *failureAt( unsigned int index ) const;
 
 protected:
-  Decorator *m_testDecorator;
+  Decorator *test_decorator;
 
 
 public: // ManualEndTest相关的方法
@@ -43,8 +43,8 @@ public: // ManualEndTest相关的方法
   virtual void unregisterManualEndTest( ManualEndTest *test );
 
 protected:
-  ManualEndTest *m_testRuning;
-  AutoEndTest m_autoEndTest;
+  ManualEndTest *runing_test;
+  AutoEndTest auto_end_test;
 };
 
 CUTEST_NS_END

@@ -63,21 +63,21 @@ thread_id Runner::currentThreadId() {
 }
 
 thread_id Runner::mainThreadId() {
-    return MainTestRunnerImpl::s_mainThreadId;
+    return MainTestRunnerImpl::main_thread_id;
 }
 
 MainTestRunner *Runner::instance() {
-    static MainTestRunnerImpl s_mainTestRunner;
-    return &s_mainTestRunner;
+    static MainTestRunnerImpl main_test_runner;
+    return &main_test_runner;
 }
 
-thread_id MainTestRunnerImpl::s_mainThreadId = 0;
+thread_id MainTestRunnerImpl::main_thread_id = 0;
 
-MainTestRunnerImpl::MainTestRunnerImpl() : _runLoop(NULL) {
-    _runLoop = [MainTestRunLoop new];
-    _listenerManager.add(&_testProgressLogger);
+MainTestRunnerImpl::MainTestRunnerImpl() : run_loop(NULL) {
+    this->run_loop = [MainTestRunLoop new];
+    _listenerManager.add(&test_progress_logger);
 
-    // 通过这个异步方法给s_mainThreadId赋值
+    // 通过这个异步方法给main_thread_id赋值
     asyncRunOnMainThread(this, false);
 }
 
@@ -85,19 +85,19 @@ MainTestRunnerImpl::~MainTestRunnerImpl() {}
 
 void MainTestRunnerImpl::asyncRunOnMainThread(Runnable *runnable,
                                               bool is_auto_delete) {
-    [_runLoop asyncRunOnMainThread:runnable isAutoDelete:is_auto_delete];
+    [this->run_loop asyncRunOnMainThread:runnable isAutoDelete:is_auto_delete];
 }
 
 void MainTestRunnerImpl::delayRunOnMainThread(unsigned int delay_ms,
                                               Runnable *runnable,
                                               bool is_auto_delete) {
-    [_runLoop delayRunOnMainThread:delay_ms
+    [this->run_loop delayRunOnMainThread:delay_ms
                        runnable:runnable
                    isAutoDelete:is_auto_delete];
 }
 
 void MainTestRunnerImpl::run() {
-    MainTestRunnerImpl::s_mainThreadId = Runner::currentThreadId();
+    MainTestRunnerImpl::main_thread_id = Runner::currentThreadId();
 }
 
 CPPUNIT_NS_END

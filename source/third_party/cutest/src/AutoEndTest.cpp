@@ -7,21 +7,21 @@
 CUTEST_NS_BEGIN
 
 TestTimeoutCounter::TestTimeoutCounter( ManualEndTest *test )
-  : m_test( test )
-  , m_callback( NULL )
-  , m_timeoutMs( 0 )
-  , m_startMs( 0 )
+  : test( test )
+  , callback( NULL )
+  , timeout_ms( 0 )
+  , start_ms( 0 )
 {}
 
 void
-TestTimeoutCounter::start( unsigned int timeout_ms, Callback *callback )
+TestTimeoutCounter::start( unsigned int timeout_ms_in, Callback *callback_in )
 {
-  if ( timeout_ms )
+  if ( timeout_ms_in )
   {
-    m_callback = callback;
-    m_timeoutMs = timeout_ms;
-    m_startMs = Runner::tickCount();
-    Runner::instance()->delayRunOnMainThread( timeout_ms, this, false );
+    this->callback = callback_in;
+    this->timeout_ms = timeout_ms_in;
+    this->start_ms = Runner::tickCount();
+    Runner::instance()->delayRunOnMainThread( timeout_ms_in, this, false );
   }
   else
   {
@@ -34,8 +34,8 @@ void
 TestTimeoutCounter::run()
 {
   // 计算ManualEndTest当前的执行时长
-  unsigned int elapsedMs = ( unsigned int )( Runner::tickCount() - m_startMs );
-  if ( elapsedMs < m_timeoutMs )
+  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount() - this->start_ms );
+  if ( elapsed_ms < this->timeout_ms )
   {
     /*
     超时补偿逻辑：
@@ -47,7 +47,7 @@ TestTimeoutCounter::run()
   }
   else
   {
-    m_callback->onTimeout( m_test, this );
+    this->callback->onTimeout( this->test, this );
     delete this;
   }
 }
@@ -56,22 +56,22 @@ void
 TestTimeoutCounter::addFailure()
 {
   // 计算ManualEndTest当前的执行时长
-  unsigned int elapsedMs = ( unsigned int )( Runner::tickCount() - m_startMs );
+  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount() - this->start_ms );
 
-  if ( elapsedMs < m_timeoutMs )
+  if ( elapsed_ms < this->timeout_ms )
   {
     // ManualEndTest还没超时就被自动结束了？需要Review AutoEndTest的设计。
-    EXPECT_GE( elapsedMs, m_timeoutMs ) << "AutoEndTest early end the TestCase!";
+    EXPECT_GE( elapsed_ms, this->timeout_ms ) << "AutoEndTest early end the TestCase!";
   }
   else
   {
-    EXPECT_LE( elapsedMs, m_timeoutMs ) << "ManualEndTest Timeout!";
+    EXPECT_LE( elapsed_ms, this->timeout_ms ) << "ManualEndTest Timeout!";
   }
 }
 
 AutoEndTest::AutoEndTest()
-  : m_test( NULL )
-  , m_counter( NULL )
+  : test( NULL )
+  , counter( NULL )
 {}
 
 void
@@ -79,31 +79,31 @@ AutoEndTest::check( ManualEndTest *test, unsigned int timeout_ms )
 {
   if ( test && timeout_ms )
   {
-    m_test = test;
-    m_counter = new TestTimeoutCounter( test );
-    m_counter->start( timeout_ms, this );
+    this->test = test;
+    this->counter = new TestTimeoutCounter( test );
+    this->counter->start( timeout_ms, this );
   }
   else
   {
-    m_test = NULL;
-    m_counter = NULL;
+    this->test = NULL;
+    this->counter = NULL;
   }
 }
 
 void
 AutoEndTest::cancel()
 {
-  m_test = NULL;
-  m_counter = NULL;
+  this->test = NULL;
+  this->counter = NULL;
 }
 
 void
 AutoEndTest::onTimeout( ManualEndTest *test, TestTimeoutCounter *counter )
 {
-  if ( m_test == test && m_counter == counter )
+  if ( this->test == test && this->counter == counter )
   {
     counter->addFailure();
-    m_test->endTest();
+    this->test->endTest();
   }
 }
 

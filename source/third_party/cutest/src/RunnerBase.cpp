@@ -10,16 +10,16 @@ CUTEST_NS_BEGIN
 const char *
 Runner::version()
 {
-  static std::string s_version;
+  static std::string version;
 
-  if ( s_version.empty() )
+  if ( version.empty() )
   {
     if ( 0 == BUILD_NUMBER )
     {
       // 本地编译会进入这个分支，这个时候取当前时刻作为版本号。
-      s_version = __TIME__;
-      s_version.append( " " );
-      s_version.append( __DATE__ );
+      version = __TIME__;
+      version.append( " " );
+      version.append( __DATE__ );
     }
     else
     {
@@ -28,42 +28,42 @@ Runner::version()
       int minor   = MINOR_VERSION;
       int fix     = FIX_VERSION;
       int build   = BUILD_NUMBER;
-      s_version = testing::internal::StreamableToString( major ) + "."
+      version = testing::internal::StreamableToString( major ) + "."
                   + testing::internal::StreamableToString( minor ) + "."
                   + testing::internal::StreamableToString( fix ) + "."
                   + testing::internal::StreamableToString( build );
     }
   }
 
-  return s_version.c_str();
+  return version.c_str();
 }
 
 RunnerBase::RunnerBase()
-  : m_testDecorator( NULL )
-  , m_testRuning( NULL )
+  : test_decorator( NULL )
+  , runing_test( NULL )
 {}
 
 RunnerBase::~RunnerBase()
 {
   stop();
 
-  if ( m_testDecorator )
+  if ( this->test_decorator )
   {
-    m_testDecorator->destroy();
-    m_testDecorator = NULL;
+    this->test_decorator->destroy();
+    this->test_decorator = NULL;
   }
 }
 
 void
 RunnerBase::addListener( ProgressListener *listener )
 {
-  m_listenerManager.add( listener );
+  this->listener_manager.add( listener );
 }
 
 void
 RunnerBase::removeListener( ProgressListener *listener )
 {
-  m_listenerManager.remove( listener );
+  this->listener_manager.remove( listener );
 }
 
 void
@@ -71,28 +71,28 @@ RunnerBase::start( CPPUNIT_NS::Test *test )
 {
   stop();
 
-  if ( m_testDecorator )
+  if ( this->test_decorator )
   {
-    m_testDecorator->destroy();
-    m_testDecorator = NULL;
+    this->test_decorator->destroy();
+    this->test_decorator = NULL;
   }
 
-  m_testDecorator = Decorator::createInstance( test );
-  m_testDecorator->addListener( &m_listenerManager );
-  m_testDecorator->start();
+  this->test_decorator = Decorator::createInstance( test );
+  this->test_decorator->addListener( &this->listener_manager );
+  this->test_decorator->start();
 }
 
 void
 RunnerBase::stop()
 {
-  if ( m_testDecorator )
+  if ( this->test_decorator )
   {
-    m_testDecorator->stop();
+    this->test_decorator->stop();
 
-    if ( m_testRuning )
+    if ( this->runing_test )
     {
-      m_testRuning->endTest();
-      m_testRuning = NULL;
+      this->runing_test->endTest();
+      this->runing_test = NULL;
     }
   }
 }
@@ -100,19 +100,19 @@ RunnerBase::stop()
 void
 RunnerBase::addFailure( bool is_error, CPPUNIT_NS::Exception *exception )
 {
-  if ( m_testDecorator )
+  if ( this->test_decorator )
   {
-    m_testDecorator->addFailure( is_error, exception );
+    this->test_decorator->addFailure( is_error, exception );
   }
 }
 
 unsigned int
 RunnerBase::errorCount() const
 {
-  if ( m_testDecorator )
+  if ( this->test_decorator )
   {
-    const CPPUNIT_NS::TestResultCollector *resultCollector = m_testDecorator->testResultCollector();
-    return ( unsigned int )resultCollector->testErrors();
+    const CPPUNIT_NS::TestResultCollector *collector = this->test_decorator->testResultCollector();
+    return ( unsigned int )collector->testErrors();
   }
   return 0;
 }
@@ -120,10 +120,10 @@ RunnerBase::errorCount() const
 unsigned int
 RunnerBase::failureCount() const
 {
-  if ( m_testDecorator )
+  if ( this->test_decorator )
   {
-    const CPPUNIT_NS::TestResultCollector *resultCollector = m_testDecorator->testResultCollector();
-    return ( unsigned int )resultCollector->testFailures();
+    const CPPUNIT_NS::TestResultCollector *collector = this->test_decorator->testResultCollector();
+    return ( unsigned int )collector->testFailures();
   }
   return 0;
 }
@@ -131,10 +131,10 @@ RunnerBase::failureCount() const
 unsigned int
 RunnerBase::totalFailureCount() const
 {
-  if ( m_testDecorator )
+  if ( this->test_decorator )
   {
-    const CPPUNIT_NS::TestResultCollector *resultCollector = m_testDecorator->testResultCollector();
-    return ( unsigned int )resultCollector->testFailuresTotal();
+    const CPPUNIT_NS::TestResultCollector *collector = this->test_decorator->testResultCollector();
+    return ( unsigned int )collector->testFailuresTotal();
   }
   return 0;
 }
@@ -142,12 +142,12 @@ RunnerBase::totalFailureCount() const
 const CPPUNIT_NS::TestFailure *
 RunnerBase::failureAt( unsigned int index ) const
 {
-  if ( m_testDecorator )
+  if ( this->test_decorator )
   {
-    const CPPUNIT_NS::TestResultCollector *resultCollector = m_testDecorator->testResultCollector();
-    if ( index < resultCollector->failures().size() )
+    const CPPUNIT_NS::TestResultCollector *collector = this->test_decorator->testResultCollector();
+    if ( index < collector->failures().size() )
     {
-      return resultCollector->failures()[index];
+      return collector->failures()[index];
     }
   }
   return NULL;
@@ -156,17 +156,17 @@ RunnerBase::failureAt( unsigned int index ) const
 void
 RunnerBase::registerManualEndTest( ManualEndTest *test, unsigned int timeout_ms )
 {
-  m_testRuning = test;
-  m_autoEndTest.check( test, timeout_ms );
+  this->runing_test = test;
+  this->auto_end_test.check( test, timeout_ms );
 }
 
 void
 RunnerBase::unregisterManualEndTest( ManualEndTest *test )
 {
-  if ( m_testRuning == test )
+  if ( this->runing_test == test )
   {
-    m_testRuning = NULL;
-    m_autoEndTest.cancel();
+    this->runing_test = NULL;
+    this->auto_end_test.cancel();
   }
 }
 

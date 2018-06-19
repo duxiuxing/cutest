@@ -6,13 +6,13 @@
 CUTEST_NS_BEGIN
 
 ManualEndTest::ManualEndTest()
-  : m_event( NULL )
+  : event( NULL )
 {}
 
 void
-ManualEndTest::setEvent( CUTEST_NS::Event *event )
+ManualEndTest::setEvent( CUTEST_NS::Event *event_in )
 {
-  m_event = event;
+  this->event = event_in;
 }
 
 void
@@ -24,17 +24,17 @@ ManualEndTest::endTest()
   }
 
   CUTEST_NS::Runner::instance()->unregisterManualEndTest( this );
-  if ( m_event )
+  if ( this->event )
   {
-    m_event->post();
-    m_event = NULL;
+    this->event->post();
+    this->event = NULL;
   }
 }
 
 bool
 ManualEndTest::isTestEnd()
 {
-  return ( m_event == NULL ) ? true : false;
+  return ( this->event == NULL ) ? true : false;
 }
 
 CUTEST_NS_END

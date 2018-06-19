@@ -7,7 +7,7 @@ CUTEST_NS_BEGIN
 
 class EventImpl : public Event
 {
-  HANDLE m_event;
+  HANDLE event_handle;
 
 public:
   EventImpl();

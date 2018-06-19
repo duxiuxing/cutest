@@ -2,35 +2,35 @@
 
 CUTEST_NS_BEGIN
 
-Result::Result( SynchronizedObject::SynchronizationObject *listenerLock, SynchronizedObject::SynchronizationObject *stopLock )
-  : CPPUNIT_NS::TestResult( listenerLock )
-  , m_stopLock( stopLock )
+Result::Result( SynchronizedObject::SynchronizationObject *listener_lock, SynchronizedObject::SynchronizationObject *stop_lock_in )
+  : CPPUNIT_NS::TestResult( listener_lock )
+  , stop_lock( stop_lock_in )
 {}
 
 Result::~Result()
 {
-  delete m_stopLock;
+  delete this->stop_lock;
 }
 
 void
 Result::reset()
 {
-  ExclusiveZone zone( m_stopLock );
-  m_stop = false;
+  ExclusiveZone zone( this->stop_lock );
+  CPPUNIT_NS::TestResult::m_stop = false;
 }
 
 bool
 Result::shouldStop() const
 {
-  ExclusiveZone zone( m_stopLock );
-  return m_stop;
+  ExclusiveZone zone( this->stop_lock );
+  return CPPUNIT_NS::TestResult::m_stop;
 }
 
 void
 Result::stop()
 {
-  ExclusiveZone zone( m_stopLock );
-  m_stop = true;
+  ExclusiveZone zone( this->stop_lock );
+  CPPUNIT_NS::TestResult::m_stop = true;
 }
 
 CUTEST_NS_END

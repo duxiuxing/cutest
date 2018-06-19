@@ -31,7 +31,7 @@ public:
     virtual ~MainTestRunnerImpl();
 
 protected:
-    TestProgressLogger _testProgressLogger;
+    TestProgressLogger test_progress_logger;
 
 public:
     // MainTestRunner的接口实现
@@ -41,8 +41,8 @@ public:
                                       bool is_auto_delete);
 
 protected:
-    MainTestRunLoop *_runLoop;
-    static thread_id s_mainThreadId;
+    MainTestRunLoop *run_loop;
+    static thread_id main_thread_id;
 
     // 实现Runnable::run()
     virtual void run();
