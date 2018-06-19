@@ -213,8 +213,8 @@
     <ClInclude Include="..\TestRunnerModel.h" />
     <ClInclude Include="..\TreeHierarchyDlg.h" />
     <ClInclude Include="..\TestRunnerApp.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\stdafx.h" />
+    <ClInclude Include="..\targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\DynamicWindow\cdxCDynamicDialog.cpp" />
@@ -230,7 +230,7 @@
     <ClCompile Include="..\TestRunnerModel.cpp" />
     <ClCompile Include="..\TreeHierarchyDlg.cpp" />
     <ClCompile Include="..\TestRunnerApp.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="..\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
