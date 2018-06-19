@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "SynchronizationObjectImpl.h"
 
 CPPUNIT_NS_BEGIN
