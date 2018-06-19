@@ -4,14 +4,6 @@
     <Filter Include="Win32 DLL">
       <UniqueIdentifier>{565e7aa3-5d60-43a8-9ac9-e5eba4a31440}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Win32 DLL\Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Win32 DLL\Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="cppunit">
       <UniqueIdentifier>{4e2dc4cf-13b0-4bd1-aff1-c7302c4ea1d9}</UniqueIdentifier>
     </Filter>
@@ -50,12 +42,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Win32 DLL\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Win32 DLL\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\cutest\ProgressListener.h">
       <Filter>cutest\Progress</Filter>
     </ClInclude>
@@ -101,14 +87,14 @@
     <ClInclude Include="..\src\AutoEndTest.h">
       <Filter>cutest\ManualEndTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\win\stdafx.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\win\targetver.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Win32 DLL\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Win32 DLL\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
       <Filter>cppunit</Filter>
     </ClCompile>
@@ -144,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="..\src\ManualEndTest.cpp">
       <Filter>cutest\ManualEndTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\dllmain.cpp">
+      <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\stdafx.cpp">
+      <Filter>Win32 DLL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
