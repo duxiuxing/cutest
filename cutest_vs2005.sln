@@ -13,6 +13,27 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hierarchy", "source\test\hi
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cppunit sample", "cppunit sample", "{8F960F91-9BF5-477E-AFBF-27DE0BEAA56A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "money", "source\test\money\vs2005\money.vcproj", "{BF284D0B-FE64-4EF2-8C36-E6E38F5E6DDB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple", "source\test\simple\vs2005\simple.vcproj", "{3C1633CC-8333-44D2-8A67-BD4AC56E78D1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cutest sample", "cutest sample", "{42F5DBA7-DA4A-40BF-806E-392B2C07D8AF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "manualend", "source\test\manualend\vs2005\manualend.vcproj", "{96450E17-BB80-4EF6-87AF-A95A65D21146}"
+	ProjectSection(ProjectDependencies) = postProject
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gtest sample", "gtest sample", "{909BDA31-3E01-40F2-B2C0-5DB91D4C896C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,8 +52,26 @@ Global
 		{524E8623-40D2-4DE7-AD36-8250A6832E18}.Debug|Win32.Build.0 = Debug|Win32
 		{524E8623-40D2-4DE7-AD36-8250A6832E18}.Release|Win32.ActiveCfg = Release|Win32
 		{524E8623-40D2-4DE7-AD36-8250A6832E18}.Release|Win32.Build.0 = Release|Win32
+		{BF284D0B-FE64-4EF2-8C36-E6E38F5E6DDB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BF284D0B-FE64-4EF2-8C36-E6E38F5E6DDB}.Debug|Win32.Build.0 = Debug|Win32
+		{BF284D0B-FE64-4EF2-8C36-E6E38F5E6DDB}.Release|Win32.ActiveCfg = Release|Win32
+		{BF284D0B-FE64-4EF2-8C36-E6E38F5E6DDB}.Release|Win32.Build.0 = Release|Win32
+		{3C1633CC-8333-44D2-8A67-BD4AC56E78D1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3C1633CC-8333-44D2-8A67-BD4AC56E78D1}.Debug|Win32.Build.0 = Debug|Win32
+		{3C1633CC-8333-44D2-8A67-BD4AC56E78D1}.Release|Win32.ActiveCfg = Release|Win32
+		{3C1633CC-8333-44D2-8A67-BD4AC56E78D1}.Release|Win32.Build.0 = Release|Win32
+		{96450E17-BB80-4EF6-87AF-A95A65D21146}.Debug|Win32.ActiveCfg = Debug|Win32
+		{96450E17-BB80-4EF6-87AF-A95A65D21146}.Debug|Win32.Build.0 = Debug|Win32
+		{96450E17-BB80-4EF6-87AF-A95A65D21146}.Release|Win32.ActiveCfg = Release|Win32
+		{96450E17-BB80-4EF6-87AF-A95A65D21146}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{524E8623-40D2-4DE7-AD36-8250A6832E18} = {8F960F91-9BF5-477E-AFBF-27DE0BEAA56A}
+		{BF284D0B-FE64-4EF2-8C36-E6E38F5E6DDB} = {8F960F91-9BF5-477E-AFBF-27DE0BEAA56A}
+		{3C1633CC-8333-44D2-8A67-BD4AC56E78D1} = {8F960F91-9BF5-477E-AFBF-27DE0BEAA56A}
+		{96450E17-BB80-4EF6-87AF-A95A65D21146} = {42F5DBA7-DA4A-40BF-806E-392B2C07D8AF}
 	EndGlobalSection
 EndGlobal
