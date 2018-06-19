@@ -12,7 +12,6 @@
 *.res
 *.sdf
 *.suo
-dte80a.tlh
 *.tlog
 *.unsuccessfulbuild
 *.VC.db
@@ -27,3 +26,7 @@ dte80a.tlh
 /x64_Debug/*
 
 /x64_Release/*
+
+BuildLog.htm
+dte80a.tlh
+mt.dep
