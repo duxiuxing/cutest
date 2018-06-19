@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -117,7 +117,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
