@@ -38,10 +38,10 @@ TestTimeoutCounter::run()
   if ( elapsed_ms < this->timeout_ms )
   {
     /*
-    超时补偿逻辑：
-    Timer存在误差，比如Runner::instance()->delayRunOnMainThread(1000, ...)指定的是1000ms，
-    但有可能在980ms左右就调用TestTimeoutCounter::run()了，为了避免因误差导致ManualEndTest被提前结束，
-    此处增加一个100ms的补偿逻辑。
+      超时补偿逻辑：
+      Timer存在误差，比如Runner::instance()->delayRunOnMainThread(1000, ...)指定的是1000ms，
+      但有可能在980ms左右就调用TestTimeoutCounter::run()了，为了避免因误差导致ManualEndTest被提前结束，
+      此处增加一个100ms的补偿逻辑。
     */
     Runner::instance()->delayRunOnMainThread( 100, this, false );
   }

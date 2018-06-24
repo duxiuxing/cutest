@@ -7,17 +7,17 @@
 
 #if (defined(_WIN32) || defined(_WIN64))
 
-CUTEST_NS_BEGIN
-typedef unsigned long thread_id;
-CUTEST_NS_END
+  CUTEST_NS_BEGIN
+  typedef unsigned long thread_id;
+  CUTEST_NS_END
 
 #else
 
-#include <pthread.h>
-#include <unistd.h>
-CUTEST_NS_BEGIN
-typedef pid_t thread_id;
-CUTEST_NS_END
+  #include <pthread.h>
+  #include <unistd.h>
+  CUTEST_NS_BEGIN
+  typedef pid_t thread_id;
+  CUTEST_NS_END
 
 #endif
 
@@ -35,9 +35,9 @@ public:
   static thread_id mainThreadId();
 
   /*
-  返回当前系统的时间，单位为ms
+    返回当前系统的时间，单位为ms
 
-  主要使用场景：根据用例执行前后的系统时间差计算耗时
+    主要使用场景：根据用例执行前后的系统时间差计算耗时
   */
   static unsigned long long tickCount();
 
@@ -45,19 +45,19 @@ public:
 
 public: // Help接口族
   /*
-  在主线程异步调用runnable->run()
-  @param runnable 指向要调用的Runnable对象
-  @param is_auto_delete
+    在主线程异步调用runnable->run()
+    @param runnable 指向要调用的Runnable对象
+    @param is_auto_delete
       - 若为true，Runner调用runnable->run()之后会接着调用delete runnable;
       - 若为false，Runner则只负责调用runnable->run()。
   */
   virtual void asyncRunOnMainThread( Runnable *runnable, bool is_auto_delete ) = 0;
 
   /*
-  在主线程延迟调用runnable->run()
-  @param delay_ms 延迟时间，单位是ms
-  @param runnable 指向要调用的Runnable对象
-  @param is_auto_delete
+    在主线程延迟调用runnable->run()
+    @param delay_ms 延迟时间，单位是ms
+    @param runnable 指向要调用的Runnable对象
+    @param is_auto_delete
       - 若为true，Runner调用runnable->run()之后会接着调用delete runnable;
       - 若为false，Runner则只负责调用runnable->run()。
   */

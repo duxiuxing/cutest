@@ -36,17 +36,17 @@ Logger::onRunnerStart( CPPUNIT_NS::Test *test )
   this->failed_test_cases.clear();
 
   printString( "[==========] Running %s from %s.",
-               testing::FormatTestCount( test->countTestCases() ).c_str(),
-               test->getName().c_str() );
+    testing::FormatTestCount( test->countTestCases() ).c_str(),
+    test->getName().c_str() );
 }
 
 void
 Logger::onRunnerEnd( CPPUNIT_NS::Test *test, unsigned int elapsed_ms )
 {
   printString( "[==========] %s from %s ran. (%u ms)",
-               testing::FormatTestCount( test->countTestCases() ).c_str(),
-               test->getName().c_str(),
-               elapsed_ms );
+    testing::FormatTestCount( test->countTestCases() ).c_str(),
+    test->getName().c_str(),
+    elapsed_ms );
 
   printString( "[  PASSED  ] %s.", testing::FormatTestCount( this->passed_test_cases ).c_str() );
 
@@ -62,7 +62,7 @@ Logger::onRunnerEnd( CPPUNIT_NS::Test *test, unsigned int elapsed_ms )
     }
 
     printString( "\n%2d FAILED %s", this->failed_test_cases.size(),
-                 this->failed_test_cases.size() == 1 ? "TEST" : "TESTS" );
+      this->failed_test_cases.size() == 1 ? "TEST" : "TESTS" );
   }
 }
 
@@ -70,17 +70,17 @@ void
 Logger::onSuiteStart( CPPUNIT_NS::Test *suite )
 {
   printString( "[----------] %s from %s",
-               testing::FormatTestCount( suite->countTestCases() ).c_str(),
-               suite->getName().c_str() );
+    testing::FormatTestCount( suite->countTestCases() ).c_str(),
+    suite->getName().c_str() );
 }
 
 void
 Logger::onSuiteEnd( CPPUNIT_NS::Test *suite, unsigned int elapsed_ms )
 {
   printString( "[----------] %s from %s (%u ms)\n",
-               testing::FormatTestCount( suite->countTestCases() ).c_str(),
-               suite->getName().c_str(),
-               elapsed_ms );
+    testing::FormatTestCount( suite->countTestCases() ).c_str(),
+    suite->getName().c_str(),
+    elapsed_ms );
 }
 
 void
@@ -95,16 +95,16 @@ Logger::onFailureAdd( unsigned int index, const CPPUNIT_NS::TestFailure &failure
   if ( failure.isError() )
   {
     printString( "%s(%u): error : %s",
-                 failure.sourceLine().fileName().c_str(),
-                 failure.sourceLine().lineNumber(),
-                 failure.thrownException()->what() );
+      failure.sourceLine().fileName().c_str(),
+      failure.sourceLine().lineNumber(),
+      failure.thrownException()->what() );
   }
   else
   {
     printString( "%s(%u): failure : %s",
-                 failure.sourceLine().fileName().c_str(),
-                 failure.sourceLine().lineNumber(),
-                 failure.thrownException()->what() );
+      failure.sourceLine().fileName().c_str(),
+      failure.sourceLine().lineNumber(),
+      failure.thrownException()->what() );
   }
 }
 
@@ -118,15 +118,15 @@ Logger::onTestEnd(
   if ( 0 == error_count && 0 == failure_count )
   {
     printString( "[       OK ] %s (%u ms)",
-                 test->getName().c_str(),
-                 elapsed_ms );
+      test->getName().c_str(),
+      elapsed_ms );
     ++this->passed_test_cases;
   }
   else
   {
     printString( "[  FAILED  ] %s (%u ms)",
-                 test->getName().c_str(),
-                 elapsed_ms );
+      test->getName().c_str(),
+      elapsed_ms );
     this->failed_test_cases.push_back( test->getName() );
   }
 }

@@ -1,1 +1,0 @@
---style=allman --indent=spaces=2 --align-pointer=name --align-reference=name --attach-namespaces --attach-extern-c --indent-cases --indent-col1-comments --pad-oper --pad-paren-in --pad-header --unpad-paren --close-templates --add-brackets --remove-brackets --convert-tabs --mode=c

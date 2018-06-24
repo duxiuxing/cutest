@@ -34,7 +34,7 @@ public:
 };
 
 /*
-CUTEST_NS::RunnerBase内部使用的一个帮助类：
+  CUTEST_NS::RunnerBase内部使用的一个帮助类：
     - 使用CPPUNIT_MANUAL_END_TEST_WITH_TIMEOUT，可以为ManualEndTest指定一个超时时长(单位：ms)；
     - AutoEndTest的设计是，当ManualEndTest执行时长超过了指定的超时时长，
       就通过TestTimeoutCounter::addFailure()打印错误信息，
