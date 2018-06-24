@@ -1,22 +1,23 @@
 ﻿#pragma once
 
 #ifndef __AFXWIN_H__
-#error "include 'stdafx.h' before including this file for PCH"
+	#error "include 'stdafx.h' before including this file for PCH"
 #endif
 
 #include "resource.h"
 
-class CTestRunnerApp : public CWinApp {
+class CTestRunnerApp : public CWinApp
+{
 public:
-    CTestRunnerApp();
+	CTestRunnerApp();
 
-    // Overrides
-    virtual BOOL InitInstance();
-    virtual int ExitInstance();
+	// Overrides
+	virtual BOOL InitInstance();
+	virtual int ExitInstance();
 
-    // Implementation
+	// Implementation
 
-    DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP()
 };
 
 extern CTestRunnerApp theApp;

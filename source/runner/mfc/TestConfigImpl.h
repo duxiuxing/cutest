@@ -5,15 +5,15 @@
 class TestConfigImpl : public TestConfig
 {
 public:
-  TestConfigImpl();
+	TestConfigImpl();
 
-  virtual BOOL load();
-  virtual LPCTSTR title();
-
-protected:
-  static BOOL isFileExist( CString &file_path );
-  static void loadFailedMsgBox( LPTSTR lib_name );
+	virtual BOOL Load();
+	virtual LPCTSTR GetTitle();
 
 protected:
-  CString m_title;
+	static BOOL IsFileExist(CString& filePath);
+	static void loadFailedMsgBox(LPTSTR libName);
+
+protected:
+	CString m_title;
 };

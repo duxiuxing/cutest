@@ -5,8 +5,8 @@
 class TestConfig
 {
 public:
-  static TestConfig *instance();
+	static TestConfig* GetInstance();
 
-  virtual BOOL load() PURE;
-  virtual LPCTSTR title() PURE;
+	virtual BOOL Load() PURE;
+	virtual LPCTSTR GetTitle() PURE;
 };
