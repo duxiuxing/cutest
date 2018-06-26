@@ -2,6 +2,7 @@
 #include <cppunit/Exception.h>
 #include <cppunit/Message.h>
 
+#include "cutest/Runner.h"
 
 CPPUNIT_NS_BEGIN
 
@@ -18,7 +19,8 @@ void
 Asserter::fail( const Message &message, 
                 const SourceLine &sourceLine )
 {
-  throw Exception( message, sourceLine );
+  // throw Exception( message, sourceLine );
+  CUTEST_NS::Runner::instance()->addFailure( false, new Exception( message, sourceLine ) );
 }
 
 
