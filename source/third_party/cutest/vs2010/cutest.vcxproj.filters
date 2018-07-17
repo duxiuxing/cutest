@@ -34,11 +34,14 @@
     <Filter Include="cutest\Logger">
       <UniqueIdentifier>{3768418f-eba6-476e-9e38-d42cbafa289b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="gtest">
-      <UniqueIdentifier>{377bd403-1b71-4727-b69e-9141135dba60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cutest\ManualEndTest">
       <UniqueIdentifier>{d1b0f672-0b90-48c0-8c21-170e59629e29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="googletest">
+      <UniqueIdentifier>{377bd403-1b71-4727-b69e-9141135dba60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="googlemock">
+      <UniqueIdentifier>{be04d733-236f-489d-b64e-951e66607855}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +102,7 @@
       <Filter>cppunit</Filter>
     </ClCompile>
     <ClCompile Include="..\..\googletest\src\gtest-all.cc">
-      <Filter>gtest</Filter>
+      <Filter>googletest</Filter>
     </ClCompile>
     <ClCompile Include="..\src\win\DecoratorImpl.cpp">
       <Filter>cutest\Thread\Decorator</Filter>
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="..\src\win\stdafx.cpp">
       <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\googlemock\src\gmock-all.cc">
+      <Filter>googlemock</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

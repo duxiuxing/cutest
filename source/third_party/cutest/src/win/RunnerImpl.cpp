@@ -1,6 +1,6 @@
 ﻿#include "RunnerImpl.h"
 
-#include "gtest/gtest.h"
+#include "gmock/gmock.h"
 #include <set>
 
 CUTEST_NS_BEGIN
@@ -46,7 +46,7 @@ thread_id RunnerImpl::main_thread_id = 0;
 
 RunnerImpl::RunnerImpl()
 {
-  testing::InitGoogleTest( &__argc, __wargv );
+  testing::InitGoogleMock( &__argc, __wargv );
   this->listener_manager.add( &this->test_progress_logger );
 
   // Register message window class.
