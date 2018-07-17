@@ -9,7 +9,7 @@ TEST(PainterTest, CanDrawSomething)
 {
 	MockTurtle turtle;
 	EXPECT_CALL(turtle, PenDown())
-		.Times(AtLeast(2));
+		.Times(AtLeast(1));
 
 	Painter painter(&turtle);
 

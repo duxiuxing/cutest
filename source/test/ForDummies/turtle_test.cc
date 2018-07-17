@@ -9,10 +9,10 @@ TEST(TurtleTest, GetX)
 {
 	MockTurtle turtle;
 	EXPECT_CALL(turtle, GetX())
-	.Times(5) // Times必须在WillOnce之前
-	.WillOnce(Return(100))
-	.WillOnce(Return(150))
-	.WillRepeatedly(Return(200));
+		.Times(5) // Times必须在WillOnce之前
+		.WillOnce(Return(100))
+		.WillOnce(Return(150))
+		.WillRepeatedly(Return(200));
 
 	EXPECT_EQ(turtle.GetX(), 100);
 	EXPECT_EQ(turtle.GetX(), 150);
