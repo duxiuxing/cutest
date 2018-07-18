@@ -2,12 +2,11 @@
 
 #include "turtle.h"
 
-class Painter
-{
-public:
-	Painter(Turtle* turtle);
+class Painter {
+ public:
+  Painter(Turtle* turtle);
 
-	bool DrawCircle(int x, int y, int r);
-private:
-	Turtle* turtle_;
+  bool DrawCircle(int x, int y, int r);
+ private:
+  Turtle* turtle_;
 };

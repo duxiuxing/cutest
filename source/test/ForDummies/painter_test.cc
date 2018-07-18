@@ -5,13 +5,12 @@
 
 using ::testing::AtLeast;
 
-TEST(PainterTest, CanDrawSomething)
-{
-	MockTurtle turtle;
-	EXPECT_CALL(turtle, PenDown())
-		.Times(AtLeast(1));
+TEST(PainterTest, CanDrawSomething) {
+  MockTurtle turtle;
+  EXPECT_CALL(turtle, PenDown())
+      .Times(AtLeast(1));
 
-	Painter painter(&turtle);
+  Painter painter(&turtle);
 
-	EXPECT_TRUE(painter.DrawCircle(0, 0, 10));
+  EXPECT_TRUE(painter.DrawCircle(0, 0, 10));
 }
