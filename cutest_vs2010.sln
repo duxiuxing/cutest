@@ -38,7 +38,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "money", "source\test\money\
 		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gtest sample", "gtest sample", "{E1AA8642-5BAE-4BAE-AF32-81F1D0CA10F3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "googletest samples", "googletest samples", "{E1AA8642-5BAE-4BAE-AF32-81F1D0CA10F3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple", "source\test\simple\vs2010\simple.vcxproj", "{F23E9839-ACFF-4B13-B546-7CFB236A354F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -55,6 +55,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cutest sample", "cutest sample", "{732540B1-EBD3-4D5F-BDA1-12A2D5B720CD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "manualend", "source\test\manualend\vs2010\manualend.vcxproj", "{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "googlemock tests", "googlemock tests", "{2AE5BB7D-5361-4CF7-995E-A1CAEEAEE1E5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForDummies", "source\test\ForDummies\vs2010\ForDummies.vcxproj", "{005ECBFD-D7E5-44F3-A87C-094A74C19388}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
 	EndProjectSection
@@ -109,6 +116,10 @@ Global
 		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}.Debug|Win32.Build.0 = Debug|Win32
 		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}.Release|Win32.ActiveCfg = Release|Win32
 		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}.Release|Win32.Build.0 = Release|Win32
+		{005ECBFD-D7E5-44F3-A87C-094A74C19388}.Debug|Win32.ActiveCfg = Debug|Win32
+		{005ECBFD-D7E5-44F3-A87C-094A74C19388}.Debug|Win32.Build.0 = Debug|Win32
+		{005ECBFD-D7E5-44F3-A87C-094A74C19388}.Release|Win32.ActiveCfg = Release|Win32
+		{005ECBFD-D7E5-44F3-A87C-094A74C19388}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,5 +134,6 @@ Global
 		{F23E9839-ACFF-4B13-B546-7CFB236A354F} = {76457E6A-B5A6-468F-92C8-8BB836D958DF}
 		{1645984D-0F12-474A-AEF6-4C0A0AB079FD} = {76457E6A-B5A6-468F-92C8-8BB836D958DF}
 		{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0} = {732540B1-EBD3-4D5F-BDA1-12A2D5B720CD}
+		{005ECBFD-D7E5-44F3-A87C-094A74C19388} = {2AE5BB7D-5361-4CF7-995E-A1CAEEAEE1E5}
 	EndGlobalSection
 EndGlobal
