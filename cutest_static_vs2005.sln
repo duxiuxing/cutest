@@ -16,6 +16,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutest_static", "source\thi
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMockPlusStatic", "source\third_party\GMockPlus\vs2005\GMockPlusStatic.vcproj", "{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{3F388A95-21B6-471F-A31B-7983493ECBCD} = {3F388A95-21B6-471F-A31B-7983493ECBCD}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -30,6 +39,10 @@ Global
 		{3F388A95-21B6-471F-A31B-7983493ECBCD}.Debug|Win32.Build.0 = Debug|Win32
 		{3F388A95-21B6-471F-A31B-7983493ECBCD}.Release|Win32.ActiveCfg = Release|Win32
 		{3F388A95-21B6-471F-A31B-7983493ECBCD}.Release|Win32.Build.0 = Release|Win32
+		{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}.Debug|Win32.Build.0 = Debug|Win32
+		{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}.Release|Win32.ActiveCfg = Release|Win32
+		{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
