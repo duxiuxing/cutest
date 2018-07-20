@@ -3,7 +3,7 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cutest/Runner.h>
 
-CPPUNIT_API int _tmain( int argc, _TCHAR *argv[] )
+int _tmain( int argc, _TCHAR *argv[] )
 {
   ::CoInitialize( NULL );
 
