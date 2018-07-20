@@ -103,7 +103,7 @@ struct ExpectedExceptionTraits<NoExceptionExpected>
  * 
  * \see TestCase
  */
-#ifndef _CUTEST
+#if 0 // #ifndef _CUTEST_IMPL
 
 template <class Fixture>
 class TestCaller : public TestCase
@@ -202,7 +202,7 @@ private:
   TestMethod m_test;
 };
 
-#else //#ifndef _CUTEST
+#else // #if 0
 
 template <class Fixture>
 class TestCaller
@@ -396,7 +396,7 @@ private:
   CUTEST_NS::Event *m_event;
 };
 
-#endif // #ifndef _CUTEST
+#endif // #if 0
 
 CPPUNIT_NS_END
 

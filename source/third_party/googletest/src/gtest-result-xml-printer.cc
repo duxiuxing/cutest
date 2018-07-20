@@ -1,6 +1,4 @@
-﻿#ifdef _CUTEST
-
-#include "gtest/internal/gtest-result-xml-printer.h"
+﻿#include "gtest/internal/gtest-result-xml-printer.h"
 
 #include <cppunit/TestFailure.h>
 #include "cutest/Runner.h"
@@ -386,5 +384,3 @@ void TestResultXmlPrinter::printXmlTestSuites(
 
 } // namespace internal
 } // namespace testing
-
-#endif // #ifdef _CUTEST

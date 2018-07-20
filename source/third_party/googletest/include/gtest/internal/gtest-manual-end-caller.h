@@ -1,14 +1,12 @@
 ﻿#pragma once
 
-#ifdef _CUTEST
-
 #include <cppunit/TestCase.h>
 
 #include "cutest/Event.h"
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 
-CPPUNIT_NS_BEGIN
+namespace testing {
 
 /*
   timeout_ms 单位：毫秒，默认为0，表示永不超时；
@@ -16,76 +14,76 @@ CPPUNIT_NS_BEGIN
   此时CUTEST::Runner会调用Fixture::endTest()来结束用例。
 */
 template <class Fixture, unsigned int timeout_ms = 0>
-class GTestManualEndCaller
+class ManualEndTestCaller
   : public CUTEST_NS::Runnable
-  , public TestCase {
-  typedef void (Fixture::*TestBody)();
+  , public CPPUNIT_NS::TestCase {
+  typedef void (Fixture::*TestMethod)();
 
  public:
-  GTestManualEndCaller(std::string name, TestBody test_body_in)
+  ManualEndTestCaller(std::string name, TestMethod test)
     : TestCase(name)
-    , test_body(test_body_in)
-    , fixture(NULL)
-    , fixture_method_id(FIXTURE_METHOD_ID_NONE)
-    , event(NULL)
+	, m_fixture(NULL)
+    , m_test(test)    
+    , m_fixtureMethodId(FIXTURE_METHOD_ID_NONE)
+    , m_event(NULL)
   {}
 
-  ~GTestManualEndCaller() {
-    if (this->fixture) {
-      delete this->fixture;
+  ~ManualEndTestCaller() {
+    if (m_fixture) {
+      delete m_fixture;
     }
   }
 
   // 重载TestCase::runTest()
   virtual void runTest() override {
-    this->fixture_method_id = FIXTURE_METHOD_ID_TEST_BODY;
-    this->event = CUTEST_NS::Event::createInstance();
+    m_fixtureMethodId = FIXTURE_METHOD_ID_TEST_BODY;
+    m_event = CUTEST_NS::Event::createInstance();
     CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
-    this->event->wait();
-    this->event->destroy();
-    this->event = NULL;
+    m_event->wait();
+    m_event->destroy();
+    m_event = NULL;
   }
 
   // 重载TestFixture::setUp()
   virtual void setUp() override {
-    this->fixture_method_id = FIXTURE_METHOD_ID_SET_UP;
-    this->event = CUTEST_NS::Event::createInstance();
+    m_fixtureMethodId = FIXTURE_METHOD_ID_SET_UP;
+    m_event = CUTEST_NS::Event::createInstance();
     CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
-    this->event->wait();
-    this->event->destroy();
-    this->event = NULL;
+    m_event->wait();
+    m_event->destroy();
+    m_event = NULL;
   }
 
   // 重载TestFixture::tearDown()
   virtual void tearDown() override {
-    this->fixture_method_id = FIXTURE_METHOD_ID_TEAR_DOWN;
-    this->event = CUTEST_NS::Event::createInstance();
+    m_fixtureMethodId = FIXTURE_METHOD_ID_TEAR_DOWN;
+    m_event = CUTEST_NS::Event::createInstance();
     CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
-    this->event->wait();
-    this->event->destroy();
-    this->event = NULL;
+    m_event->wait();
+    m_event->destroy();
+    m_event = NULL;
   }
 
   // 实现Runnable::run()
   virtual void run() {
-    switch (this->fixture_method_id) {
+    switch (m_fixtureMethodId) {
     case FIXTURE_METHOD_ID_SET_UP: {
-        if (!this->fixture) {
-          this->fixture = new Fixture;
+        if (!m_fixture) {
+          m_fixture = new Fixture;
         }
-        this->fixture->SetUp();
-        this->event->post();
+        m_fixture->SetUp();
+        m_event->post();
       }
       break;
     case FIXTURE_METHOD_ID_TEAR_DOWN: {
-        this->fixture->TearDown();
-        this->event->post();
+        m_fixture->TearDown();
+        m_event->post();
       }
       break;
     case FIXTURE_METHOD_ID_TEST_BODY: {
-        this->fixture->setEvent(this->event);
-        CUTEST_NS::Runner::instance()->registerManualEndTest(this->fixture, timeout_ms);
-        (this->fixture->*test_body)();
+        m_fixture->setEvent(m_event);
+        CUTEST_NS::Runner::instance()->registerManualEndTest(m_fixture, timeout_ms);
+        (m_fixture->*m_test)();
       }
       break;
     default:
@@ -94,11 +92,11 @@ class GTestManualEndCaller
   }
 
  private:
-  GTestManualEndCaller(const GTestManualEndCaller&);
-  GTestManualEndCaller& operator =(const GTestManualEndCaller&);
+  ManualEndTestCaller(const ManualEndTestCaller&);
+  ManualEndTestCaller& operator =(const ManualEndTestCaller&);
 
-  TestBody test_body;
-  Fixture* fixture;
+  Fixture* m_fixture;
+  TestMethod m_test;
 
   // 用于标识在run()方法中要调用的方法
   enum FixtureMethodId {
@@ -107,11 +105,9 @@ class GTestManualEndCaller
     FIXTURE_METHOD_ID_TEAR_DOWN,    // this->fixture->TearDown();
     FIXTURE_METHOD_ID_TEST_BODY,    // (this->fixture->*test_body)();
   };
-  FixtureMethodId fixture_method_id;
+  FixtureMethodId m_fixtureMethodId;
 
-  CUTEST_NS::Event* event;
+  CUTEST_NS::Event* m_event;
 };
 
-CPPUNIT_NS_END
-
-#endif // #ifdef _CUTEST
+} // namespace testing {

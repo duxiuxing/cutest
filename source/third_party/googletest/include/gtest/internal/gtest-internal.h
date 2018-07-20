@@ -64,13 +64,11 @@
 #include "gtest/internal/gtest-string.h"
 #include "gtest/internal/gtest-type-util.h"
 
-#ifdef _CUTEST
 #include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/extensions/TestNamer.h>
 #include "gtest-caller.h"
 #include "gtest-manual-end-caller.h"
-#endif
 
 // Due to C++ preprocessor weirdness, we need double indirection to
 // concatenate two tokens when one of them is __LINE__.  Writing
@@ -1258,8 +1256,9 @@ class NativeArray {
 #define GTEST_TEST_CLASS_NAME_(test_case_name, test_name) \
   test_case_name##_##test_name##_Test
 
-#ifndef _CUTEST
 // Helper macro for defining tests.
+#if 0 // #ifndef _CUTEST_IMPL
+
 #define GTEST_TEST_(test_case_name, test_name, parent_class, parent_id)\
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class {\
  public:\
@@ -1282,10 +1281,12 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class {\
         new ::testing::internal::TestFactoryImpl<\
             GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>);\
 void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
-#else // #ifndef _CUTEST
+
+#else // #if 0
+
 #define GTEST_TEST_(test_case_name, test_name, parent_class, parent_id) \
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { \
-  friend class CPPUNIT_NS::GTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
+  friend class testing::TestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
  public: \
   GTEST_TEST_CLASS_NAME_(test_case_name, test_name)() {} \
   static class TestFactory : public CPPUNIT_NS::TestFactory { \
@@ -1297,7 +1298,7 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { 
     } \
     virtual CPPUNIT_NS::Test* makeTest() { \
       CPPUNIT_NS::TestNamer namer(#test_case_name); \
-      return new CPPUNIT_NS::GTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
+      return new testing::TestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
         namer.getTestNameFor(#test_name), \
         &GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody); \
     } \
@@ -1317,7 +1318,7 @@ void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 
 #define GTEST_MANUAL_END_TEST_(test_case_name, test_name, parent_class) \
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { \
-  friend class CPPUNIT_NS::GTestManualEndCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
+  friend class testing::ManualEndTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
  public: \
   GTEST_TEST_CLASS_NAME_(test_case_name, test_name)() {} \
   static class TestFactory : public CPPUNIT_NS::TestFactory { \
@@ -1340,6 +1341,7 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { 
 GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestFactory \
 GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::factory; \
 void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
-#endif // #ifndef _CUTEST
+
+#endif // #if 0
 
 #endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_

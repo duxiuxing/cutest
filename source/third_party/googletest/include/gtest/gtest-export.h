@@ -2,7 +2,6 @@
 
 #include "gtest/gtest.h"
 
-#ifdef _CUTEST
 namespace testing {
 
 GTEST_API_ std::string FormatTestCount(int test_count);
@@ -22,4 +21,3 @@ GTEST_API_ void ColoredPrintf(GTestColor color, const char* fmt, ...);
 } // namespace internal
 
 } // namespace testing
-#endif // #ifdef _CUTEST

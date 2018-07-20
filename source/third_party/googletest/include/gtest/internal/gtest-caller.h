@@ -1,33 +1,31 @@
 ﻿#pragma once
 
-#ifdef _CUTEST
-
 #include <cppunit/TestCase.h>
 
 #include "cutest/Event.h"
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 
-CPPUNIT_NS_BEGIN
+namespace testing {
 
-template <class T>
-class GTestCaller
+template <class Fixture>
+class TestCaller
   : public CUTEST_NS::Runnable
-  , public TestCase {
-  typedef void (T::*TestBody)();
+  , public CPPUNIT_NS::TestCase {
+  typedef void (Fixture::*TestMethod)();
 
  public:
-  GTestCaller(std::string name, TestBody test_body_in)
+  TestCaller(std::string name, TestMethod test)
     : TestCase(name)
-    , test_body(test_body_in)
-    , m_test(NULL)
-    , m_asyncRunMethod(ASYNC_RUN_NONE)
-    , m_event(NULL)
-  {}
+	, m_fixture(NULL)
+    , m_test(test)    
+    , m_fixtureMethodId(FIXTURE_METHOD_ID_NONE)
+    , m_event(NULL) {
+  }
 
   // 重载TestCase::runTest()
   virtual void runTest() override {
-    m_asyncRunMethod = ASYNC_RUN_TEST;
+    m_fixtureMethodId = FIXTURE_METHOD_ID_TEST;
     m_event = CUTEST_NS::Event::createInstance();
     CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
     m_event->wait();
@@ -37,7 +35,7 @@ class GTestCaller
 
   // 重载TestFixture::setUp()
   virtual void setUp() override {
-    m_asyncRunMethod = ASYNC_RUN_SET_UP;
+    m_fixtureMethodId = FIXTURE_METHOD_ID_SET_UP;
     m_event = CUTEST_NS::Event::createInstance();
     CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
     m_event->wait();
@@ -47,7 +45,7 @@ class GTestCaller
 
   // 重载TestFixture::tearDown()
   virtual void tearDown() override {
-    m_asyncRunMethod = ASYNC_RUN_TEAR_DOWN;
+    m_fixtureMethodId = FIXTURE_METHOD_ID_TEAR_DOWN;
     m_event = CUTEST_NS::Event::createInstance();
     CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
     m_event->wait();
@@ -57,20 +55,20 @@ class GTestCaller
 
   // 实现Runnable::run()
   virtual void run() {
-    switch (m_asyncRunMethod) {
-    case ASYNC_RUN_SET_UP: {
-        m_test = new T;
-        m_test->SetUp();
+    switch (m_fixtureMethodId) {
+    case FIXTURE_METHOD_ID_SET_UP: {
+        m_fixture = new Fixture;
+        m_fixture->SetUp();
       }
       break;
-    case ASYNC_RUN_TEAR_DOWN: {
-        m_test->TearDown();
-        delete m_test;
-        m_test = NULL;
+    case FIXTURE_METHOD_ID_TEAR_DOWN: {
+        m_fixture->TearDown();
+        delete m_fixture;
+        m_fixture = NULL;
       }
       break;
-    case ASYNC_RUN_TEST: {
-        (m_test->*this->test_body)();
+    case FIXTURE_METHOD_ID_TEST: {
+        (m_fixture->*m_test)();
       }
       break;
     default:
@@ -80,24 +78,22 @@ class GTestCaller
   }
 
  private:
-  GTestCaller(const GTestCaller&);
-  GTestCaller& operator =(const GTestCaller&);
+  TestCaller(const TestCaller&);
+  TestCaller& operator =(const TestCaller&);
 
-  TestBody test_body;
-  T* m_test;
+  Fixture* m_fixture;
+  TestMethod m_test;  
 
   // 用于标识在run()方法中要调用的方法
-  enum AsyncRunMethod {
-    ASYNC_RUN_NONE = 0,     // 初始值，无意义
-    ASYNC_RUN_SET_UP,       // m_test->SetUp();
-    ASYNC_RUN_TEAR_DOWN,    // m_test->TearDown();
-    ASYNC_RUN_TEST,         // (m_test->*m_testMethod)();
+  enum FixtureMethodId {
+    FIXTURE_METHOD_ID_NONE = 0,     // 初始值，无意义
+    FIXTURE_METHOD_ID_SET_UP,       // m_fixture->SetUp();
+    FIXTURE_METHOD_ID_TEAR_DOWN,    // m_fixture->TearDown();
+    FIXTURE_METHOD_ID_TEST,         // (m_fixture->*m_test)();
   };
-  AsyncRunMethod m_asyncRunMethod;
+  FixtureMethodId m_fixtureMethodId;
 
   CUTEST_NS::Event* m_event;
 };
 
-CPPUNIT_NS_END
-
-#endif // #ifdef _CUTEST
+} // namespace testing {

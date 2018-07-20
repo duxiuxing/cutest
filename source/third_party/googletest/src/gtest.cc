@@ -31,7 +31,7 @@
 //
 // The Google C++ Testing and Mocking Framework (Google Test)
 
-#ifndef _CUTEST
+#ifndef _CUTEST_IMPL
 #include "gtest/gtest.h"
 #else
 #include "gtest/gtest-export.h"
@@ -398,7 +398,7 @@ AssertHelper::~AssertHelper() {
 }
 
 // Message assignment, for assertion streaming support.
-#ifndef _CUTEST
+#ifndef _CUTEST_IMPL
 void AssertHelper::operator=(const Message& message) const {
   UnitTest::GetInstance()->
     AddTestPartResult(data_->type, data_->file, data_->line,
@@ -408,7 +408,7 @@ void AssertHelper::operator=(const Message& message) const {
                       // Skips the stack frame for this function itself.
                       );  // NOLINT
 }
-#else // #ifndef _CUTEST
+#else // #ifndef _CUTEST_IMPL
 void AssertHelper::operator=(const Message& message) const {
   CPPUNIT_NS::Message msg(data_->message);
   const std::string user_msg_string = message.GetString();
@@ -434,7 +434,7 @@ void AssertHelper::operator=(const Message& message) const {
     break;
   }
 }
-#endif // #ifndef _CUTEST
+#endif // #ifndef _CUTEST_IMPL
 
 // Mutex for linked pointers.
 GTEST_API_ GTEST_DEFINE_STATIC_MUTEX_(g_linked_ptr_mutex);
@@ -491,7 +491,7 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
   if (format.empty())
     format = std::string(kDefaultOutputFormat);
 
-#ifndef _CUTEST
+#ifndef _CUTEST_IMPL
   const char* const colon = strchr(gtest_output_flag, ':');
   if (colon == NULL)
     return internal::FilePath::MakeFileName(
@@ -499,7 +499,7 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
             UnitTest::GetInstance()->original_working_dir()),
         internal::FilePath(kDefaultOutputFile), 0,
         format.c_str()).string();
-#else // #ifndef _CUTEST
+#else // #ifndef _CUTEST_IMPL
   internal::FilePath workingDir = FilePath::GetCurrentDir();
   const char* const colon = strchr(gtest_output_flag, ':');
   if (colon == NULL)
@@ -508,9 +508,9 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
       internal::FilePath(kDefaultOutputFile),
 	  0,
       format.c_str()).string();
-#endif // #ifndef _CUTEST
+#endif // #ifndef _CUTEST_IMPL
 
-#ifndef _CUTEST
+#ifndef _CUTEST_IMPL
   internal::FilePath output_name(colon + 1);
   if (!output_name.IsAbsolutePath())
     // TODO(wan@google.com): on Windows \some\path is not an absolute
@@ -520,13 +520,13 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
     output_name = internal::FilePath::ConcatPaths(
         internal::FilePath(UnitTest::GetInstance()->original_working_dir()),
         internal::FilePath(colon + 1));
-#else // #ifndef _CUTEST
+#else // #ifndef _CUTEST_IMPL
   internal::FilePath output_name(colon + 1);
   if (!output_name.IsAbsolutePath())
     output_name = internal::FilePath::ConcatPaths(
-        workingDir,
-        internal::FilePath(colon + 1));
-#endif // #ifndef _CUTEST
+      workingDir,
+      internal::FilePath(colon + 1));
+#endif // #ifndef _CUTEST_IMPL
 
   if (!output_name.IsDirectory())
     return output_name.string();
@@ -2954,7 +2954,7 @@ static void PrintTestPartResult(const TestPartResult& test_part_result) {
 }
 
 // class PrettyUnitTestResultPrinter
-#ifndef _CUTEST
+#ifndef _CUTEST_IMPL
 enum GTestColor {
   COLOR_DEFAULT,
   COLOR_RED,
@@ -5903,7 +5903,7 @@ void InitGoogleTestImpl(int* argc, CharType** argv) {
 #endif  // GTEST_HAS_ABSL
 
   ParseGoogleTestFlagsOnly(argc, argv);
-#ifndef _CUTEST
+#ifndef _CUTEST_IMPL
   GetUnitTestImpl()->PostFlagParsingInit();
 #endif
 }

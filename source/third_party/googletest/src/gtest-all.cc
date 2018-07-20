@@ -44,7 +44,7 @@
 #include "src/gtest-filepath.cc"
 #include "src/gtest-port.cc"
 #include "src/gtest-printers.cc"
-#ifdef _CUTEST
+#ifdef _CUTEST_IMPL
 #include "src/gtest-result-xml-printer.cc"
 #endif
 #include "src/gtest-test-part.cc"

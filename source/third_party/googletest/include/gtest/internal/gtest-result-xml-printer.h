@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#ifdef _CUTEST
-
 #include "gtest/gtest-export.h"
 #include "cutest/ProgressListener.h"
 
@@ -147,5 +145,3 @@ class TestResultXmlPrinter
 
 } // namespace internal
 } // namespace testing
-
-#endif // #ifdef _CUTEST
