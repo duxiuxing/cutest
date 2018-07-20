@@ -31,12 +31,14 @@
 //
 // The Google C++ Testing and Mocking Framework (Google Test)
 
-// #include "gtest/gtest.h"
+#ifndef _CUTEST
+#include "gtest/gtest.h"
+#else
 #include "gtest/gtest-export.h"
+#include "cutest/Runner.h"
+#endif
 #include "gtest/internal/custom/gtest.h"
 #include "gtest/gtest-spi.h"
-
-#include "cutest/Runner.h"
 
 #include <ctype.h>
 #include <math.h>
@@ -396,7 +398,7 @@ AssertHelper::~AssertHelper() {
 }
 
 // Message assignment, for assertion streaming support.
-#if 0 // gtest_mod : replace the original implement
+#ifndef _CUTEST
 void AssertHelper::operator=(const Message& message) const {
   UnitTest::GetInstance()->
     AddTestPartResult(data_->type, data_->file, data_->line,
@@ -406,31 +408,33 @@ void AssertHelper::operator=(const Message& message) const {
                       // Skips the stack frame for this function itself.
                       );  // NOLINT
 }
-#else // gtest_mod : output message to cutest
+#else // #ifndef _CUTEST
 void AssertHelper::operator=(const Message& message) const {
   CPPUNIT_NS::Message msg(data_->message);
   const std::string user_msg_string = message.GetString();
   if (!user_msg_string.empty())
-      msg.addDetail(user_msg_string);
+    msg.addDetail(user_msg_string);
 
   switch (data_->type) {
   case TestPartResult::kNonFatalFailure: { // Failed but the test can continue.
-        CPPUNIT_NS::Exception* exception = new CPPUNIT_NS::Exception(msg,
-          CPPUNIT_NS::SourceLine(data_->file, data_->line));
-        CUTEST_NS::Runner::instance()->addFailure(false, exception);
-      }
-      break;
+    CPPUNIT_NS::Exception* exception = new CPPUNIT_NS::Exception(
+      msg,
+      CPPUNIT_NS::SourceLine(data_->file, data_->line));
+      CUTEST_NS::Runner::instance()->addFailure(false, exception);
+    }
+    break;
   case TestPartResult::kFatalFailure: { // Failed and the test should be terminated.
-        CPPUNIT_NS::Exception* exception = new CPPUNIT_NS::Exception(msg,
-          CPPUNIT_NS::SourceLine(data_->file, data_->line));
-        CUTEST_NS::Runner::instance()->addFailure(true, exception);
-      }
-      break;
+    CPPUNIT_NS::Exception* exception = new CPPUNIT_NS::Exception(
+	  msg,
+      CPPUNIT_NS::SourceLine(data_->file, data_->line));
+      CUTEST_NS::Runner::instance()->addFailure(true, exception);
+    }
+    break;
   default:
-      break;
+    break;
   }
 }
-#endif
+#endif // #ifndef _CUTEST
 
 // Mutex for linked pointers.
 GTEST_API_ GTEST_DEFINE_STATIC_MUTEX_(g_linked_ptr_mutex);
@@ -487,7 +491,7 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
   if (format.empty())
     format = std::string(kDefaultOutputFormat);
 
-#if 0 // gtest_mod : replace the original implement
+#ifndef _CUTEST
   const char* const colon = strchr(gtest_output_flag, ':');
   if (colon == NULL)
     return internal::FilePath::MakeFileName(
@@ -495,16 +499,18 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
             UnitTest::GetInstance()->original_working_dir()),
         internal::FilePath(kDefaultOutputFile), 0,
         format.c_str()).string();
-#else // gtest_mod : no need to depend on UnitTest::GetInstance()
+#else // #ifndef _CUTEST
   internal::FilePath workingDir = FilePath::GetCurrentDir();
   const char* const colon = strchr(gtest_output_flag, ':');
   if (colon == NULL)
-    return internal::FilePath::MakeFileName(workingDir,
-        internal::FilePath(kDefaultOutputFile), 0,
-        format.c_str()).string();
-#endif
+    return internal::FilePath::MakeFileName(
+	  workingDir,
+      internal::FilePath(kDefaultOutputFile),
+	  0,
+      format.c_str()).string();
+#endif // #ifndef _CUTEST
 
-#if 0 // gtest_mod : replace the original implement
+#ifndef _CUTEST
   internal::FilePath output_name(colon + 1);
   if (!output_name.IsAbsolutePath())
     // TODO(wan@google.com): on Windows \some\path is not an absolute
@@ -514,13 +520,13 @@ std::string UnitTestOptions::GetAbsolutePathToOutputFile() {
     output_name = internal::FilePath::ConcatPaths(
         internal::FilePath(UnitTest::GetInstance()->original_working_dir()),
         internal::FilePath(colon + 1));
-#else // gtest_mod : no need to depend on UnitTest::GetInstance()
+#else // #ifndef _CUTEST
   internal::FilePath output_name(colon + 1);
   if (!output_name.IsAbsolutePath())
     output_name = internal::FilePath::ConcatPaths(
         workingDir,
         internal::FilePath(colon + 1));
-#endif
+#endif // #ifndef _CUTEST
 
   if (!output_name.IsDirectory())
     return output_name.string();
@@ -2886,7 +2892,7 @@ static std::string FormatCountableNoun(int count,
 }
 
 // Formats the count of tests.
-std::string FormatTestCount(int test_count) {
+static std::string FormatTestCount(int test_count) {
   return FormatCountableNoun(test_count, "test", "tests");
 }
 
@@ -2948,7 +2954,7 @@ static void PrintTestPartResult(const TestPartResult& test_part_result) {
 }
 
 // class PrettyUnitTestResultPrinter
-#if 0 // gtest_mod : move to gtest-export.h
+#ifndef _CUTEST
 enum GTestColor {
   COLOR_DEFAULT,
   COLOR_RED,
@@ -5897,8 +5903,9 @@ void InitGoogleTestImpl(int* argc, CharType** argv) {
 #endif  // GTEST_HAS_ABSL
 
   ParseGoogleTestFlagsOnly(argc, argv);
-  // gtest_mod : comment the gtest logic
-  // GetUnitTestImpl()->PostFlagParsingInit();
+#ifndef _CUTEST
+  GetUnitTestImpl()->PostFlagParsingInit();
+#endif
 }
 
 }  // namespace internal

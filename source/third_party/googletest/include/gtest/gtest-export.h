@@ -2,6 +2,7 @@
 
 #include "gtest/gtest.h"
 
+#ifdef _CUTEST
 namespace testing {
 
 GTEST_API_ std::string FormatTestCount(int test_count);
@@ -10,10 +11,10 @@ static std::vector<std::string> GetReservedAttributesForElement(const std::strin
 namespace internal {
 
 enum GTestColor {
-    COLOR_DEFAULT,
-    COLOR_RED,
-    COLOR_GREEN,
-    COLOR_YELLOW
+  COLOR_DEFAULT,
+  COLOR_RED,
+  COLOR_GREEN,
+  COLOR_YELLOW
 };
 
 GTEST_API_ void ColoredPrintf(GTestColor color, const char* fmt, ...);
@@ -21,3 +22,4 @@ GTEST_API_ void ColoredPrintf(GTestColor color, const char* fmt, ...);
 } // namespace internal
 
 } // namespace testing
+#endif // #ifdef _CUTEST

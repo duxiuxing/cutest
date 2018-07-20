@@ -103,7 +103,8 @@ struct ExpectedExceptionTraits<NoExceptionExpected>
  * 
  * \see TestCase
  */
-#if 0
+#ifndef _CUTEST
+
 template <class Fixture>
 class TestCaller : public TestCase
 { 
@@ -200,7 +201,8 @@ private:
   Fixture *m_fixture;
   TestMethod m_test;
 };
-#endif
+
+#else //#ifndef _CUTEST
 
 template <class Fixture>
 class TestCaller
@@ -241,13 +243,13 @@ public:
     m_ownFixture( true ),
     m_fixture( NULL ),
     m_test( test ),
-    m_asyncRunMethod( ASYNC_RUN_NONE ),
+    m_fixtureMethodId( FIXTURE_METHOD_ID_NONE ),
     m_event( NULL )
   {}
 
   virtual void runTest() override
   {
-    m_asyncRunMethod = ASYNC_RUN_TEST;
+    m_fixtureMethodId = FIXTURE_METHOD_ID_TEST;
     if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
     {
       run();
@@ -264,7 +266,7 @@ public:
 
   virtual void setUp() override
   {
-    m_asyncRunMethod = ASYNC_RUN_SET_UP;
+    m_fixtureMethodId = FIXTURE_METHOD_ID_SET_UP;
     if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
     {
       run();
@@ -290,7 +292,7 @@ public:
 
   virtual void tearDown() override
   {
-    m_asyncRunMethod = ASYNC_RUN_TEAR_DOWN;
+    m_fixtureMethodId = FIXTURE_METHOD_ID_TEAR_DOWN;
     if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
     {
       run();
@@ -328,9 +330,9 @@ public:
   // 实现Runnable::run()
   virtual void run()
   {
-    switch ( m_asyncRunMethod )
+    switch ( m_fixtureMethodId )
     {
-    case ASYNC_RUN_SET_UP:
+    case FIXTURE_METHOD_ID_SET_UP:
       {
         if ( m_result )
           m_result->protect( MethodFunctor( this, &TestCaller::setUpOnMainThread ),
@@ -341,7 +343,7 @@ public:
         }
       }
       break;
-    case ASYNC_RUN_TEAR_DOWN:
+    case FIXTURE_METHOD_ID_TEAR_DOWN:
       {
         if ( m_result )
           m_result->protect( MethodFunctor( this, &TestCaller::tearDownOnMainThread ),
@@ -352,7 +354,7 @@ public:
         }
       }
       break;
-    case ASYNC_RUN_TEST:
+    case FIXTURE_METHOD_ID_TEST:
       {
         if ( m_result )
           m_result->protect( MethodFunctor( this, &TestCaller::runTestOnMainThread ),
@@ -382,17 +384,19 @@ private:
   TestMethod m_test;
 
   // 用于标识在run()方法中要调用的方法
-  enum AsyncRunMethod
+  enum FixtureMethodId
   {
-    ASYNC_RUN_NONE = 0,     // 初始值，无意义
-    ASYNC_RUN_SET_UP,       // m_fixture->setUp();
-    ASYNC_RUN_TEAR_DOWN,    // m_fixture->tearDown();
-    ASYNC_RUN_TEST,         // (m_fixture->*m_test)();
+    FIXTURE_METHOD_ID_NONE = 0,     // 初始值，无意义
+    FIXTURE_METHOD_ID_SET_UP,       // m_fixture->setUp();
+    FIXTURE_METHOD_ID_TEAR_DOWN,    // m_fixture->tearDown();
+    FIXTURE_METHOD_ID_TEST,			// (m_fixture->*m_test)();
   };
-  AsyncRunMethod m_asyncRunMethod;
+  FixtureMethodId m_fixtureMethodId;
 
   CUTEST_NS::Event *m_event;
 };
+
+#endif // #ifndef _CUTEST
 
 CPPUNIT_NS_END
 
