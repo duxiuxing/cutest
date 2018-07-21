@@ -1330,7 +1330,7 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { 
     } \
     virtual CPPUNIT_NS::Test* makeTest() { \
       CPPUNIT_NS::TestNamer namer(#test_case_name); \
-      return new testing::TestExplicitEndCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
+      return new testing::ExplicitEndTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
         namer.getTestNameFor(#test_name), \
         &GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody); \
     } \

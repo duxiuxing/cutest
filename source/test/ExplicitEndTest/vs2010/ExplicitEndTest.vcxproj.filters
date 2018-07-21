@@ -4,11 +4,11 @@
     <Filter Include="Win32 DLL">
       <UniqueIdentifier>{131872cc-b570-4a6e-98f5-57e7f850012a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="gtest style">
-      <UniqueIdentifier>{1425af85-c3f4-4b09-9e13-8f6f1a3e45e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cppunit">
       <UniqueIdentifier>{372abfae-cd7f-483b-ac31-21cd66fa2d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="googletest">
+      <UniqueIdentifier>{1425af85-c3f4-4b09-9e13-8f6f1a3e45e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,6 +21,9 @@
     <ClInclude Include="..\targetver.h">
       <Filter>Win32 DLL</Filter>
     </ClInclude>
+    <ClInclude Include="..\GTestExplicitEndTest.h">
+      <Filter>googletest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CppUnitExplicitEndTest.cpp">
@@ -31,6 +34,9 @@
     </ClCompile>
     <ClCompile Include="..\stdafx.cpp">
       <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GTestExplicitEndTest.cpp">
+      <Filter>googletest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
