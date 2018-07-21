@@ -40,8 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;&quot;%(AdditionalIncludeDirectories)&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL"
+				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../Detours/src;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;&quot;%(AdditionalIncludeDirectories)&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -116,8 +116,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;&quot;%(AdditionalIncludeDirectories)&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL"
+				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../Detours/src;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;&quot;%(AdditionalIncludeDirectories)&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -370,6 +370,70 @@
 				RelativePath="..\..\googlemock\src\gmock-all.cc"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="GMockPlus"
+			>
+			<File
+				RelativePath="..\..\GMockPlus\src\GMockPlus.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\GMockPlus\src\GMockPlus.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\GMockPlus\src\HookMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\GMockPlus\src\HookMgr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\GMockPlus\src\MockMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\GMockPlus\src\MockMgr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\GMockPlus\src\SymbolHelper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\GMockPlus\src\SymbolHelper.h"
+				>
+			</File>
+			<Filter
+				Name="Detours"
+				>
+				<File
+					RelativePath="..\..\Detours\src\creatwth.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Detours\src\detours.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Detours\src\detours.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Detours\src\disasm.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Detours\src\image.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Detours\src\modules.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
