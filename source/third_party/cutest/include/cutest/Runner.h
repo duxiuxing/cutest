@@ -24,7 +24,7 @@
 CUTEST_NS_BEGIN
 
 class Event;
-class ManualEndTest;
+class ExplicitEndTest;
 class Runnable;
 
 class CPPUNIT_API Runner
@@ -77,9 +77,9 @@ public: // Runner接口族
   virtual unsigned int totalFailureCount() const = 0; // 等于ErrorCount + FailureCount
   virtual const CPPUNIT_NS::TestFailure *failureAt( unsigned int index ) const = 0;
 
-public: // ManualEndTest相关接口族
-  virtual void registerManualEndTest( ManualEndTest *test, unsigned int timeout_ms ) = 0;
-  virtual void unregisterManualEndTest( ManualEndTest *test ) = 0;
+public: // ExplicitEndTest相关接口族
+  virtual void registerExplicitEndTest( ExplicitEndTest *test, unsigned int timeout_ms ) = 0;
+  virtual void unregisterExplicitEndTest( ExplicitEndTest *test ) = 0;
 };
 
 CUTEST_NS_END

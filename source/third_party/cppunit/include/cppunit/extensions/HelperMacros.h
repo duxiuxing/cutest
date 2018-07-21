@@ -6,7 +6,7 @@
 #ifndef CPPUNIT_EXTENSIONS_HELPERMACROS_H
 #define CPPUNIT_EXTENSIONS_HELPERMACROS_H
 
-#include <cppunit/ManualEndTestCaller.h>
+#include <cppunit/ExplicitEndTestCaller.h>
 #include <cppunit/TestCaller.h>
 #include <cppunit/TestSuite.h>
 #include <cppunit/extensions/AutoRegisterSuite.h>
@@ -331,15 +331,15 @@
                                context.getTestNameFor( #testMethod ),  \
                                &TestFixtureType::testMethod))))
 
-#define CPPUNIT_MANUAL_END_TEST(testMethod) \
+#define CPPUNIT_EXPLICIT_END_TEST(testMethod) \
     CPPUNIT_TEST_SUITE_ADD_TEST( \
-        (new CPPUNIT_NS::ManualEndTestCaller<TestFixtureType>( \
+        (new CPPUNIT_NS::ExplicitEndTestCaller<TestFixtureType>( \
             context.getTestNameFor(#testMethod), \
             &TestFixtureType::testMethod)))
 
-#define CPPUNIT_MANUAL_END_TEST_WITH_TIMEOUT(testMethod, timeoutMs) \
+#define CPPUNIT_EXPLICIT_END_TEST_WITH_TIMEOUT(testMethod, timeoutMs) \
     CPPUNIT_TEST_SUITE_ADD_TEST( \
-        (new CPPUNIT_NS::ManualEndTestCaller<TestFixtureType, timeoutMs>( \
+        (new CPPUNIT_NS::ExplicitEndTestCaller<TestFixtureType, timeoutMs>( \
             context.getTestNameFor(#testMethod), \
             &TestFixtureType::testMethod)))
 
@@ -543,8 +543,8 @@
 #define CU_TEST_SUITE(tc) CPPUNIT_TEST_SUITE(tc)
 #define CU_TEST_SUB_SUITE(tc,sc) CPPUNIT_TEST_SUB_SUITE(tc,sc)
 #define CU_TEST(tm) CPPUNIT_TEST(tm)
-#define CU_MANUAL_END_TEST(tm) CPPUNIT_MANUAL_END_TEST(tm)
-#define CU_MANUAL_END_TEST_WITH_TIMEOUT(tm, ms) CPPUNIT_MANUAL_END_TEST_WITH_TIMEOUT(tm, ms)
+#define CU_EXPLICIT_END_TEST(tm) CPPUNIT_EXPLICIT_END_TEST(tm)
+#define CU_EXPLICIT_END_TEST_WITH_TIMEOUT(tm, ms) CPPUNIT_EXPLICIT_END_TEST_WITH_TIMEOUT(tm, ms)
 #define CU_TEST_SUITE_END() CPPUNIT_TEST_SUITE_END()
 #define CU_TEST_SUITE_REGISTRATION(tc) CPPUNIT_TEST_SUITE_REGISTRATION(tc)
 

@@ -83,7 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cutest\Event.h" />
-    <ClInclude Include="..\include\cutest\ManualEndTest.h" />
+    <ClInclude Include="..\include\cutest\ExplicitEndTest.h" />
     <ClInclude Include="..\include\cutest\ProgressListener.h" />
     <ClInclude Include="..\include\cutest\Runnable.h" />
     <ClInclude Include="..\include\cutest\Runner.h" />
@@ -105,7 +105,7 @@
     <ClCompile Include="..\..\googlemock\src\gmock-all.cc" />
     <ClCompile Include="..\..\googletest\src\gtest-all.cc" />
     <ClCompile Include="..\src\AutoEndTest.cpp" />
-    <ClCompile Include="..\src\ManualEndTest.cpp" />
+    <ClCompile Include="..\src\ExplicitEndTest.cpp" />
     <ClCompile Include="..\src\ProgressListenerManager.cpp" />
     <ClCompile Include="..\src\Result.cpp" />
     <ClCompile Include="..\src\RunnerBase.cpp" />

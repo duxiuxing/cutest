@@ -27,7 +27,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple", "source\test\simpl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cutest sample", "cutest sample", "{42F5DBA7-DA4A-40BF-806E-392B2C07D8AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "manualend", "source\test\manualend\vs2005\manualend.vcproj", "{96450E17-BB80-4EF6-87AF-A95A65D21146}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExplicitEndTest", "source\test\ExplicitEndTest\vs2005\ExplicitEndTest.vcproj", "{96450E17-BB80-4EF6-87AF-A95A65D21146}"
 	ProjectSection(ProjectDependencies) = postProject
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection

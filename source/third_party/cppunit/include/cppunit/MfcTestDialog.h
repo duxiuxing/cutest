@@ -1,17 +1,17 @@
 ﻿#pragma once
 
-#include <cppunit/ManualEndTest.h>
+#include <cppunit/ExplicitEndTest.h>
 #include "MainTestRunner.h"
 
 template<class T>
 class CMfcTestDialog
-  : public CPPUNIT_NS::ManualEndTest
+  : public CPPUNIT_NS::ExplicitEndTest
   , public T
 {
 public:
   CMfcTestDialog( unsigned int timeout_ms = 0 );
 
-  // 重载ManualEndTest
+  // 重载ExplicitEndTest
   virtual void EndTest() override;
 
   virtual void PostNcDestroy() override;
@@ -21,7 +21,7 @@ public:
 
 template<class T>
 CMfcTestDialog<T>::CMfcTestDialog( unsigned int timeout_ms )
-  : CPPUNIT_NS::ManualEndTest( timeout_ms )
+  : CPPUNIT_NS::ExplicitEndTest( timeout_ms )
 {
 }
 

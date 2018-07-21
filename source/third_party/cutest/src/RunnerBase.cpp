@@ -1,6 +1,6 @@
 ﻿#include "RunnerBase.h"
 
-#include "cutest/ManualEndTest.h"
+#include "cutest/ExplicitEndTest.h"
 #include "cutest/Runnable.h"
 
 #include "gtest/gtest-message.h"
@@ -154,14 +154,14 @@ RunnerBase::failureAt( unsigned int index ) const
 }
 
 void
-RunnerBase::registerManualEndTest( ManualEndTest *test, unsigned int timeout_ms )
+RunnerBase::registerExplicitEndTest( ExplicitEndTest *test, unsigned int timeout_ms )
 {
   this->runing_test = test;
   this->auto_end_test.check( test, timeout_ms );
 }
 
 void
-RunnerBase::unregisterManualEndTest( ManualEndTest *test )
+RunnerBase::unregisterExplicitEndTest( ExplicitEndTest *test )
 {
   if ( this->runing_test == test )
   {

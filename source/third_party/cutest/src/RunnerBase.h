@@ -7,7 +7,7 @@
 
 CUTEST_NS_BEGIN
 
-class ManualEndTest;
+class ExplicitEndTest;
 
 class RunnerBase : public Runner
 {
@@ -38,12 +38,12 @@ protected:
   Decorator *test_decorator;
 
 
-public: // ManualEndTest相关的方法
-  virtual void registerManualEndTest( ManualEndTest *test, unsigned int timeout_ms );
-  virtual void unregisterManualEndTest( ManualEndTest *test );
+public: // ExplicitEndTest相关的方法
+  virtual void registerExplicitEndTest( ExplicitEndTest *test, unsigned int timeout_ms );
+  virtual void unregisterExplicitEndTest( ExplicitEndTest *test );
 
 protected:
-  ManualEndTest *runing_test;
+  ExplicitEndTest *runing_test;
   AutoEndTest auto_end_test;
 };
 

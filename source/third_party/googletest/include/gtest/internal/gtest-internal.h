@@ -68,7 +68,7 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/extensions/TestNamer.h>
 #include "gtest-caller.h"
-#include "gtest-manual-end-caller.h"
+#include "gtest-explicit-end-caller.h"
 
 // Due to C++ preprocessor weirdness, we need double indirection to
 // concatenate two tokens when one of them is __LINE__.  Writing
@@ -1316,9 +1316,9 @@ void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 
 #define GTEST_REGISTRY_ADD_TO_DEFAULT(which) CPPUNIT_REGISTRY_ADD_TO_DEFAULT(which)
 
-#define GTEST_MANUAL_END_TEST_(test_case_name, test_name, parent_class) \
+#define GTEST_EXPLICIT_END_TEST_(test_case_name, test_name, parent_class) \
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { \
-  friend class testing::ManualEndTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
+  friend class testing::ExplicitEndTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
  public: \
   GTEST_TEST_CLASS_NAME_(test_case_name, test_name)() {} \
   static class TestFactory : public CPPUNIT_NS::TestFactory { \
@@ -1330,7 +1330,7 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { 
     } \
     virtual CPPUNIT_NS::Test* makeTest() { \
       CPPUNIT_NS::TestNamer namer(#test_case_name); \
-      return new CPPUNIT_NS::GTestManualEndCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
+      return new testing::TestExplicitEndCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
         namer.getTestNameFor(#test_name), \
         &GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody); \
     } \

@@ -7,10 +7,10 @@ CUTEST_NS_BEGIN
 
 class Event;
 
-class CPPUNIT_API ManualEndTest
+class CPPUNIT_API ExplicitEndTest
 {
 public:
-  ManualEndTest();
+  ExplicitEndTest();
 
 public:
   void setEvent( CUTEST_NS::Event *event );
@@ -21,8 +21,8 @@ protected:
   Event *event;
 
 private:
-  ManualEndTest( const ManualEndTest &other );
-  ManualEndTest &operator=( const ManualEndTest &other );
+  ExplicitEndTest( const ExplicitEndTest &other );
+  ExplicitEndTest &operator=( const ExplicitEndTest &other );
 };
 
 CUTEST_NS_END

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="cutest"
-	ProjectGUID="{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}"
-	RootNamespace="cutest"
+	Name="ExplicitEndTest"
+	ProjectGUID="{96450E17-BB80-4EF6-87AF-A95A65D21146}"
+	RootNamespace="ExplicitEndTest"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,8 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY"
+				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include;../../../third_party/googletest/include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -62,6 +62,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -116,8 +117,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY"
+				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include;../../../third_party/googletest/include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -136,6 +137,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -172,14 +174,26 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Win32 DLL"
+			Name="cppunit style"
 			>
 			<File
-				RelativePath="..\src\win\dllmain.cpp"
+				RelativePath="..\CppUnitExplicitEndTest.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\src\win\stdafx.cpp"
+				RelativePath="..\CppUnitExplicitEndTest.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Win32 DLL"
+			>
+			<File
+				RelativePath="..\dllmain.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\stdafx.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -199,167 +213,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\src\win\stdafx.h"
+				RelativePath="..\stdafx.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\win\targetver.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="cppunit"
-			>
-			<File
-				RelativePath="..\..\cppunit\src\cppunit\cppunit-all.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="cutest"
-			>
-			<Filter
-				Name="Logger"
-				>
-				<File
-					RelativePath="..\src\win\Logger.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Logger.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="ExplicitEndTest"
-				>
-				<File
-					RelativePath="..\src\AutoEndTest.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\AutoEndTest.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ExplicitEndTest.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\include\cutest\ExplicitEndTest.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Progress"
-				>
-				<File
-					RelativePath="..\include\cutest\ProgressListener.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ProgressListenerManager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\ProgressListenerManager.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Result"
-				>
-				<File
-					RelativePath="..\src\Result.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\Result.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Runner"
-				>
-				<File
-					RelativePath="..\include\cutest\Runner.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\RunnerBase.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\RunnerBase.h"
-					>
-				</File>
-				<File
-					RelativePath="..\src\win\RunnerImpl.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\src\win\RunnerImpl.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Thread"
-				>
-				<File
-					RelativePath="..\include\cutest\Runnable.h"
-					>
-				</File>
-				<Filter
-					Name="Decorator"
-					>
-					<File
-						RelativePath="..\src\Decorator.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\win\DecoratorImpl.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\win\DecoratorImpl.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Event"
-					>
-					<File
-						RelativePath="..\include\cutest\Event.h"
-						>
-					</File>
-					<File
-						RelativePath="..\src\win\EventImpl.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\win\EventImpl.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Lock"
-					>
-					<File
-						RelativePath="..\src\win\SynchronizationObjectImpl.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\src\win\SynchronizationObjectImpl.h"
-						>
-					</File>
-				</Filter>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="gtest"
-			>
-			<File
-				RelativePath="..\..\googletest\src\gtest-all.cc"
+				RelativePath="..\targetver.h"
 				>
 			</File>
 		</Filter>

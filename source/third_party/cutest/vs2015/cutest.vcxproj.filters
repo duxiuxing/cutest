@@ -37,7 +37,7 @@
     <Filter Include="gtest">
       <UniqueIdentifier>{c8b1b1aa-27b7-430b-91ba-7ffcb13ad080}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cutest\ManualEndTest">
+    <Filter Include="cutest\ExplicitEndTest">
       <UniqueIdentifier>{635e6d40-cd03-45b9-a8b7-dc7e06978e3e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -79,10 +79,10 @@
       <Filter>cutest\Thread\Lock</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AutoEndTest.h">
-      <Filter>cutest\ManualEndTest</Filter>
+      <Filter>cutest\ExplicitEndTest</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\ManualEndTest.h">
-      <Filter>cutest\ManualEndTest</Filter>
+    <ClInclude Include="..\include\cutest\ExplicitEndTest.h">
+      <Filter>cutest\ExplicitEndTest</Filter>
     </ClInclude>
     <ClInclude Include="..\src\win\stdafx.h">
       <Filter>Win32 DLL</Filter>
@@ -126,10 +126,10 @@
       <Filter>gtest</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AutoEndTest.cpp">
-      <Filter>cutest\ManualEndTest</Filter>
+      <Filter>cutest\ExplicitEndTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ManualEndTest.cpp">
-      <Filter>cutest\ManualEndTest</Filter>
+    <ClCompile Include="..\src\ExplicitEndTest.cpp">
+      <Filter>cutest\ExplicitEndTest</Filter>
     </ClCompile>
     <ClCompile Include="..\src\win\dllmain.cpp">
       <Filter>Win32 DLL</Filter>

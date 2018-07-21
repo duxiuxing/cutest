@@ -34,7 +34,7 @@
     <Filter Include="cutest\Logger">
       <UniqueIdentifier>{3768418f-eba6-476e-9e38-d42cbafa289b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cutest\ManualEndTest">
+    <Filter Include="cutest\ExplicitEndTest">
       <UniqueIdentifier>{d1b0f672-0b90-48c0-8c21-170e59629e29}</UniqueIdentifier>
     </Filter>
     <Filter Include="googletest">
@@ -84,11 +84,11 @@
     <ClInclude Include="..\include\cutest\Runnable.h">
       <Filter>cutest\Thread</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\ManualEndTest.h">
-      <Filter>cutest\ManualEndTest</Filter>
+    <ClInclude Include="..\include\cutest\ExplicitEndTest.h">
+      <Filter>cutest\ExplicitEndTest</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AutoEndTest.h">
-      <Filter>cutest\ManualEndTest</Filter>
+      <Filter>cutest\ExplicitEndTest</Filter>
     </ClInclude>
     <ClInclude Include="..\src\win\stdafx.h">
       <Filter>Win32 DLL</Filter>
@@ -129,10 +129,10 @@
       <Filter>cutest\Logger</Filter>
     </ClCompile>
     <ClCompile Include="..\src\AutoEndTest.cpp">
-      <Filter>cutest\ManualEndTest</Filter>
+      <Filter>cutest\ExplicitEndTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ManualEndTest.cpp">
-      <Filter>cutest\ManualEndTest</Filter>
+    <ClCompile Include="..\src\ExplicitEndTest.cpp">
+      <Filter>cutest\ExplicitEndTest</Filter>
     </ClCompile>
     <ClCompile Include="..\src\win\dllmain.cpp">
       <Filter>Win32 DLL</Filter>

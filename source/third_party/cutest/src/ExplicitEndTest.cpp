@@ -1,29 +1,29 @@
-﻿#include "cutest/ManualEndTest.h"
+﻿#include "cutest/ExplicitEndTest.h"
 
 #include "cutest/Event.h"
 #include "cutest/Runner.h"
 
 CUTEST_NS_BEGIN
 
-ManualEndTest::ManualEndTest()
+ExplicitEndTest::ExplicitEndTest()
   : event( NULL )
 {}
 
 void
-ManualEndTest::setEvent( CUTEST_NS::Event *event_in )
+ExplicitEndTest::setEvent( CUTEST_NS::Event *event )
 {
-  this->event = event_in;
+  this->event = event;
 }
 
 void
-ManualEndTest::endTest()
+ExplicitEndTest::endTest()
 {
   if ( isTestEnd() )
   {
     return;  // 防止重入，CUTEST_NS::Runner::Stop()/超时/延迟/异步调用逻辑都可能调用EndTest()
   }
 
-  CUTEST_NS::Runner::instance()->unregisterManualEndTest( this );
+  CUTEST_NS::Runner::instance()->unregisterExplicitEndTest( this );
   if ( this->event )
   {
     this->event->post();
@@ -32,7 +32,7 @@ ManualEndTest::endTest()
 }
 
 bool
-ManualEndTest::isTestEnd()
+ExplicitEndTest::isTestEnd()
 {
   return ( this->event == NULL ) ? true : false;
 }

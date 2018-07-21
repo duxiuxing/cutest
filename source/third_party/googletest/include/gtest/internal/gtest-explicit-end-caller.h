@@ -11,16 +11,16 @@ namespace testing {
 /*
   timeout_ms 单位：毫秒，默认为0，表示永不超时；
   用例启动之后，如果timeout_ms之后还没有结束，则视为超时，
-  此时CUTEST::Runner会调用Fixture::endTest()来结束用例。
+  此时CUTEST_NS::Runner会调用Fixture::endTest()来结束用例。
 */
 template <class Fixture, unsigned int timeout_ms = 0>
-class ManualEndTestCaller
+class ExplicitEndTestCaller
   : public CUTEST_NS::Runnable
   , public CPPUNIT_NS::TestCase {
   typedef void (Fixture::*TestMethod)();
 
  public:
-  ManualEndTestCaller(std::string name, TestMethod test)
+  ExplicitEndTestCaller(std::string name, TestMethod test)
     : TestCase(name)
 	, m_fixture(NULL)
     , m_test(test)    
@@ -28,7 +28,7 @@ class ManualEndTestCaller
     , m_event(NULL)
   {}
 
-  ~ManualEndTestCaller() {
+  ~ExplicitEndTestCaller() {
     if (m_fixture) {
       delete m_fixture;
     }
@@ -82,7 +82,7 @@ class ManualEndTestCaller
       break;
     case FIXTURE_METHOD_ID_TEST_BODY: {
         m_fixture->setEvent(m_event);
-        CUTEST_NS::Runner::instance()->registerManualEndTest(m_fixture, timeout_ms);
+		CUTEST_NS::Runner::instance()->registerExplicitEndTest(m_fixture, timeout_ms);
         (m_fixture->*m_test)();
       }
       break;
@@ -92,8 +92,8 @@ class ManualEndTestCaller
   }
 
  private:
-  ManualEndTestCaller(const ManualEndTestCaller&);
-  ManualEndTestCaller& operator =(const ManualEndTestCaller&);
+  ExplicitEndTestCaller(const ExplicitEndTestCaller&);
+  ExplicitEndTestCaller& operator =(const ExplicitEndTestCaller&);
 
   Fixture* m_fixture;
   TestMethod m_test;
