@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="ExplicitEndTest"
-	ProjectGUID="{96450E17-BB80-4EF6-87AF-A95A65D21146}"
-	RootNamespace="ExplicitEndTest"
+	Name="ForDummies"
+	ProjectGUID="{AD5C4154-BDB2-40A3-893F-EA8AE5220102}"
+	RootNamespace="ForDummies"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,8 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include;../../../third_party/googletest/include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include;../../../third_party/googlemock/include;../../../third_party/googletest/include"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;GTEST_LINKED_AS_SHARED_LIBRARY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -117,8 +117,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include;../../../third_party/googletest/include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
+				AdditionalIncludeDirectories="../../../third_party/cppunit/include;../../../third_party/cutest/include;../../../third_party/googlemock/include;../../../third_party/googletest/include"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;GTEST_LINKED_AS_SHARED_LIBRARY"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -174,14 +174,30 @@
 	</References>
 	<Files>
 		<Filter
-			Name="cppunit"
+			Name="ForDummies"
 			>
 			<File
-				RelativePath="..\CppUnitExplicitEndTest.cpp"
+				RelativePath="..\mock-turtle.h"
 				>
 			</File>
 			<File
-				RelativePath="..\CppUnitExplicitEndTest.h"
+				RelativePath="..\painter.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\painter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\painter_test.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\turtle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\turtle_test.cc"
 				>
 			</File>
 		</Filter>
@@ -218,18 +234,6 @@
 			</File>
 			<File
 				RelativePath="..\targetver.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="googletest"
-			>
-			<File
-				RelativePath="..\GTestExplicitEndTest.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\GTestExplicitEndTest.h"
 				>
 			</File>
 		</Filter>

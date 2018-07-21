@@ -13,7 +13,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hierarchy", "source\test\hi
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cppunit sample", "cppunit sample", "{8F960F91-9BF5-477E-AFBF-27DE0BEAA56A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cppunit examples", "cppunit examples", "{8F960F91-9BF5-477E-AFBF-27DE0BEAA56A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "money", "source\test\money\vs2005\money.vcproj", "{BF284D0B-FE64-4EF2-8C36-E6E38F5E6DDB}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -32,7 +32,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExplicitEndTest", "source\t
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gtest sample", "gtest sample", "{909BDA31-3E01-40F2-B2C0-5DB91D4C896C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gtest samples", "gtest samples", "{909BDA31-3E01-40F2-B2C0-5DB91D4C896C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample1", "source\test\sample1\vs2005\sample1.vcproj", "{9FD9D394-CB84-48D6-A18B-CFAA59DC72B9}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -55,6 +55,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample4", "source\test\samp
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample5", "source\test\sample5\vs2005\sample5.vcproj", "{DD777815-8730-4957-8895-BA626B9D29A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gmock test", "gmock test", "{371E97B5-850C-4FB0-8873-13A78F6B08A4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForDummies", "source\test\ForDummies\vs2005\ForDummies.vcproj", "{AD5C4154-BDB2-40A3-893F-EA8AE5220102}"
 	ProjectSection(ProjectDependencies) = postProject
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
@@ -109,6 +116,10 @@ Global
 		{DD777815-8730-4957-8895-BA626B9D29A4}.Debug|Win32.Build.0 = Debug|Win32
 		{DD777815-8730-4957-8895-BA626B9D29A4}.Release|Win32.ActiveCfg = Release|Win32
 		{DD777815-8730-4957-8895-BA626B9D29A4}.Release|Win32.Build.0 = Release|Win32
+		{AD5C4154-BDB2-40A3-893F-EA8AE5220102}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AD5C4154-BDB2-40A3-893F-EA8AE5220102}.Debug|Win32.Build.0 = Debug|Win32
+		{AD5C4154-BDB2-40A3-893F-EA8AE5220102}.Release|Win32.ActiveCfg = Release|Win32
+		{AD5C4154-BDB2-40A3-893F-EA8AE5220102}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,5 +134,6 @@ Global
 		{74EDD284-69B0-4307-A77A-3C33D3D03115} = {909BDA31-3E01-40F2-B2C0-5DB91D4C896C}
 		{820F4DBC-A25C-4493-A654-EF14EA432A8C} = {909BDA31-3E01-40F2-B2C0-5DB91D4C896C}
 		{DD777815-8730-4957-8895-BA626B9D29A4} = {909BDA31-3E01-40F2-B2C0-5DB91D4C896C}
+		{AD5C4154-BDB2-40A3-893F-EA8AE5220102} = {371E97B5-850C-4FB0-8873-13A78F6B08A4}
 	EndGlobalSection
 EndGlobal

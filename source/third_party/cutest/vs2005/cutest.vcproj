@@ -40,8 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY"
+				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;&quot;%(AdditionalIncludeDirectories)&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -116,8 +116,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY"
+				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;&quot;%(AdditionalIncludeDirectories)&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -356,10 +356,18 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="gtest"
+			Name="googletest"
 			>
 			<File
 				RelativePath="..\..\googletest\src\gtest-all.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="googlemock"
+			>
+			<File
+				RelativePath="..\..\googlemock\src\gmock-all.cc"
 				>
 			</File>
 		</Filter>
