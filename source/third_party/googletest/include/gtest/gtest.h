@@ -2319,7 +2319,10 @@ bool StaticAssertTypeEq() {
               ::testing::internal::GetTypeId<test_fixture>())
 
 #define EXPLICIT_END_TEST_F(test_fixture, test_name) \
-  GTEST_EXPLICIT_END_TEST_(test_fixture, test_name, test_fixture)
+  GTEST_EXPLICIT_END_TEST_(test_fixture, test_name, test_fixture, 0)
+
+#define EXPLICIT_END_TEST_WITH_TIMEOUT_F(test_fixture, test_name, timeout_ms) \
+  GTEST_EXPLICIT_END_TEST_(test_fixture, test_name, test_fixture, timeout_ms)
 
 // Returns a path to temporary directory.
 // Tries to determine an appropriate directory for the platform.

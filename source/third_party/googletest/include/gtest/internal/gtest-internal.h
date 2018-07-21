@@ -1316,9 +1316,9 @@ void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 
 #define GTEST_REGISTRY_ADD_TO_DEFAULT(which) CPPUNIT_REGISTRY_ADD_TO_DEFAULT(which)
 
-#define GTEST_EXPLICIT_END_TEST_(test_case_name, test_name, parent_class) \
+#define GTEST_EXPLICIT_END_TEST_(test_case_name, test_name, parent_class, timeout_ms) \
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { \
-  friend class testing::ExplicitEndTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>; \
+  friend class testing::ExplicitEndTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name), timeout_ms>; \
  public: \
   GTEST_TEST_CLASS_NAME_(test_case_name, test_name)() {} \
   static class TestFactory : public CPPUNIT_NS::TestFactory { \
@@ -1330,7 +1330,7 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { 
     } \
     virtual CPPUNIT_NS::Test* makeTest() { \
       CPPUNIT_NS::TestNamer namer(#test_case_name); \
-      return new testing::ExplicitEndTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>( \
+      return new testing::ExplicitEndTestCaller<GTEST_TEST_CLASS_NAME_(test_case_name, test_name), timeout_ms>( \
         namer.getTestNameFor(#test_name), \
         &GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody); \
     } \

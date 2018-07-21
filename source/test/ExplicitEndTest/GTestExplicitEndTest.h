@@ -7,6 +7,13 @@ class GTestExplicitEndTest
   : public testing::ExplicitEndTest
   , public CUTEST_NS::Runnable {
  public:
+  GTestExplicitEndTest();
+
+  virtual void SetUp() override;
+  virtual void TearDown() override;
+
   // 实现Runnable::run()
   virtual void run();
+
+  unsigned long long tick_count_setup;
 };

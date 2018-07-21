@@ -1,5 +1,23 @@
 ﻿#include "CppUnitExplicitEndTest.h"
 
+CppUnitExplicitEndTest::CppUnitExplicitEndTest()
+  : tick_count_setup(0)
+{}
+
+void
+CppUnitExplicitEndTest::setUp()
+{
+  this->tick_count_setup = CUTEST_NS::Runner::instance()->tickCount();
+}
+
+void
+CppUnitExplicitEndTest::tearDown()
+{
+  unsigned long long ms = CUTEST_NS::Runner::instance()->tickCount() - this->tick_count_setup;
+  EXPECT_GT(ms, 950);
+  EXPECT_LT(ms, 1050);
+}
+
 void
 CppUnitExplicitEndTest::explicit_end_test_after_1s()
 {
@@ -18,3 +36,4 @@ CppUnitExplicitEndTest::run()
 void
 CppUnitExplicitEndTest::auto_end_test_after_1s()
 {}
+
