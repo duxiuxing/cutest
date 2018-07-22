@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../Detours/src;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;&quot;%(AdditionalIncludeDirectories)&quot;"
+				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../Detours/src;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;../../cutest/include;&quot;%(AdditionalIncludeDirectories)&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -89,6 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h&quot; &quot;$(SolutionDir)source\third_party\cutest\include\GMockPlus.h&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)source\third_party\cppunit\include\cppunit&quot; &quot;$(SolutionDir)source\third_party\cutest\include\cppunit&quot; /y /i /e&#x0D;&#x0A;xcopy &quot;$(SolutionDir)source\third_party\googlemock\include\gmock&quot; &quot;$(SolutionDir)source\third_party\cutest\include\gmock&quot; /y /i /e&#x0D;&#x0A;xcopy &quot;$(SolutionDir)source\third_party\googletest\include\gtest&quot; &quot;$(SolutionDir)source\third_party\cutest\include\gtest&quot; /y /i /e"
 			/>
 		</Configuration>
 		<Configuration
@@ -116,7 +117,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../cutest/include;../../Detours/src;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;&quot;%(AdditionalIncludeDirectories)&quot;"
+				AdditionalIncludeDirectories="../../cppunit/include;../../cppunit/src;../../Detours/src;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;../../cutest/include;&quot;%(AdditionalIncludeDirectories)&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
