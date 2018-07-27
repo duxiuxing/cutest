@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="sample1"
-	ProjectGUID="{9FD9D394-CB84-48D6-A18B-CFAA59DC72B9}"
-	RootNamespace="sample1"
+	Name="GMockPlusDemo"
+	ProjectGUID="{1186BDE5-8496-4E69-AC5D-EC28AF70C541}"
+	RootNamespace="GMockPlusDemo"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../../../third_party/cutest/include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;GTEST_LINKED_AS_SHARED_LIBRARY"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -117,8 +117,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="../../../third_party/cutest/include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;GTEST_LINKED_AS_SHARED_LIBRARY"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -174,18 +175,10 @@
 	</References>
 	<Files>
 		<Filter
-			Name="sample1"
+			Name="GMockPlusDemo"
 			>
 			<File
-				RelativePath="..\..\..\third_party\googletest\samples\sample1.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\googletest\samples\sample1.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\googletest\samples\sample1_unittest.cc"
+				RelativePath="..\GMockPlusDemo.cpp"
 				>
 			</File>
 		</Filter>

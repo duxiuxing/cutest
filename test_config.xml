@@ -12,4 +12,5 @@
     <test brief="gtest官方示例代码5" libName="sample5.dll" />
     <test brief="gmock官方文档ForDummies.md中的示例代码" libName="ForDummies.dll" />
     <test brief="cutest示例代码" libName="ExplicitEndTest.dll" />
+    <test brief="cutest示例代码" libName="GMockPlusDemo.dll" />
 </root>

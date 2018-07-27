@@ -34,3 +34,8 @@
 BuildLog.htm
 dte80a.tlh
 mt.dep
+
+source/third_party/cutest/include/cppunit/*
+source/third_party/cutest/include/gmock/*
+source/third_party/cutest/include/gtest/*
+source/third_party/cutest/include/GMockPlus.h
