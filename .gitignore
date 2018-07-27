@@ -27,9 +27,9 @@
 
 /Release/*
 
-/x64_Debug/*
+/x64/Debug/*
 
-/x64_Release/*
+/x64/Release/*
 
 BuildLog.htm
 dte80a.tlh

@@ -74,14 +74,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Platform)_$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)$(Platform)_$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -89,14 +87,20 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../cppunit/include;../../cppunit/src;../../cutest/include;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+xcopy "$(SolutionDir)source\third_party\cppunit\include\cppunit" "$(SolutionDir)source\third_party\cutest\include\cppunit" /y /i /e
+xcopy "$(SolutionDir)source\third_party\googlemock\include\gmock" "$(SolutionDir)source\third_party\cutest\include\gmock" /y /i /e
+xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir)source\third_party\cutest\include\gtest" /y /i /e</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -104,14 +108,20 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../cppunit/include;../../cppunit/src;../../cutest/include;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+xcopy "$(SolutionDir)source\third_party\cppunit\include\cppunit" "$(SolutionDir)source\third_party\cutest\include\cppunit" /y /i /e
+xcopy "$(SolutionDir)source\third_party\googlemock\include\gmock" "$(SolutionDir)source\third_party\cutest\include\gmock" /y /i /e
+xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir)source\third_party\cutest\include\gtest" /y /i /e</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -121,9 +131,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../cppunit/include;../../cppunit/src;../../cutest/include;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -131,6 +141,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+xcopy "$(SolutionDir)source\third_party\cppunit\include\cppunit" "$(SolutionDir)source\third_party\cutest\include\cppunit" /y /i /e
+xcopy "$(SolutionDir)source\third_party\googlemock\include\gmock" "$(SolutionDir)source\third_party\cutest\include\gmock" /y /i /e
+xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir)source\third_party\cutest\include\gtest" /y /i /e</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -140,9 +156,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../cppunit/include;../../cppunit/src;../../cutest/include;../../googlemock/include;../../googlemock;../../googletest/include;../../googletest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,6 +166,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+xcopy "$(SolutionDir)source\third_party\cppunit\include\cppunit" "$(SolutionDir)source\third_party\cutest\include\cppunit" /y /i /e
+xcopy "$(SolutionDir)source\third_party\googlemock\include\gmock" "$(SolutionDir)source\third_party\cutest\include\gmock" /y /i /e
+xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir)source\third_party\cutest\include\gtest" /y /i /e</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cutest\Event.h" />

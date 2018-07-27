@@ -3,21 +3,19 @@
   <ItemGroup>
     <Filter Include="Win32 DLL">
       <UniqueIdentifier>{6e037702-b35d-4fdb-b035-06ae03575a76}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="simple">
       <UniqueIdentifier>{a90ffc52-dd6f-4b02-9a0a-5f1589047699}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\stdafx.h">
-      <Filter>Win32 DLL\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\targetver.h">
       <Filter>Win32 DLL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\third_party\cppunit\examples\simple\ExampleTestCase.h">
       <Filter>simple</Filter>
     </ClInclude>
+    <ClInclude Include="..\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\stdafx.cpp">

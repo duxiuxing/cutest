@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{333812E0-7B4C-4F4E-8D7A-F8939804B746}</ProjectGuid>
+    <ProjectGuid>{F9D08AE3-B629-4e9c-B86E-337DF04CD42F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ForDummies</RootNamespace>
+    <RootNamespace>GMockPlusDemo</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -154,11 +154,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\mock-turtle.h" />
-    <ClInclude Include="..\painter.h" />
     <ClInclude Include="..\stdafx.h" />
     <ClInclude Include="..\targetver.h" />
-    <ClInclude Include="..\turtle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\dllmain.cpp">
@@ -175,10 +172,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\painter.cc" />
-    <ClCompile Include="..\painter_test.cc" />
+    <ClCompile Include="..\GMockPlusDemo.cpp" />
     <ClCompile Include="..\stdafx.cpp" />
-    <ClCompile Include="..\turtle_test.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

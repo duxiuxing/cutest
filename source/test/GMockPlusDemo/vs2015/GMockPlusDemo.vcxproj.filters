@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GMockPlusDemo">
+      <UniqueIdentifier>{f80d1f30-a5c7-4f25-9cd2-aa5f28c5e943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win32 DLL">
+      <UniqueIdentifier>{10fa5ff6-9fd2-4283-8a8a-7e5f9f408d2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\stdafx.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\targetver.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\dllmain.cpp">
+      <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\stdafx.cpp">
+      <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GMockPlusDemo.cpp">
+      <Filter>GMockPlusDemo</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
