@@ -130,7 +130,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\TestRunnerApp.rc">
+    <ResourceCompile Include="..\MfcTestRunnerApp.rc">
       <Filter>MFC Application Dialog based\Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -138,10 +138,10 @@
     <None Include="..\res\errortype.bmp">
       <Filter>MFC Application Dialog based\Resource Files</Filter>
     </None>
-    <None Include="..\res\TestRunnerApp.ico">
+    <None Include="..\res\MfcTestRunnerApp.ico">
       <Filter>MFC Application Dialog based\Resource Files</Filter>
     </None>
-    <None Include="..\res\TestRunnerApp.rc2">
+    <None Include="..\res\MfcTestRunnerApp.rc2">
       <Filter>MFC Application Dialog based\Resource Files</Filter>
     </None>
     <None Include="..\res\test_type.bmp">

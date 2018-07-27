@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestRunnerApp", "source\runner\mfc\vs2010\TestRunnerApp.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcTestRunnerApp", "source\runner\mfc\vs2010\MfcTestRunnerApp.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
 	EndProjectSection

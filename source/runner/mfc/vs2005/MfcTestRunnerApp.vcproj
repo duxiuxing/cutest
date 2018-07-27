@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="TestRunnerApp"
+	Name="MfcTestRunnerApp"
 	ProjectGUID="{1C88A886-E073-4C6D-81E7-F5A0D34D717E}"
-	RootNamespace="TestRunnerApp"
+	RootNamespace="MfcTestRunnerApp"
 	Keyword="MFCProj"
 	>
 	<Platforms>
@@ -371,15 +371,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\res\TestRunnerApp.ico"
+					RelativePath="..\res\MfcTestRunnerApp.ico"
 					>
 				</File>
 				<File
-					RelativePath="..\TestRunnerApp.rc"
+					RelativePath="..\MfcTestRunnerApp.rc"
 					>
 				</File>
 				<File
-					RelativePath="..\res\TestRunnerApp.rc2"
+					RelativePath="..\res\MfcTestRunnerApp.rc2"
 					>
 				</File>
 			</Filter>

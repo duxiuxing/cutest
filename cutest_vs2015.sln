@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestRunnerApp", "source\runner\mfc\vs2015\TestRunnerApp.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcTestRunnerApp", "source\runner\mfc\vs2015\MfcTestRunnerApp.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
 	ProjectSection(ProjectDependencies) = postProject
 		{185FF715-C691-49B9-B83F-D54649575FD2} = {185FF715-C691-49B9-B83F-D54649575FD2}
 	EndProjectSection

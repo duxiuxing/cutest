@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AABD35C3-3F4F-4CCC-AFF9-201605302224}</ProjectGuid>
-    <RootNamespace>TestRunnerApp</RootNamespace>
+    <RootNamespace>MfcTestRunnerApp</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
@@ -238,16 +238,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\TestRunnerApp.rc" />
+    <ResourceCompile Include="..\MfcTestRunnerApp.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\errortype.bmp" />
-    <None Include="..\res\TestRunnerApp.rc2">
+    <None Include="..\res\MfcTestRunnerApp.rc2">
       <FileType>RC</FileType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\TestRunnerApp.ico" />
+    <None Include="..\res\MfcTestRunnerApp.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\test_type.bmp" />

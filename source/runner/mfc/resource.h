@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by TestRunnerApp.rc
+// Used by MfcTestRunnerApp.rc
 //
 #define IDS_ERROR_SELECT_TEST           1
 #define IDS_ERRORLIST_TYPE              2

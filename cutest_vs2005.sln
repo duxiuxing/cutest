@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutest", "source\third_party\cutest\vs2005\cutest.vcproj", "{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestRunnerApp", "source\runner\mfc\vs2005\TestRunnerApp.vcproj", "{1C88A886-E073-4C6D-81E7-F5A0D34D717E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcTestRunnerApp", "source\runner\mfc\vs2005\MfcTestRunnerApp.vcproj", "{1C88A886-E073-4C6D-81E7-F5A0D34D717E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutest", "source\third_party\cutest\vs2005\cutest.vcproj", "{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hierarchy", "source\test\hierarchy\vs2005\hierarchy.vcproj", "{524E8623-40D2-4DE7-AD36-8250A6832E18}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -72,14 +72,14 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}.Debug|Win32.Build.0 = Debug|Win32
-		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}.Release|Win32.ActiveCfg = Release|Win32
-		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}.Release|Win32.Build.0 = Release|Win32
 		{1C88A886-E073-4C6D-81E7-F5A0D34D717E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1C88A886-E073-4C6D-81E7-F5A0D34D717E}.Debug|Win32.Build.0 = Debug|Win32
 		{1C88A886-E073-4C6D-81E7-F5A0D34D717E}.Release|Win32.ActiveCfg = Release|Win32
 		{1C88A886-E073-4C6D-81E7-F5A0D34D717E}.Release|Win32.Build.0 = Release|Win32
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}.Debug|Win32.Build.0 = Debug|Win32
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}.Release|Win32.ActiveCfg = Release|Win32
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C}.Release|Win32.Build.0 = Release|Win32		
 		{524E8623-40D2-4DE7-AD36-8250A6832E18}.Debug|Win32.ActiveCfg = Debug|Win32
 		{524E8623-40D2-4DE7-AD36-8250A6832E18}.Debug|Win32.Build.0 = Debug|Win32
 		{524E8623-40D2-4DE7-AD36-8250A6832E18}.Release|Win32.ActiveCfg = Release|Win32
