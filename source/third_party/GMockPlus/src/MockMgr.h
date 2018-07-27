@@ -1,3 +1,4 @@
+#pragma once
 #include "GMockPlus.h"
 #include <set>
 

@@ -105,18 +105,6 @@
     <ClInclude Include="..\..\Detours\src\detours.h">
       <Filter>GMockPlus\Detours</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\GMockPlus\src\GMockPlus.h">
-      <Filter>GMockPlus</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\GMockPlus\src\HookMgr.h">
-      <Filter>GMockPlus</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\GMockPlus\src\MockMgr.h">
-      <Filter>GMockPlus</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\GMockPlus\src\SymbolHelper.h">
-      <Filter>GMockPlus</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
@@ -179,16 +167,7 @@
     <ClCompile Include="..\..\Detours\src\modules.cpp">
       <Filter>GMockPlus\Detours</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\GMockPlus\src\GMockPlus.cpp">
-      <Filter>GMockPlus</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\GMockPlus\src\HookMgr.cpp">
-      <Filter>GMockPlus</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\GMockPlus\src\MockMgr.cpp">
-      <Filter>GMockPlus</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\GMockPlus\src\SymbolHelper.cpp">
+    <ClCompile Include="..\..\GMockPlus\src\GMockPlusAll.cpp">
       <Filter>GMockPlus</Filter>
     </ClCompile>
   </ItemGroup>

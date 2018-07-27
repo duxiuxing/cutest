@@ -377,35 +377,7 @@
 			Name="GMockPlus"
 			>
 			<File
-				RelativePath="..\..\GMockPlus\src\GMockPlus.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\GMockPlus\src\GMockPlus.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\GMockPlus\src\HookMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\GMockPlus\src\HookMgr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\GMockPlus\src\MockMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\GMockPlus\src\MockMgr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\GMockPlus\src\SymbolHelper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\GMockPlus\src\SymbolHelper.h"
+				RelativePath="..\..\GMockPlus\src\GMockPlusAll.cpp"
 				>
 			</File>
 			<Filter

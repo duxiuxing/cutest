@@ -97,10 +97,6 @@ xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Detours\src\detours.h" />
-    <ClInclude Include="..\..\GMockPlus\src\GMockPlus.h" />
-    <ClInclude Include="..\..\GMockPlus\src\HookMgr.h" />
-    <ClInclude Include="..\..\GMockPlus\src\MockMgr.h" />
-    <ClInclude Include="..\..\GMockPlus\src\SymbolHelper.h" />
     <ClInclude Include="..\include\cutest\Event.h" />
     <ClInclude Include="..\include\cutest\ExplicitEndTest.h" />
     <ClInclude Include="..\include\cutest\ProgressListener.h" />
@@ -126,10 +122,7 @@ xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir
     <ClCompile Include="..\..\Detours\src\disasm.cpp" />
     <ClCompile Include="..\..\Detours\src\image.cpp" />
     <ClCompile Include="..\..\Detours\src\modules.cpp" />
-    <ClCompile Include="..\..\GMockPlus\src\GMockPlus.cpp" />
-    <ClCompile Include="..\..\GMockPlus\src\HookMgr.cpp" />
-    <ClCompile Include="..\..\GMockPlus\src\MockMgr.cpp" />
-    <ClCompile Include="..\..\GMockPlus\src\SymbolHelper.cpp" />
+    <ClCompile Include="..\..\GMockPlus\src\GMockPlusAll.cpp" />
     <ClCompile Include="..\..\googlemock\src\gmock-all.cc" />
     <ClCompile Include="..\..\googletest\src\gtest-all.cc" />
     <ClCompile Include="..\src\AutoEndTest.cpp" />
