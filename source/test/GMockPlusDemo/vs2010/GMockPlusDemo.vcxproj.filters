@@ -4,7 +4,7 @@
     <Filter Include="Win32 DLL">
       <UniqueIdentifier>{26f5bc4f-38ff-4019-825c-d459585773ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ForDummies">
+    <Filter Include="GMockPlusDemo">
       <UniqueIdentifier>{395f6297-a19e-48c1-913f-f4cb0865de5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -15,15 +15,6 @@
     <ClInclude Include="..\targetver.h">
       <Filter>Win32 DLL</Filter>
     </ClInclude>
-    <ClInclude Include="..\mock-turtle.h">
-      <Filter>ForDummies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\painter.h">
-      <Filter>ForDummies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\turtle.h">
-      <Filter>ForDummies</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\dllmain.cpp">
@@ -32,14 +23,8 @@
     <ClCompile Include="..\stdafx.cpp">
       <Filter>Win32 DLL</Filter>
     </ClCompile>
-    <ClCompile Include="..\painter.cc">
-      <Filter>ForDummies</Filter>
-    </ClCompile>
-    <ClCompile Include="..\painter_test.cc">
-      <Filter>ForDummies</Filter>
-    </ClCompile>
-    <ClCompile Include="..\turtle_test.cc">
-      <Filter>ForDummies</Filter>
+    <ClCompile Include="..\GMockPlusDemo.cpp">
+      <Filter>GMockPlusDemo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

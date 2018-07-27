@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../../../third_party/cutest/include"
+				AdditionalIncludeDirectories="..\..\..\third_party\cutest\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;OEMRESOURCE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../../../third_party/cutest/include"
+				AdditionalIncludeDirectories="..\..\..\third_party\cutest\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;OEMRESOURCE"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
@@ -367,10 +367,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\res\test_type.bmp"
-					>
-				</File>
-				<File
 					RelativePath="..\res\MfcTestRunnerApp.ico"
 					>
 				</File>
@@ -380,6 +376,10 @@
 				</File>
 				<File
 					RelativePath="..\res\MfcTestRunnerApp.rc2"
+					>
+				</File>
+				<File
+					RelativePath="..\res\test_type.bmp"
 					>
 				</File>
 			</Filter>
