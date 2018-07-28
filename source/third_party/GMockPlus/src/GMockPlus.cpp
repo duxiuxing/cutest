@@ -1,4 +1,4 @@
-#include "GMockPlus.h"
+ï»¿#include "GMockPlus.h"
 #include "HookMgr.h"
 #include "MockMgr.h"
 
@@ -7,463 +7,459 @@ namespace testing {
 typedef unsigned int uint;
 
 DWORD AnalysisCallAddr(void* call_next_addr, DWORD* regs) {
-	/*
-	pushad ºóÕ»µÄÄÚÈÝ:
-	LOW
-			edi
-			esi
-			ebp
-			esp
-			ebx
-			edx
-			ecx
-			eax
-	HIGH
-	*/
-	DWORD rEDI = regs[0];
-	DWORD rESI = regs[1];
-	DWORD rEBP = regs[2];
-	DWORD rESP = regs[3] + 4;	// ÓÉÓÚcallÖ¸Áî»ápush eipµ½Õ»ÉÏ£¬ËùÒÔcallºóµÄesp±ÈcallÊ±µÄespµÍ4¸ö×Ö½Ú
-	DWORD rEBX = regs[4];
-	DWORD rEDX = regs[5];
-	DWORD rECX = regs[6];
-	DWORD rEAX = regs[7];
+  /*
+    pushad åŽæ ˆçš„å†…å®¹:
+    LOW
+      edi
+      esi
+      ebp
+      esp
+      ebx
+      edx
+      ecx
+      eax
+    HIGH
+  */
+  DWORD rEDI = regs[0];
+  DWORD rESI = regs[1];
+  DWORD rEBP = regs[2];
+  DWORD rESP = regs[3] + 4; // ç”±äºŽcallæŒ‡ä»¤ä¼špush eipåˆ°æ ˆä¸Šï¼Œæ‰€ä»¥callåŽçš„espæ¯”callæ—¶çš„espä½Ž4ä¸ªå­—èŠ‚
+  DWORD rEBX = regs[4];
+  DWORD rEDX = regs[5];
+  DWORD rECX = regs[6];
+  DWORD rEAX = regs[7];
 
-	char* binArr_2 = (char*)(byte*)call_next_addr - 2;
-	char* binArr_3 = (char*)(byte*)call_next_addr - 3;
-	char* binArr_5 = (char*)(byte*)call_next_addr - 5;
-	char* binArr_6 = (char*)(byte*)call_next_addr - 6;
+  char* binArr_2 = (char*)(byte*)call_next_addr - 2;
+  char* binArr_3 = (char*)(byte*)call_next_addr - 3;
+  char* binArr_5 = (char*)(byte*)call_next_addr - 5;
+  char* binArr_6 = (char*)(byte*)call_next_addr - 6;
 
-	// TODO: Èç¹ûÔÚµ÷ÊÔ×´Ì¬ÏÂ¶ÔcallÖ¸ÁîµÄµØ·½ÏÂÁË¶Ïµã£¬binArr[0]¾Í³É0xccÁË£¡
-	// TODO: ¿ÉÄÜ»á³öÏÖÍ¬Ê±Âú×ã¶àÖÖ¹æÔòµÄÇé¿ö
-	// Èç£ºe8 c5 34 ff 10
-	// ¼È±íÊ¾"CALL rel32	E8 xx xx xx xx"£¬
-	// ÓÖ±íÊ¾"CALL dword ptr [EAX]	FF 10"
-	// ÕâÖÖÇé¿öÔÝÊ±Ã»ÓÐ´¦Àí
-	DWORD callAddr = 0;
-	byte bAddr;
-	if (0 == callAddr && (byte)binArr_2[0] == 0xFF) {
-		bAddr= binArr_2[1];
-		switch(bAddr) {
-		case 0x10:	// CALL dword ptr [EAX]	FF 10
-			callAddr = *((DWORD*)rEAX);
-			break;
-		case 0x11:	// CALL dword ptr [ECX]	FF 11
-			callAddr = *((DWORD*)rECX);
-			break;
-		case 0x12:	// CALL dword ptr [EDX]	FF 12
-			callAddr = *((DWORD*)rEDX);
-			break;
-		case 0x13:	// CALL dword ptr [EBX]	FF 13
-			callAddr = *((DWORD*)rEBX);
-			break;
-		case 0x16:	// CALL dword ptr [ESI]	FF 16
-			callAddr = *((DWORD*)rESI);
-			break;
-		case 0x17:	// CALL dword ptr [EDI]	FF 17
-			callAddr = *((DWORD*)rEDI);
-			break;
-		case 0xD0:	// CALL EAX	FF D0
-			callAddr = rEAX;
-			break;
-		case 0xD1:	// CALL ECX	FF D1
-			callAddr = rECX;
-			break;
-		case 0xD2:	// CALL EDX	FF D2
-			callAddr = rEDX;
-			break;
-		case 0xD3:	// CALL EBX	FF D3
-			callAddr = rEBX;
-			break;
-		case 0xD4:	// CALL ESP	FF D4
-			callAddr = rESP;
-			break;
-		case 0xD5:	// CALL EBP	FF D5
-			callAddr = rEBP;
-			break;
-		case 0xD6:	// CALL ESI	FF D6
-			callAddr = rESI;
-			break;
-		case 0xD7:	// CALL EDI	FF D7
-			callAddr = rEDI;
-			break;
-		default:
-			break;
-		}
-	}
-	if (0 == callAddr && (byte)binArr_3[0] == 0xFF) {
-		bAddr = binArr_3[1];
-		switch(bAddr) {
-		case 0x50:	// CALL dword ptr [EAX+xx]	FF 50 xx
-			callAddr = *((DWORD*)((byte*)rEAX + binArr_3[2]));
-			break;
-		case 0x51:	// CALL dword ptr [ECX+xx]	FF 51 xx
-			callAddr = *((DWORD*)((byte*)rECX + binArr_3[2]));
-			break;
-		case 0x52:	// CALL dword ptr [EDX+xx]	FF 52 xx
-			callAddr = *((DWORD*)((byte*)rEDX + binArr_3[2]));
-			break;
-		case 0x53:	// CALL dword ptr [EBX+xx]	FF 53 xx
-			callAddr = *((DWORD*)((byte*)rEBX + binArr_3[2]));
-			break;
-		case 0x55:	// CALL dword ptr [EBP+xx]	FF 55 xx
-			callAddr = *((DWORD*)((byte*)rEBP + binArr_3[2]));
-			break;
-		case 0x56:	// CALL dword ptr [ESI+xx]	FF 56 xx
-			callAddr = *((DWORD*)((byte*)rESI + binArr_3[2]));
-			break;
-		case 0x57:	// CALL dword ptr [EDI+xx]	FF 57 xx
-			callAddr = *((DWORD*)((byte*)rEDI + binArr_3[2]));
-			break;
-		default:
-			break;
-		}
-	}
-	if (0 == callAddr && (byte)binArr_6[0] == 0xFF) {
-		bAddr = binArr_6[1];
-		switch(bAddr) {
-		case 0x15:	// CALL dword ptr [abs32]	FF 15 xx xx xx xx
-			callAddr = **(DWORD**)(binArr_6 + 2);
-			break;
-		case 0x90:	// CALL dword ptr [EAX+xxxxxxxx]	FF 90 xx xx xx xx
-			callAddr = *(DWORD*)(rEAX + *((DWORD*)(binArr_6 + 2)));
-			break;
-		case 0x91:	// CALL dword ptr [ECX+xxxxxxxx]	FF 91 xx xx xx xx
-			callAddr = *(DWORD*)(rECX + *((DWORD*)(binArr_6 + 2)));
-			break;
-		case 0x92:	// CALL dword ptr [EDX+xxxxxxxx]	FF 92 xx xx xx xx
-			callAddr = *(DWORD*)(rEDX + *((DWORD*)(binArr_6 + 2)));
-			break;
-		case 0x93:	// CALL dword ptr [EBX+xxxxxxxx]	FF 93 xx xx xx xx
-			callAddr = *(DWORD*)(rEBX + *((DWORD*)(binArr_6 + 2)));
-			break;
-		case 0x95:	// CALL dword ptr [EBP+xxxxxxxx]	FF 95 xx xx xx xx
-			callAddr = *(DWORD*)(rEBP + *((DWORD*)(binArr_6 + 2)));
-			break;
-		case 0x96:	// CALL dword ptr [ESI+xxxxxxxx]	FF 96 xx xx xx xx
-			callAddr = *(DWORD*)(rESI + *((DWORD*)(binArr_6 + 2)));
-			break;
-		case 0x97:	// CALL dword ptr [EDI+xxxxxxxx]	FF 97 xx xx xx xx
-			callAddr = *(DWORD*)(rEDI + *((DWORD*)(binArr_6 + 2)));
-			break;
-		default:
-			break;
-		}
-	}
-	if (0 == callAddr && (byte)binArr_5[0] == 0xE8) {
-		// CALL rel32	E8 xx xx xx xx
-		// °ÑÕâÖÖÖ¸ÁîµÄÅÐ¶Ï·Åµ½×îºó£¬ÒòÎªÕâ¸öÖ¸ÁîÖ»ÅÐ¶Ï binArr_5[0] == 0xE8
-		// ¸üÈÝÒ×³öÏÖÎóÅÐ£¬¶øÇ°ÃæµÄÄÇÐ©Ö¸Áî¶¼ÊÇÅÐ¶ÏÁ½¸ö×Ö½ÚµÄÄÚÈÝµÄ£¬²»ÈÝÒ×ÎóÅÐ
-		callAddr = (DWORD)call_next_addr + *(DWORD*)(binArr_5 + 1);
-	}
-	/*
-	»¹Ê£ÏÂÒÔÏÂ¼¸ÖÖÖ¸ÁîÃ»ÓÐÖ§³Ö£º
-	Ö¸Áî	¶þ½øÖÆÐÎÊ½
-	CALL dword ptr [REG*SCALE+BASE]	FF 14 xx
+  // TODO: å¦‚æžœåœ¨è°ƒè¯•çŠ¶æ€ä¸‹å¯¹callæŒ‡ä»¤çš„åœ°æ–¹ä¸‹äº†æ–­ç‚¹ï¼ŒbinArr[0]å°±æˆ0xccäº†ï¼
+  // TODO: å¯èƒ½ä¼šå‡ºçŽ°åŒæ—¶æ»¡è¶³å¤šç§è§„åˆ™çš„æƒ…å†µ
+  // å¦‚ï¼še8 c5 34 ff 10
+  // æ—¢è¡¨ç¤º"CALL rel32  E8 xx xx xx xx"ï¼Œ
+  // åˆè¡¨ç¤º"CALL dword ptr [EAX]  FF 10"
+  // è¿™ç§æƒ…å†µæš‚æ—¶æ²¡æœ‰å¤„ç†
+  DWORD callAddr = 0;
+  byte bAddr;
+  if (0 == callAddr && (byte)binArr_2[0] == 0xFF) {
+    bAddr = binArr_2[1];
+    switch (bAddr) {
+    case 0x10:  // CALL dword ptr [EAX] FF 10
+      callAddr = *((DWORD*)rEAX);
+      break;
+    case 0x11:  // CALL dword ptr [ECX] FF 11
+      callAddr = *((DWORD*)rECX);
+      break;
+    case 0x12:  // CALL dword ptr [EDX] FF 12
+      callAddr = *((DWORD*)rEDX);
+      break;
+    case 0x13:  // CALL dword ptr [EBX] FF 13
+      callAddr = *((DWORD*)rEBX);
+      break;
+    case 0x16:  // CALL dword ptr [ESI] FF 16
+      callAddr = *((DWORD*)rESI);
+      break;
+    case 0x17:  // CALL dword ptr [EDI] FF 17
+      callAddr = *((DWORD*)rEDI);
+      break;
+    case 0xD0:  // CALL EAX FF D0
+      callAddr = rEAX;
+      break;
+    case 0xD1:  // CALL ECX FF D1
+      callAddr = rECX;
+      break;
+    case 0xD2:  // CALL EDX FF D2
+      callAddr = rEDX;
+      break;
+    case 0xD3:  // CALL EBX FF D3
+      callAddr = rEBX;
+      break;
+    case 0xD4:  // CALL ESP FF D4
+      callAddr = rESP;
+      break;
+    case 0xD5:  // CALL EBP FF D5
+      callAddr = rEBP;
+      break;
+    case 0xD6:  // CALL ESI FF D6
+      callAddr = rESI;
+      break;
+    case 0xD7:  // CALL EDI FF D7
+      callAddr = rEDI;
+      break;
+    default:
+      break;
+    }
+  }
+  if (0 == callAddr && (byte)binArr_3[0] == 0xFF) {
+    bAddr = binArr_3[1];
+    switch (bAddr) {
+    case 0x50:  // CALL dword ptr [EAX+xx]  FF 50 xx
+      callAddr = *((DWORD*)((byte*)rEAX + binArr_3[2]));
+      break;
+    case 0x51:  // CALL dword ptr [ECX+xx]  FF 51 xx
+      callAddr = *((DWORD*)((byte*)rECX + binArr_3[2]));
+      break;
+    case 0x52:  // CALL dword ptr [EDX+xx]  FF 52 xx
+      callAddr = *((DWORD*)((byte*)rEDX + binArr_3[2]));
+      break;
+    case 0x53:  // CALL dword ptr [EBX+xx]  FF 53 xx
+      callAddr = *((DWORD*)((byte*)rEBX + binArr_3[2]));
+      break;
+    case 0x55:  // CALL dword ptr [EBP+xx]  FF 55 xx
+      callAddr = *((DWORD*)((byte*)rEBP + binArr_3[2]));
+      break;
+    case 0x56:  // CALL dword ptr [ESI+xx]  FF 56 xx
+      callAddr = *((DWORD*)((byte*)rESI + binArr_3[2]));
+      break;
+    case 0x57:  // CALL dword ptr [EDI+xx]  FF 57 xx
+      callAddr = *((DWORD*)((byte*)rEDI + binArr_3[2]));
+      break;
+    default:
+      break;
+    }
+  }
+  if (0 == callAddr && (byte)binArr_6[0] == 0xFF) {
+    bAddr = binArr_6[1];
+    switch (bAddr) {
+    case 0x15:  // CALL dword ptr [abs32] FF 15 xx xx xx xx
+      callAddr = **(DWORD**)(binArr_6 + 2);
+      break;
+    case 0x90:  // CALL dword ptr [EAX+xxxxxxxx]  FF 90 xx xx xx xx
+      callAddr = *(DWORD*)(rEAX + * ((DWORD*)(binArr_6 + 2)));
+      break;
+    case 0x91:  // CALL dword ptr [ECX+xxxxxxxx]  FF 91 xx xx xx xx
+      callAddr = *(DWORD*)(rECX + * ((DWORD*)(binArr_6 + 2)));
+      break;
+    case 0x92:  // CALL dword ptr [EDX+xxxxxxxx]  FF 92 xx xx xx xx
+      callAddr = *(DWORD*)(rEDX + * ((DWORD*)(binArr_6 + 2)));
+      break;
+    case 0x93:  // CALL dword ptr [EBX+xxxxxxxx]  FF 93 xx xx xx xx
+      callAddr = *(DWORD*)(rEBX + * ((DWORD*)(binArr_6 + 2)));
+      break;
+    case 0x95:  // CALL dword ptr [EBP+xxxxxxxx]  FF 95 xx xx xx xx
+      callAddr = *(DWORD*)(rEBP + * ((DWORD*)(binArr_6 + 2)));
+      break;
+    case 0x96:  // CALL dword ptr [ESI+xxxxxxxx]  FF 96 xx xx xx xx
+      callAddr = *(DWORD*)(rESI + * ((DWORD*)(binArr_6 + 2)));
+      break;
+    case 0x97:  // CALL dword ptr [EDI+xxxxxxxx]  FF 97 xx xx xx xx
+      callAddr = *(DWORD*)(rEDI + * ((DWORD*)(binArr_6 + 2)));
+      break;
+    default:
+      break;
+    }
+  }
+  if (0 == callAddr && (byte)binArr_5[0] == 0xE8) {
+    // CALL rel32 E8 xx xx xx xx
+    // æŠŠè¿™ç§æŒ‡ä»¤çš„åˆ¤æ–­æ”¾åˆ°æœ€åŽï¼Œå› ä¸ºè¿™ä¸ªæŒ‡ä»¤åªåˆ¤æ–­ binArr_5[0] == 0xE8
+    // æ›´å®¹æ˜“å‡ºçŽ°è¯¯åˆ¤ï¼Œè€Œå‰é¢çš„é‚£äº›æŒ‡ä»¤éƒ½æ˜¯åˆ¤æ–­ä¸¤ä¸ªå­—èŠ‚çš„å†…å®¹çš„ï¼Œä¸å®¹æ˜“è¯¯åˆ¤
+    callAddr = (DWORD)call_next_addr + *(DWORD*)(binArr_5 + 1);
+  }
+  /*
+    è¿˜å‰©ä¸‹ä»¥ä¸‹å‡ ç§æŒ‡ä»¤æ²¡æœ‰æ”¯æŒï¼š
+    æŒ‡ä»¤  äºŒè¿›åˆ¶å½¢å¼
+    CALL dword ptr [REG*SCALE+BASE] FF 14 xx
 
-	CALL dword ptr [REG*SCALE+BASE+off8]	FF 54 xx xx
-	CALL dword ptr [REG*SCALE+BASE+off32]	FF 94 xx xx xx xx xx
+    CALL dword ptr [REG*SCALE+BASE+off8]  FF 54 xx xx
+    CALL dword ptr [REG*SCALE+BASE+off32] FF 94 xx xx xx xx xx
 
-	CALL FAR seg16:abs32	9A xx xx xx xx xx xx
-	*/
+    CALL FAR seg16:abs32  9A xx xx xx xx xx xx
+  */
 
-	/*
-	NOTE:
-	ÒÔÏÂÇé¿ö»áµ¼ÖÂ·µ»ØÖµcallAddrÎª0£º
-		ÒªmockµÄº¯ÊýÃ»ÓÐ´«Èë²ÎÊý£¬²¢ÇÒÔÚº¯Êýµ÷ÓÃµÄµØ·½ÏÂÁË¶Ïµã£»
-	Ô­ÒòÊÇÏÂÁË¶Ïµãºóµ÷ÊÔÆ÷»áÔÚ¶Ïµã´¦ÐÞ¸ÄÄÚ´æÎª0xCC£¬´Ó¶øµ¼ÖÂÕâÀïÎÞ·¨½âÎö³öµ½µ×ÊÇÄÄÖÖµ÷ÓÃ·½Ê½£¬
-	ÐÞÕý°ì·¨ÊÇ£º°Ñ¶ÏµãÈ¥µô¡£
-	*/
+  /*
+    NOTE:
+    ä»¥ä¸‹æƒ…å†µä¼šå¯¼è‡´è¿”å›žå€¼callAddrä¸º0ï¼š
+    è¦mockçš„å‡½æ•°æ²¡æœ‰ä¼ å…¥å‚æ•°ï¼Œå¹¶ä¸”åœ¨å‡½æ•°è°ƒç”¨çš„åœ°æ–¹ä¸‹äº†æ–­ç‚¹ï¼›
+    åŽŸå› æ˜¯ä¸‹äº†æ–­ç‚¹åŽè°ƒè¯•å™¨ä¼šåœ¨æ–­ç‚¹å¤„ä¿®æ”¹å†…å­˜ä¸º0xCCï¼Œä»Žè€Œå¯¼è‡´è¿™é‡Œæ— æ³•è§£æžå‡ºåˆ°åº•æ˜¯å“ªç§è°ƒç”¨æ–¹å¼ï¼Œ
+    ä¿®æ­£åŠžæ³•æ˜¯ï¼šæŠŠæ–­ç‚¹åŽ»æŽ‰ã€‚
+  */
 
-	return callAddr;
+  return callAddr;
 }
 
 GMockPlus* QueryMockInfo(void* srcAddr) {
-	GMockPlus* mockInfo = MockMgr::GetInstance()->QueryMockInfo(srcAddr);
-	ASSERT(mockInfo);
-	return mockInfo;
+  GMockPlus* mockInfo = MockMgr::GetInstance()->QueryMockInfo(srcAddr);
+  ASSERT(mockInfo);
+  return mockInfo;
 }
 
 void HookAll() {
-	HookMgr::GetInstance()->HookAll();
+  HookMgr::GetInstance()->HookAll();
 }
 
 void UnhookAll() {
-	HookMgr::GetInstance()->UnhookAll();
+  HookMgr::GetInstance()->UnhookAll();
 }
 
 void* internal::QueryNewSrcAddrImpl_(void* srcAddr) {
-	void* result = srcAddr;
-	if (srcAddr) {
-		GMockPlus* mockInfo = MockMgr::GetInstance()->QueryMockInfo(srcAddr);
-		if (mockInfo) {
-			result = mockInfo->GetNewSrcAddr();
-		}
-	}
+  void* result = srcAddr;
+  if (srcAddr) {
+    GMockPlus* mockInfo = MockMgr::GetInstance()->QueryMockInfo(srcAddr);
+    if (mockInfo) {
+      result = mockInfo->GetNewSrcAddr();
+    }
+  }
 
-	return result;
+  return result;
 }
 
-void __declspec(naked) MockFunctionJmpTo() {	// ±»hookµÄº¯ÊýÖ±½Ójmpµ½´Ë£¬´Ëº¯ÊýÐèÒª¸ºÔðÕ»Æ½ºâ£¬×ªµ÷ÐÂµÄÊµÏÖ
-	__asm {
-		// 1.±£´æ¼Ä´æÆ÷
-		pushad	// ±£´æ¸÷¼Ä´æÆ÷£¨Ò»¹²8¸ö¼Ä´æÆ÷£©
-		push ebp
-		mov ebp, esp
+void __declspec(naked) MockFunctionJmpTo() {  // è¢«hookçš„å‡½æ•°ç›´æŽ¥jmpåˆ°æ­¤ï¼Œæ­¤å‡½æ•°éœ€è¦è´Ÿè´£æ ˆå¹³è¡¡ï¼Œè½¬è°ƒæ–°çš„å®žçŽ°
+  __asm {
+    // 1.ä¿å­˜å¯„å­˜å™¨
+    pushad  // ä¿å­˜å„å¯„å­˜å™¨ï¼ˆä¸€å…±8ä¸ªå¯„å­˜å™¨ï¼‰
+    push ebp
+    mov ebp, esp
 
-		sub esp, 16	// Ô¤ÁôËÄ¸ö×Ö¸øÁÙÊ±±äÁ¿Ê¹ÓÃ£¡
+    sub esp, 16 // é¢„ç•™å››ä¸ªå­—ç»™ä¸´æ—¶å˜é‡ä½¿ç”¨ï¼
 
-		// 2.»ñÈ¡GMockPlus¶ÔÏóÖ¸Õë
-		// ÕÒµ½ÊÇ´ÓÄÄÀïjmpµ½´ËµÄ
-		// ebp - 4 ±£´æ srcFuncAddr
-		mov ebx, ebp
-		add ebx, 4
-		push ebx	// ±£´æµÄ¼Ä´æÆ÷ÃÇµÄµØÖ·
-		mov ebx, [ebp + 36]
-		push ebx
-		call AnalysisCallAddr
+    // 2.èŽ·å–GMockPluså¯¹è±¡æŒ‡é’ˆ
+    // æ‰¾åˆ°æ˜¯ä»Žå“ªé‡Œjmpåˆ°æ­¤çš„
+    // ebp - 4 ä¿å­˜ srcFuncAddr
+    mov ebx, ebp
+    add ebx, 4
+    push ebx  // ä¿å­˜çš„å¯„å­˜å™¨ä»¬çš„åœ°å€
+    mov ebx, [ebp + 36]
+    push ebx
+    call AnalysisCallAddr
 
+    add esp, 8
+    mov dword ptr [ebp - 4], eax
 
+    // é€šè¿‡æ‰€callçš„å‡½æ•°åœ°å€æ‰¾åˆ°mockå¯¹è±¡çš„æŒ‡é’ˆ
+    push eax
+    call QueryMockInfo
+    add esp, 4
+    mov dword ptr [ebp - 4], eax  // ebp - 4 é‡Œä¿å­˜å¯¹è±¡æŒ‡é’ˆ
 
+    // 3.å‡†å¤‡å‚æ•°å¹¶è°ƒç”¨dstMethodAddrï¼ŒdstMethodAddræ˜¯ç±»çš„æˆå‘˜å‡½æ•°ï¼Œæ ˆå¹³è¡¡æ˜¯ç”±dstMethodAddrå‡½æ•°åšçš„
+    mov ecx, dword ptr [ebp - 4]
+    call GMockPlus::GetObjPtr
+    mov dword ptr [ebp - 8], eax  // ebp - 8 é‡Œä¿å­˜ objPtr
+    mov ecx, dword ptr [ebp - 4]
+    call GMockPlus::GetDstMethodAddr
+    mov dword ptr [ebp - 12], eax // ebp - 12 é‡Œä¿å­˜ dstMethodAddr
+    mov ecx, dword ptr [ebp - 4]
+    call GMockPlus::GetParamCount
+    mov dword ptr [ebp - 16], eax // ebp - 16 é‡Œä¿å­˜ paramCnt
 
+    // call objPtr->dstMethodAddr
+    call GMockPlus::ShouldPassParams  // hookå‡½æ•°çš„å‚æ•°å¯ä»¥ä¸ŽåŽŸå‡½æ•°ä¿æŒä¸€è‡´ï¼Œä¹Ÿå¯ä»¥æ²¡æœ‰å‚æ•°ï¼ˆå¦‚æžœä¸å…³å¿ƒå‚æ•°çš„è¯ï¼‰
+    mov bl, al
+    movzx eax, bl
+    test eax, eax
+    je callDstMethod  // ä¸éœ€è¦ä¼ å‚æ•°ç»™ objPtr->dstMethodAddr çš„è¯å°±ç›´æŽ¥è°ƒç”¨ä¹‹
 
+    // å¦åˆ™å°†å‚æ•°åŽ‹åˆ°æ ˆä¸Š
+    mov ecx, dword ptr [ebp - 16]
+    jmp compareWithZero
+    subParamCnt:
+    sub ecx, 1
+    compareWithZero:
+    cmp ecx, 0
+    jbe callDstMethod // å‚æ•°å·²ç»pushå®Œ
+    mov eax, ecx
+    shl eax, 2
+    add eax, 4 + 32   // è¿™é‡Œçš„32æ˜¯ä¸ºäº†è·³è¿‡pushadä¿å­˜çš„8ä¸ªå¯„å­˜å™¨
+    mov ebx, dword ptr [ebp + eax]
+    push ebx  // å‚æ•°å…¥æ ˆ
+    jmp subParamCnt
+    callDstMethod:
+    mov ecx, dword ptr [ebp - 8]  // [ebp - 8]ä¿å­˜çš„æ˜¯objPtrçš„æŒ‡é’ˆ
+    mov eax, dword ptr [ebp - 12] // [ebp - 12]ä¿å­˜çš„æ˜¯ç±»æˆå‘˜å‡½æ•°çš„æŒ‡é’ˆ
+    call eax
+    mov dword ptr [ebp - 12], eax // [ebp - 12] é‡Œä¿å­˜è¿”å›žå€¼
+    mov dword ptr [ebp - 8], edx  // å¦‚æžœè¿”å›žå€¼æ˜¯__int64çš„è¯ï¼Œedxä¸­ä¹Ÿä¼šä¿å­˜è¿”å›žå€¼
 
-		add esp, 8
-		mov dword ptr [ebp - 4], eax
+    // 4.å¹³è¡¡æ ˆä¸Žå¯„å­˜å™¨æ¢å¤
+    mov ecx, dword ptr [ebp - 4]
+    call GMockPlus::IsCDeclCall   // å¦‚æžœä¸æ˜¯ CDECL_CALLï¼Œæ ˆå¹³è¡¡å·¥ä½œéœ€è¦æ”¾åœ¨è¿™é‡Œåš
+    test al, al
+    jne cdecl_call
 
-		// Í¨¹ýËùcallµÄº¯ÊýµØÖ·ÕÒµ½mock¶ÔÏóµÄÖ¸Õë
-		push eax
-		call QueryMockInfo
-		add esp, 4
-		mov dword ptr [ebp - 4], eax	// ebp - 4 Àï±£´æ¶ÔÏóÖ¸Õë
+    mov eax, dword ptr [ebp - 12] // è®¾ç½®è¿”å›žå€¼åˆ° eax
+    mov edx, dword ptr [ebp - 8]  // è®¾ç½®è¿”å›žå€¼åˆ° edx
+    mov ecx, dword ptr [ebp - 16] // [ebp - 16]é‡Œä¿å­˜çš„æ˜¯å‚æ•°ä¸ªæ•°ï¼Œè¿™é‡Œåšä¸‹æ ˆå¹³è¡¡
+    mov esp, ebp
+    pop ebp
+    jmp stack_balance
 
-		// 3.×¼±¸²ÎÊý²¢µ÷ÓÃdstMethodAddr£¬dstMethodAddrÊÇÀàµÄ³ÉÔ±º¯Êý£¬Õ»Æ½ºâÊÇÓÉdstMethodAddrº¯Êý×öµÄ
-		mov ecx, dword ptr [ebp - 4]
-		call GMockPlus::GetObjPtr
-		mov dword ptr [ebp - 8], eax	// ebp - 8 Àï±£´æ objPtr
-		mov ecx, dword ptr [ebp - 4]
-		call GMockPlus::GetDstMethodAddr
-		mov dword ptr [ebp - 12], eax	// ebp - 12 Àï±£´æ dstMethodAddr
-		mov ecx, dword ptr [ebp - 4]
-		call GMockPlus::GetParamCount
-		mov dword ptr [ebp - 16], eax	// ebp - 16 Àï±£´æ paramCnt
+    cdecl_call: // cdecl å¯ä»¥è®¤ä¸ºæ˜¯å‚æ•°ä¸ªæ•°ä¸º0çš„æƒ…å†µ
+    mov eax, dword ptr [ebp - 12] // è®¾ç½®è¿”å›žå€¼åˆ° eax
+    mov edx, dword ptr [ebp - 8]  // è®¾ç½®è¿”å›žå€¼åˆ° edx
+    mov ecx, 0
+    mov esp, ebp
+    pop ebp
 
-		// call objPtr->dstMethodAddr
-		call GMockPlus::ShouldPassParams	// hookº¯ÊýµÄ²ÎÊý¿ÉÒÔÓëÔ­º¯Êý±£³ÖÒ»ÖÂ£¬Ò²¿ÉÒÔÃ»ÓÐ²ÎÊý£¨Èç¹û²»¹ØÐÄ²ÎÊýµÄ»°£©
-		mov bl, al
-		movzx eax, bl
-		test eax, eax
-		je callDstMethod	// ²»ÐèÒª´«²ÎÊý¸ø objPtr->dstMethodAddr µÄ»°¾ÍÖ±½Óµ÷ÓÃÖ®
+    stack_balance:
+    push eax  // ä¿å­˜è¿”å›žå€¼ï¼
+    push edx  // ä¿å­˜è¿”å›žå€¼ï¼
+    /*
+      æ­¤æ—¶çš„æ ˆçŠ¶æ€ï¼š
+      -------------- esp
+      edx
+      eax
+      regs
+      eip
+      param_1
+      ...
+      param_n
+    */
 
-		// ·ñÔò½«²ÎÊýÑ¹µ½Õ»ÉÏ
-		mov ecx, dword ptr [ebp - 16]
-		jmp compareWithZero
-subParamCnt:
-		sub ecx, 1
-compareWithZero:
-		cmp ecx, 0
-		jbe callDstMethod	// ²ÎÊýÒÑ¾­pushÍê
-		mov eax, ecx
-		shl eax, 2
-		add eax, 4 + 32		// ÕâÀïµÄ32ÊÇÎªÁËÌø¹ýpushad±£´æµÄ8¸ö¼Ä´æÆ÷
-		mov ebx, dword ptr [ebp + eax]
-		push ebx	// ²ÎÊýÈëÕ»
-		jmp subParamCnt
-callDstMethod:
-		mov ecx, dword ptr [ebp - 8]	// [ebp - 8]±£´æµÄÊÇobjPtrµÄÖ¸Õë
-		mov eax, dword ptr [ebp - 12]	// [ebp - 12]±£´æµÄÊÇÀà³ÉÔ±º¯ÊýµÄÖ¸Õë
-		call eax
-		mov dword ptr [ebp - 12], eax	// [ebp - 12] Àï±£´æ·µ»ØÖµ
-		mov dword ptr [ebp - 8], edx	// Èç¹û·µ»ØÖµÊÇ__int64µÄ»°£¬edxÖÐÒ²»á±£´æ·µ»ØÖµ
+    mov edx, ecx
+    shl edx, 2  // å‚æ•°ä¸ªæ•°çš„åç§»
 
-		// 4.Æ½ºâÕ»Óë¼Ä´æÆ÷»Ö¸´
-		mov ecx, dword ptr [ebp - 4]
-		call GMockPlus::IsCDeclCall		// Èç¹û²»ÊÇ CDECL_CALL£¬Õ»Æ½ºâ¹¤×÷ÐèÒª·ÅÔÚÕâÀï×ö
-		test al, al
-		jne cdecl_call
+    cmp ecx, 0
+    je no_param_stack_balance
 
-		mov eax, dword ptr [ebp - 12]	// ÉèÖÃ·µ»ØÖµµ½ eax
-		mov edx, dword ptr [ebp - 8]	// ÉèÖÃ·µ»ØÖµµ½ edx
-		mov ecx, dword ptr [ebp - 16]	// [ebp - 16]Àï±£´æµÄÊÇ²ÎÊý¸öÊý£¬ÕâÀï×öÏÂÕ»Æ½ºâ
-		mov esp, ebp
-		pop ebp
-		jmp stack_balance
+    mov ebx, dword ptr [esp + 32 + 8] // ä¸‹ä¸€æ¡æŒ‡ä»¤çš„åœ°å€
+    mov eax, esp
+    add eax, 32 + 8
+    add eax, edx
+    mov dword ptr [eax], ebx    // è®¾ç½®ä¸‹ä¸€æ¡æŒ‡ä»¤çš„åœ°å€
+    /*
+      æ­¤æ—¶çš„æ ˆçŠ¶æ€ï¼š
+      -------------- esp
+      edx
+      eax
+      regs
+      eip
+      param_1
+      ...
+      param_n-1
+      eip
+    */
 
-cdecl_call:	// cdecl ¿ÉÒÔÈÏÎªÊÇ²ÎÊý¸öÊýÎª0µÄÇé¿ö
-		mov eax, dword ptr [ebp - 12]	// ÉèÖÃ·µ»ØÖµµ½ eax
-		mov edx, dword ptr [ebp - 8]	// ÉèÖÃ·µ»ØÖµµ½ edx
-		mov ecx, 0
-		mov esp, ebp
-		pop ebp
+    mov ecx, 8 + 2  // æŒªåŠ¨ç¼“å­˜çš„8ä¸ªå¯„å­˜å™¨å’Œæ ˆé¡¶çš„eaxå’Œedxï¼ˆè¿”å›žå€¼ï¼‰
+    mov esi, esp
+    add esi, 8 + 32 - 4   // esiæŒ‡å‘pushadæœ€åº•éƒ¨çš„reg
+    mov edi, esi
+    add edi, edx  // ediæŒ‡å‘è¦ç§»å¾€çš„åœ°æ–¹
+    move_regs:
+    cmp ecx, 0
+    jbe no_param_stack_balance
+    mov eax, dword ptr [esi]
+    mov dword ptr [edi], eax
+    sub esi, 4
+    sub edi, 4
+    sub ecx, 1
+    jmp move_regs
+    no_param_stack_balance:
+    /*
+      æ­¤æ—¶çš„æ ˆçŠ¶æ€ï¼š
+      -------------- esp
+      temp_1
+      ...
+      temp_n
+      edx
+      eax
+      regs
+      eip
+    */
+    add esp, edx
+    add esp, 8
+    /*
+      æ­¤æ—¶çš„æ ˆçŠ¶æ€ï¼š
+      edx
+      eax
+      -------------- esp
+      regs
+      eip
+    */
 
-stack_balance:
-		push eax	// ±£´æ·µ»ØÖµ£¡
-		push edx	// ±£´æ·µ»ØÖµ£¡
-		/*
-		´ËÊ±µÄÕ»×´Ì¬£º
-		-------------- esp
-		edx
-		eax
-		regs
-		eip
-		param_1
-		...
-		param_n
-		*/
-
-		mov edx, ecx
-		shl edx, 2	// ²ÎÊý¸öÊýµÄÆ«ÒÆ
-
-		cmp ecx, 0
-		je no_param_stack_balance
-
-		mov ebx, dword ptr [esp + 32 + 8]	// ÏÂÒ»ÌõÖ¸ÁîµÄµØÖ·
-		mov eax, esp
-		add eax, 32 + 8
-		add eax, edx
-		mov dword ptr [eax], ebx		// ÉèÖÃÏÂÒ»ÌõÖ¸ÁîµÄµØÖ·
-		/*
-		´ËÊ±µÄÕ»×´Ì¬£º
-		-------------- esp
-		edx
-		eax
-		regs
-		eip
-		param_1
-		...
-		param_n-1
-		eip
-		*/
-
-		mov ecx, 8 + 2	// Å²¶¯»º´æµÄ8¸ö¼Ä´æÆ÷ºÍÕ»¶¥µÄeaxºÍedx£¨·µ»ØÖµ£©
-		mov esi, esp
-		add esi, 8 + 32 - 4		// esiÖ¸Ïòpushad×îµ×²¿µÄreg
-		mov edi, esi
-		add edi, edx	// ediÖ¸ÏòÒªÒÆÍùµÄµØ·½
-move_regs:
-		cmp ecx, 0
-		jbe no_param_stack_balance
-		mov eax, dword ptr [esi]
-		mov dword ptr [edi], eax
-		sub esi, 4
-		sub edi, 4
-		sub ecx, 1
-		jmp move_regs
-no_param_stack_balance:
-		/*
-		´ËÊ±µÄÕ»×´Ì¬£º
-		-------------- esp
-		temp_1
-		...
-		temp_n
-		edx
-		eax
-		regs
-		eip
-		*/
-		add esp, edx
-		add esp, 8
-		/*
-		´ËÊ±µÄÕ»×´Ì¬£º
-		edx
-		eax
-		-------------- esp
-		regs
-		eip
-		*/
-
-		popad
-		/*
-		´ËÊ±µÄÕ»×´Ì¬£º
-		edx
-		eax
-		regs
-		-------------- esp
-		eip
-		*/
-		mov eax, dword ptr [esp - 32 - 4]
-		mov edx, dword ptr [esp - 32 - 8]
-		ret
-	}
+    popad
+    /*
+      æ­¤æ—¶çš„æ ˆçŠ¶æ€ï¼š
+      edx
+      eax
+      regs
+      -------------- esp
+      eip
+    */
+    mov eax, dword ptr [esp - 32 - 4]
+    mov edx, dword ptr [esp - 32 - 8]
+    ret
+  }
 }
 
-GMockPlus::GMockPlus(void* srcAddr,
-					   void* objPtr,
-					   void* dstMethodAddr,
-					   bool hookImmediately/* = true*/,
-					   CallType callType /*= CDECL_CALL*/,
-					   size_t paramCnt /*= 0*/,
-					   bool passParams /*= true*/)
-: m_callType(callType)
-, m_paramCnt(paramCnt)
-, m_srcAddr(srcAddr)
-, m_dstAddr(NULL)
-, m_objPtr(objPtr)
-, m_dstMethodAddr(dstMethodAddr)
-, m_newSrcAddr(NULL)
-, m_hooked(false)
-, m_registed(false)
-, m_passParams(passParams) {
-	ASSERT(srcAddr && objPtr && dstMethodAddr);
-	m_dstAddr = MockFunctionJmpTo;
-	PreHook();
-	if (hookImmediately) {
-		Hook();
-	}
+GMockPlus::GMockPlus(
+  void* srcAddr,
+  void* objPtr,
+  void* dstMethodAddr,
+  bool hookImmediately/* = true*/,
+  CallType callType /*= CDECL_CALL*/,
+  size_t paramCnt /*= 0*/,
+  bool passParams /*= true*/
+) : m_callType(callType)
+  , m_paramCnt(paramCnt)
+  , m_srcAddr(srcAddr)
+  , m_dstAddr(NULL)
+  , m_objPtr(objPtr)
+  , m_dstMethodAddr(dstMethodAddr)
+  , m_newSrcAddr(NULL)
+  , m_hooked(false)
+  , m_registed(false)
+  , m_passParams(passParams) {
+  ASSERT(srcAddr && objPtr && dstMethodAddr);
+  m_dstAddr = MockFunctionJmpTo;
+  PreHook();
+  if (hookImmediately) {
+    Hook();
+  }
 }
 
 GMockPlus::GMockPlus(void* srcAddr, void* dstAddr, bool hookImmediately/* = true*/)
-:m_callType(INVALID_CALL)
-,m_paramCnt(0)
-,m_srcAddr(srcAddr)
-,m_dstAddr(dstAddr)
-,m_objPtr(NULL)
-,m_dstMethodAddr(NULL)
-,m_newSrcAddr(NULL)
-,m_hooked(false)
-,m_registed(false)
-,m_passParams(false) {
-	ASSERT(srcAddr && dstAddr);
-	PreHook();
-	if (hookImmediately) {
-		Hook();
-	}
+  : m_callType(INVALID_CALL)
+  , m_paramCnt(0)
+  , m_srcAddr(srcAddr)
+  , m_dstAddr(dstAddr)
+  , m_objPtr(NULL)
+  , m_dstMethodAddr(NULL)
+  , m_newSrcAddr(NULL)
+  , m_hooked(false)
+  , m_registed(false)
+  , m_passParams(false) {
+  ASSERT(srcAddr && dstAddr);
+  PreHook();
+  if (hookImmediately) {
+    Hook();
+  }
 }
 
 GMockPlus::~GMockPlus() {
-	Unhook();
+  Unhook();
 }
 
 void GMockPlus::PreHook() {
-	if (!m_registed && !m_hooked) {
-		HookMgr::GetInstance()->AddFuncHook(this);
-		m_registed = true;
-	}
+  if (!m_registed && !m_hooked) {
+    HookMgr::GetInstance()->AddFuncHook(this);
+    m_registed = true;
+  }
 }
 
 void GMockPlus::Hook() {
-	if (!m_registed && !m_hooked) {	// !m_hooked ÓÃÓÚ·ÀÖ¹PreUnhookºóÓÖµ÷ÓÃMock
-		HookMgr::GetInstance()->AddFuncHook(this);
-		m_registed = true;
-	}
-	HookMgr::GetInstance()->HookAll();
-	ASSERT(m_hooked);
+  if (!m_registed && !m_hooked) { // !m_hooked ç”¨äºŽé˜²æ­¢PreUnhookåŽåˆè°ƒç”¨Mock
+    HookMgr::GetInstance()->AddFuncHook(this);
+    m_registed = true;
+  }
+  HookMgr::GetInstance()->HookAll();
+  ASSERT(m_hooked);
 }
 
 void GMockPlus::PreUnhook() {
-	if (m_registed && m_hooked) {
-		HookMgr::GetInstance()->AddFuncUnhook(this);
-		m_registed = false;
-	}
+  if (m_registed && m_hooked) {
+    HookMgr::GetInstance()->AddFuncUnhook(this);
+    m_registed = false;
+  }
 }
 
 void GMockPlus::Unhook() {
-	if (m_registed && m_hooked) {	// m_hooked ÓÃÓÚ·ÀÖ¹¶ÔÏóÉú³Éºó»¹Ã»µ÷ÓÃMock»òÕßMockAll¾Íµ÷ÓÃÁËUnmock
-		HookMgr::GetInstance()->AddFuncUnhook(this);
-		m_registed = false;
-	}
-	HookMgr::GetInstance()->UnhookAll();
-	// assert(!m_hooked);
+  if (m_registed && m_hooked) { // m_hooked ç”¨äºŽé˜²æ­¢å¯¹è±¡ç”ŸæˆåŽè¿˜æ²¡è°ƒç”¨Mockæˆ–è€…MockAllå°±è°ƒç”¨äº†Unmock
+    HookMgr::GetInstance()->AddFuncUnhook(this);
+    m_registed = false;
+  }
+  HookMgr::GetInstance()->UnhookAll();
+  // assert(!m_hooked);
 }
 
-}
+} // namespace testing {

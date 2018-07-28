@@ -1,137 +1,146 @@
-#pragma once
+ï»¿#pragma once
 #include <windows.h>
 #include <crtdbg.h>
 #include <set>
 
-#include "gtest/gtest.h"
+// WARNING:è¢«Mockå‡½æ•°çš„èµ·å§‹ä½ç½®ä¸èƒ½ä¸‹æ–­ç‚¹ï¼Œå¦åˆ™ä¼šå¯¼è‡´Hookå¤±è´¥ï¼
+#define GMOCKPLUS_CDECL(srcAddr, gmockObj, gmockMethodAddr, paramCount) \
+  testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(srcAddr, &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::CDECL_CALL, paramCount)
 
-// WARNING:±»Mockº¯ÊıµÄÆğÊ¼Î»ÖÃ²»ÄÜÏÂ¶Ïµã£¬·ñÔò»áµ¼ÖÂHookÊ§°Ü£¡
-#define GMOCKPLUS_CDECL(srcAddr, gmockObj, gmockMethodAddr, paramCount)	\
-	testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(srcAddr, &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::CDECL_CALL, paramCount)
+#define GMOCKPLUS_STDCALL(srcAddr, gmockObj, gmockMethodAddr, paramCount)   \
+  testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(srcAddr, &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::STD_CALL, paramCount)
 
-#define GMOCKPLUS_STDCALL(srcAddr, gmockObj, gmockMethodAddr, paramCount)	\
-	testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(srcAddr, &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::STD_CALL, paramCount)
+#define GMOCKPLUS_THISCALL(srcMethodAddr, gmockObj, gmockMethodAddr, paramCount)    \
+  testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(testing::internal::GetMethodAddr(srcMethodAddr), &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::THIS_CALL, paramCount)
 
-#define GMOCKPLUS_THISCALL(srcMethodAddr, gmockObj, gmockMethodAddr, paramCount)	\
-	testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(testing::internal::GetMethodAddr(srcMethodAddr), &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::THIS_CALL, paramCount)
+#define GMOCKPLUS_STATICMETHODCALL(srcMethodAddr, gmockObj, gmockMethodAddr, paramCount)    \
+  testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(testing::internal::GetMethodAddr(srcMethodAddr), &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::STATIC_METHOD_CALL, paramCount)
 
-#define GMOCKPLUS_STATICMETHODCALL(srcMethodAddr, gmockObj, gmockMethodAddr, paramCount)	\
-	testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(testing::internal::GetMethodAddr(srcMethodAddr), &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::STATIC_METHOD_CALL, paramCount)
-
-//tolua_begin
 namespace testing {
-//tolua_end
 
-#define GMOCKPLUS_CONCAT_TOKEN_(foo, bar)	GMOCKPLUS_CONCAT_TOKEN_IMPL_(foo, bar)
-#define GMOCKPLUS_CONCAT_TOKEN_IMPL_(foo, bar)	foo ## bar
+#define GMOCKPLUS_CONCAT_TOKEN_(foo, bar)   GMOCKPLUS_CONCAT_TOKEN_IMPL_(foo, bar)
+#define GMOCKPLUS_CONCAT_TOKEN_IMPL_(foo, bar)  foo ## bar
 
-// WARNING:ÕâÀï²»Ö§³Ö´ø¿É±ä²ÎÊıµÄº¯Êı¡£
-// ÁíÍâ£¬¿É±ä²ÎÊıµÄ³ÉÔ±º¯ÊıµÄÕ»Æ½ºâ¹¤×÷²»ÔÙÓÉ³ÉÔ±º¯Êı±¾ÉíÀ´×öÁË£¨ÕâºÜºÏÀí£¬ÒòÎªµ÷ÓÃÕß²Å»áÃ÷È·µÄÖªµÀÓĞ¶àÉÙ¸ö²ÎÊı£©
-// ÁíÍâ£¬µ÷ÓÃ¿É±ä²ÎÊıµÄ³ÉÔ±º¯ÊıÊ±£¬Ò²Ã»ÓĞÔÙÓÃecx¼Ä´æÆ÷À´´«µİthisÖ¸ÕëÁË¡£
+// WARNING:è¿™é‡Œä¸æ”¯æŒå¸¦å¯å˜å‚æ•°çš„å‡½æ•°ã€‚
+// å¦å¤–ï¼Œå¯å˜å‚æ•°çš„æˆå‘˜å‡½æ•°çš„æ ˆå¹³è¡¡å·¥ä½œä¸å†ç”±æˆå‘˜å‡½æ•°æœ¬èº«æ¥åšäº†ï¼ˆè¿™å¾ˆåˆç†ï¼Œå› ä¸ºè°ƒç”¨è€…æ‰ä¼šæ˜ç¡®çš„çŸ¥é“æœ‰å¤šå°‘ä¸ªå‚æ•°ï¼‰
+// å¦å¤–ï¼Œè°ƒç”¨å¯å˜å‚æ•°çš„æˆå‘˜å‡½æ•°æ—¶ï¼Œä¹Ÿæ²¡æœ‰å†ç”¨ecxå¯„å­˜å™¨æ¥ä¼ é€’thisæŒ‡é’ˆäº†ã€‚
 enum CallType {
-	INVALID_CALL = -1,
-	STD_CALL = 0,
-	CDECL_CALL = 1,		// __cdecl µ÷ÓÃ·½Ê½µÄÕ»Æ½ºâ¹¤×÷ÊÇ½»ÓÉµ÷ÓÃÕßÀ´×öµÄ£¬´ËÊ±²»ĞèÒª¹ØĞÄ²ÎÊı¸öÊı
-	THIS_CALL = STD_CALL,
-	STATIC_METHOD_CALL = CDECL_CALL,
-	STATIC_STDCALL_METHOD_CALL = STD_CALL
+  INVALID_CALL = -1,
+  STD_CALL = 0,
+  CDECL_CALL = 1,     // __cdecl è°ƒç”¨æ–¹å¼çš„æ ˆå¹³è¡¡å·¥ä½œæ˜¯äº¤ç”±è°ƒç”¨è€…æ¥åšçš„ï¼Œæ­¤æ—¶ä¸éœ€è¦å…³å¿ƒå‚æ•°ä¸ªæ•°
+  THIS_CALL = STD_CALL,
+  STATIC_METHOD_CALL = CDECL_CALL,
+  STATIC_STDCALL_METHOD_CALL = STD_CALL
 };
 
 class HookMgr;
 class MockMgr;
 
-class GTEST_API_ GMockPlus {
-	friend class HookMgr;
-	friend class MockMgr;
-public:
-	GMockPlus(void* srcAddr, void* objPtr, void* dstMethodAddr, bool hookImmediately = true, CallType callType = CDECL_CALL, size_t paramCnt = 0, bool passParams = true);
-	GMockPlus(void* srcAddr, void* dstAddr, bool hookImmediately = true);	// dstAddr ×Ô¼º×öÕ»Æ½ºâ
+class GMockPlus {
+  friend class HookMgr;
+  friend class MockMgr;
+ public:
+  GMockPlus(void* srcAddr, void* objPtr, void* dstMethodAddr, bool hookImmediately = true, CallType callType = CDECL_CALL, size_t paramCnt = 0, bool passParams = true);
+  GMockPlus(void* srcAddr, void* dstAddr, bool hookImmediately = true);   // dstAddr è‡ªå·±åšæ ˆå¹³è¡¡
 
-	~GMockPlus();
+  ~GMockPlus();
 
-	void PreHook();
-	void Hook();
-	void PreUnhook();
-	void Unhook();
-	void* GetSrcAddr() { return m_srcAddr; }
-	void* GetNewSrcAddr() { return m_newSrcAddr; }
+  void PreHook();
+  void Hook();
+  void PreUnhook();
+  void Unhook();
+  void* GetSrcAddr() {
+    return m_srcAddr;
+  }
+  void* GetNewSrcAddr() {
+    return m_newSrcAddr;
+  }
 
-	void* GetObjPtr() { return m_objPtr; }
-	void* GetDstMethodAddr() { return m_dstMethodAddr; }
-	size_t GetParamCount() { return m_paramCnt; }
-	bool IsCDeclCall() { return m_callType == CDECL_CALL; }
-	bool ShouldPassParams() { return m_passParams; }
+  void* GetObjPtr() {
+    return m_objPtr;
+  }
+  void* GetDstMethodAddr() {
+    return m_dstMethodAddr;
+  }
+  size_t GetParamCount() {
+    return m_paramCnt;
+  }
+  bool IsCDeclCall() {
+    return m_callType == CDECL_CALL;
+  }
+  bool ShouldPassParams() {
+    return m_passParams;
+  }
 
-private:
-	void*		m_srcAddr;
-	void*		m_dstAddr;
-	void*		m_newSrcAddr;
-	void*		m_objPtr;
-	void*		m_dstMethodAddr;
-	CallType	m_callType;
-	size_t		m_paramCnt;
-	bool		m_hooked;
-	bool		m_registed;
-	bool		m_passParams;
+ private:
+  void* m_srcAddr;
+  void* m_dstAddr;
+  void* m_newSrcAddr;
+  void* m_objPtr;
+  void* m_dstMethodAddr;
+  CallType m_callType;
+  size_t m_paramCnt;
+  bool m_hooked;
+  bool m_registed;
+  bool m_passParams;
 };
 
 #ifdef _DEBUG
-#define ASSERT(expression)	\
-	if (! (expression))	\
-{	\
-	if (1 == _CrtDbgReport(_CRT_ASSERT, __FILE__, __LINE__, NULL, #expression))	\
-{	\
-	DebugBreak();	\
-}	\
-}
+#define ASSERT(expression)  \
+  if (! (expression)) \
+  {   \
+    if (1 == _CrtDbgReport(_CRT_ASSERT, __FILE__, __LINE__, NULL, #expression)) \
+    {   \
+      DebugBreak();   \
+    }   \
+  }
 #else
 #define ASSERT(expression)
-#endif	// ~_DEBUG
+#endif  // ~_DEBUG
 
 namespace internal {
-GTEST_API_ void* QueryNewSrcAddrImpl_(void* srcAddr);	// ÕÒ²»µ½Ê±Ö±½Ó·µ»ØsrcAddr
+void* QueryNewSrcAddrImpl_(void* srcAddr);  // æ‰¾ä¸åˆ°æ—¶ç›´æ¥è¿”å›srcAddr
 
 template <typename T>
 inline void* GetMethodAddr(T func) {
-	return *(void**)&func;
+  return *(void**)&func;
 }
 
 }
 void HookAll();
 void UnhookAll();
 
-// ¼øÓÚ dbghelp µÄÏŞÖÆ£¬SymbolÏà¹ØµÄº¯Êı¡°²»¡±ÊÇÏß³Ì°²È«µÄ
-GTEST_API_ bool SetSymSearchPath(const wchar_t* utf16Path);
+// é‰´äº dbghelp çš„é™åˆ¶ï¼ŒSymbolç›¸å…³çš„å‡½æ•°â€œä¸â€æ˜¯çº¿ç¨‹å®‰å…¨çš„
+bool SetSymSearchPath(const wchar_t* utf16Path);
 
 /*
-	@param
-		moduleName ²»´øÂ·¾¶µÄÄ£¿éÃû£¨Èç£ºxxx.dll, xxx.exe£©
-		symbolName ·ûºÅÃû£¨Èç£ºnamespace_name::class_name::method_name£©
-	@return	·ûºÅµØÖ·
+    @param
+        moduleName ä¸å¸¦è·¯å¾„çš„æ¨¡å—åï¼ˆå¦‚ï¼šxxx.dll, xxx.exeï¼‰
+        symbolName ç¬¦å·åï¼ˆå¦‚ï¼šnamespace_name::class_name::method_nameï¼‰
+    @return ç¬¦å·åœ°å€
 */
-// ¶ÔÓÚ·ÇÖØÔØº¯Êı£¬²ÎÊısymbolNameÖ±½Ó´«º¯ÊıÃû¼´¿É£¬Èç£ºtestFunc, MyClass::testMethod
-// Èç¹ûÊÇÖØÔØº¯Êı£¬Ôò²ÎÊısymbolNameĞèÒªÎªº¯ÊıÃûºÍ²ÎÊıÀàĞÍĞÅÏ¢£¬Èç£º
+// å¯¹äºéé‡è½½å‡½æ•°ï¼Œå‚æ•°symbolNameç›´æ¥ä¼ å‡½æ•°åå³å¯ï¼Œå¦‚ï¼štestFunc, MyClass::testMethod
+// å¦‚æœæ˜¯é‡è½½å‡½æ•°ï¼Œåˆ™å‚æ•°symbolNameéœ€è¦ä¸ºå‡½æ•°åå’Œå‚æ•°ç±»å‹ä¿¡æ¯ï¼Œå¦‚ï¼š
 // testFunc(int,int)
 // MyClass::testMethod(int,int)
 // testFunc<struct MyStruct>(char *,class MyClass &)
 // std::_Construct<struct testing::internal::TraceInfo,struct testing::internal::TraceInfo>(struct testing::internal::TraceInfo *,struct testing::internal::TraceInfo const &)
-// WARNING:ĞèÒªÑÏ¸ñ×¢ÒâsymbolNameµÄ¿Õ¸ñ£¬²»ÄÜ¶à£¬Ò²²»ÄÜÉÙ
-GTEST_API_ void* GetSymbolAddr(const char* moduleName, const char* symbolName);
+// WARNING:éœ€è¦ä¸¥æ ¼æ³¨æ„symbolNameçš„ç©ºæ ¼ï¼Œä¸èƒ½å¤šï¼Œä¹Ÿä¸èƒ½å°‘
+void* GetSymbolAddr(const char* moduleName, const char* symbolName);
 
-// typedef std::map<std::string, void*>	OverloadFuncName2FuncAddrMap; // Õâ¸öMapÀïµÄsecond×Ö¶ÎÄ¿Ç°¿´À´Ã»Ê²Ã´ÓÃ£¬ËùÒÔ¸Ä³ÉÓÃSetÀ´´úÌæ°É
+// typedef std::map<std::string, void*> OverloadFuncName2FuncAddrMap; // è¿™ä¸ªMapé‡Œçš„secondå­—æ®µç›®å‰çœ‹æ¥æ²¡ä»€ä¹ˆç”¨ï¼Œæ‰€ä»¥æ”¹æˆç”¨Setæ¥ä»£æ›¿å§
 typedef std::set<std::string> OverloadFuncNameSet;
 
-// Èç¹û²»È·¶¨GetSymbolAddrº¯ÊıµÄsymbolNameÓ¦¸ÃÔõÃ´Ğ´£¬¿ÉÒÔµ÷ÓÃÏÂÃæÕâ¸öº¯ÊıÀ´²éÑ¯ÓĞÄÄĞ©ÀàËÆµÄº¯Êı
-GTEST_API_ void QueryOverloadFuncNameSet(const char* moduleName, const char* symbolName, OverloadFuncNameSet& funcSet);
+// å¦‚æœä¸ç¡®å®šGetSymbolAddrå‡½æ•°çš„symbolNameåº”è¯¥æ€ä¹ˆå†™ï¼Œå¯ä»¥è°ƒç”¨ä¸‹é¢è¿™ä¸ªå‡½æ•°æ¥æŸ¥è¯¢æœ‰å“ªäº›ç±»ä¼¼çš„å‡½æ•°
+void QueryOverloadFuncNameSet(const char* moduleName, const char* symbolName, OverloadFuncNameSet& funcSet);
 
 template<class FuncT>
 FuncT QueryNewSrcAddr(FuncT srcAddr) {
-	FuncT result = srcAddr;	
-	internal::QueryNewSrcAddrImpl_(internal::GetMethodAddr(srcAddr));
-	__asm mov result, eax		// ±àÒëÆ÷²»ÈÃÎÒÃÇÖ±½Ó°Ñ void* ×ª³ÉÀà³ÉÔ±º¯ÊıµÄº¯ÊıÖ¸Õë£¬ÓÃ»ã±àÀ´½â¾ö£¡
+  FuncT result = srcAddr;
+  internal::QueryNewSrcAddrImpl_(internal::GetMethodAddr(srcAddr));
+  __asm mov result, eax       // ç¼–è¯‘å™¨ä¸è®©æˆ‘ä»¬ç›´æ¥æŠŠ void* è½¬æˆç±»æˆå‘˜å‡½æ•°çš„å‡½æ•°æŒ‡é’ˆï¼Œç”¨æ±‡ç¼–æ¥è§£å†³ï¼
 
-	return result;
+  return result;
 }
-//tolua_begin
-}	// ~testing
-//tolua_end
+
+} // namespace testing {

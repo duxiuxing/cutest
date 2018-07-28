@@ -1,155 +1,166 @@
-#include "HookMgr.h"
+ï»¿#include "HookMgr.h"
 #include <Windows.h>
-#include "detours.h"
+#include "detours/detours.h"
 #include <tlhelp32.h>
 #include "MockMgr.h"
 
 namespace testing {
 
 HookMgr* HookMgr::GetInstance() {
-	static HookMgr* mgr = NULL;
-	if (mgr == NULL) {
-		mgr = new HookMgr;
-	}
+  static HookMgr* mgr = NULL;
+  if (mgr == NULL) {
+    mgr = new HookMgr;
+  }
 
-	return mgr;
+  return mgr;
 }
 
 void HookMgr::AddFuncHook(GMockPlus* info) {
-	ASSERT(info != NULL);
-	m_hookInfos.push_back(info);
+  ASSERT(info != NULL);
+  m_hookInfos.push_back(info);
 }
 
 void HookMgr::AddFuncUnhook(GMockPlus* info) {
-	ASSERT(info != NULL);
-	m_unhookInfos.push_back(info);
+  ASSERT(info != NULL);
+  m_unhookInfos.push_back(info);
 }
 
 bool HookMgr::UpdateAllThread() {
-	bool result = true;
-	HANDLE        hThreadSnap = NULL;
-	THREADENTRY32 te32        = {0};
+  bool result = true;
+  HANDLE        hThreadSnap = NULL;
+  THREADENTRY32 te32        = {0};
 
-	// Take a snapshot of all threads currently in the system. 
-	hThreadSnap = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0); 
-	if (hThreadSnap == INVALID_HANDLE_VALUE) 
-		return false; 
+  // Take a snapshot of all threads currently in the system.
+  hThreadSnap = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+  if (hThreadSnap == INVALID_HANDLE_VALUE) {
+    return false;
+  }
 
-	// Fill in the size of the structure before using it. 
-	te32.dwSize = sizeof(THREADENTRY32); 
+  // Fill in the size of the structure before using it.
+  te32.dwSize = sizeof(THREADENTRY32);
 
-	// Walk the thread snapshot to find all threads of the process. 
-	// If the thread belongs to the process, add its information 
-	// to the display list.
-	DWORD curProcID = GetCurrentProcessId();
-	DWORD curThreadID = GetCurrentThreadId();
-	if (Thread32First(hThreadSnap, &te32)) { 
-		result = true;
-		do { 
-			if (te32.th32OwnerProcessID == curProcID) {
-				if (te32.th32ThreadID == curThreadID)
-					continue;
-				DWORD right = THREAD_GET_CONTEXT | THREAD_SET_CONTEXT | THREAD_SUSPEND_RESUME;
-				HANDLE hThread = OpenThread(right, TRUE, te32.th32ThreadID);
-				m_threads.push_back(hThread);
-				if (DetourUpdateThread(hThread) != NO_ERROR) {
-					result = false;
-					break;
-				}
-			} 
-		} while (Thread32Next(hThreadSnap, &te32));
-	} 
+  // Walk the thread snapshot to find all threads of the process.
+  // If the thread belongs to the process, add its information
+  // to the display list.
+  DWORD curProcID = GetCurrentProcessId();
+  DWORD curThreadID = GetCurrentThreadId();
+  if (Thread32First(hThreadSnap, &te32)) {
+    result = true;
+    do {
+      if (te32.th32OwnerProcessID == curProcID) {
+        if (te32.th32ThreadID == curThreadID) {
+          continue;
+        }
+        DWORD right = THREAD_GET_CONTEXT | THREAD_SET_CONTEXT | THREAD_SUSPEND_RESUME;
+        HANDLE hThread = OpenThread(right, TRUE, te32.th32ThreadID);
+        m_threads.push_back(hThread);
+        if (DetourUpdateThread(hThread) != NO_ERROR) {
+          result = false;
+          break;
+        }
+      }
+    } while (Thread32Next(hThreadSnap, &te32));
+  }
 
-	// Do not forget to clean up the snapshot object. 
-	CloseHandle (hThreadSnap);
+  // Do not forget to clean up the snapshot object.
+  CloseHandle(hThreadSnap);
 
-	return result;
+  return result;
 }
 
 bool HookMgr::HookAll() {
-	bool result = false;
-	if (m_hookInfos.empty())
-		return result;
+  bool result = false;
+  if (m_hookInfos.empty()) {
+    return result;
+  }
 
-	do {
+  do {
 
-		if (DetourTransactionBegin() != NO_ERROR)
-			break;
-		if (!UpdateAllThread())
-			break;
+    if (DetourTransactionBegin() != NO_ERROR) {
+      break;
+    }
+    if (!UpdateAllThread()) {
+      break;
+    }
 
-		bool attachFailed = false;
-		MockInfoVec::iterator it = m_hookInfos.begin();
-		for (; !attachFailed && it != m_hookInfos.end(); ++it) {
-			ASSERT(!(*it)->m_hooked);
-			(*it)->m_newSrcAddr = (*it)->m_srcAddr;
-			if (DetourAttach(&((*it)->m_newSrcAddr), (*it)->m_dstAddr) != NO_ERROR) {
-				attachFailed = true;
-				OutputDebugStringW(L"DetourAttach Failed! ¿ÉÄÜÊÇÒòÎªÔÚº¯ÊýÈë¿Ú´¦ÉèÖÃÁË¶Ïµã£¬Çë°ÑÕâ¸ö¶ÏµãÒÆ³ýÔÙÖØÊÔ£¡");
-			} else {
-				(*it)->m_hooked = true;
-				// ·ÅÔÚcommitÖ®Ç°Add£¬Èç¹ûcommitÖ®ºó²ÅAddµÄ»°¿ÉÄÜ»áµ¼ÖÂÆäËûÏß³Ìµ÷ÓÃµ½MockFunctionº¯ÊýÊ±ÕÒ²»µ½¶ÔÓ¦µÄsrcFunc
-				MockMgr::GetInstance()->AddMockFuncInfo(*it);
-			}
-		}
+    bool attachFailed = false;
+    MockInfoVec::iterator it = m_hookInfos.begin();
+    for (; !attachFailed && it != m_hookInfos.end(); ++it) {
+      ASSERT(!(*it)->m_hooked);
+      (*it)->m_newSrcAddr = (*it)->m_srcAddr;
+      if (DetourAttach(&((*it)->m_newSrcAddr), (*it)->m_dstAddr) != NO_ERROR) {
+        attachFailed = true;
+        OutputDebugStringW(L"DetourAttach Failed! å¯èƒ½æ˜¯å› ä¸ºåœ¨å‡½æ•°å…¥å£å¤„è®¾ç½®äº†æ–­ç‚¹ï¼Œè¯·æŠŠè¿™ä¸ªæ–­ç‚¹ç§»é™¤å†é‡è¯•ï¼");
+      } else {
+        (*it)->m_hooked = true;
+        // æ”¾åœ¨commitä¹‹å‰Addï¼Œå¦‚æžœcommitä¹‹åŽæ‰Addçš„è¯å¯èƒ½ä¼šå¯¼è‡´å…¶ä»–çº¿ç¨‹è°ƒç”¨åˆ°MockFunctionå‡½æ•°æ—¶æ‰¾ä¸åˆ°å¯¹åº”çš„srcFunc
+        MockMgr::GetInstance()->AddMockFuncInfo(*it);
+      }
+    }
 
-		if (attachFailed || DetourTransactionCommit() != NO_ERROR)
-			break;
+    if (attachFailed || DetourTransactionCommit() != NO_ERROR) {
+      break;
+    }
 
-		result = true;
-	} while (0);
+    result = true;
+  } while (0);
 
-	CloseAllHandle();
-	m_hookInfos.clear();
-	return result;
+  CloseAllHandle();
+  m_hookInfos.clear();
+  return result;
 }
 
 bool HookMgr::UnhookAll() {
-	if (m_unhookInfos.empty())
-		return true;
-	bool result = false;
-	do {
+  if (m_unhookInfos.empty()) {
+    return true;
+  }
+  bool result = false;
+  do {
 
-		if (DetourTransactionBegin() != NO_ERROR)
-			break;
-		if (!UpdateAllThread())
-			break;
+    if (DetourTransactionBegin() != NO_ERROR) {
+      break;
+    }
+    if (!UpdateAllThread()) {
+      break;
+    }
 
-		bool detachFailed = false;
-		MockInfoVec::iterator it = m_unhookInfos.begin();
-		for (; !detachFailed && it != m_unhookInfos.end(); ++it) {
-			ASSERT((*it)->m_hooked);
-			(*it)->m_hooked = false;
-			if (DetourDetach(&((*it)->m_newSrcAddr), (*it)->m_dstAddr) != NO_ERROR)
-				detachFailed = true;
-		}
+    bool detachFailed = false;
+    MockInfoVec::iterator it = m_unhookInfos.begin();
+    for (; !detachFailed && it != m_unhookInfos.end(); ++it) {
+      ASSERT((*it)->m_hooked);
+      (*it)->m_hooked = false;
+      if (DetourDetach(&((*it)->m_newSrcAddr), (*it)->m_dstAddr) != NO_ERROR) {
+        detachFailed = true;
+      }
+    }
 
-		if (detachFailed || DetourTransactionCommit() != NO_ERROR)
-			break;
+    if (detachFailed || DetourTransactionCommit() != NO_ERROR) {
+      break;
+    }
 
-		it = m_unhookInfos.begin();
-		for (; it != m_unhookInfos.end(); ++it) {
-			// ÓÐÒ»¸öbug:µ±Ä³Ïß³ÌµÄeip´¦ÓÚMockFunctionº¯ÊýÄÚ±»¹ÒÆðÊ±£¬Unhook¹ýºó£¬ËäÈ»Ô­±¾µÄjmpÖ¸ÁîÒÑ¾­±»¸Ä»Ø
-			// µ«ÊÇMockFunction»¹ÐèÒª²éÕÒsrcFunc¶ÔÓ¦µÄMockFuncInfo£¬´ËÊ±DelµÄ»°¾Í»áµ¼ÖÂÕÒ²»µ½ÁË£¡
-			
-			// TODO WARNING:ÕâÀïÐèÒªÓÉÓÃ»§À´±£Ö¤UnmockÇ°£¬²»»áÓÐÏß³ÌÔÙµ÷ÓÃÕâ¸ö±»mockµÄº¯Êý£¡
-			MockMgr::GetInstance()->DelMockFuncInfo(*it);
-		}
+    it = m_unhookInfos.begin();
+    for (; it != m_unhookInfos.end(); ++it) {
+      // æœ‰ä¸€ä¸ªbug:å½“æŸçº¿ç¨‹çš„eipå¤„äºŽMockFunctionå‡½æ•°å†…è¢«æŒ‚èµ·æ—¶ï¼ŒUnhookè¿‡åŽï¼Œè™½ç„¶åŽŸæœ¬çš„jmpæŒ‡ä»¤å·²ç»è¢«æ”¹å›ž
+      // ä½†æ˜¯MockFunctionè¿˜éœ€è¦æŸ¥æ‰¾srcFuncå¯¹åº”çš„MockFuncInfoï¼Œæ­¤æ—¶Delçš„è¯å°±ä¼šå¯¼è‡´æ‰¾ä¸åˆ°äº†ï¼
 
-		result = true;
-	} while (0);
+      // TODO WARNING:è¿™é‡Œéœ€è¦ç”±ç”¨æˆ·æ¥ä¿è¯Unmockå‰ï¼Œä¸ä¼šæœ‰çº¿ç¨‹å†è°ƒç”¨è¿™ä¸ªè¢«mockçš„å‡½æ•°ï¼
+      MockMgr::GetInstance()->DelMockFuncInfo(*it);
+    }
 
-	CloseAllHandle();
-	m_unhookInfos.clear();
-	return result;
+    result = true;
+  } while (0);
+
+  CloseAllHandle();
+  m_unhookInfos.clear();
+  return result;
 }
 
 void HookMgr::CloseAllHandle() {
-	std::vector<HANDLE>::iterator it = m_threads.begin();
-	for (; it != m_threads.end(); ++it) {
-		::CloseHandle(*it);
-	}
-	m_threads.clear();
+  std::vector<HANDLE>::iterator it = m_threads.begin();
+  for (; it != m_threads.end(); ++it) {
+    ::CloseHandle(*it);
+  }
+  m_threads.clear();
 }
 
-}
+} // namespace testing {
