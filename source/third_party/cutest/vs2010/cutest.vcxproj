@@ -96,7 +96,6 @@ xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Detours\src\detours.h" />
     <ClInclude Include="..\include\cutest\Event.h" />
     <ClInclude Include="..\include\cutest\ExplicitEndTest.h" />
     <ClInclude Include="..\include\cutest\ProgressListener.h" />

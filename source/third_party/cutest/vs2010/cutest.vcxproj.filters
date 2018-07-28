@@ -102,9 +102,6 @@
     <ClInclude Include="..\src\win\targetver.h">
       <Filter>Win32 DLL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Detours\src\detours.h">
-      <Filter>GMockPlus\Detours</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
