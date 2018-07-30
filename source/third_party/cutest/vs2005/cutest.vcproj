@@ -393,10 +393,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\Detours\src\detours.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\Detours\src\disasm.cpp"
 					>
 				</File>
