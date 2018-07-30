@@ -60,12 +60,20 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
-xcopy "$(SolutionDir)source\third_party\cppunit\include\cppunit" "$(SolutionDir)source\third_party\cutest\include\cppunit" /y /i /e
-xcopy "$(SolutionDir)source\third_party\googlemock\include\gmock" "$(SolutionDir)source\third_party\cutest\include\gmock" /y /i /e
-xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir)source\third_party\cutest\include\gtest" /y /i /e
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>DEL /F /A /Q "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\cppunit"
+RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock\internal\custom"
+RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock\internal"
+RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock"
+RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gtest\internal\custom"
+RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gtest\internal"
+RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gtest"
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
