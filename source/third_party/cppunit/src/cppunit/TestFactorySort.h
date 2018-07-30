@@ -7,13 +7,13 @@
 #include <map>
 
 /*
-1. TestFactoryRegistry内部有一个std::set<TestFactory*>类型的m_factories；
-2. m_factories用于保存TestFactoryRegistry::registerFactory(TestFactory*)的入参；
-3. TestFactoryRegistry::addTestToSuite(TestSuite*)中会遍历m_factories，逐个元素调用TestSuite::addTest(Test*)；
-4. 由于std::set的无序性，registerFactory()和addTest()的顺序会不一致，这个会影响到用例的执行顺序；
-5. TestFactorySort可以用来保证registerFactory()和addTest()的顺序一致；
-6. Windows上使用TestFactorySort来让界面上的用例树更好看；
-7. 每个测试用例都应该是独立的，互不影响的，相互依赖的用例不是好用例。
+  1. TestFactoryRegistry内部有一个std::set<TestFactory*>类型的m_factories；
+  2. m_factories用于保存TestFactoryRegistry::registerFactory(TestFactory*)的入参；
+  3. TestFactoryRegistry::addTestToSuite(TestSuite*)中会遍历m_factories，逐个元素调用TestSuite::addTest(Test*)；
+  4. 由于std::set的无序性，registerFactory()和addTest()的顺序会不一致，这个会影响到用例的执行顺序；
+  5. TestFactorySort可以用来保证registerFactory()和addTest()的顺序一致；
+  6. Windows上使用TestFactorySort来让界面上的用例树更好看；
+  7. 每个测试用例都应该是独立的，互不影响的，相互依赖的用例不是好用例。
 */
 CPPUNIT_NS_BEGIN
 
@@ -40,8 +40,8 @@ public:
 protected:
   TestFactorySort();
 
-  unsigned int m_weigth;
-  CppUnitMap<const TestFactory *, unsigned int> m_weigthCache;
+  unsigned int current_weigth;
+  CppUnitMap<const TestFactory *, unsigned int> factories_weigth;
 };
 
 CPPUNIT_NS_END

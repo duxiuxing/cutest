@@ -10,18 +10,18 @@ TestFactorySort::getInstance()
   return &test_factory_sort;
 }
 
-TestFactorySort::TestFactorySort() : m_weigth( 0 )
+TestFactorySort::TestFactorySort() : current_weigth( 0 )
 {}
 
 unsigned int
 TestFactorySort::allocWeigth( const TestFactory *factory )
 {
-  CppUnitMap<const TestFactory *, unsigned int>::iterator it = m_weigthCache.find( factory );
-  if ( it == m_weigthCache.end() )
+  CppUnitMap<const TestFactory *, unsigned int>::iterator it = this->factories_weigth.find( factory );
+  if ( it == this->factories_weigth.end() )
   {
-    ++m_weigth;
-    m_weigthCache[factory] = m_weigth;
-    return m_weigth;
+    ++this->current_weigth;
+    this->factories_weigth[factory] = this->current_weigth;
+    return this->current_weigth;
   }
   else
   {
@@ -32,8 +32,8 @@ TestFactorySort::allocWeigth( const TestFactory *factory )
 unsigned int
 TestFactorySort::queryWeigth( const TestFactory *factory )
 {
-  CppUnitMap<const TestFactory *, unsigned int>::iterator it = m_weigthCache.find( factory );
-  if ( it == m_weigthCache.end() )
+  CppUnitMap<const TestFactory *, unsigned int>::iterator it = this->factories_weigth.find( factory );
+  if ( it == this->factories_weigth.end() )
   {
     return 0;
   }
@@ -46,7 +46,7 @@ TestFactorySort::queryWeigth( const TestFactory *factory )
 void
 TestFactorySort::deallocWeigth( const TestFactory *factory )
 {
-  m_weigthCache.erase( factory );
+  this->factories_weigth.erase( factory );
 }
 
 bool
