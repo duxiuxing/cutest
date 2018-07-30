@@ -2,6 +2,7 @@
 #include <cppunit/TestSuite.h>
 #include <cppunit/TestResult.h>
 
+
 CPPUNIT_NS_BEGIN
 
 
@@ -59,6 +60,75 @@ TestSuite::doGetChildTestAt( int index ) const
   return m_tests[index];
 }
 
+class TestCaseMethodList
+{
+public:
+  static TestCaseMethodList *instance()
+  {
+    static TestCaseMethodList list;
+    return &list;
+  }
+
+  void RegisterSetUpMethod( const std::string &name, TestSuite::SetUpTestCaseMethod set_up_tc )
+  {
+    TestCaseMethodList::instance()->setUpMethods[name] = set_up_tc;
+  }
+
+  void RunSetUpTestCase( const std::string &name )
+  {
+    SetUpMethods::iterator it = this->setUpMethods.find( name );
+    if (it != this->setUpMethods.end())
+    {
+      (*(it->second))();
+    }
+  }
+
+  void RegisterTearDownMethod( const std::string &name, TestSuite::TearDownTestCaseMethod tear_down_tc )
+  {
+    TestCaseMethodList::instance()->tearDownMethods[name] = tear_down_tc;
+  }
+
+  void RunTearDownTestCase( const std::string &name )
+  {
+    TearDownMethods::iterator it = this->tearDownMethods.find( name );
+    if (it != this->tearDownMethods.end())
+    {
+      (*(it->second))();
+    }
+  }
+
+private:
+  typedef CppUnitMap<std::string, TestSuite::SetUpTestCaseMethod, std::less<std::string> > SetUpMethods;
+  SetUpMethods setUpMethods;
+  
+  typedef CppUnitMap<std::string, TestSuite::TearDownTestCaseMethod, std::less<std::string> > TearDownMethods;
+  TearDownMethods tearDownMethods;
+};
+
+void
+TestSuite::RegisterSetUpTestCase( std::string name, TestSuite::SetUpTestCaseMethod set_up_tc )
+{
+  TestCaseMethodList::instance()->RegisterSetUpMethod( name, set_up_tc );
+}
+
+void
+TestSuite::RegisterTearDownTestCase( std::string name, TestSuite::TearDownTestCaseMethod tear_down_tc )
+{
+  TestCaseMethodList::instance()->RegisterTearDownMethod( name, tear_down_tc );
+}
+
+void 
+TestSuite::doStartSuite( TestResult *controller )
+{
+  TestComposite::doStartSuite( controller );
+  TestCaseMethodList::instance()->RunSetUpTestCase( getName() );
+}
+
+void 
+TestSuite::doEndSuite( TestResult *controller )
+{
+  TestComposite::doEndSuite( controller );
+  TestCaseMethodList::instance()->RunTearDownTestCase( getName() );
+}
 
 CPPUNIT_NS_END
-

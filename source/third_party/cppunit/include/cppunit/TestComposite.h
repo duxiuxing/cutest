@@ -36,6 +36,7 @@ private:
   TestComposite( const TestComposite &other );
   TestComposite &operator =( const TestComposite &other ); 
 
+protected:
   virtual void doStartSuite( TestResult *controller );
   virtual void doRunChildTests( TestResult *controller );
   virtual void doEndSuite( TestResult *controller );

@@ -1282,7 +1282,7 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class {\
             GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>);\
 void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 
-#else // #if 0
+#else // #if 0 // #ifndef _CUTEST_IMPL
 
 #define GTEST_TEST_(test_case_name, test_name, parent_class, parent_id) \
 class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { \
@@ -1295,6 +1295,8 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { 
       CPPUNIT_NS::TestFactoryRegistry &registry = CPPUNIT_NS::TestFactoryRegistry::getRegistry(#test_case_name); \
       registry.registerFactory(this); \
       CPPUNIT_NS::TestFactoryRegistry::getRegistry().registerFactory(&registry); \
+      CPPUNIT_NS::TestSuite::RegisterSetUpTestCase(#test_case_name, GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::SetUpTestCase); \
+      CPPUNIT_NS::TestSuite::RegisterTearDownTestCase(#test_case_name, GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TearDownTestCase); \
     } \
     virtual CPPUNIT_NS::Test* makeTest() { \
       CPPUNIT_NS::TestNamer namer(#test_case_name); \
@@ -1327,6 +1329,8 @@ class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) : public parent_class { 
       CPPUNIT_NS::TestFactoryRegistry &registry = CPPUNIT_NS::TestFactoryRegistry::getRegistry(#test_case_name); \
       registry.registerFactory(this); \
       CPPUNIT_NS::TestFactoryRegistry::getRegistry().registerFactory(&registry); \
+	  CPPUNIT_NS::TestSuite::RegisterSetUpTestCase(#test_case_name, GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::SetUpTestCase); \
+	  CPPUNIT_NS::TestSuite::RegisterTearDownTestCase(#test_case_name, GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TearDownTestCase); \
     } \
     virtual CPPUNIT_NS::Test* makeTest() { \
       CPPUNIT_NS::TestNamer namer(#test_case_name); \
@@ -1342,6 +1346,6 @@ GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestFactory \
 GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::factory; \
 void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 
-#endif // #if 0
+#endif // #if 0 // #ifndef _CUTEST_IMPL
 
 #endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_

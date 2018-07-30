@@ -68,6 +68,17 @@ public:
 
 private:
   CppUnitVector<Test *> m_tests;
+
+public:
+  typedef void (*SetUpTestCaseMethod)();
+  static void RegisterSetUpTestCase( std::string name, SetUpTestCaseMethod set_up_tc );
+
+  typedef void (*TearDownTestCaseMethod)();
+  static void RegisterTearDownTestCase( std::string name, TearDownTestCaseMethod tear_down_tc );
+
+protected:
+  virtual void doStartSuite( TestResult *controller );
+  virtual void doEndSuite( TestResult *controller );
 };
 
 
