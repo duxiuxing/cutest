@@ -24,6 +24,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="DEL /F /A /Q &quot;$(SolutionDir)source\third_party\cutest\include\GMockPlus.h&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\cppunit&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock\internal\custom&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock\internal&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest\internal\custom&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest\internal&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -89,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h&quot; &quot;$(SolutionDir)source\third_party\cutest\include\GMockPlus.h&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)source\third_party\cppunit\include\cppunit&quot; &quot;$(SolutionDir)source\third_party\cutest\include\cppunit&quot; /y /i /e&#x0D;&#x0A;xcopy &quot;$(SolutionDir)source\third_party\googlemock\include\gmock&quot; &quot;$(SolutionDir)source\third_party\cutest\include\gmock&quot; /y /i /e&#x0D;&#x0A;xcopy &quot;$(SolutionDir)source\third_party\googletest\include\gtest&quot; &quot;$(SolutionDir)source\third_party\cutest\include\gtest&quot; /y /i /e&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
