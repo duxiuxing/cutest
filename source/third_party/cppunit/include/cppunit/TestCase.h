@@ -45,7 +45,7 @@ public:
     std::string getName() const;
 
     //! FIXME: this should probably be pure virtual.
-    virtual void runTest();
+    virtual void runTest() = 0;
     
 private:
     //TestCase( const TestCase &other ); 

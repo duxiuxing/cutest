@@ -3,6 +3,8 @@
 #include <crtdbg.h>
 #include <set>
 
+#include "gtest/gtest.h"
+
 // WARNING:被Mock函数的起始位置不能下断点，否则会导致Hook失败！
 #define GMOCKPLUS_CDECL(srcAddr, gmockObj, gmockMethodAddr, paramCount) \
   testing::GMockPlus GMOCKPLUS_CONCAT_TOKEN_(gmockplusObj_, __LINE__)(srcAddr, &gmockObj, testing::internal::GetMethodAddr(gmockMethodAddr), true, testing::CDECL_CALL, paramCount)
@@ -36,7 +38,7 @@ enum CallType {
 class HookMgr;
 class MockMgr;
 
-class GMockPlus {
+class GTEST_API_ GMockPlus {
   friend class HookMgr;
   friend class MockMgr;
  public:
@@ -99,7 +101,7 @@ class GMockPlus {
 #endif  // ~_DEBUG
 
 namespace internal {
-void* QueryNewSrcAddrImpl_(void* srcAddr);  // 找不到时直接返回srcAddr
+GTEST_API_ void* QueryNewSrcAddrImpl_(void* srcAddr);  // 找不到时直接返回srcAddr
 
 template <typename T>
 inline void* GetMethodAddr(T func) {
@@ -111,7 +113,7 @@ void HookAll();
 void UnhookAll();
 
 // 鉴于 dbghelp 的限制，Symbol相关的函数“不”是线程安全的
-bool SetSymSearchPath(const wchar_t* utf16Path);
+GTEST_API_ bool SetSymSearchPath(const wchar_t* utf16Path);
 
 /*
     @param
@@ -126,13 +128,13 @@ bool SetSymSearchPath(const wchar_t* utf16Path);
 // testFunc<struct MyStruct>(char *,class MyClass &)
 // std::_Construct<struct testing::internal::TraceInfo,struct testing::internal::TraceInfo>(struct testing::internal::TraceInfo *,struct testing::internal::TraceInfo const &)
 // WARNING:需要严格注意symbolName的空格，不能多，也不能少
-void* GetSymbolAddr(const char* moduleName, const char* symbolName);
+GTEST_API_ void* GetSymbolAddr(const char* moduleName, const char* symbolName);
 
 // typedef std::map<std::string, void*> OverloadFuncName2FuncAddrMap; // 这个Map里的second字段目前看来没什么用，所以改成用Set来代替吧
 typedef std::set<std::string> OverloadFuncNameSet;
 
 // 如果不确定GetSymbolAddr函数的symbolName应该怎么写，可以调用下面这个函数来查询有哪些类似的函数
-void QueryOverloadFuncNameSet(const char* moduleName, const char* symbolName, OverloadFuncNameSet& funcSet);
+GTEST_API_ void QueryOverloadFuncNameSet(const char* moduleName, const char* symbolName, OverloadFuncNameSet& funcSet);
 
 template<class FuncT>
 FuncT QueryNewSrcAddr(FuncT srcAddr) {

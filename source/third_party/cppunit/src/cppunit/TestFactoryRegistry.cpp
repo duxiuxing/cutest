@@ -4,8 +4,9 @@
 #include <cppunit/TestSuite.h>
 #include <assert.h>
 
-// 支持按照声明顺序排序
-#include "TestFactorySort.h"
+#ifdef _CUTEST_IMPL
+  #include "TestFactorySort.h"
+#endif
 
 CPPUNIT_NS_BEGIN
 
@@ -141,7 +142,7 @@ TestFactoryRegistry::makeTest()
   return suite;
 }
 
-#if 0 // 支持按照声明顺序排序
+#ifndef _CUTEST_IMPL
 void 
 TestFactoryRegistry::addTestToSuite( TestSuite *suite )
 {
@@ -153,7 +154,7 @@ TestFactoryRegistry::addTestToSuite( TestSuite *suite )
     suite->addTest( factory->makeTest() );
   }
 }
-#else
+#else // #ifndef _CUTEST_IMPL
 void
 TestFactoryRegistry::addTestToSuite( TestSuite *suite )
 {
@@ -167,7 +168,7 @@ TestFactoryRegistry::addTestToSuite( TestSuite *suite )
     suite->addTest( ( *it )->makeTest() );
   }
 }
-#endif
+#endif // #ifndef _CUTEST_IMPL
 
 bool 
 TestFactoryRegistry::isValid()

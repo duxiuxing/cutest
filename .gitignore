@@ -1,3 +1,8 @@
+/Debug/*
+/Release/*
+/x64/Debug/*
+/x64/Release/*
+
 *_manifest.rc
 *.embed.manifest
 *.idb
@@ -23,14 +28,6 @@
 *.vcxproj.user
 *.vcxprojResolveAssemblyReference.cache
 
-/Debug/*
-
-/Release/*
-
-/x64/Debug/*
-
-/x64/Release/*
-
 BuildLog.htm
 dte80a.tlh
 mt.dep
@@ -39,4 +36,3 @@ source/third_party/cutest/include/cppunit/*
 source/third_party/cutest/include/gmock/*
 source/third_party/cutest/include/gtest/*
 source/third_party/cutest/include/GMockPlus.h
-

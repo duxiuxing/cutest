@@ -30,7 +30,7 @@ public:
   // 查找之前AllocWeigth()分配的权值
   unsigned int queryWeigth( const TestFactory *factory );
 
-  // 移除分配的权值，不移除的话，内部缓存的越来越大
+  // 移除分配的权值，不移除的话，内部缓存的会越来越大
   void deallocWeigth( const TestFactory *factory );
 
   // 得到按权值排序的数组

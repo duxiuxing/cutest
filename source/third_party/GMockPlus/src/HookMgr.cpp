@@ -1,6 +1,6 @@
 ﻿#include "HookMgr.h"
 #include <Windows.h>
-#include "detours/detours.h"
+#include "detours.h"
 #include <tlhelp32.h>
 #include "MockMgr.h"
 
