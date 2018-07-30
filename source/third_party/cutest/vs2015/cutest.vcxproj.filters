@@ -43,6 +43,12 @@
     <Filter Include="googlemock">
       <UniqueIdentifier>{afb6cbde-17f7-49da-9c8e-fa70324688fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GMockPlus">
+      <UniqueIdentifier>{4e499284-b19a-4a4a-99af-a54454d2e159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GMockPlus\Detours">
+      <UniqueIdentifier>{e888e04a-13bf-4d47-a7e2-b9ab33fa387b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Logger.h">
@@ -142,6 +148,24 @@
     </ClCompile>
     <ClCompile Include="..\..\googlemock\src\gmock-all.cc">
       <Filter>googlemock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\creatwth.cpp">
+      <Filter>GMockPlus\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\detours.cpp">
+      <Filter>GMockPlus\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\disasm.cpp">
+      <Filter>GMockPlus\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\image.cpp">
+      <Filter>GMockPlus\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\modules.cpp">
+      <Filter>GMockPlus\Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GMockPlus\src\GMockPlusAll.cpp">
+      <Filter>GMockPlus</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
