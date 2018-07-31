@@ -130,7 +130,7 @@ CTestRunnerDlg::OnInitDialog()
   m_fixedSizeFont.CreateFontIndirect( &font );
   m_details.SetFont( &m_fixedSizeFont ); // Does not work. Need to investigate...
 
-  const int listGrowthRatio = 30;
+  const int listGrowthRatio = 80;
   AddSzXControl( IDC_COMBO_TEST, mdResize );
   AddSzXControl( IDC_BROWSE_TEST, mdRepos );
   AddSzXControl( IDC_RUNNING_TEST_CASE_LABEL, mdResize );
