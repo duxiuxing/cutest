@@ -202,7 +202,7 @@ private:
   TestMethod m_test;
 };
 
-#else // #if 0
+#else // #if 0 // #ifndef _CUTEST_IMPL
 
 template <class Fixture>
 class TestCaller
@@ -233,11 +233,11 @@ class TestCaller
 
 public:
   /*!
-   * Constructor for TestCaller. This constructor builds a new Fixture
-   * instance owned by the TestCaller.
-   * \param name name of this TestCaller
-   * \param test the method this TestCaller calls in runTest()
-   */
+     Constructor for TestCaller. This constructor builds a new Fixture
+     instance owned by the TestCaller.
+     \param name name of this TestCaller
+     \param test the method this TestCaller calls in runTest()
+  */
   TestCaller( std::string name, TestMethod test ) :
     TestCase( name ),
     m_ownFixture( true ),
@@ -249,30 +249,59 @@ public:
 
   virtual void runTest() override
   {
-    m_fixtureMethodId = FIXTURE_METHOD_ID_TEST;
+    runTestOnMainThread();
+  }
+
+  void runTestOnMainThread()
+  {
     if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
     {
-      run();
+      if ( m_result )
+        m_result->protect( MethodFunctor( this, &TestCaller::runTestImmediately ),
+                           this );
+      else
+      {
+        runTestImmediately();
+      }
     }
     else
     {
+      m_fixtureMethodId = FIXTURE_METHOD_ID_TEST;
       m_event = CUTEST_NS::Event::createInstance();
       CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
       m_event->wait();
       m_event->destroy();
       m_event = NULL;
     }
+  }
+
+  void runTestImmediately()
+  {
+    ( m_fixture->*m_test )();
   }
 
   virtual void setUp() override
   {
-    m_fixtureMethodId = FIXTURE_METHOD_ID_SET_UP;
+    setUpOnMainThread();
+  }
+
+  void setUpOnMainThread()
+  {
     if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
     {
-      run();
+      if ( m_result )
+      {
+        m_result->protect( MethodFunctor( this, &TestCaller::setUpImmediately ),
+                           this, "setUp() failed" );
+      }
+      else
+      {
+        setUpImmediately();
+      }
     }
     else
     {
+      m_fixtureMethodId = FIXTURE_METHOD_ID_SET_UP;
       m_event = CUTEST_NS::Event::createInstance();
       CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
       m_event->wait();
@@ -281,7 +310,7 @@ public:
     }
   }
 
-  void setUpOnMainThread()
+  void setUpImmediately()
   {
     if ( m_ownFixture )
     {
@@ -292,13 +321,26 @@ public:
 
   virtual void tearDown() override
   {
-    m_fixtureMethodId = FIXTURE_METHOD_ID_TEAR_DOWN;
+    tearDownOnMainThread();
+  }
+
+  void tearDownOnMainThread()
+  {
     if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
     {
-      run();
+      if ( m_result )
+      {
+        m_result->protect( MethodFunctor( this, &TestCaller::tearDownImmediately ),
+                           this, "tearDown() failed" );
+      }
+      else
+      {
+        tearDownImmediately();
+      }
     }
     else
     {
+      m_fixtureMethodId = FIXTURE_METHOD_ID_TEAR_DOWN;
       m_event = CUTEST_NS::Event::createInstance();
       CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
       m_event->wait();
@@ -307,7 +349,7 @@ public:
     }
   }
 
-  void tearDownOnMainThread()
+  void tearDownImmediately()
   {
     m_fixture->tearDown();
     if ( m_ownFixture )
@@ -315,11 +357,6 @@ public:
       delete m_fixture;
       m_fixture = NULL;
     }
-  }
-
-  void runTestOnMainThread()
-  {
-    ( m_fixture->*m_test )();
   }
 
   std::string toString() const
@@ -333,37 +370,13 @@ public:
     switch ( m_fixtureMethodId )
     {
     case FIXTURE_METHOD_ID_SET_UP:
-      {
-        if ( m_result )
-          m_result->protect( MethodFunctor( this, &TestCaller::setUpOnMainThread ),
-                             this, "setUp() failed" );
-        else
-        {
-          setUpOnMainThread();
-        }
-      }
+      setUpOnMainThread();
       break;
     case FIXTURE_METHOD_ID_TEAR_DOWN:
-      {
-        if ( m_result )
-          m_result->protect( MethodFunctor( this, &TestCaller::tearDownOnMainThread ),
-                             this, "tearDown() failed" );
-        else
-        {
-          tearDownOnMainThread();
-        }
-      }
+      tearDownOnMainThread();
       break;
     case FIXTURE_METHOD_ID_TEST:
-      {
-        if ( m_result )
-          m_result->protect( MethodFunctor( this, &TestCaller::runTestOnMainThread ),
-                             this );
-        else
-        {
-          runTestOnMainThread();
-        }
-      }
+      runTestOnMainThread();
       break;
     default:
       break;
@@ -386,17 +399,17 @@ private:
   // 用于标识在run()方法中要调用的方法
   enum FixtureMethodId
   {
-    FIXTURE_METHOD_ID_NONE = 0,     // 初始值，无意义
-    FIXTURE_METHOD_ID_SET_UP,       // m_fixture->setUp();
-    FIXTURE_METHOD_ID_TEAR_DOWN,    // m_fixture->tearDown();
-    FIXTURE_METHOD_ID_TEST,			// (m_fixture->*m_test)();
+    FIXTURE_METHOD_ID_NONE = 0,  // 初始值，无意义
+    FIXTURE_METHOD_ID_SET_UP,    // m_fixture->setUp();
+    FIXTURE_METHOD_ID_TEAR_DOWN, // m_fixture->tearDown();
+    FIXTURE_METHOD_ID_TEST,      // (m_fixture->*m_test)();
   };
   FixtureMethodId m_fixtureMethodId;
 
   CUTEST_NS::Event *m_event;
 };
 
-#endif // #if 0
+#endif // #if 0 // #ifndef _CUTEST_IMPL
 
 CPPUNIT_NS_END
 
