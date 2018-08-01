@@ -178,7 +178,6 @@ public:
     switch ( m_fixtureMethodId )
     {
     case FIXTURE_METHOD_ID_SET_UP:
-
       setUpOnMainThread();
       break;
     case FIXTURE_METHOD_ID_TEAR_DOWN:
