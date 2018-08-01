@@ -29,9 +29,9 @@ Runner::version()
       int fix     = FIX_VERSION;
       int build   = BUILD_NUMBER;
       version = testing::internal::StreamableToString( major ) + "."
-        + testing::internal::StreamableToString( minor ) + "."
-        + testing::internal::StreamableToString( fix ) + "."
-        + testing::internal::StreamableToString( build );
+                + testing::internal::StreamableToString( minor ) + "."
+                + testing::internal::StreamableToString( fix ) + "."
+                + testing::internal::StreamableToString( build );
     }
   }
 
@@ -41,6 +41,7 @@ Runner::version()
 RunnerBase::RunnerBase()
   : test_decorator( NULL )
   , runing_test( NULL )
+  , always_call_test_on_main_thread( false )
 {}
 
 RunnerBase::~RunnerBase()
@@ -52,6 +53,18 @@ RunnerBase::~RunnerBase()
     this->test_decorator->destroy();
     this->test_decorator = NULL;
   }
+}
+
+void
+RunnerBase::setAlwaysCallTestOnMainThread( bool value )
+{
+  this->always_call_test_on_main_thread = value;
+}
+
+bool
+RunnerBase::alwaysCallTestOnMainThread()
+{
+  return this->always_call_test_on_main_thread;
 }
 
 void

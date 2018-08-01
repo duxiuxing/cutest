@@ -44,15 +44,20 @@ class TestCaller
 
   // 重载TestCase::runTest()
   virtual void runTest() override {
-    runTestOnMainThread();
+    if (CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()) {
+      runTestOnMainThread();
+    } else {
+      runTestImmediately();
+    }
   }
 
   void runTestOnMainThread() {
     if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
-      if (m_result)
-        m_result->protect(MethodFunctor(this, &TestCaller::runTestImmediately),
-                          this);
-      else {
+      if (m_result) {
+        m_result->protect(
+          MethodFunctor(this, &TestCaller::runTestImmediately),
+          this);
+      } else {
         runTestImmediately();
       }
     } else {
@@ -71,14 +76,20 @@ class TestCaller
 
   // 重载TestFixture::setUp()
   virtual void setUp() override {
-    setUpOnMainThread();
+    if (CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()) {
+      setUpOnMainThread();
+    } else {
+      setUpImmediately();
+    }
   }
 
   void setUpOnMainThread() {
     if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
       if (m_result) {
-        m_result->protect(MethodFunctor(this, &TestCaller::setUpImmediately),
-                          this, "setUp() failed");
+        m_result->protect(
+          MethodFunctor(this, &TestCaller::setUpImmediately),
+          this,
+          "setUp() failed");
       } else {
         setUpImmediately();
       }
@@ -99,14 +110,20 @@ class TestCaller
 
   // 重载TestFixture::tearDown()
   virtual void tearDown() override {
-    tearDownOnMainThread();
+    if (CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()) {
+      tearDownOnMainThread();
+    } else {
+      tearDownImmediately();
+    }
   }
 
   void tearDownOnMainThread() {
     if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
       if (m_result) {
-        m_result->protect(MethodFunctor(this, &TestCaller::tearDownImmediately),
-                          this, "tearDown() failed");
+        m_result->protect(
+          MethodFunctor(this, &TestCaller::tearDownImmediately),
+          this,
+          "tearDown() failed");
       } else {
         tearDownImmediately();
       }

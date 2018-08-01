@@ -15,6 +15,10 @@ public:
   RunnerBase();
   virtual ~RunnerBase();
 
+public:
+  virtual void setAlwaysCallTestOnMainThread( bool value );
+  virtual bool alwaysCallTestOnMainThread();
+
 public: // Runner接口族的实现
   virtual void addListener( ProgressListener *listener );
   virtual void removeListener( ProgressListener *listener );
@@ -45,6 +49,7 @@ public: // ExplicitEndTest相关的方法
 protected:
   ExplicitEndTest *runing_test;
   AutoEndTest auto_end_test;
+  bool always_call_test_on_main_thread;
 };
 
 CUTEST_NS_END

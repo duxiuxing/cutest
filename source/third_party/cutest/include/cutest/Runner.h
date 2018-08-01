@@ -63,6 +63,9 @@ public: // Help接口族
   */
   virtual void delayRunOnMainThread( unsigned int delay_ms, Runnable *runnable, bool is_auto_delete ) = 0;
 
+  virtual void setAlwaysCallTestOnMainThread( bool value ) = 0;
+  virtual bool alwaysCallTestOnMainThread() = 0;
+
 public: // Runner接口族
   virtual void addListener( ProgressListener *listener ) = 0;
   virtual void removeListener( ProgressListener *listener ) = 0;

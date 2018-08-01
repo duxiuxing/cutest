@@ -249,7 +249,14 @@ public:
 
   virtual void runTest() override
   {
-    runTestOnMainThread();
+    if ( CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread() )
+    {
+      runTestOnMainThread();
+    }
+    else
+    {
+      runTestImmediately();
+    }
   }
 
   void runTestOnMainThread()
@@ -282,7 +289,14 @@ public:
 
   virtual void setUp() override
   {
-    setUpOnMainThread();
+    if ( CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread() )
+    {
+      setUpOnMainThread();
+    }
+    else
+    {
+      setUpImmediately();
+    }
   }
 
   void setUpOnMainThread()
@@ -321,7 +335,14 @@ public:
 
   virtual void tearDown() override
   {
-    tearDownOnMainThread();
+    if ( CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread() )
+    {
+      tearDownOnMainThread();
+    }
+    else
+    {
+      tearDownImmediately();
+    }
   }
 
   void tearDownOnMainThread()
