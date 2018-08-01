@@ -24,7 +24,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="ECHO ------ clean header files in ...\source\third_party\cutest\include ------&#x0D;&#x0A;DEL /F /A /Q &quot;$(SolutionDir)source\third_party\cutest\include\GMockPlus.h&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\cppunit&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock\internal\custom&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock\internal&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest\internal\custom&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest\internal&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest&quot;&#x0D;&#x0A;ECHO ========== clean header files done =========="
+				CommandLine="ECHO ------ clean header files in ...\source\third_party\cutest\include ------&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\cppunit&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock\internal\custom&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock\internal&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gmock&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest\internal\custom&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest\internal&quot;&#x0D;&#x0A;RMDIR /S /Q &quot;$(SolutionDir)source\third_party\cutest\include\gtest&quot;&#x0D;&#x0A;ECHO ========== clean header files done ==========&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;&quot;%(AdditionalIncludeDirectories)&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -120,7 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;&quot;%(AdditionalIncludeDirectories)&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -374,38 +374,6 @@
 				RelativePath="..\..\googlemock\src\gmock-all.cc"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="GMockPlus"
-			>
-			<File
-				RelativePath="..\..\GMockPlus\src\GMockPlusAll.cpp"
-				>
-			</File>
-			<Filter
-				Name="Detours"
-				>
-				<File
-					RelativePath="..\..\Detours\src\creatwth.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Detours\src\detours.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Detours\src\disasm.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Detours\src\image.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Detours\src\modules.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
