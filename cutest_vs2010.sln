@@ -69,6 +69,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMockPlusDemo", "source\test\GMockPlusDemo\vs2010\GMockPlusDemo.vcxproj", "{DD5F99B8-1126-4171-84C7-6B8DA71278AF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
+		{9ACCC3BA-BB14-47D9-964A-40E3CA500773} = {9ACCC3BA-BB14-47D9-964A-40E3CA500773}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMockPlus", "source\third_party\GMockPlus\vs2010\GMockPlus.vcxproj", "{9ACCC3BA-BB14-47D9-964A-40E3CA500773}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
 	EndProjectSection
 EndProject
 Global
@@ -129,6 +135,10 @@ Global
 		{DD5F99B8-1126-4171-84C7-6B8DA71278AF}.Debug|Win32.Build.0 = Debug|Win32
 		{DD5F99B8-1126-4171-84C7-6B8DA71278AF}.Release|Win32.ActiveCfg = Release|Win32
 		{DD5F99B8-1126-4171-84C7-6B8DA71278AF}.Release|Win32.Build.0 = Release|Win32
+		{9ACCC3BA-BB14-47D9-964A-40E3CA500773}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9ACCC3BA-BB14-47D9-964A-40E3CA500773}.Debug|Win32.Build.0 = Debug|Win32
+		{9ACCC3BA-BB14-47D9-964A-40E3CA500773}.Release|Win32.ActiveCfg = Release|Win32
+		{9ACCC3BA-BB14-47D9-964A-40E3CA500773}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
