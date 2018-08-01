@@ -26,7 +26,6 @@ TestCaseDecorator::getName() const
 void 
 TestCaseDecorator::setUp()
 {
-  m_test->setTestResult(m_result);
   m_test->setUp();
 }
 
@@ -34,7 +33,6 @@ TestCaseDecorator::setUp()
 void 
 TestCaseDecorator::tearDown()
 {
-  m_test->setTestResult(m_result);
   m_test->tearDown();
 }
 
@@ -42,7 +40,6 @@ TestCaseDecorator::tearDown()
 void 
 TestCaseDecorator::runTest()
 {
-  m_test->setTestResult(m_result);
   m_test->runTest();
 }
 

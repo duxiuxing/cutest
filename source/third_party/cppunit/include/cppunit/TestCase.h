@@ -48,15 +48,13 @@ public:
     virtual void runTest() = 0;
     
 private:
-    //TestCase( const TestCase &other ); 
-    //TestCase &operator=( const TestCase &other ); 
+    TestCase( const TestCase &other ); 
+    TestCase &operator=( const TestCase &other ); 
     
 private:
     const std::string m_name;
 
 protected:
-    friend class TestCaseDecorator;
-    void setTestResult(TestResult *result);
     TestResult* m_result;
 };
 

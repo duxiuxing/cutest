@@ -134,11 +134,5 @@ TestCase::getName() const
   return m_name; 
 }
   
-// 供TestCaseDecorator调用，传递TestResult
-void
-TestCase::setTestResult(TestResult *result)
-{
-  m_result = result;
-}
 
 CPPUNIT_NS_END
