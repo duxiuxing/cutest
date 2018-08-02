@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Win32 DLL">
+      <UniqueIdentifier>{bc9906ec-c52b-4991-9dce-d6b76daa01c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GMockPlus">
+      <UniqueIdentifier>{4e499284-b19a-4a4a-99af-a54454d2e159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Detours">
+      <UniqueIdentifier>{e888e04a-13bf-4d47-a7e2-b9ab33fa387b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\stdafx.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\targetver.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\dllmain.cpp">
+      <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\stdafx.cpp">
+      <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\creatwth.cpp">
+      <Filter>Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\detours.cpp">
+      <Filter>Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\disasm.cpp">
+      <Filter>Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\image.cpp">
+      <Filter>Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Detours\src\modules.cpp">
+      <Filter>Detours</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\GMockPlus\src\GMockPlusAll.cpp">
+      <Filter>GMockPlus</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

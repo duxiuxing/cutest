@@ -53,7 +53,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -88,7 +88,7 @@ ECHO ========== clean header files done ==========
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
-      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\Detours\src;..\..\googletest\include;..\..\googlemock\include;..\..\cutest\include;&quot;%(AdditionalIncludeDirectories)&quot;"
+				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\Detours\src;..\..\googletest\include;..\..\cutest\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;GTEST_CREATE_SHARED_LIBRARY;DETOURS_X86"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -120,7 +120,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Detours\src;..\..\cutest\include;&quot;%(AdditionalIncludeDirectories)&quot;"
+				AdditionalIncludeDirectories="..\..\Detours\src;..\..\cutest\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;GTEST_CREATE_SHARED_LIBRARY;DETOURS_X86"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"

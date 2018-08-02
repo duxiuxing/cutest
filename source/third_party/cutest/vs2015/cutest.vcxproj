@@ -87,9 +87,9 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -101,7 +101,6 @@
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>ECHO ------ clean header files in ...\source\third_party\cutest\include ------
-DEL /F /A /Q "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\cppunit"
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock\internal\custom"
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock\internal"
@@ -118,9 +117,9 @@ ECHO ========== clean header files done ==========</Command>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,7 +131,6 @@ ECHO ========== clean header files done ==========</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>ECHO ------ clean header files in ...\source\third_party\cutest\include ------
-DEL /F /A /Q "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\cppunit"
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock\internal\custom"
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock\internal"
@@ -148,12 +146,12 @@ ECHO ========== clean header files done ==========</Command>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X86;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,7 +161,6 @@ ECHO ========== clean header files done ==========</Command>
     </Link>
     <PostBuildEvent>
       <Command>ECHO ------ copy header files to ...\source\third_party\cutest\include ------
-copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
 xcopy "$(SolutionDir)source\third_party\cppunit\include\cppunit" "$(SolutionDir)source\third_party\cutest\include\cppunit" /y /i /e
 xcopy "$(SolutionDir)source\third_party\googlemock\include\gmock" "$(SolutionDir)source\third_party\cutest\include\gmock" /y /i /e
 xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir)source\third_party\cutest\include\gtest" /y /i /e
@@ -178,9 +175,9 @@ ECHO ========== copy header files done ==========</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;DETOURS_X64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\Detours\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -217,12 +214,6 @@ ECHO ========== copy header files done ==========</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp" />
-    <ClCompile Include="..\..\Detours\src\creatwth.cpp" />
-    <ClCompile Include="..\..\Detours\src\detours.cpp" />
-    <ClCompile Include="..\..\Detours\src\disasm.cpp" />
-    <ClCompile Include="..\..\Detours\src\image.cpp" />
-    <ClCompile Include="..\..\Detours\src\modules.cpp" />
-    <ClCompile Include="..\..\GMockPlus\src\GMockPlusAll.cpp" />
     <ClCompile Include="..\..\googlemock\src\gmock-all.cc" />
     <ClCompile Include="..\..\googletest\src\gtest-all.cc" />
     <ClCompile Include="..\src\AutoEndTest.cpp" />

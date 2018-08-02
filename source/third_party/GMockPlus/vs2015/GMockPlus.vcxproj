@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{333812E0-7B4C-4F4E-8D7A-F8939804B746}</ProjectGuid>
+    <ProjectGuid>{E681DEF8-DB9B-4c46-B658-8A7C3FC62AA2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ForDummies</RootNamespace>
+    <RootNamespace>GMockPlus</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -87,15 +87,24 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GTEST_LINKED_AS_SHARED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GTEST_CREATE_SHARED_LIBRARY;DETOURS_X86;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\third_party\cppunit\include;..\..\..\third_party\googletest\include;..\..\..\third_party\googlemock\include;..\..\..\third_party\cutest\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\Detours\src;..\..\googletest\include;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>ECHO ------ clean GMockPlus.h in ...\source\third_party\cutest\include ------
+DEL /F /A /Q "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+ECHO ========== clean GMockPlus.h done ==========</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -103,15 +112,24 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;GTEST_LINKED_AS_SHARED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;GTEST_CREATE_SHARED_LIBRARY;DETOURS_X64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\third_party\cppunit\include;..\..\..\third_party\googletest\include;..\..\..\third_party\googlemock\include;..\..\..\third_party\cutest\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\cppunit\include;..\..\Detours\src;..\..\googletest\include;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>ECHO ------ clean GMockPlus.h in ...\source\third_party\cutest\include ------
+DEL /F /A /Q "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+ECHO ========== clean GMockPlus.h done ==========</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -121,10 +139,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GTEST_LINKED_AS_SHARED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GTEST_CREATE_SHARED_LIBRARY;DETOURS_X86;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\third_party\cutest\include</AdditionalIncludeDirectories>
-      <UseFullPaths>true</UseFullPaths>
+      <AdditionalIncludeDirectories>..\..\Detours\src;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -133,6 +150,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>ECHO ------ copy GMockPlus.h to ...\source\third_party\cutest\include ------
+copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+ECHO ========== copy GMockPlus.h done ==========</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -142,10 +164,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;GTEST_LINKED_AS_SHARED_LIBRARY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;GTEST_CREATE_SHARED_LIBRARY;DETOURS_X64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\third_party\cutest\include</AdditionalIncludeDirectories>
-      <UseFullPaths>true</UseFullPaths>
+      <AdditionalIncludeDirectories>..\..\Detours\src;..\..\cutest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -154,16 +175,24 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>ECHO ------ copy GMockPlus.h to ...\source\third_party\cutest\include ------
+copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
+ECHO ========== copy GMockPlus.h done ==========</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\mock-turtle.h" />
-    <ClInclude Include="..\painter.h" />
-    <ClInclude Include="..\stdafx.h" />
-    <ClInclude Include="..\targetver.h" />
-    <ClInclude Include="..\turtle.h" />
+    <ClInclude Include="..\src\stdafx.h" />
+    <ClInclude Include="..\src\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\dllmain.cpp">
+    <ClCompile Include="..\..\Detours\src\creatwth.cpp" />
+    <ClCompile Include="..\..\Detours\src\detours.cpp" />
+    <ClCompile Include="..\..\Detours\src\disasm.cpp" />
+    <ClCompile Include="..\..\Detours\src\image.cpp" />
+    <ClCompile Include="..\..\Detours\src\modules.cpp" />
+    <ClCompile Include="..\..\GMockPlus\src\GMockPlusAll.cpp" />
+    <ClCompile Include="..\src\dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
@@ -177,10 +206,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\painter.cc" />
-    <ClCompile Include="..\painter_test.cc" />
-    <ClCompile Include="..\stdafx.cpp" />
-    <ClCompile Include="..\turtle_test.cc" />
+    <ClCompile Include="..\src\stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
