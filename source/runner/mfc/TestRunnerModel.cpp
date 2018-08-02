@@ -13,9 +13,9 @@
 #include <set>
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
-#undef THIS_FILE
-static char THIS_FILE[] = __FILE__;
+  #define new DEBUG_NEW
+  #undef THIS_FILE
+  static char THIS_FILE[] = __FILE__;
 #endif
 
 const CString TestRunnerModel::settingKey( _T( "CppUnit" ) );
@@ -62,10 +62,17 @@ TestRunnerModel::loadSettings( Settings &s )
   CWinApp *app = AfxGetApp();
   ASSERT( app != NULL );
 
-  int autorun = app->GetProfileInt( _T( "CppUnit" ),
-                                    _T( "AutorunAtStartup" ),
-                                    1 );
-  s.autorunOnLaunch = ( autorun == 1 );
+  int autorun = app->GetProfileInt(
+                  _T( "CppUnit" ),
+                  _T( "AutorunAtStartup" ),
+                  1 );
+  s.autorunOnStartup = ( autorun == 1 );
+
+  int mainThread = app->GetProfileInt(
+                     _T( "CppUnit" ),
+                     _T( "AlwaysCallTestOnMainThread" ),
+                     0 );
+  s.alwaysCallTestOnMainThread = ( mainThread == 1 );
 
   s.col_1 = app->GetProfileInt( _T( "CppUnit" ), _T( "Col_1" ), 80 );
   s.col_2 = app->GetProfileInt( _T( "CppUnit" ), _T( "Col_2" ), 80 );
@@ -108,8 +115,7 @@ TestRunnerModel::loadHistory()
     }
     catch ( std::invalid_argument & )
     {}
-  }
-  while ( true );
+  } while ( true );
 
   // 如果m_history则视为第一次运行，默认执行All Tests
   if ( m_history.empty() )
@@ -138,8 +144,11 @@ TestRunnerModel::saveSettings( const Settings &s )
   CWinApp *app = AfxGetApp();
   ASSERT( app != NULL );
 
-  int autorun = s.autorunOnLaunch ? 1 : 0;
+  int autorun = s.autorunOnStartup ? 1 : 0;
   app->WriteProfileInt( _T( "CppUnit" ), _T( "AutorunAtStartup" ), autorun );
+
+  int mainThread = s.alwaysCallTestOnMainThread ? 1 : 0;
+  app->WriteProfileInt( _T( "CppUnit" ), _T( "AlwaysCallTestOnMainThread" ), mainThread );
 
   app->WriteProfileInt( _T( "CppUnit" ), _T( "Col_1" ),  s.col_1 );
   app->WriteProfileInt( _T( "CppUnit" ), _T( "Col_2" ),  s.col_2 );
@@ -149,7 +158,7 @@ TestRunnerModel::saveSettings( const Settings &s )
   int idx = 1;
   for ( History::const_iterator it = m_history.begin();
         it != m_history.end();
-        ++it , ++idx )
+        ++it, ++idx )
   {
     CPPUNIT_NS::Test *test = *it;
     saveHistoryEntry( idx, test->getName().c_str() );

@@ -10,7 +10,7 @@
 #include "cutest/Runner.h"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
+  #define new DEBUG_NEW
 #endif
 
 // CTestRunnerDlg dialog
@@ -42,7 +42,6 @@ CTestRunnerDlg::DoDataExchange( CDataExchange *pDX )
   DDX_Control( pDX, IDC_COMBO_TEST, m_comboHistory );
   DDX_Control( pDX, IDC_BROWSE_TEST, m_buttonBrowse );
   DDX_Control( pDX, ID_RUN, m_buttonRun );
-  DDX_Check( pDX, IDC_CHECK_AUTORUN, m_bAutorunAtStartup );
   DDX_Control( pDX, IDC_LIST, m_listCtrl );
   DDX_Control( pDX, ID_STOP, m_buttonStop );
   DDX_Control( pDX, IDOK, m_buttonClose );
@@ -64,6 +63,9 @@ BEGIN_MESSAGE_MAP( CTestRunnerDlg, cdxCDynamicDialog )
   ON_WM_SIZE()
   ON_NOTIFY( LVN_ITEMCHANGED, IDC_LIST, OnSelectedFailureChange )
   ON_CBN_SELCHANGE( IDC_COMBO_TEST, OnSelectTestInHistoryCombo )
+  ON_WM_MENUSELECT()
+  ON_COMMAND( ID_AUTORUN_AT_STARTUP, OnAutorunAtStartup )
+  ON_COMMAND( ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, OnAlwaysCallTestOnMainThread )
 END_MESSAGE_MAP()
 
 // CTestRunnerDlg message handlers
@@ -103,8 +105,8 @@ CTestRunnerDlg::OnInitDialog()
 
   m_testsProgress.Create( NULL, NULL, WS_CHILD | WS_VISIBLE, getItemClientRect( IDC_STATIC_PROGRESS_BAR ), this, 0 );
 
-  m_bAutorunAtStartup = m_settings.autorunOnLaunch;
-  UpdateData( FALSE );
+  m_bAutorunAtStartup = m_settings.autorunOnStartup;
+  CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread( m_settings.alwaysCallTestOnMainThread );
 
   m_errorListBitmap.Create( IDB_ERROR_TYPE, 16, 1, RGB( 255, 0, 255 ) );
   m_listCtrl.SetImageList( &m_errorListBitmap, LVSIL_SMALL );
@@ -136,7 +138,6 @@ CTestRunnerDlg::OnInitDialog()
   AddSzXControl( IDC_RUNNING_TEST_CASE_LABEL, mdResize );
   AddSzXControl( ID_RUN, mdRepos );
   AddSzXControl( m_testsProgress, mdResize );
-  AddSzXControl( IDC_CHECK_AUTORUN, mdRepos );
   AddSzControl( IDC_LIST, 0, 0, 100, listGrowthRatio );
   AddSzXControl( ID_STOP, mdRepos );
   AddSzXControl( IDOK, mdRepos );
@@ -457,9 +458,8 @@ CTestRunnerDlg::PreTranslateMessage( MSG *pMsg )
 void
 CTestRunnerDlg::saveSettings()
 {
-  UpdateData();
-
-  m_settings.autorunOnLaunch = ( m_bAutorunAtStartup != 0 );
+  m_settings.autorunOnStartup = ( m_bAutorunAtStartup != 0 );
+  m_settings.alwaysCallTestOnMainThread = CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread();
   StoreWindowPosition( TestRunnerModel::settingKey,
                        TestRunnerModel::settingMainDialogKey );
 
@@ -635,4 +635,39 @@ CTestRunnerDlg::SafeCloseDialog()
     SetUIState( UI_STATE_CLOSING );
     break;
   }
+}
+
+void
+CTestRunnerDlg::OnMenuSelect( UINT nItemID, UINT nFlags, HMENU hSysMenu )
+{
+  cdxCDynamicDialog::OnMenuSelect( nItemID, nFlags, hSysMenu );
+
+  CMenu *mainMenu = GetMenu();
+  if ( mainMenu && mainMenu->GetSafeHmenu() )
+  {
+    UINT check = m_bAutorunAtStartup ? MF_CHECKED : MF_UNCHECKED;
+    mainMenu->CheckMenuItem( ID_AUTORUN_AT_STARTUP, MF_BYCOMMAND | check );
+    UINT enable = ( m_uiState == UI_STATE_NONE ) ? MF_ENABLED : MF_GRAYED;
+    mainMenu->EnableMenuItem( ID_AUTORUN_AT_STARTUP, MF_BYCOMMAND | enable );
+
+    check = CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread() ? MF_CHECKED : MF_UNCHECKED;
+    mainMenu->CheckMenuItem( ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, MF_BYCOMMAND | check );
+    mainMenu->EnableMenuItem( ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, MF_BYCOMMAND | enable );
+  }
+}
+
+void
+CTestRunnerDlg::OnAutorunAtStartup()
+{
+  m_bAutorunAtStartup = !m_bAutorunAtStartup;
+  saveSettings();
+}
+
+void
+CTestRunnerDlg::OnAlwaysCallTestOnMainThread()
+{
+  CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread(
+    !CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()
+  );
+  saveSettings();
 }

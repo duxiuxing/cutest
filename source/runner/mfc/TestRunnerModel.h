@@ -10,8 +10,8 @@
 #include <cppunit/Test.h>
 
 /*! \class TestRunnerModel
- * \brief This class represents a model for the test runner.
- */
+   \brief This class represents a model for the test runner.
+*/
 class TestRunnerModel
 {
 public:
@@ -21,10 +21,17 @@ public:
 
   struct Settings
   {
-    Settings() : autorunOnLaunch( false ), col_1( 0 ), col_2( 0 ), col_3( 0 ), col_4( 0 )
+    Settings()
+      : autorunOnStartup( false )
+      , alwaysCallTestOnMainThread( false )
+      , col_1( 0 )
+      , col_2( 0 )
+      , col_3( 0 )
+      , col_4( 0 )
     {}
 
-    bool autorunOnLaunch;
+    bool autorunOnStartup;
+    bool alwaysCallTestOnMainThread;
     int  col_1; // 1st column width in list view
     int  col_2; // 2nd column width in list view
     int  col_3; // 3rd column width in list view
@@ -34,11 +41,11 @@ public:
   typedef std::deque<CPPUNIT_NS::Test *> History;
 
   /*! Constructs a TestRunnerModel object.
-   */
+  */
   TestRunnerModel( CPPUNIT_NS::Test *rootTest );
 
   /*! Destructor.
-   */
+  */
   virtual ~TestRunnerModel();
 
   virtual void setRootTest( CPPUNIT_NS::Test *rootTest );

@@ -47,6 +47,7 @@ protected:
   afx_msg void OnSize( UINT nType, int cx, int cy );
   afx_msg void OnQuitApplication();
   afx_msg void OnClose();
+  afx_msg void OnMenuSelect( UINT nItemID, UINT nFlags, HMENU hSysMenu );
 
   DECLARE_MESSAGE_MAP()
 
@@ -84,6 +85,9 @@ protected:
   void UpdateUI_Counts();
 
   BOOL m_bAutorunAtStartup;
+  afx_msg void OnAutorunAtStartup();
+  BOOL m_bAlwaysCallTestOnMainThread;
+  afx_msg void OnAlwaysCallTestOnMainThread();
 
   enum ErrorTypeBitmaps
   {
