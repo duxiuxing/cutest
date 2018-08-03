@@ -402,6 +402,7 @@ CTestRunnerDlg::OnSelectTestInHistoryCombo()
     CPPUNIT_NS::Test *selectedTest = m_model.history()[currentSelection];
     m_model.selectHistoryTest( selectedTest );
     ResetHistoryCombo();
+    saveSettings();
   }
 }
 
@@ -440,6 +441,7 @@ CTestRunnerDlg::OnBrowseTest()
   {
     m_model.selectHistoryTest( dlg.getSelectedTest() );
     ResetHistoryCombo();
+    saveSettings();
   }
 }
 
