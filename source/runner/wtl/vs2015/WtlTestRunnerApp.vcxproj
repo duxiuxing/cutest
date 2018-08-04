@@ -88,7 +88,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\third_party\cppunit\include;..\..\..\third_party\cutest\include;..\..\..\third_party\wtl\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\;..\..\..\third_party\cppunit\include;..\..\..\third_party\cutest\include;..\..\..\third_party\wtl\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -122,7 +122,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WINDOWS;STRICT;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\third_party\cppunit\include;..\..\..\third_party\cutest\include;..\..\..\third_party\wtl\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\;..\..\..\third_party\cppunit\include;..\..\..\third_party\cutest\include;..\..\..\third_party\wtl\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -154,6 +154,7 @@
       <DebugInformationFormat />
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\..\third_party\cutest\include;..\..\..\third_party\wtl\include</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -207,8 +208,9 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\DynamicWindow\cdxCDynamicLayoutInfo.cpp" />
     <ClCompile Include="..\TestRunnerDlg.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="..\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -217,9 +219,11 @@
     <ClCompile Include="..\TestRunnerApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicLayoutInfo.h" />
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicWnd.h" />
     <ClInclude Include="..\TestRunnerDlg.h" />
     <ClInclude Include="..\resource.h" />
-    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="..\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\TestRunnerApp.rc" />

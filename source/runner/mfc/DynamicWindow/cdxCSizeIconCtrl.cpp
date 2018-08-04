@@ -36,12 +36,11 @@ cdxCSizeIconCtrl::OEMImageList::OEMImageList( UINT nBitmapID, COLORREF crMask )
 cdxCSizeIconCtrl::OEMImageList::~OEMImageList()
 {}
 
-const CSize &cdxCSizeIconCtrl::OEMImageList::GetImageSize() const
+const CSize &
+cdxCSizeIconCtrl::OEMImageList::GetImageSize() const
 {
   return this->image_size;
 }
-
-IMPLEMENT_DYNAMIC( cdxCSizeIconCtrl, CScrollBar );
 
 cdxCSizeIconCtrl::OEMImageList cdxCSizeIconCtrl::oem_image_list(
   OBM_SIZE,
@@ -65,7 +64,8 @@ BEGIN_MESSAGE_MAP( cdxCSizeIconCtrl, CScrollBar )
   //}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-BOOL cdxCSizeIconCtrl::Create( CWnd *pParentWnd, UINT nID )
+BOOL
+cdxCSizeIconCtrl::Create( CWnd *pParentWnd, UINT nID )
 {
   ASSERT( pParentWnd != NULL );
   CRect rect;
@@ -82,7 +82,8 @@ BOOL cdxCSizeIconCtrl::Create( CWnd *pParentWnd, UINT nID )
   return TRUE;
 }
 
-void cdxCSizeIconCtrl::OnPaint()
+void
+cdxCSizeIconCtrl::OnPaint()
 {
   CPaintDC dc( this ); // device context for painting
 
@@ -99,7 +100,8 @@ void cdxCSizeIconCtrl::OnPaint()
   }
 }
 
-BOOL cdxCSizeIconCtrl::OnSetCursor( CWnd *pWnd, UINT nHitTest, UINT message )
+BOOL
+cdxCSizeIconCtrl::OnSetCursor( CWnd *pWnd, UINT nHitTest, UINT message )
 {
   if ( GetParent() && ( !GetParent()->IsZoomed() || !this->reflect_parent_state ) )
   {
@@ -114,7 +116,8 @@ BOOL cdxCSizeIconCtrl::OnSetCursor( CWnd *pWnd, UINT nHitTest, UINT message )
    the control.
    Don't know why, but it's annoying.
 */
-void cdxCSizeIconCtrl::OnLButtonDblClk( UINT nFlags, CPoint point )
+void
+cdxCSizeIconCtrl::OnLButtonDblClk( UINT nFlags, CPoint point )
 {
   // CScrollBar::OnLButtonDblClk(nFlags, point);
 }

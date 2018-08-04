@@ -19,9 +19,12 @@
     <Filter Include="TestRunnerDlg">
       <UniqueIdentifier>{1f6cf934-38e2-4318-92c5-1e8183bac69b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DynamicWindow">
+      <UniqueIdentifier>{614741fd-0c4e-427d-b6f8-7c59b70d0de6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="..\stdafx.cpp">
       <Filter>WTL Application Dialog based\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\TestRunnerApp.cpp">
@@ -30,9 +33,12 @@
     <ClCompile Include="..\TestRunnerDlg.cpp">
       <Filter>TestRunnerDlg</Filter>
     </ClCompile>
+    <ClCompile Include="..\DynamicWindow\cdxCDynamicLayoutInfo.cpp">
+      <Filter>DynamicWindow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="..\stdafx.h">
       <Filter>WTL Application Dialog based\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\resource.h">
@@ -40,6 +46,12 @@
     </ClInclude>
     <ClInclude Include="..\TestRunnerDlg.h">
       <Filter>TestRunnerDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicLayoutInfo.h">
+      <Filter>DynamicWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicWnd.h">
+      <Filter>DynamicWindow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

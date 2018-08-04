@@ -2,8 +2,6 @@
 
 class cdxCSizeIconCtrl : public CScrollBar
 {
-  DECLARE_DYNAMIC( cdxCSizeIconCtrl );
-
 public:
   class OEMImageList : public CImageList
   {
