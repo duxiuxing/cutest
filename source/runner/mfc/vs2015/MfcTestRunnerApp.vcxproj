@@ -195,6 +195,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\DynamicWindow\cdxCDynamicDialog.h" />
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicLayoutInfo.h" />
     <ClInclude Include="..\DynamicWindow\cdxCDynamicWnd.h" />
     <ClInclude Include="..\DynamicWindow\cdxCDynamicWndEx.h" />
     <ClInclude Include="..\DynamicWindow\cdxCSizeIconCtrl.h" />
@@ -214,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\DynamicWindow\cdxCDynamicDialog.cpp" />
+    <ClCompile Include="..\DynamicWindow\cdxCDynamicLayoutInfo.cpp" />
     <ClCompile Include="..\DynamicWindow\cdxCDynamicWnd.cpp" />
     <ClCompile Include="..\DynamicWindow\cdxCDynamicWndEx.cpp" />
     <ClCompile Include="..\DynamicWindow\cdxCSizeIconCtrl.cpp" />

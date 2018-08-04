@@ -69,7 +69,7 @@ void cdxCDynamicWndEx::OnInitialized()
     if(!RestoreWindowPosition(_makeFullProfile(M_lpszAutoPosProfileSection,m_strAutoPos),_T(""),rflg_all))
 #endif
 		{
-			Window()->CenterWindow();
+			GetWnd()->CenterWindow();
 			StretchWindow(10);
 		}
 	}
@@ -105,7 +105,7 @@ bool cdxCDynamicWndEx::StretchWindow(const CSize & szDelta)
 		return false;
 	}
 
-	CWnd	*pWnd	=	Window();
+	CWnd	*pWnd	=	GetWnd();
 
 	WINDOWPLACEMENT	wpl;
 	pWnd->GetWindowPlacement(&wpl);
@@ -177,7 +177,7 @@ bool cdxCDynamicWndEx::StoreWindowPosition(LPCTSTR lpszProfile,
 		return false;
 	}
 
-	CWnd	*pWnd	=	Window();
+	CWnd	*pWnd	=	GetWnd();
 
 	WINDOWPLACEMENT	wpl;
 	VERIFY( pWnd->GetWindowPlacement(&wpl) );
@@ -224,7 +224,7 @@ bool cdxCDynamicWndEx::RestoreWindowPosition(LPCTSTR lpszProfile,
 		return false;
 	}
 
-	CWnd		*pWnd	=	Window();
+	CWnd		*pWnd	=	GetWnd();
 	CWinApp	*app	=	AfxGetApp();
 
 	if(!app->m_pszRegistryKey || !*app->m_pszRegistryKey)

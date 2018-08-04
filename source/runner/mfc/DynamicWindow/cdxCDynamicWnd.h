@@ -1,158 +1,25 @@
-﻿// cdxCDynamicWnd.h: interface for the cdxCDynamicWnd class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#if !defined(AFX_CDXCDYNAMICWND_H__1FEFDD69_5C1C_11D3_800D_000000000000__INCLUDED_)
-#define AFX_CDXCDYNAMICWND_H__1FEFDD69_5C1C_11D3_800D_000000000000__INCLUDED_
-
-#if _MSC_VER >= 1000
-#pragma once
-#endif // _MSC_VER >= 1000
+﻿#pragma once
 
 #include <afxwin.h>
 #include <afxtempl.h>
 
+#include "cdxCDynamicLayoutInfo.h"
+
 class cdxCSizeIconCtrl;
-class cdxCDynamicWnd;
 
 #ifndef DECLARE_CDX_HIDDENFUNC
-#define	DECLARE_CDX_HIDDENFUNC(name)		name
+#define	DECLARE_CDX_HIDDENFUNC(name) name
 #endif
 #ifndef DECLARE_CDX_HIDDENENUM
-#define	DECLARE_CDX_HIDDENENUM(name)		enum name
+#define	DECLARE_CDX_HIDDENENUM(name) enum name
 #endif
 #ifndef DECLARE_CDX_HIDDENSTRUCT
-#define	DECLARE_CDX_HIDDENSTRUCT(name)	struct name
+#define	DECLARE_CDX_HIDDENSTRUCT(name) struct name
 #endif
 
-#pragma warning(disable: 4100)
-#pragma warning(disable: 4706)
+//#pragma warning(disable: 4100)
+//#pragma warning(disable: 4706)
 
-/*
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 9
- * ---------------------------
- * A) To make groupboxes work with WS_CLIPCHILDREN windows, set
- *    the WS_EX_TRANSPARENT flag for this child window.
- *    THIS IS NOT A PROBLEM WITH THIS CLASS BUT WITH MFC AT ALL
- *    (you can check it by test-viewing the group box in the
- *     resource editor).
- * B) The property sheet now has the WS_CLIPCHILDREN flag and it
- *    uses flSWPCopyBits.
- * C) The same applies to cdxCDynamicBar.
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 8
- * ---------------------------
- * A) Flags flSWPCopyBits added (which will be cleared by default)
- *		This leads into far less flickering but ensures proper updates
- *		for all child controls.
- *		Some controls do need you to clear this flag.
- *		It ensures that I don't use SWP_NOCOPYBITS.
- *    (Michel Wassink)
- *
- *    IMPORTANT:
- *    People should use the WS_CLIPCHILDREN flag for DIALOGS to
- *    avoid flickering !!!!!
- *
- * B) Added ModifyFlags() and GetFlags().
- *    (To help people modifying my flags)
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 7
- * ---------------------------
- * A) Bug in two overloads taking SBYTE parameters removed.
- *    (Uwe Keim)
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 6
- * ---------------------------
- * A) Added some #pragma warning(disable) to avoid ugly warnings
- *    when compiling using warning level 4.
- *    (Rick Hullinger)
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 5
- * ---------------------------
- * A) AddSzControl(...) overloads for control IDs added
- *    (Uwe Keim)
- * B) Design issue: AddSzControl() with bRepos == true didn't used
- *    DoMoveCtrl() as it would supposed to be.
- *    (Hans B黨ler, concerning an issue of Roberto del Noce.
- * C) Layout-Algorithm little changed:
- *    If you now want to provide extra information by deriving
- *    a class from cdxCDynamicLayoutInfo, you no longer overwrite Layout()
- *    but DoCreateLayoutInfo().
- *    (Hans B黨ler)
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 4
- * ---------------------------
- * A) BEGIN_DYNAMIC_MAP() now takes TWO parameters:
- *    The class itself and its base-class.
- *    This way even maps defined for bade-classes will work properly.
- *    (Rick Hullinger)
- *    If this feature offends your code, define _CDX_SIMPLE_DYNAMIC_MAPS in your
- *    project's settings to switch back to the old behaviour.
- *    However, it's strongly recommended to modify the BEGIN_DYNAMIC_MAP()
- *    declarations since the final release will surely have this feature.
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 3
- * ---------------------------
- * A) The size icon is now displayed using the right colors.
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 2
- * ---------------------------
- * A) changed cdxCDynamicWnd::BYTE to cdxCDynamicWnd::SBYTE
- *    changed cdxCDynamicWnd::BYTES to cdxCDynamicWnd::SBYTES
- *    to avoid conflicts with Window's BYTE data type.
- *    (Joshua Jensen)
- * B) Dialogs will be centered and sized to 110% by default.
- *    (Hans B黨ler)
- * C) Bug when avoiding flAntiFlicker
- * ---------------------------
- * cdxCDynamicWnd beta 1 fix 1
- * ---------------------------
- * A) ::Get/SetWindowPlacement() needs length in structure
- *    (Joshua Jensen)
- */
-
-
-/*
- * cdxCDynamicLayoutInfo
- * =====================
- * Layout information class.
- * This class is derived from CObject and made dynamic using
- * DECLARE_DYNAMIC.
- * You can derive your own class from it to provide more information
- * to your own DoMoveCtrl() function (if you have one).
- */
-
-class cdxCDynamicLayoutInfo : public CObject
-{
-	DECLARE_DYNAMIC(cdxCDynamicLayoutInfo);
-
-public:
-	CSize		m_szCurrent,			// current client size
-				m_szInitial,			// initial client size
-				m_szDelta;				// current - initial
-	UINT		m_nCtrlCnt;				// number of controls (>=0)
-	CPoint	m_pntScrollPos;		// current scrolling position
-	bool		m_bUseScrollPos;		// use scroll pos if m_szDelta < 0
-
-public:
-	cdxCDynamicLayoutInfo() : m_pntScrollPos(0), m_bUseScrollPos(false),m_nCtrlCnt(0) 
-        {
-        }
-
-	cdxCDynamicLayoutInfo(cdxCDynamicWnd *pWnd) : m_pntScrollPos(0), m_bUseScrollPos(false) 
-        { 
-          operator=(pWnd); 
-        }
-
-	virtual ~cdxCDynamicLayoutInfo() 
-        {
-        }
-
-	bool operator=(cdxCDynamicWnd *pWnd);
-
-	bool IsInitial() const { return !m_szDelta.cx && !m_szDelta.cy && (!m_bUseScrollPos || (!m_pntScrollPos.x && !m_pntScrollPos.y)); }
-};
 
 /*
  * cdxCDynamicWnd
@@ -269,7 +136,7 @@ public:
 	bool IsWindow() const { return IsValid() && ::IsWindow(m_pWnd->m_hWnd); }
 	bool IsUp() const { return IsWindow() && !m_pWnd->IsIconic(); }
 	bool IsDisabled() const { return m_iDisabled > 0; }
-	CWnd *Window() const { return m_pWnd; }
+	CWnd *GetWnd() const { return m_pWnd; }
 
 	virtual UINT GetCtrlCount() const { return (UINT)m_Map.GetCount(); }
 
@@ -484,32 +351,6 @@ private:												\
 #define	DYNAMIC_MAP_DEFAULT_ID							0
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-// cdxCDynamicLayoutInfo inlines
-/////////////////////////////////////////////////////////////////////////////
-
-/*
- * auto-fill in struct
- */
-
-inline bool cdxCDynamicLayoutInfo::operator=(cdxCDynamicWnd *pWnd)
-{
-	if(!pWnd || !pWnd->IsUp())
-		return false;
-
-	m_szCurrent			=	pWnd->GetCurrentClientSize();
-	m_szInitial			=	pWnd->m_szInitial;
-	m_szDelta			=	m_szCurrent - m_szInitial;
-	m_nCtrlCnt			=	pWnd->GetCtrlCount();
-
-	if(m_bUseScrollPos == pWnd->m_bUseScrollPos)
-	{
-		m_pntScrollPos.x	=	pWnd->Window()->GetScrollPos(SB_HORZ);
-		m_pntScrollPos.y	=	pWnd->Window()->GetScrollPos(SB_VERT);
-	}
-
-	return true;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // cdxCDynamicWnd inlines
@@ -700,7 +541,5 @@ inline HWND cdxCDynamicWnd::GetSafeChildHWND(UINT nID)
 	return h;
 }
 	
-#pragma warning(default: 4100)
-#pragma warning(default: 4706)
-
-#endif // !defined(AFX_CDXCDYNAMICWND_H__1FEFDD69_5C1C_11D3_800D_000000000000__INCLUDED_)
+//#pragma warning(default: 4100)
+//#pragma warning(default: 4706)

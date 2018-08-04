@@ -15,9 +15,6 @@ static char THIS_FILE[]=__FILE__;
 #pragma warning(disable: 4100)
 #pragma warning(disable: 4706)
 
-
-IMPLEMENT_DYNAMIC(cdxCDynamicLayoutInfo,CObject);
-
 //////////////////////////////////////////////////////////////////////
 // cdxCDynamicWnd::Position
 //////////////////////////////////////////////////////////////////////
@@ -38,30 +35,30 @@ IMPLEMENT_DYNAMIC(cdxCDynamicLayoutInfo,CObject);
 
 void cdxCDynamicWnd::Position::Apply(HWND hwnd, CRect & rectNewPos, const cdxCDynamicLayoutInfo & li) const
 {
-	if(li.m_bUseScrollPos)
+	if(li.use_scroll_pos)
 	{
-		rectNewPos.left	=	left   - li.m_pntScrollPos.x;
-		rectNewPos.right	=	right  - li.m_pntScrollPos.x;
-		rectNewPos.top		=	top    - li.m_pntScrollPos.y;
-		rectNewPos.bottom	=	bottom - li.m_pntScrollPos.y;
+		rectNewPos.left	=	left   - li.scroll_pos.x;
+		rectNewPos.right	=	right  - li.scroll_pos.x;
+		rectNewPos.top		=	top    - li.scroll_pos.y;
+		rectNewPos.bottom	=	bottom - li.scroll_pos.y;
 
-		if(li.m_szDelta.cx >= 0)
+		if(li.delta_size.cx >= 0)
 		{
-			rectNewPos.left	+=	(m_Bytes[X1] * li.m_szDelta.cx) / 100;
-			rectNewPos.right	+=	(m_Bytes[X2] * li.m_szDelta.cx) / 100;
+			rectNewPos.left	+=	(m_Bytes[X1] * li.delta_size.cx) / 100;
+			rectNewPos.right	+=	(m_Bytes[X2] * li.delta_size.cx) / 100;
 		}
-		if(li.m_szDelta.cy >= 0)
+		if(li.delta_size.cy >= 0)
 		{
-			rectNewPos.top		+=	(m_Bytes[Y1] * li.m_szDelta.cy) / 100;
-			rectNewPos.bottom	+=	(m_Bytes[Y2] * li.m_szDelta.cy) / 100;
+			rectNewPos.top		+=	(m_Bytes[Y1] * li.delta_size.cy) / 100;
+			rectNewPos.bottom	+=	(m_Bytes[Y2] * li.delta_size.cy) / 100;
 		}
 	}
 	else
 	{
-		rectNewPos.left	=	left   + (m_Bytes[X1] * li.m_szDelta.cx) / 100;
-		rectNewPos.right	=	right  + (m_Bytes[X2] * li.m_szDelta.cx) / 100;
-		rectNewPos.top		=	top    + (m_Bytes[Y1] * li.m_szDelta.cy) / 100;
-		rectNewPos.bottom	=	bottom + (m_Bytes[Y2] * li.m_szDelta.cy) / 100;
+		rectNewPos.left	=	left   + (m_Bytes[X1] * li.delta_size.cx) / 100;
+		rectNewPos.right	=	right  + (m_Bytes[X2] * li.delta_size.cx) / 100;
+		rectNewPos.top		=	top    + (m_Bytes[Y1] * li.delta_size.cy) / 100;
+		rectNewPos.bottom	=	bottom + (m_Bytes[Y2] * li.delta_size.cy) / 100;
 	}
 
 	if(rectNewPos.left + m_szMin.cx >= rectNewPos.right)
@@ -308,7 +305,7 @@ void cdxCDynamicWnd::Layout()
 
 	try
 	{
-		HDWP							hdwp		=	::BeginDeferWindowPos(pli->m_nCtrlCnt);
+		HDWP							hdwp		=	::BeginDeferWindowPos(pli->control_count);
 		HWND							hwnd;
 		bool							bRepeat;
 		CRect							rectNew;
