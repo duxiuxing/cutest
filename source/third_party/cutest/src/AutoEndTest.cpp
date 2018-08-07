@@ -63,7 +63,7 @@ TestTimeoutCounter::addFailure()
     // ExplicitEndTest还没超时就被自动结束了？需要Review AutoEndTest的设计。
     EXPECT_GE( elapsed_ms, this->timeout_ms ) << "AutoEndTest early end the TestCase!";
   }
-  else
+  else if ( Runner::instance()->treatTimeoutAsError() )
   {
     EXPECT_LE( elapsed_ms, this->timeout_ms ) << "ExplicitEndTest Timeout!";
   }

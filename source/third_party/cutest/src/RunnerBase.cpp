@@ -42,6 +42,7 @@ RunnerBase::RunnerBase()
   : test_decorator( NULL )
   , runing_test( NULL )
   , always_call_test_on_main_thread( false )
+  , treat_timeout_as_error( false )
 {}
 
 RunnerBase::~RunnerBase()
@@ -65,6 +66,18 @@ bool
 RunnerBase::alwaysCallTestOnMainThread()
 {
   return this->always_call_test_on_main_thread;
+}
+
+void
+RunnerBase::setTreatTimeoutAsError( bool value )
+{
+  this->treat_timeout_as_error = value;
+}
+
+bool
+RunnerBase::treatTimeoutAsError()
+{
+  return this->treat_timeout_as_error;
 }
 
 void

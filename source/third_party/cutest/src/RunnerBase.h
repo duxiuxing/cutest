@@ -19,6 +19,9 @@ public:
   virtual void setAlwaysCallTestOnMainThread( bool value );
   virtual bool alwaysCallTestOnMainThread();
 
+  virtual void setTreatTimeoutAsError( bool value );
+  virtual bool treatTimeoutAsError();
+
 public: // Runner接口族的实现
   virtual void addListener( ProgressListener *listener );
   virtual void removeListener( ProgressListener *listener );
@@ -50,6 +53,7 @@ protected:
   ExplicitEndTest *runing_test;
   AutoEndTest auto_end_test;
   bool always_call_test_on_main_thread;
+  bool treat_timeout_as_error;
 };
 
 CUTEST_NS_END

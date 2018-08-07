@@ -86,8 +86,9 @@ protected:
 
   BOOL m_bAutorunAtStartup;
   afx_msg void OnAutorunAtStartup();
-  BOOL m_bAlwaysCallTestOnMainThread;
+
   afx_msg void OnAlwaysCallTestOnMainThread();
+  afx_msg void OnTreatTimeoutAsError();
 
   enum ErrorTypeBitmaps
   {

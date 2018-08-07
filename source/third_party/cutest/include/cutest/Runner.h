@@ -66,6 +66,9 @@ public: // Help接口族
   virtual void setAlwaysCallTestOnMainThread( bool value ) = 0;
   virtual bool alwaysCallTestOnMainThread() = 0;
 
+  virtual void setTreatTimeoutAsError( bool value ) = 0;
+  virtual bool treatTimeoutAsError() = 0;
+
 public: // Runner接口族
   virtual void addListener( ProgressListener *listener ) = 0;
   virtual void removeListener( ProgressListener *listener ) = 0;
