@@ -173,4 +173,15 @@ RunnerImpl::run()
   RunnerImpl::main_thread_id = Runner::currentThreadId();
 }
 
+void
+RunnerImpl::runUntilAllTestEnd( CPPUNIT_NS::Test *test )
+{
+  MSG msg = {0};
+  while (::GetMessage( &msg, NULL, 0, 0 ) )
+  {
+    ::TranslateMessage( &msg );
+    ::DispatchMessage( &msg );
+  }
+}
+
 CUTEST_NS_END

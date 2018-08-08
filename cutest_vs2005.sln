@@ -68,11 +68,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForDummies", "source\test\F
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMockPlusDemo", "source\test\GMockPlusDemo\vs2005\GMockPlusDemo.vcproj", "{1186BDE5-8496-4E69-AC5D-EC28AF70C541}"
 	ProjectSection(ProjectDependencies) = postProject
-		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 		{9FB0DC43-096C-41CB-8B40-5280BB8D26A1} = {9FB0DC43-096C-41CB-8B40-5280BB8D26A1}
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMockPlus", "source\third_party\GMockPlus\vs2005\GMockPlus.vcproj", "{9FB0DC43-096C-41CB-8B40-5280BB8D26A1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleTestRunnerApp", "source\runner\console\vs2005\ConsoleTestRunnerApp.vcproj", "{554A7628-C55E-490C-98B8-0BA1E7CE1A84}"
 	ProjectSection(ProjectDependencies) = postProject
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
@@ -139,6 +144,10 @@ Global
 		{9FB0DC43-096C-41CB-8B40-5280BB8D26A1}.Debug|Win32.Build.0 = Debug|Win32
 		{9FB0DC43-096C-41CB-8B40-5280BB8D26A1}.Release|Win32.ActiveCfg = Release|Win32
 		{9FB0DC43-096C-41CB-8B40-5280BB8D26A1}.Release|Win32.Build.0 = Release|Win32
+		{554A7628-C55E-490C-98B8-0BA1E7CE1A84}.Debug|Win32.ActiveCfg = Debug|Win32
+		{554A7628-C55E-490C-98B8-0BA1E7CE1A84}.Debug|Win32.Build.0 = Debug|Win32
+		{554A7628-C55E-490C-98B8-0BA1E7CE1A84}.Release|Win32.ActiveCfg = Release|Win32
+		{554A7628-C55E-490C-98B8-0BA1E7CE1A84}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

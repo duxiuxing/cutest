@@ -76,6 +76,8 @@ public: // Runner接口族
   virtual void start( CPPUNIT_NS::Test *test ) = 0;
   virtual void stop() = 0;
 
+  virtual void runUntilAllTestEnd( CPPUNIT_NS::Test *test ) = 0;
+
   virtual void addFailure( bool is_error, CPPUNIT_NS::Exception *exception ) = 0;
 
   virtual unsigned int errorCount() const = 0;
