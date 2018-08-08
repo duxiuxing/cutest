@@ -39,7 +39,7 @@ public:
 
     主要使用场景：根据用例执行前后的系统时间差计算耗时
   */
-  static unsigned long long tickCount();
+  static unsigned long long tickCount64();
 
   static Runner *instance();
 

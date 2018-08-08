@@ -29,7 +29,7 @@ CTestRunnerDlg::CTestRunnerDlg( CPPUNIT_NS::Test *rootTest, CWnd *pParent )
 
   m_bAutorunAtStartup = FALSE;
 
-  m_testStartTime = CUTEST_NS::Runner::tickCount();
+  m_testStartTime = CUTEST_NS::Runner::tickCount64();
   m_testEndTime = m_testStartTime;
 
   ModifyFlags( flSWPCopyBits, 0 );    // anti-flickering option for resizing
@@ -231,7 +231,7 @@ CTestRunnerDlg::OnRun()
 
   m_testsCount = selectedTest->countTestCases();
   m_testsProgress.start( m_testsCount );
-  m_testStartTime = CUTEST_NS::Runner::tickCount();
+  m_testStartTime = CUTEST_NS::Runner::tickCount64();
   runner->start( selectedTest );
 }
 
@@ -326,7 +326,7 @@ CTestRunnerDlg::onTestEnd(
   UpdateUI_Counts();
   m_testsProgress.step( m_failures == 0 && m_errors == 0 );
 
-  m_testEndTime = CUTEST_NS::Runner::tickCount();
+  m_testEndTime = CUTEST_NS::Runner::tickCount64();
   UpdateUI_Time();
 
   CWnd *runningTestCaseLabel = GetDlgItem( IDC_RUNNING_TEST_CASE_LABEL );

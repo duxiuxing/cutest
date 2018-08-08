@@ -6,7 +6,7 @@
 CUTEST_NS_BEGIN
 
 unsigned long long
-Runner::tickCount()
+Runner::tickCount64()
 {
   static LARGE_INTEGER ticks_per_second = { 0 };
   LARGE_INTEGER tick;

@@ -60,7 +60,7 @@ ProgressListenerManager::startTestRunOnMainThread( CPPUNIT_NS::Test *test )
   this->failure_index = 0;
 
   TestRecord record;
-  record.start_ms = Runner::tickCount();
+  record.start_ms = Runner::tickCount64();
   this->test_record.push( record );
 
   TestProgressListeners::iterator it = this->listeners.begin();
@@ -80,8 +80,7 @@ public:
   EndTestRunTask( ProgressListenerManager *manager, CPPUNIT_NS::Test *test_in )
     : ProgressListenerManager::TaskBase( manager, NULL )
     , test( test_in )
-  {
-  }
+  {}
 
   virtual void run()
   {
@@ -101,7 +100,7 @@ void
 ProgressListenerManager::endTestRunOnMainThread( CPPUNIT_NS::Test *test )
 {
   TestRecord &record = this->test_record.top();
-  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount() - record.start_ms );
+  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount64() - record.start_ms );
   this->test_record.pop();
 
   TestProgressListeners::iterator it = this->listeners.begin();
@@ -143,7 +142,7 @@ void
 ProgressListenerManager::startSuiteOnMainThread( CPPUNIT_NS::Test *suite )
 {
   TestRecord record;
-  record.start_ms = Runner::tickCount();
+  record.start_ms = Runner::tickCount64();
   this->test_record.push( record );
 
   TestProgressListeners::iterator it = this->listeners.begin();
@@ -186,7 +185,7 @@ void
 ProgressListenerManager::endSuiteOnMainThread( CPPUNIT_NS::Test *suite )
 {
   TestRecord &record = this->test_record.top();
-  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount() - record.start_ms );
+  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount64() - record.start_ms );
   this->test_record.pop();
 
   TestProgressListeners::iterator it = this->listeners.begin();
@@ -225,7 +224,7 @@ ProgressListenerManager::startTest( CPPUNIT_NS::Test *test )
 
   // 在这记录开始时间，避免把线程切换的时间也计算在内
   TestRecord record;
-  record.start_ms = Runner::tickCount();
+  record.start_ms = Runner::tickCount64();
   this->test_record.push( record );
 }
 
@@ -321,7 +320,7 @@ ProgressListenerManager::endTest( CPPUNIT_NS::Test *test )
   Runner *runner = Runner::instance();
   // 在这记录用例耗时，避免把线程切换的时间也计算在内
   TestRecord &record = this->test_record.top();
-  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount() - record.start_ms );
+  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount64() - record.start_ms );
 
   Event *event = Event::createInstance();
   EndTestTask *task = new EndTestTask( this, event, test, elapsed_ms );
