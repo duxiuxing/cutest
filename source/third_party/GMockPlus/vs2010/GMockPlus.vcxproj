@@ -75,7 +75,7 @@ ECHO ========== clean GMockPlus.h done ==========
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GTEST_CREATE_SHARED_LIBRARY;DETOURS_X86;%(PreprocessorDefinitions)</PreprocessorDefinitions>

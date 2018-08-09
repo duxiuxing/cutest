@@ -247,6 +247,14 @@ public:
     m_event( NULL )
   {}
 
+  virtual ~TestCaller()
+  {
+    if ( m_ownFixture && m_fixture )
+    {
+      delete m_fixture;
+    }
+  }
+
   virtual void runTest() override
   {
     if ( CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread() )
@@ -373,7 +381,7 @@ public:
   void tearDownImmediately()
   {
     m_fixture->tearDown();
-    if ( m_ownFixture )
+    if ( m_ownFixture && m_fixture )
     {
       delete m_fixture;
       m_fixture = NULL;

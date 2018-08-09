@@ -42,6 +42,12 @@ class TestCaller
     , m_event(NULL) {
   }
 
+  virtual ~TestCaller() {
+    if (m_fixture) {
+      delete m_fixture;
+    }
+  }
+
   // 重载TestCase::runTest()
   virtual void runTest() override {
     if (CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()) {

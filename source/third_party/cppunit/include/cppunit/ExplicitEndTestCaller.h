@@ -169,6 +169,8 @@ public:
   void tearDownImmediately()
   {
     m_fixture->tearDown();
+    delete m_fixture;
+    m_fixture = NULL;
     m_event->post();
   }
 
