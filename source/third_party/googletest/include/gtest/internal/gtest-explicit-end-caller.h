@@ -47,7 +47,7 @@ class ExplicitEndTestCaller
     , m_event(NULL)
   {}
 
-  ~ExplicitEndTestCaller() {
+  virtual ~ExplicitEndTestCaller() {
     if (m_fixture) {
       delete m_fixture;
     }
@@ -138,6 +138,8 @@ class ExplicitEndTestCaller
 
   void tearDownImmediately() {
     m_fixture->TearDown();
+    delete m_fixture;
+    m_fixture = NULL;
     m_event->post();
   }
 
