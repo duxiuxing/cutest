@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="2"
 				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;CPPUNIT_BUILD_DLL;GTEST_CREATE_SHARED_LIBRARY;_CUTEST_IMPL"
 				RuntimeLibrary="2"
