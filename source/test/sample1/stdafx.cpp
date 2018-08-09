@@ -1,3 +1,7 @@
 ﻿#include "stdafx.h"
 
-#pragma comment(lib, "cutest.lib")
+#ifdef _CONSOLE
+  #pragma comment(lib, "cutest_static.lib")
+#else
+  #pragma comment(lib, "cutest.lib")
+#endif

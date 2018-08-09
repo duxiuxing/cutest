@@ -2892,7 +2892,11 @@ static std::string FormatCountableNoun(int count,
 }
 
 // Formats the count of tests.
+#ifndef _CUTEST_IMPL
 static std::string FormatTestCount(int test_count) {
+#else
+std::string FormatTestCount(int test_count) {
+#endif
   return FormatCountableNoun(test_count, "test", "tests");
 }
 
@@ -3063,7 +3067,11 @@ bool ShouldUseColor(bool stdout_is_tty) {
 // cannot simply emit special characters and have the terminal change colors.
 // This routine must actually emit the characters rather than return a string
 // that would be colored when printed, as can be done on Linux.
+#ifndef _CUTEST_IMPL
 static void ColoredPrintf(GTestColor color, const char* fmt, ...) {
+#else
+void ColoredPrintf(GTestColor color, const char* fmt, ...) {
+#endif
   va_list args;
   va_start(args, fmt);
 
