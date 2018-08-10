@@ -211,7 +211,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="hierarchy"
+			Name="example"
 			>
 			<File
 				RelativePath="..\..\..\third_party\cppunit\examples\hierarchy\BoardGame.cpp"

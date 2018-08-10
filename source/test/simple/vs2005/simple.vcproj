@@ -175,7 +175,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="simple"
+			Name="example"
 			>
 			<File
 				RelativePath="..\..\..\third_party\cppunit\examples\simple\ExampleTestCase.cpp"

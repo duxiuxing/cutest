@@ -175,7 +175,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="sample1"
+			Name="sample"
 			>
 			<File
 				RelativePath="..\..\..\third_party\googletest\samples\sample1.cc"

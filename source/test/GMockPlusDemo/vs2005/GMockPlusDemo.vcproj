@@ -176,7 +176,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="GMockPlusDemo"
+			Name="demo"
 			>
 			<File
 				RelativePath="..\GMockPlusDemo.cpp"

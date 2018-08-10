@@ -175,7 +175,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="money"
+			Name="example"
 			>
 			<File
 				RelativePath="..\..\..\third_party\cppunit\examples\money\Money.h"
