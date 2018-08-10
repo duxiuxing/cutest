@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="sample1_console"
-	ProjectGUID="{009B80E2-0407-4C5E-9BFF-88166AB06327}"
-	RootNamespace="sample1_console"
+	Name="ProgressListenerTest"
+	ProjectGUID="{6E595626-6DD1-495B-88FB-B45DDD272E43}"
+	RootNamespace="ProgressListenerTest"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -188,22 +188,18 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="sample"
+			Name="test"
 			>
 			<File
 				RelativePath="..\console_main.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\googletest\samples\sample1.cc"
+				RelativePath="..\EventRecordingListener.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\googletest\samples\sample1.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\googletest\samples\sample1_unittest.cc"
+				RelativePath="..\ProgressListenerTest.cpp"
 				>
 			</File>
 		</Filter>
