@@ -78,6 +78,8 @@ RunnerImpl::RunnerImpl()
 
 RunnerImpl::~RunnerImpl()
 {
+  waitUntilAllTestEnd();
+
   if ( RunnerImpl::message_window )
   {
     ::DestroyWindow( RunnerImpl::message_window );
@@ -174,16 +176,14 @@ RunnerImpl::run()
 }
 
 void
-RunnerImpl::runUntilAllTestEnd( CPPUNIT_NS::Test *test )
+RunnerImpl::waitUntilAllTestEnd()
 {
-  this->start( test );
   MSG msg = { 0 };
-  while ( ::GetMessage( &msg, NULL, 0, 0 ) )
+  while ( STATE_NONE != this->state
+          && ::GetMessage( &msg, NULL, 0, 0 ) )
   {
     ::TranslateMessage( &msg );
     ::DispatchMessage( &msg );
-    if ( STATE_NONE == this->state )
-      break;
   }
 }
 

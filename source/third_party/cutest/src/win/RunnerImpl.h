@@ -25,7 +25,7 @@ public:
   virtual void asyncRunOnMainThread( Runnable *runnable, bool is_auto_delete );
   virtual void delayRunOnMainThread( unsigned int delay_ms, Runnable *runnable, bool is_auto_delete );
 
-  virtual void runUntilAllTestEnd( CPPUNIT_NS::Test *test );
+  virtual void waitUntilAllTestEnd();
 
 protected:
   enum

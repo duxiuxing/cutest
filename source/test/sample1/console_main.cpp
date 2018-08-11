@@ -7,9 +7,11 @@ int _tmain( int argc, _TCHAR *argv[] )
 {
   ::CoInitialize( NULL );
 
-  CUTEST_NS::Runner::instance()->runUntilAllTestEnd(
+  CUTEST_NS::Runner::instance()->start(
     CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest()
   );
+
+  CUTEST_NS::Runner::instance()->waitUntilAllTestEnd();
 
   return 0;
 }

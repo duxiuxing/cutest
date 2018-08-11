@@ -3,6 +3,8 @@
 #include "EventRecordingListener.h"
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cutest/Runner.h>
+#include "gtest/gtest.h"
+
 /*
   void VerifyResults(const std::vector<std::string>& data,
                    const char* const* expected_data,
@@ -144,6 +146,20 @@
 
 std::vector<std::string> *g_events = NULL;
 
+class EnvironmentInvocationCatcher : public testing::Environment
+{
+protected:
+  virtual void SetUp()
+  {
+    g_events->push_back( "Environment::SetUp" );
+  }
+
+  virtual void TearDown()
+  {
+    g_events->push_back( "Environment::TearDown" );
+  }
+};
+
 int _tmain( int argc, _TCHAR *argv[] )
 {
   ::CoInitialize( NULL );
@@ -156,9 +172,16 @@ int _tmain( int argc, _TCHAR *argv[] )
   EventRecordingListener listener2( "2nd" );
   CUTEST_NS::Runner::instance()->addListener( &listener2 );
 
-  CUTEST_NS::Runner::instance()->runUntilAllTestEnd(
+  AddGlobalTestEnvironment( new EnvironmentInvocationCatcher );
+
+  GTEST_CHECK_( events.size() == 0 )
+      << "AddGlobalTestEnvironment should not generate any events itself.";
+
+  CUTEST_NS::Runner::instance()->start(
     CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest()
   );
+
+  CUTEST_NS::Runner::instance()->waitUntilAllTestEnd();
 
   return 0;
 }
