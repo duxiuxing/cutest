@@ -175,7 +175,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="sample3"
+			Name="sample"
 			>
 			<File
 				RelativePath="..\..\..\third_party\googletest\samples\sample3-inl.h"

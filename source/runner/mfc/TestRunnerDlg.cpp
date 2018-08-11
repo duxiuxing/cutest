@@ -343,7 +343,8 @@ CTestRunnerDlg::onRunnerEnd( CPPUNIT_NS::Test *test, unsigned int elapsed_ms )
 {
   if ( UI_STATE_CLOSING == m_uiState )
   {
-    EndDialog( IDOK );
+    SetUIState( UI_STATE_NONE );
+    PostMessage( WM_CLOSE );
   }
   else
   {

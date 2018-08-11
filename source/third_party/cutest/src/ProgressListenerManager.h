@@ -60,8 +60,7 @@ public:
     TaskBase( ProgressListenerManager *manager_in, Event *event_in )
       : manager( manager_in )
       , event( event_in )
-    {
-    }
+    {}
 
     virtual ~TaskBase()
     {
