@@ -182,6 +182,8 @@ RunnerImpl::runUntilAllTestEnd( CPPUNIT_NS::Test *test )
   {
     ::TranslateMessage( &msg );
     ::DispatchMessage( &msg );
+    if ( STATE_NONE == this->state )
+      break;
   }
 }
 
