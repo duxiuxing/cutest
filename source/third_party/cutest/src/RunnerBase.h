@@ -9,7 +9,7 @@ CUTEST_NS_BEGIN
 
 class ExplicitEndTest;
 
-class RunnerBase : public Runner
+class RunnerBase : public Runner, public ProgressListener
 {
 public:
   RunnerBase();
@@ -54,6 +54,15 @@ protected:
   AutoEndTest auto_end_test;
   bool always_call_test_on_main_thread;
   bool treat_timeout_as_error;
+
+  enum State
+  {
+    STATE_NONE = 0,  // 空闲状态，上一状态为STATE_RUNING or STATE_STOPPING
+    STATE_RUNING,    // 调用了Runner::start()之后，上一状态为STATE_NONE
+    STATE_STOPPING,  // 调用了Runner::stop()之后，上一状态为STATE_RUNING
+  };
+  State state;
+  virtual void onRunnerEnd( CPPUNIT_NS::Test *test, unsigned int elapsed_ms ) override;
 };
 
 CUTEST_NS_END

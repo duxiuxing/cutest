@@ -43,7 +43,10 @@ RunnerBase::RunnerBase()
   , runing_test( NULL )
   , always_call_test_on_main_thread( false )
   , treat_timeout_as_error( false )
-{}
+  , state( STATE_NONE )
+{
+  addListener( this );
+}
 
 RunnerBase::~RunnerBase()
 {
@@ -95,7 +98,18 @@ RunnerBase::removeListener( ProgressListener *listener )
 void
 RunnerBase::start( CPPUNIT_NS::Test *test )
 {
-  stop();
+  switch ( this->state )
+  {
+  case STATE_NONE:
+    this->state = STATE_RUNING;
+    break;
+  case STATE_RUNING:
+    return;
+  case STATE_STOPPING:
+    return;
+  default:
+    return;
+  }
 
   if ( this->test_decorator )
   {
@@ -111,6 +125,19 @@ RunnerBase::start( CPPUNIT_NS::Test *test )
 void
 RunnerBase::stop()
 {
+  switch ( this->state )
+  {
+  case STATE_NONE:
+    return;
+  case STATE_RUNING:
+    this->state = STATE_STOPPING;
+    break;
+  case STATE_STOPPING:
+    return;
+  default:
+    return;
+  }
+
   if ( this->test_decorator )
   {
     this->test_decorator->stop();
@@ -194,6 +221,12 @@ RunnerBase::unregisterExplicitEndTest( ExplicitEndTest *test )
     this->runing_test = NULL;
     this->auto_end_test.cancel();
   }
+}
+
+void
+RunnerBase::onRunnerEnd( CPPUNIT_NS::Test *test, unsigned int elapsed_ms )
+{
+  this->state = STATE_NONE;
 }
 
 CUTEST_NS_END
