@@ -8,7 +8,11 @@
 #pragma warning( disable: 4251)  // X needs to have dll-interface to be used by clients of class Z
 #endif
 
+#if 0
 #include <cppunit/portability/CppUnitSet.h>
+#else // _CUTEST_IMPL
+#include <cppunit/portability/CppUnitVector.h>
+#endif
 #include <cppunit/extensions/TestFactory.h>
 #include <string>
 
@@ -165,7 +169,11 @@ private:
   void operator =( const TestFactoryRegistry &copy );
 
 private:
+#if 0
   typedef CppUnitSet<TestFactory *, std::less<TestFactory*> > Factories;
+#else // _CUTEST_IMPL
+  typedef CppUnitVector<TestFactory *> Factories;
+#endif
   Factories m_factories;
 
   std::string m_name;

@@ -4,9 +4,6 @@
 #include <cppunit/TestSuite.h>
 #include <assert.h>
 
-#ifdef _CUTEST_IMPL
-  #include "TestFactorySort.h"
-#endif
 
 CPPUNIT_NS_BEGIN
 
@@ -114,16 +111,30 @@ TestFactoryRegistry::registerFactory( const std::string &,
 void 
 TestFactoryRegistry::registerFactory( TestFactory *factory )
 {
+#if 0
   m_factories.insert( factory );
-  TestFactorySort::getInstance()->allocWeigth(factory);
+#else
+  Factories::iterator it = std::find( m_factories.begin(), m_factories.end(), factory );
+  if ( it == m_factories.end() )
+  {
+    m_factories.push_back( factory );
+  }  
+#endif
 }
 
 
 void 
 TestFactoryRegistry::unregisterFactory( TestFactory *factory )
 {
+#if 0
   m_factories.erase( factory );
-  TestFactorySort::getInstance()->deallocWeigth(factory);
+#else
+  Factories::iterator it = std::find( m_factories.begin(), m_factories.end(), factory );
+  if ( it != m_factories.end() )
+  {
+    m_factories.erase( it );
+  }
+#endif
 }
 
 
@@ -142,7 +153,7 @@ TestFactoryRegistry::makeTest()
   return suite;
 }
 
-#ifndef _CUTEST_IMPL
+
 void 
 TestFactoryRegistry::addTestToSuite( TestSuite *suite )
 {
@@ -154,21 +165,7 @@ TestFactoryRegistry::addTestToSuite( TestSuite *suite )
     suite->addTest( factory->makeTest() );
   }
 }
-#else // #ifndef _CUTEST_IMPL
-void
-TestFactoryRegistry::addTestToSuite( TestSuite *suite )
-{
-  CppUnitVector<TestFactory *> result;
-  TestFactorySort::getInstance()->sort( m_factories, result );
 
-  for ( CppUnitVector<TestFactory *>::const_iterator it = result.begin();
-        it != result.end();
-        ++it )
-  {
-    suite->addTest( ( *it )->makeTest() );
-  }
-}
-#endif // #ifndef _CUTEST_IMPL
 
 bool 
 TestFactoryRegistry::isValid()

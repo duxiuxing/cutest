@@ -120,8 +120,8 @@ TestSuite::RegisterTearDownTestCase( std::string name, TestSuite::TearDownTestCa
 void 
 TestSuite::doStartSuite( TestResult *controller )
 {
-  TestComposite::doStartSuite( controller );
   TestCaseMethodList::instance()->RunSetUpTestCase( getName() );
+  TestComposite::doStartSuite( controller );
 }
 
 void 
