@@ -10,7 +10,6 @@ int _tmain( int argc, _TCHAR *argv[] )
   CUTEST_NS::Runner::instance()->start(
     CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest()
   );
-
   CUTEST_NS::Runner::instance()->waitUntilAllTestEnd();
 
   return 0;

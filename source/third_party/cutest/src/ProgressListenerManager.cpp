@@ -288,7 +288,6 @@ ProgressListenerManager::StartTestImmediately( CPPUNIT_NS::Test *test )
 class AddFailureTask : public ProgressListenerManager::TaskBase
 {
 protected:
-  ProgressListenerManager *manager;
   CPPUNIT_NS::TestFailure *failure;
 
 public:
