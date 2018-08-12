@@ -88,10 +88,10 @@ TreeHierarchyDlg::addTest( CPPUNIT_NS::Test *test,
   CString itemName = CString( test->getName().c_str() );
   if ( TVI_ROOT != hParent )
   {
-    // 将Test名字中Suite::的部分精简掉
-    // 比如："ExampleTestCase::testAdd"精简为"testAdd"
+    // 将Test名字中Suite.的部分精简掉
+    // 比如："ExampleTestCase.testAdd"精简为"testAdd"
     CString prefix;
-    prefix.Format( _T( "%s::" ), ( LPCTSTR )m_treeTests.GetItemText( hParent ) );
+    prefix.Format( _T( "%s." ), ( LPCTSTR )m_treeTests.GetItemText( hParent ) );
     itemName.Replace( prefix, _T( "" ) );
   }
 
