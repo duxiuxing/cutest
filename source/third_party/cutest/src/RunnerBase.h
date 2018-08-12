@@ -12,6 +12,8 @@ class ExplicitEndTest;
 class RunnerBase : public Runner, public ProgressListener
 {
 public:
+  static void initGoogleMock();
+
   RunnerBase();
   virtual ~RunnerBase();
 

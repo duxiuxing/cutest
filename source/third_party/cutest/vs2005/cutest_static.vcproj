@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include"
+				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;..\..\cutest"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CUTEST_IMPL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -106,7 +106,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include"
+				AdditionalIncludeDirectories="..\..\cppunit\include;..\..\cppunit\src;..\..\googletest\include;..\..\googletest;..\..\googlemock\include;..\..\googlemock;..\..\cutest\include;..\..\cutest"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CUTEST_IMPL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"

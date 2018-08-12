@@ -3,6 +3,7 @@
 #include "cutest/ExplicitEndTest.h"
 #include "cutest/Runnable.h"
 
+#include "gmock/gmock.h"
 #include "gtest/gtest-message.h"
 
 CUTEST_NS_BEGIN
@@ -36,6 +37,17 @@ Runner::version()
   }
 
   return version.c_str();
+}
+
+void
+RunnerBase::initGoogleMock()
+{
+  static bool init_once = true;
+  if ( init_once )
+  {
+    init_once = false;
+    testing::InitGoogleMock( &__argc, __wargv );
+  }
 }
 
 RunnerBase::RunnerBase()

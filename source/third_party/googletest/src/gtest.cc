@@ -585,7 +585,12 @@ bool UnitTestOptions::MatchesFilter(
 bool UnitTestOptions::FilterMatchesTest(const std::string &test_case_name,
                                         const std::string &test_name) {
   const std::string& full_name = test_case_name + "." + test_name.c_str();
+#ifdef _CUTEST_IMPL
+  return UnitTestOptions::FilterMatchesTest(full_name);
+}
 
+bool UnitTestOptions::FilterMatchesTest(const std::string &full_name) {
+#endif
   // Split --gtest_filter at '-', if there is one, to separate into
   // positive filter and negative filter portions
   const char* const p = GTEST_FLAG(filter).c_str();

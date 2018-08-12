@@ -9,10 +9,10 @@ int _tmain( int argc, _TCHAR *argv[] )
   ::CoInitialize( NULL );
 
   TestConfig::GetInstance()->Load();
-  CUTEST_NS::Runner::instance()->start(
-    CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest()
-  );
+  CPPUNIT_NS::Test* allTests = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
+  CUTEST_NS::Runner::instance()->start( allTests );
   CUTEST_NS::Runner::instance()->waitUntilAllTestEnd();
+  delete allTests;
 
   return 0;
 }

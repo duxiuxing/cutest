@@ -392,6 +392,8 @@ class GTEST_API_ UnitTestOptions {
   static bool FilterMatchesTest(const std::string &test_case_name,
                                 const std::string &test_name);
 
+  static bool FilterMatchesTest(const std::string &full_name);
+
 #if GTEST_OS_WINDOWS
   // Function for supporting the gtest_catch_exception flag.
 
