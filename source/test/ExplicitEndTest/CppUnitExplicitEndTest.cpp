@@ -14,9 +14,6 @@ void
 CppUnitExplicitEndTest::tearDown()
 {
   SimpleTimer::instance()->removeCallback( this );
-  unsigned long long ms = CUTEST_NS::Runner::instance()->tickCount64() - this->tick_count_setup;
-  EXPECT_GT( ms, 950 );
-  EXPECT_LT( ms, 1200 );
 }
 
 void
@@ -28,7 +25,9 @@ CppUnitExplicitEndTest::explicit_end_test_after_1s()
 void
 CppUnitExplicitEndTest::onTimeUp()
 {
-  // 这里才结束测试用例
+  unsigned long long ms = CUTEST_NS::Runner::instance()->tickCount64() - this->tick_count_setup;
+  EXPECT_GT( ms, 950 );
+  EXPECT_LT( ms, 1200 );
   endTest();
 }
 

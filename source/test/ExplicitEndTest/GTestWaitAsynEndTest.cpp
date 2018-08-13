@@ -12,9 +12,6 @@ void GTestWaitAsynEndTest::SetUp() {
 
 void GTestWaitAsynEndTest::TearDown() {
   SimpleTimer::instance()->removeCallback(this);
-  unsigned long long ms = CUTEST_NS::Runner::instance()->tickCount64() - this->tick_count_setup;
-  EXPECT_GT(ms, 950);
-  EXPECT_LT(ms, 1200);
 }
 
 void GTestWaitAsynEndTest::onTimeUp() {
@@ -30,4 +27,8 @@ TEST_F(GTestWaitAsynEndTest, end_test_after_1s) {
     ::TranslateMessage(&msg);
     ::DispatchMessage(&msg);
   }
+
+  unsigned long long ms = CUTEST_NS::Runner::instance()->tickCount64() - this->tick_count_setup;
+  EXPECT_GT(ms, 950);
+  EXPECT_LT(ms, 1200);
 }
