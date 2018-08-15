@@ -322,6 +322,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Helper"
+				>
+				<File
+					RelativePath="..\src\Helper.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\include\cutest\Helper.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="googlemock"
