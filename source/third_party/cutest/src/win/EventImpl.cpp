@@ -20,6 +20,12 @@ EventImpl::wait()
 }
 
 void
+EventImpl::wait( unsigned int timeout_ms )
+{
+  ::WaitForSingleObjectEx( this->event_handle, timeout_ms, FALSE );
+}
+
+void
 EventImpl::reset()
 {
   ::ResetEvent( this->event_handle );

@@ -17,6 +17,7 @@ protected:
 
 public:
   virtual void wait() = 0;
+  virtual void wait(unsigned int timeout_ms) = 0;
   virtual void post() = 0;
   virtual void reset() = 0;
   virtual void destroy() = 0;

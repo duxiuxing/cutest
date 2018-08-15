@@ -1,6 +1,7 @@
 ﻿#pragma once
 
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
+#include "CountDownLatch.h"
 #include "SimpleTimer.h"
 
 class GTestWaitAsynEndTest
@@ -15,6 +16,5 @@ class GTestWaitAsynEndTest
   // 实现SimpleTimer::Callback
   virtual void onTimeUp();
 
-  unsigned long long tick_count_setup;
-  bool time_up;
+  CountDownLatch* time_up;
 };

@@ -9,11 +9,10 @@ class GTestExplicitEndTest
  public:
   GTestExplicitEndTest();
 
-  virtual void SetUp() override;
   virtual void TearDown() override;
 
   // 实现SimpleTimer::Callback
   virtual void onTimeUp();
 
-  unsigned long long tick_count_setup;
+  unsigned long long tick_count_start;
 };

@@ -17,7 +17,6 @@ class CppUnitExplicitEndTest
 public:
   CppUnitExplicitEndTest();
 
-  virtual void setUp() override;
   virtual void tearDown() override;
 
   // 实现SimpleTimer::Callback
@@ -26,7 +25,7 @@ public:
   void explicit_end_test_after_1s();
   void auto_end_test_after_1s();
 
-  unsigned long long tick_count_setup;
+  unsigned long long tick_count_start;
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CppUnitExplicitEndTest );

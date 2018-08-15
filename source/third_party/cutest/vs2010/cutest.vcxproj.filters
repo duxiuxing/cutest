@@ -43,6 +43,9 @@
     <Filter Include="googlemock">
       <UniqueIdentifier>{be04d733-236f-489d-b64e-951e66607855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cutest\CountDownLatch">
+      <UniqueIdentifier>{dcdd60ad-02ac-4242-bd70-20ec18e46dee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cutest\ProgressListener.h">
@@ -96,6 +99,12 @@
     <ClInclude Include="..\src\win\targetver.h">
       <Filter>Win32 DLL</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\CountDownLatch.h">
+      <Filter>cutest\CountDownLatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CountDownLatchImpl.h">
+      <Filter>cutest\CountDownLatch</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
@@ -142,6 +151,12 @@
     </ClCompile>
     <ClCompile Include="..\..\googlemock\src\gmock-all.cc">
       <Filter>googlemock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CountDownLatch.cpp">
+      <Filter>cutest\CountDownLatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\CountDownLatchImpl.cpp">
+      <Filter>cutest\CountDownLatch</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
