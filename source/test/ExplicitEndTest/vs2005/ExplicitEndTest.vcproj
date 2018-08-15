@@ -229,7 +229,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\GTestExplicitEndTest.h"
+					RelativePath="..\GTestWaitAsynEndTest.cpp"
 					>
 				</File>
 			</Filter>

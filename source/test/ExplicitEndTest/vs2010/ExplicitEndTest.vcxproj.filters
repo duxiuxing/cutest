@@ -7,19 +7,16 @@
     <Filter Include="Asynchronous Callback">
       <UniqueIdentifier>{9a2882aa-d22e-42ab-ae32-3694e142c613}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Asynchronous Callback\cppunit style">
-      <UniqueIdentifier>{372abfae-cd7f-483b-ac31-21cd66fa2d63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Asynchronous Callback\googletest style">
-      <UniqueIdentifier>{1425af85-c3f4-4b09-9e13-8f6f1a3e45e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Asynchronous Callback\googletest orgin">
+    <Filter Include="Asynchronous Callback\googletest">
       <UniqueIdentifier>{02b2bbc1-8a5d-4d97-9974-f8202289b2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asynchronous Callback\cppunit">
+      <UniqueIdentifier>{372abfae-cd7f-483b-ac31-21cd66fa2d63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\CppUnitExplicitEndTest.h">
-      <Filter>Asynchronous Callback\cppunit style</Filter>
+      <Filter>Asynchronous Callback\cppunit</Filter>
     </ClInclude>
     <ClInclude Include="..\stdafx.h">
       <Filter>Win32 DLL</Filter>
@@ -27,19 +24,13 @@
     <ClInclude Include="..\targetver.h">
       <Filter>Win32 DLL</Filter>
     </ClInclude>
-    <ClInclude Include="..\GTestExplicitEndTest.h">
-      <Filter>Asynchronous Callback\googletest style</Filter>
-    </ClInclude>
     <ClInclude Include="..\SimpleTimer.h">
       <Filter>Asynchronous Callback</Filter>
-    </ClInclude>
-    <ClInclude Include="..\GTestWaitAsynEndTest.h">
-      <Filter>Asynchronous Callback\googletest orgin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CppUnitExplicitEndTest.cpp">
-      <Filter>Asynchronous Callback\cppunit style</Filter>
+      <Filter>Asynchronous Callback\cppunit</Filter>
     </ClCompile>
     <ClCompile Include="..\dllmain.cpp">
       <Filter>Win32 DLL</Filter>
@@ -47,14 +38,14 @@
     <ClCompile Include="..\stdafx.cpp">
       <Filter>Win32 DLL</Filter>
     </ClCompile>
-    <ClCompile Include="..\GTestExplicitEndTest.cpp">
-      <Filter>Asynchronous Callback\googletest style</Filter>
-    </ClCompile>
     <ClCompile Include="..\SimpleTimer.cpp">
       <Filter>Asynchronous Callback</Filter>
     </ClCompile>
     <ClCompile Include="..\GTestWaitAsynEndTest.cpp">
-      <Filter>Asynchronous Callback\googletest orgin</Filter>
+      <Filter>Asynchronous Callback\googletest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GTestExplicitEndTest.cpp">
+      <Filter>Asynchronous Callback\googletest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

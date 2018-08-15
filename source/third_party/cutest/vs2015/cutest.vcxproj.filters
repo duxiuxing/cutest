@@ -43,6 +43,12 @@
     <Filter Include="googlemock">
       <UniqueIdentifier>{afb6cbde-17f7-49da-9c8e-fa70324688fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cutest\Helper">
+      <UniqueIdentifier>{d47a3250-e675-4d02-a8a9-c43b9c33cffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cutest\CountDownLatch">
+      <UniqueIdentifier>{c153517e-cf40-4c00-a16e-bf4e668671a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Logger.h">
@@ -96,6 +102,15 @@
     <ClInclude Include="..\include\cutest\Runnable.h">
       <Filter>cutest\Thread</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\cutest\Helper.h">
+      <Filter>cutest\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\CountDownLatch.h">
+      <Filter>cutest\CountDownLatch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CountDownLatchImpl.h">
+      <Filter>cutest\CountDownLatch</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
@@ -142,6 +157,15 @@
     </ClCompile>
     <ClCompile Include="..\..\googlemock\src\gmock-all.cc">
       <Filter>googlemock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Helper.cpp">
+      <Filter>cutest\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CountDownLatch.cpp">
+      <Filter>cutest\CountDownLatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\CountDownLatchImpl.cpp">
+      <Filter>cutest\CountDownLatch</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

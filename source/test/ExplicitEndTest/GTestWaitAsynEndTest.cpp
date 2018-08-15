@@ -1,7 +1,24 @@
-﻿#include "GTestWaitAsynEndTest.h"
-//#include <Windows.h>
+﻿#include "gtest/gtest.h"
+#include "CountDownLatch.h"
+#include "SimpleTimer.h"
 
-GTestWaitAsynEndTest::GTestWaitAsynEndTest() {}
+class GTestWaitAsynEndTest
+  : public testing::Test
+  , public SimpleTimer::Callback {
+ public:
+  GTestWaitAsynEndTest();
+
+  virtual void SetUp() override;
+  virtual void TearDown() override;
+
+  // 实现SimpleTimer::Callback
+  virtual void onTimeUp();
+
+  CountDownLatch* time_up;
+};
+
+GTestWaitAsynEndTest::GTestWaitAsynEndTest()
+  : time_up(NULL) {}
 
 void GTestWaitAsynEndTest::SetUp() {
   time_up = new CountDownLatch(1);
@@ -16,7 +33,7 @@ void GTestWaitAsynEndTest::onTimeUp() {
   time_up->countDown();
 }
 
-TEST_F(GTestWaitAsynEndTest, end_test_after_1s) { 
+TEST_F(GTestWaitAsynEndTest, end_test_after_1s) {
   unsigned long long start = CUTEST_NS::tickCount64();
 
   SimpleTimer::instance()->setCallback(1000, this);

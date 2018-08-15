@@ -194,12 +194,15 @@ ECHO ========== copy header files done ==========</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\CountDownLatch.h" />
     <ClInclude Include="..\include\cutest\Event.h" />
     <ClInclude Include="..\include\cutest\ExplicitEndTest.h" />
+    <ClInclude Include="..\include\cutest\Helper.h" />
     <ClInclude Include="..\include\cutest\ProgressListener.h" />
     <ClInclude Include="..\include\cutest\Runnable.h" />
     <ClInclude Include="..\include\cutest\Runner.h" />
     <ClInclude Include="..\src\AutoEndTest.h" />
+    <ClInclude Include="..\src\CountDownLatchImpl.h" />
     <ClInclude Include="..\src\Decorator.h" />
     <ClInclude Include="..\src\Logger.h" />
     <ClInclude Include="..\src\ProgressListenerManager.h" />
@@ -217,10 +220,13 @@ ECHO ========== copy header files done ==========</Command>
     <ClCompile Include="..\..\googlemock\src\gmock-all.cc" />
     <ClCompile Include="..\..\googletest\src\gtest-all.cc" />
     <ClCompile Include="..\src\AutoEndTest.cpp" />
+    <ClCompile Include="..\src\CountDownLatch.cpp" />
     <ClCompile Include="..\src\ExplicitEndTest.cpp" />
+    <ClCompile Include="..\src\Helper.cpp" />
     <ClCompile Include="..\src\ProgressListenerManager.cpp" />
     <ClCompile Include="..\src\Result.cpp" />
     <ClCompile Include="..\src\RunnerBase.cpp" />
+    <ClCompile Include="..\src\win\CountDownLatchImpl.cpp" />
     <ClCompile Include="..\src\win\DecoratorImpl.cpp" />
     <ClCompile Include="..\src\win\EventImpl.cpp" />
     <ClCompile Include="..\src\win\Logger.cpp" />
