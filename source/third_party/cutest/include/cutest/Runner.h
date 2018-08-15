@@ -5,22 +5,6 @@
 
 #include "ProgressListener.h"
 
-#if (defined(_WIN32) || defined(_WIN64))
-
-  CUTEST_NS_BEGIN
-  typedef unsigned long thread_id;
-  CUTEST_NS_END
-
-#else
-
-  #include <pthread.h>
-  #include <unistd.h>
-  CUTEST_NS_BEGIN
-  typedef pid_t thread_id;
-  CUTEST_NS_END
-
-#endif
-
 CUTEST_NS_BEGIN
 
 class Event;
@@ -30,17 +14,6 @@ class Runnable;
 class CPPUNIT_API Runner
 {
 public:
-  static const char *version();
-  static thread_id currentThreadId();
-  static thread_id mainThreadId();
-
-  /*
-    返回当前系统的时间，单位为ms
-
-    主要使用场景：根据用例执行前后的系统时间差计算耗时
-  */
-  static unsigned long long tickCount64();
-
   static Runner *instance();
 
 public: // Help接口族

@@ -17,13 +17,13 @@ void GTestWaitAsynEndTest::onTimeUp() {
 }
 
 TEST_F(GTestWaitAsynEndTest, end_test_after_1s) { 
-  unsigned long long start = CUTEST_NS::Runner::instance()->tickCount64();
+  unsigned long long start = CUTEST_NS::tickCount64();
 
   SimpleTimer::instance()->setCallback(1000, this);
 
   time_up->await();
 
-  unsigned long long ms = CUTEST_NS::Runner::instance()->tickCount64() - start;
+  unsigned long long ms = CUTEST_NS::tickCount64() - start;
   EXPECT_GT(ms, 950);
   EXPECT_LT(ms, 1200);
 }

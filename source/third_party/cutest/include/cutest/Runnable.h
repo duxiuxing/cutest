@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "CUTestDefine.h"
+#include "cutest/Define.h"
 
 CUTEST_NS_BEGIN
 

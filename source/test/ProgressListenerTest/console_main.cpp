@@ -2,7 +2,7 @@
 
 #include "EventRecordingListener.h"
 #include <cppunit/extensions/TestFactoryRegistry.h>
-#include <cutest/Runner.h>
+#include "cutest/Runner.h"
 #include "gtest/gtest.h"
 
 void VerifyResults( const std::vector<std::string> &data,

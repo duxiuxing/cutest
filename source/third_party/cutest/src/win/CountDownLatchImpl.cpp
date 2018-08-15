@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include "../CountDownLatchImpl.h"
+
+#include "cutest/Helper.h"
 #include "cutest/Runner.h"
 
 #include <Windows.h>
@@ -22,7 +24,7 @@ CountDownLatchImpl::~CountDownLatchImpl()
 void
 CountDownLatchImpl::await()
 {
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     awaitOnMainThread();
   }
@@ -35,7 +37,7 @@ CountDownLatchImpl::await()
 bool
 CountDownLatchImpl::await( unsigned int timeout_ms )
 {
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     return awaitOnMainThread( timeout_ms );
   }
@@ -76,7 +78,7 @@ CountDownLatchImpl::awaitOnMainThread()
 bool
 CountDownLatchImpl::awaitOnMainThread( unsigned int timeout_ms )
 {
-  unsigned long long start = CUTEST_NS::Runner::tickCount64();
+  unsigned long long start = CUTEST_NS::tickCount64();
 
   MSG msg = {0};
   while ( this->count > 0
@@ -85,7 +87,7 @@ CountDownLatchImpl::awaitOnMainThread( unsigned int timeout_ms )
     ::TranslateMessage( &msg );
     ::DispatchMessage( &msg );
 
-    if ( ( CUTEST_NS::Runner::tickCount64() - start ) >= timeout_ms )
+    if ( ( CUTEST_NS::tickCount64() - start ) >= timeout_ms )
     {
       return false;
     }

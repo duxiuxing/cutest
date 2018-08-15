@@ -5,7 +5,7 @@
 #include <cppunit/TestListener.h>
 #include <cppunit/TestResultCollector.h>
 
-#include "cutest/CUTestDefine.h"
+#include "cutest/Define.h"
 
 CUTEST_NS_BEGIN
 

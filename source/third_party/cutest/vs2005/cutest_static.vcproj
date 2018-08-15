@@ -302,6 +302,26 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="CountDownLatch"
+				>
+				<File
+					RelativePath="..\src\CountDownLatch.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\include\CountDownLatch.h"
+					>
+				</File>
+				<File
+					RelativePath="..\src\win\CountDownLatchImpl.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\src\CountDownLatchImpl.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="googlemock"

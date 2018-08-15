@@ -1,7 +1,9 @@
 ﻿#include "AutoEndTest.h"
 
 #include "cutest/ExplicitEndTest.h"
+#include "cutest/Helper.h"
 #include "cutest/Runner.h"
+
 #include "gtest/gtest.h"
 
 CUTEST_NS_BEGIN
@@ -20,7 +22,7 @@ TestTimeoutCounter::start( unsigned int timeout_ms_in, Callback *callback_in )
   {
     this->callback = callback_in;
     this->timeout_ms = timeout_ms_in;
-    this->start_ms = Runner::tickCount64();
+	this->start_ms = CUTEST_NS::tickCount64();
     Runner::instance()->delayRunOnMainThread( timeout_ms_in, this, false );
   }
   else
@@ -34,7 +36,7 @@ void
 TestTimeoutCounter::run()
 {
   // 计算ExplicitEndTest当前的执行时长
-  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount64() - this->start_ms );
+  unsigned int elapsed_ms = ( unsigned int )( CUTEST_NS::tickCount64() - this->start_ms );
   if ( elapsed_ms < this->timeout_ms )
   {
     /*
@@ -56,7 +58,7 @@ void
 TestTimeoutCounter::addFailure()
 {
   // 计算ExplicitEndTest当前的执行时长
-  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount64() - this->start_ms );
+  unsigned int elapsed_ms = ( unsigned int )( CUTEST_NS::tickCount64() - this->start_ms );
 
   if ( elapsed_ms < this->timeout_ms )
   {

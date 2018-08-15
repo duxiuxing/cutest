@@ -2,7 +2,7 @@
 #include "TestConfig.h"
 
 #include <cppunit/extensions/TestFactoryRegistry.h>
-#include <cutest/Runner.h>
+#include "cutest/Runner.h"
 
 int _tmain( int argc, _TCHAR *argv[] )
 {

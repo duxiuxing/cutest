@@ -46,6 +46,9 @@
     <Filter Include="cutest\CountDownLatch">
       <UniqueIdentifier>{dcdd60ad-02ac-4242-bd70-20ec18e46dee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cutest\Helper">
+      <UniqueIdentifier>{cbb40a61-18c6-4677-b4b8-d1f96b74f7e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\cutest\ProgressListener.h">
@@ -105,6 +108,9 @@
     <ClInclude Include="..\src\CountDownLatchImpl.h">
       <Filter>cutest\CountDownLatch</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\cutest\Helper.h">
+      <Filter>cutest\Helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
@@ -157,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="..\src\win\CountDownLatchImpl.cpp">
       <Filter>cutest\CountDownLatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Helper.cpp">
+      <Filter>cutest\Helper</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

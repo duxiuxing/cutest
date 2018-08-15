@@ -4,6 +4,7 @@
 #include <cppunit/TestCase.h>
 
 #include "cutest/Event.h"
+#include "cutest/Helper.h"
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 
@@ -58,7 +59,7 @@ class TestCaller
   }
 
   void runTestOnMainThread() {
-    if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
+    if (CUTEST_NS::isOnMainThread()) {
       if (m_result) {
         m_result->protect(
           MethodFunctor(this, &TestCaller::runTestImmediately),
@@ -90,7 +91,7 @@ class TestCaller
   }
 
   void setUpOnMainThread() {
-    if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
+    if (CUTEST_NS::isOnMainThread()) {
       if (m_result) {
         m_result->protect(
           MethodFunctor(this, &TestCaller::setUpImmediately),
@@ -124,7 +125,7 @@ class TestCaller
   }
 
   void tearDownOnMainThread() {
-    if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
+    if (CUTEST_NS::isOnMainThread()) {
       if (m_result) {
         m_result->protect(
           MethodFunctor(this, &TestCaller::tearDownImmediately),

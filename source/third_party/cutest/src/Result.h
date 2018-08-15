@@ -3,7 +3,7 @@
 #include <cppunit/SynchronizedObject.h>
 #include <cppunit/TestResult.h>
 
-#include "cutest/CUTestDefine.h"
+#include "cutest/Define.h"
 
 CUTEST_NS_BEGIN
 

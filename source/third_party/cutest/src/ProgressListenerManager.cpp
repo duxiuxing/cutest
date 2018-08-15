@@ -1,4 +1,6 @@
 ﻿#include "ProgressListenerManager.h"
+
+#include "cutest/Helper.h"
 #include "cutest/Runner.h"
 
 #include <algorithm>
@@ -52,7 +54,7 @@ public:
 void
 ProgressListenerManager::startTestRun( CPPUNIT_NS::Test *test, CPPUNIT_NS::TestResult * )
 {
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     startTestRunImmediately( test );
   }
@@ -76,7 +78,7 @@ ProgressListenerManager::startTestRunImmediately( CPPUNIT_NS::Test *test )
   this->failure_index = 0;
 
   TestRecord record;
-  record.start_ms = Runner::tickCount64();
+  record.start_ms = CUTEST_NS::tickCount64();
   this->test_record.push( record );
 
   TestProgressListeners::iterator it = this->listeners.begin();
@@ -107,7 +109,7 @@ public:
 void
 ProgressListenerManager::endTestRun( CPPUNIT_NS::Test *test, CPPUNIT_NS::TestResult * )
 {
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     endTestRunImmediately( test );
   }
@@ -126,7 +128,7 @@ void
 ProgressListenerManager::endTestRunImmediately( CPPUNIT_NS::Test *test )
 {
   TestRecord &record = this->test_record.top();
-  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount64() - record.start_ms );
+  unsigned int elapsed_ms = ( unsigned int )( CUTEST_NS::tickCount64() - record.start_ms );
   this->test_record.pop();
 
   TestProgressListeners::reverse_iterator it = this->listeners.rbegin();
@@ -157,7 +159,7 @@ public:
 void
 ProgressListenerManager::startSuite( CPPUNIT_NS::Test *suite )
 {
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     startSuiteImmediately( suite );
   }
@@ -175,7 +177,7 @@ void
 ProgressListenerManager::startSuiteImmediately( CPPUNIT_NS::Test *suite )
 {
   TestRecord record;
-  record.start_ms = Runner::tickCount64();
+  record.start_ms = CUTEST_NS::tickCount64();
   this->test_record.push( record );
 
   TestProgressListeners::iterator it = this->listeners.begin();
@@ -206,7 +208,7 @@ public:
 void
 ProgressListenerManager::endSuite( CPPUNIT_NS::Test *suite )
 {
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     endSuiteImmediately( suite );
   }
@@ -225,7 +227,7 @@ void
 ProgressListenerManager::endSuiteImmediately( CPPUNIT_NS::Test *suite )
 {
   TestRecord &record = this->test_record.top();
-  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount64() - record.start_ms );
+  unsigned int elapsed_ms = ( unsigned int )( CUTEST_NS::tickCount64() - record.start_ms );
   this->test_record.pop();
 
   TestProgressListeners::reverse_iterator it = this->listeners.rbegin();
@@ -256,7 +258,7 @@ public:
 void
 ProgressListenerManager::startTest( CPPUNIT_NS::Test *test )
 {
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     StartTestImmediately( test );
   }
@@ -270,7 +272,7 @@ ProgressListenerManager::startTest( CPPUNIT_NS::Test *test )
   }
   // 在这记录开始时间，避免把线程切换的时间也计算在内
   TestRecord record;
-  record.start_ms = Runner::tickCount64();
+  record.start_ms = CUTEST_NS::tickCount64();
   this->test_record.push( record );
 }
 
@@ -312,7 +314,7 @@ public:
 void
 ProgressListenerManager::addFailure( const CPPUNIT_NS::TestFailure &failure )
 {
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     addFailureImmediately( failure );
   }
@@ -378,9 +380,9 @@ ProgressListenerManager::endTest( CPPUNIT_NS::Test *test )
   Runner *runner = Runner::instance();
   // 在这记录用例耗时，避免把线程切换的时间也计算在内
   TestRecord &record = this->test_record.top();
-  unsigned int elapsed_ms = ( unsigned int )( Runner::tickCount64() - record.start_ms );
+  unsigned int elapsed_ms = ( unsigned int )( CUTEST_NS::tickCount64() - record.start_ms );
 
-  if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+  if ( CUTEST_NS::isOnMainThread() )
   {
     endTestImmediately( test, elapsed_ms );
   }

@@ -7,6 +7,8 @@
 #include "TreeHierarchyDlg.h"
 
 #include <cppunit/TestFailure.h>
+
+#include "cutest/Helper.h"
 #include "cutest/Runner.h"
 
 #ifdef _DEBUG
@@ -29,7 +31,7 @@ CTestRunnerDlg::CTestRunnerDlg( CPPUNIT_NS::Test *rootTest, CWnd *pParent )
 
   m_bAutorunAtStartup = FALSE;
 
-  m_testStartTime = CUTEST_NS::Runner::tickCount64();
+  m_testStartTime = CUTEST_NS::tickCount64();
   m_testEndTime = m_testStartTime;
 
   ModifyFlags( flSWPCopyBits, 0 );    // anti-flickering option for resizing
@@ -85,7 +87,7 @@ CTestRunnerDlg::OnInitDialog()
     CString caption;
     GetWindowText( caption );
 
-    CString version( CUTEST_NS::Runner::version() );
+    CString version( CUTEST_NS::version() );
 
     CString text;
     text.Format( _T( "%s - %s v%s" ),
@@ -231,7 +233,7 @@ CTestRunnerDlg::OnRun()
 
   m_testsCount = selectedTest->countTestCases();
   m_testsProgress.start( m_testsCount );
-  m_testStartTime = CUTEST_NS::Runner::tickCount64();
+  m_testStartTime = CUTEST_NS::tickCount64();
   runner->start( selectedTest );
 }
 
@@ -326,7 +328,7 @@ CTestRunnerDlg::onTestEnd(
   UpdateUI_Counts();
   m_testsProgress.step( m_failures == 0 && m_errors == 0 );
 
-  m_testEndTime = CUTEST_NS::Runner::tickCount64();
+  m_testEndTime = CUTEST_NS::tickCount64();
   UpdateUI_Time();
 
   CWnd *runningTestCaseLabel = GetDlgItem( IDC_RUNNING_TEST_CASE_LABEL );

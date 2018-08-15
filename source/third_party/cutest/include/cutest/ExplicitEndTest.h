@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <cppunit/Portability.h>
-#include "CUTestDefine.h"
+#include "cutest/Define.h"
 
 CUTEST_NS_BEGIN
 

@@ -5,7 +5,7 @@
 CUTEST_NS_BEGIN
 
 unsigned long long
-Runner::tickCount64()
+tickCount64()
 {
   static LARGE_INTEGER ticks_per_second = { 0 };
   LARGE_INTEGER tick;
@@ -21,13 +21,13 @@ Runner::tickCount64()
 }
 
 thread_id
-Runner::currentThreadId()
+currentThreadId()
 {
   return ::GetCurrentThreadId();
 }
 
 thread_id
-Runner::mainThreadId()
+mainThreadId()
 {
   return RunnerImpl::main_thread_id;
 }
@@ -171,7 +171,7 @@ RunnerImpl::onTimer4DelayRun( HWND wnd, UINT msg, UINT_PTR id_event, DWORD elaps
 void
 RunnerImpl::run()
 {
-  RunnerImpl::main_thread_id = Runner::currentThreadId();
+  RunnerImpl::main_thread_id = currentThreadId();
 }
 
 void

@@ -109,6 +109,7 @@ ECHO ========== copy header files done ==========
     <ClInclude Include="..\include\CountDownLatch.h" />
     <ClInclude Include="..\include\cutest\Event.h" />
     <ClInclude Include="..\include\cutest\ExplicitEndTest.h" />
+    <ClInclude Include="..\include\cutest\Helper.h" />
     <ClInclude Include="..\include\cutest\ProgressListener.h" />
     <ClInclude Include="..\include\cutest\Runnable.h" />
     <ClInclude Include="..\include\cutest\Runner.h" />
@@ -133,6 +134,7 @@ ECHO ========== copy header files done ==========
     <ClCompile Include="..\src\AutoEndTest.cpp" />
     <ClCompile Include="..\src\CountDownLatch.cpp" />
     <ClCompile Include="..\src\ExplicitEndTest.cpp" />
+    <ClCompile Include="..\src\Helper.cpp" />
     <ClCompile Include="..\src\ProgressListenerManager.cpp" />
     <ClCompile Include="..\src\Result.cpp" />
     <ClCompile Include="..\src\RunnerBase.cpp" />
