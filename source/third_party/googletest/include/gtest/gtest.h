@@ -521,9 +521,6 @@ class GTEST_API_ Test {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(Test);
 };
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4275)
-#endif
 class GTEST_API_ ExplicitEndTest
   : public Test
   , public CUTEST_NS::ExplicitEndTest {
@@ -533,9 +530,6 @@ class GTEST_API_ ExplicitEndTest
  private:
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ExplicitEndTest);
 };
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
 typedef internal::TimeInMillis TimeInMillis;
 
