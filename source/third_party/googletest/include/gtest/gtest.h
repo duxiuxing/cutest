@@ -355,13 +355,7 @@ class GTEST_API_ AssertionResult {
   // construct is not satisfied with the predicate's outcome.
   // Referenced via a pointer to avoid taking too much stack frame space
   // with test assertions.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   internal::scoped_ptr< ::std::string> message_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 };
 
 // Makes a successful assertion result.
@@ -490,13 +484,7 @@ class GTEST_API_ Test {
   // internal method to avoid clashing with names used in user TESTs.
   void DeleteSelf_() { delete this; }
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   const internal::scoped_ptr< GTEST_FLAG_SAVER_ > gtest_flag_saver_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   // Often a user misspells SetUp() as Setup() and spends a long time
   // wondering why it is never called by Google Test.  The declaration of
@@ -671,9 +659,6 @@ class GTEST_API_ TestResult {
   // properties, whose values may be updated.
   internal::Mutex test_properites_mutex_;
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   // The vector of TestPartResults
   std::vector<TestPartResult> test_part_results_;
   // The vector of TestProperties
@@ -682,9 +667,6 @@ class GTEST_API_ TestResult {
   int death_test_count_;
   // The elapsed time, in milliseconds.
   TimeInMillis elapsed_time_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   // We disallow copying TestResult.
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestResult);
@@ -809,9 +791,6 @@ class GTEST_API_ TestInfo {
     test_info->result_.Clear();
   }
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   // These fields are immutable properties of the test.
   const std::string test_case_name_;     // Test case name
   const std::string name_;               // Test name
@@ -834,9 +813,6 @@ class GTEST_API_ TestInfo {
   // This field is mutable and needs to be reset before running the
   // test for the second time.
   TestResult result_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestInfo);
 };
@@ -996,9 +972,6 @@ class GTEST_API_ TestCase {
   // Restores the test order to before the first shuffle.
   void UnshuffleTests();
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   // Name of the test case.
   std::string name_;
   // Name of the parameter type, or NULL if this is not a typed or a
@@ -1022,9 +995,6 @@ class GTEST_API_ TestCase {
   // Holds test properties recorded during execution of SetUpTestCase and
   // TearDownTestCase.
   TestResult ad_hoc_test_result_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   // We disallow copying TestCases.
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestCase);

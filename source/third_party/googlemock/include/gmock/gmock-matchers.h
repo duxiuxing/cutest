@@ -386,16 +386,9 @@ class Matcher : public internal::MatcherBase<T> {
 // The following two specializations allow the user to write str
 // instead of Eq(str) and "foo" instead of Eq("foo") when a std::string
 // matcher is expected.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
 template <>
 class GTEST_API_ Matcher<const std::string&>
     : public internal::MatcherBase<const std::string&> {
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
-
  public:
   Matcher() {}
 
@@ -416,15 +409,9 @@ class GTEST_API_ Matcher<const std::string&>
   Matcher(const char* s);  // NOLINT
 };
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
 template <>
 class GTEST_API_ Matcher<std::string>
     : public internal::MatcherBase<std::string> {
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
  public:
   Matcher() {}
 
@@ -3660,13 +3647,7 @@ class GTEST_API_ MatchMatrix {
   // Each element is a char interpreted as bool. They are stored as a
   // flattened array in lhs-major order, use 'SpaceIndex()' to translate
   // a (ilhs, irhs) matrix coordinate into an offset.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   ::std::vector<char> matched_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 };
 
 typedef ::std::pair<size_t, size_t> ElementMatcherPair;
@@ -3724,14 +3705,7 @@ class GTEST_API_ UnorderedElementsAreMatcherImplBase {
 
  private:
   UnorderedMatcherRequire::Flags match_flags_;
-
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   MatcherDescriberVec matcher_describers_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   GTEST_DISALLOW_ASSIGN_(UnorderedElementsAreMatcherImplBase);
 };
