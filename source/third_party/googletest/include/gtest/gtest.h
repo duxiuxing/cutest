@@ -509,6 +509,9 @@ class GTEST_API_ Test {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(Test);
 };
 
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4275 \
+	/* class A needs to have dll-interface to be used by clients of class B */)
+
 class GTEST_API_ ExplicitEndTest
   : public Test
   , public CUTEST_NS::ExplicitEndTest {
@@ -518,6 +521,8 @@ class GTEST_API_ ExplicitEndTest
  private:
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ExplicitEndTest);
 };
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4275
 
 typedef internal::TimeInMillis TimeInMillis;
 
