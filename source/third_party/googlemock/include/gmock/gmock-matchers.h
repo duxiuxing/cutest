@@ -26,8 +26,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// Author: wan@google.com (Zhanyong Wan)
+
 
 // Google Mock - a framework for writing C++ mock classes.
 //
@@ -57,6 +56,9 @@
 # include <initializer_list>  // NOLINT -- must be after gtest.h
 #endif
 
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+/* class A needs to have dll-interface to be used by clients of class B */)
+
 namespace testing {
 
 // To implement a matcher Foo for type T, define:
@@ -74,7 +76,7 @@ namespace testing {
 // MatchResultListener is an abstract class.  Its << operator can be
 // used by a matcher to explain why a value matches or doesn't match.
 //
-// TODO(wan@google.com): add method
+// FIXME: add method
 //   bool InterestedInWhy(bool result) const;
 // to indicate whether the listener is interested in why the match
 // result is 'result'.
@@ -384,16 +386,9 @@ class Matcher : public internal::MatcherBase<T> {
 // The following two specializations allow the user to write str
 // instead of Eq(str) and "foo" instead of Eq("foo") when a std::string
 // matcher is expected.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
 template <>
 class GTEST_API_ Matcher<const std::string&>
     : public internal::MatcherBase<const std::string&> {
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
-
  public:
   Matcher() {}
 
@@ -414,15 +409,9 @@ class GTEST_API_ Matcher<const std::string&>
   Matcher(const char* s);  // NOLINT
 };
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
 template <>
 class GTEST_API_ Matcher<std::string>
     : public internal::MatcherBase<std::string> {
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
  public:
   Matcher() {}
 
@@ -936,7 +925,7 @@ class TuplePrefix {
     GTEST_REFERENCE_TO_CONST_(Value) value = get<N - 1>(values);
     StringMatchResultListener listener;
     if (!matcher.MatchAndExplain(value, &listener)) {
-      // TODO(wan): include in the message the name of the parameter
+      // FIXME: include in the message the name of the parameter
       // as used in MOCK_METHOD*() when possible.
       *os << "  Expected arg #" << N - 1 << ": ";
       get<N - 1>(matchers).DescribeTo(os);
@@ -2434,7 +2423,7 @@ class WhenDynamicCastToMatcher : public WhenDynamicCastToMatcherBase<To> {
 
   template <typename From>
   bool MatchAndExplain(From from, MatchResultListener* listener) const {
-    // TODO(sbenza): Add more detail on failures. ie did the dyn_cast fail?
+    // FIXME: Add more detail on failures. ie did the dyn_cast fail?
     To to = dynamic_cast<To>(from);
     return MatchPrintAndExplain(to, this->matcher_, listener);
   }
@@ -3658,13 +3647,7 @@ class GTEST_API_ MatchMatrix {
   // Each element is a char interpreted as bool. They are stored as a
   // flattened array in lhs-major order, use 'SpaceIndex()' to translate
   // a (ilhs, irhs) matrix coordinate into an offset.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   ::std::vector<char> matched_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 };
 
 typedef ::std::pair<size_t, size_t> ElementMatcherPair;
@@ -3722,14 +3705,7 @@ class GTEST_API_ UnorderedElementsAreMatcherImplBase {
 
  private:
   UnorderedMatcherRequire::Flags match_flags_;
-
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   MatcherDescriberVec matcher_describers_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   GTEST_DISALLOW_ASSIGN_(UnorderedElementsAreMatcherImplBase);
 };
@@ -5292,6 +5268,8 @@ PolymorphicMatcher<internal::variant_matcher::VariantMatcher<T> > VariantWith(
     ::testing::internal::MakePredicateFormatterFromMatcher(matcher), value)
 
 }  // namespace testing
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
 // Include any custom callback matchers added by the local installation.
 // We must include this header at the end to make sure it can use the
