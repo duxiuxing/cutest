@@ -19,7 +19,7 @@ TestConfig* TestConfig::GetInstance()
 TestConfigImpl::TestConfigImpl()
 {}
 
-void TestConfigImpl::loadFailedMsgBox(LPTSTR libName)
+void TestConfigImpl::LoadFailedMsgBox(LPCTSTR libName)
 {
 	/*
 	    Retrieve the system error message for the last-error code
@@ -72,8 +72,14 @@ BOOL TestConfigImpl::Load()
 	if (!xmlPath.FileExists())
 	{
 		// 再尝试加载上一级文件夹的配置文件
-		dirPath.RemoveFileSpec();
-		xmlPath.Combine(dirPath, TEST_CONFIG_FILE);
+		if (dirPath.RemoveFileSpec())
+		{
+			xmlPath.Combine(dirPath, TEST_CONFIG_FILE);
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 	CComPtr<IXMLDOMDocument> xmlDoc;
@@ -91,7 +97,7 @@ BOOL TestConfigImpl::Load()
 		|| FAILED(xmlDoc->get_documentElement(&rootElem))
 		|| FAILED(rootElem->get_childNodes(&testList)))
 	{
-		return false;
+		return FALSE;
 	}
 
 	{
@@ -133,14 +139,14 @@ BOOL TestConfigImpl::Load()
 					attrNode->get_nodeValue(&libName);
 					if (!::CoLoadLibrary(libName.bstrVal, TRUE))
 					{
-						TestConfigImpl::loadFailedMsgBox(libName.bstrVal);
+						TestConfigImpl::LoadFailedMsgBox(libName.bstrVal);
 					}
 				}
 			}
 		}
 	}
 
-	return true;
+	return TRUE;
 }
 
 LPCTSTR TestConfigImpl::GetTitle()
