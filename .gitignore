@@ -27,10 +27,10 @@ BuildLog.htm
 dte80a.tlh
 mt.dep
 
-/Debug/*
-/Release/*
-/x64/Debug/*
-/x64/Release/*
+Debug/*
+Release/*
+x64/Debug/*
+x64/Release/*
 
 source/third_party/cutest/include/cppunit/*
 source/third_party/cutest/include/gmock/*
