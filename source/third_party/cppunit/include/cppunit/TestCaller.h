@@ -6,6 +6,7 @@
 #include <cppunit/TestCase.h>
 
 #include "cutest/Event.h"
+#include "cutest/Helper.h"
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 
@@ -247,6 +248,14 @@ public:
     m_event( NULL )
   {}
 
+  virtual ~TestCaller()
+  {
+    if ( m_ownFixture && m_fixture )
+    {
+      delete m_fixture;
+    }
+  }
+
   virtual void runTest() override
   {
     if ( CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread() )
@@ -261,7 +270,7 @@ public:
 
   void runTestOnMainThread()
   {
-    if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+    if ( CUTEST_NS::isOnMainThread() )
     {
       if ( m_result )
         m_result->protect( MethodFunctor( this, &TestCaller::runTestImmediately ),
@@ -301,7 +310,7 @@ public:
 
   void setUpOnMainThread()
   {
-    if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+    if ( CUTEST_NS::isOnMainThread() )
     {
       if ( m_result )
       {
@@ -347,7 +356,7 @@ public:
 
   void tearDownOnMainThread()
   {
-    if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+    if ( CUTEST_NS::isOnMainThread() )
     {
       if ( m_result )
       {
@@ -373,7 +382,7 @@ public:
   void tearDownImmediately()
   {
     m_fixture->tearDown();
-    if ( m_ownFixture )
+    if ( m_ownFixture && m_fixture )
     {
       delete m_fixture;
       m_fixture = NULL;

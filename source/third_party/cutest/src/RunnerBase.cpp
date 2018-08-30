@@ -3,46 +3,31 @@
 #include "cutest/ExplicitEndTest.h"
 #include "cutest/Runnable.h"
 
+#include "gmock/gmock.h"
 #include "gtest/gtest-message.h"
 
 CUTEST_NS_BEGIN
 
-const char *
-Runner::version()
+void
+RunnerBase::initGoogleMock()
 {
-  static std::string version;
-
-  if ( version.empty() )
+  static bool init_once = true;
+  if ( init_once )
   {
-    if ( 0 == BUILD_NUMBER )
-    {
-      // 本地编译会进入这个分支，这个时候取当前时刻作为版本号。
-      version = __TIME__;
-      version.append( " " );
-      version.append( __DATE__ );
-    }
-    else
-    {
-      // 持续集成会进入这个分支，这个时候按照实际版本信息来拼接版本号。
-      int major   = MAJOR_VERSION;
-      int minor   = MINOR_VERSION;
-      int fix     = FIX_VERSION;
-      int build   = BUILD_NUMBER;
-      version = testing::internal::StreamableToString( major ) + "."
-                + testing::internal::StreamableToString( minor ) + "."
-                + testing::internal::StreamableToString( fix ) + "."
-                + testing::internal::StreamableToString( build );
-    }
+    init_once = false;
+    testing::InitGoogleMock( &__argc, __wargv );
   }
-
-  return version.c_str();
 }
 
 RunnerBase::RunnerBase()
   : test_decorator( NULL )
   , runing_test( NULL )
   , always_call_test_on_main_thread( false )
-{}
+  , treat_timeout_as_error( false )
+  , state( STATE_NONE )
+{
+  addListener( this );
+}
 
 RunnerBase::~RunnerBase()
 {
@@ -68,6 +53,18 @@ RunnerBase::alwaysCallTestOnMainThread()
 }
 
 void
+RunnerBase::setTreatTimeoutAsError( bool value )
+{
+  this->treat_timeout_as_error = value;
+}
+
+bool
+RunnerBase::treatTimeoutAsError()
+{
+  return this->treat_timeout_as_error;
+}
+
+void
 RunnerBase::addListener( ProgressListener *listener )
 {
   this->listener_manager.add( listener );
@@ -82,7 +79,18 @@ RunnerBase::removeListener( ProgressListener *listener )
 void
 RunnerBase::start( CPPUNIT_NS::Test *test )
 {
-  stop();
+  switch ( this->state )
+  {
+  case STATE_NONE:
+    this->state = STATE_RUNING;
+    break;
+  case STATE_RUNING:
+    return;
+  case STATE_STOPPING:
+    return;
+  default:
+    return;
+  }
 
   if ( this->test_decorator )
   {
@@ -98,6 +106,19 @@ RunnerBase::start( CPPUNIT_NS::Test *test )
 void
 RunnerBase::stop()
 {
+  switch ( this->state )
+  {
+  case STATE_NONE:
+    return;
+  case STATE_RUNING:
+    this->state = STATE_STOPPING;
+    break;
+  case STATE_STOPPING:
+    return;
+  default:
+    return;
+  }
+
   if ( this->test_decorator )
   {
     this->test_decorator->stop();
@@ -181,6 +202,12 @@ RunnerBase::unregisterExplicitEndTest( ExplicitEndTest *test )
     this->runing_test = NULL;
     this->auto_end_test.cancel();
   }
+}
+
+void
+RunnerBase::onRunnerEnd( CPPUNIT_NS::Test *test, unsigned int elapsed_ms )
+{
+  this->state = STATE_NONE;
 }
 
 CUTEST_NS_END

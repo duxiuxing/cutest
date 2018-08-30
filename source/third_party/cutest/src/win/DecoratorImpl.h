@@ -46,13 +46,6 @@ protected:
   CPPUNIT_NS::TestResultCollector result_collector;
   testing::internal::TestResultXmlPrinter *result_printer;
 
-  enum State
-  {
-    STATE_NONE = 0,
-    STATE_RUNING,
-  };
-  State state;
-
 public: // 重载TestListener的成员方法
   virtual void startTest( CPPUNIT_NS::Test *test ) override;
   virtual void endTest( CPPUNIT_NS::Test *test ) override;

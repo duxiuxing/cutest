@@ -230,10 +230,10 @@ void TestResultXmlPrinter::outputXmlTestCase(
   // Test方法的名称
   *stream << "    <testcase";
   std::string name = test_case_info->test->getName();
-  // 将Test名字中Suite::的部分精简掉
-  // 比如："ExampleTestCase::testAdd"精简为"testAdd"
+  // 将Test名字中Suite.的部分精简掉
+  // 比如："ExampleTestCase.testAdd"精简为"testAdd"
   std::string prefix = test_case_name;
-  prefix += "::";
+  prefix += ".";
   std::string::size_type pos = name.find(prefix);
   if (pos != std::string::npos) {
     name.replace(pos, prefix.size(), "");

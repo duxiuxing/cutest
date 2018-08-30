@@ -4,6 +4,7 @@
 #include <cppunit/TestCase.h>
 
 #include "cutest/Event.h"
+#include "cutest/Helper.h"
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 
@@ -47,7 +48,7 @@ class ExplicitEndTestCaller
     , m_event(NULL)
   {}
 
-  ~ExplicitEndTestCaller() {
+  virtual ~ExplicitEndTestCaller() {
     if (m_fixture) {
       delete m_fixture;
     }
@@ -59,7 +60,7 @@ class ExplicitEndTestCaller
   }
 
   void runTestOnMainThread() {
-    if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
+    if (CUTEST_NS::isOnMainThread()) {
       if (m_result)
         m_result->protect(MethodFunctor(this, &ExplicitEndTestCaller::runTestImmediately),
                           this);
@@ -88,7 +89,7 @@ class ExplicitEndTestCaller
   }
 
   void setUpOnMainThread() {
-    if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
+    if (CUTEST_NS::isOnMainThread()) {
       if (m_result) {
         m_result->protect(MethodFunctor(this, &ExplicitEndTestCaller::setUpImmediately),
                           this, "setUp() failed");
@@ -119,7 +120,7 @@ class ExplicitEndTestCaller
   }
 
   void tearDownOnMainThread() {
-    if (CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId()) {
+    if (CUTEST_NS::isOnMainThread()) {
       if (m_result) {
         m_result->protect(MethodFunctor(this, &ExplicitEndTestCaller::tearDownImmediately),
                           this, "tearDown() failed");
@@ -138,6 +139,8 @@ class ExplicitEndTestCaller
 
   void tearDownImmediately() {
     m_fixture->TearDown();
+    delete m_fixture;
+    m_fixture = NULL;
     m_event->post();
   }
 

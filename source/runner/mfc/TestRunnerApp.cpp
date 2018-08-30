@@ -57,11 +57,11 @@ BOOL CTestRunnerApp::InitInstance()
 	// HKEY_CURRENT_USER\Software\title
 	SetRegistryKey(TestConfig::GetInstance()->GetTitle());
 
-	CPPUNIT_NS::Test* rootTest = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
-	CTestRunnerDlg dlg(rootTest);
+	CPPUNIT_NS::Test* allTests = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
+	CTestRunnerDlg dlg(allTests);
 	m_pMainWnd = &dlg;
 	dlg.DoModal();
-	delete rootTest;
+	delete allTests;
 #if _MSC_VER >= 1500
 	// Delete the shell manager created above.
 	if (pShellManager != NULL)

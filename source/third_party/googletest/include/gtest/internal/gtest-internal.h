@@ -27,7 +27,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-//
 // The Google C++ Testing and Mocking Framework (Google Test)
 //
 // This header file declares functions and macros used internally by
@@ -148,22 +147,22 @@ GTEST_API_ std::string AppendUserMessage(
 
 #if GTEST_HAS_EXCEPTIONS
 
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4275 \
+/* an exported class was derived from a class that was not exported */)
+
 // This exception is thrown by (and only by) a failed Google Test
 // assertion when GTEST_FLAG(throw_on_failure) is true (if exceptions
 // are enabled).  We derive it from std::runtime_error, which is for
 // errors presumably detectable only at run time.  Since
 // std::runtime_error inherits from std::exception, many testing
 // frameworks know how to extract and print the message inside it.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4275)
-#endif
 class GTEST_API_ GoogleTestFailureException : public ::std::runtime_error {
  public:
   explicit GoogleTestFailureException(const TestPartResult& failure);
 };
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4275
+
 #endif  // GTEST_HAS_EXCEPTIONS
 
 namespace edit_distance {
@@ -540,6 +539,9 @@ GTEST_API_ bool SkipPrefix(const char* prefix, const char** pstr);
 
 #if GTEST_HAS_TYPED_TEST || GTEST_HAS_TYPED_TEST_P
 
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+/* class A needs to have dll-interface to be used by clients of class B */)
+
 // State of the definition of a type-parameterized test case.
 class GTEST_API_ TypedTestCasePState {
  public:
@@ -582,15 +584,10 @@ class GTEST_API_ TypedTestCasePState {
   typedef ::std::map<std::string, CodeLocation> RegisteredTestsMap;
 
   bool registered_;
-
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   RegisteredTestsMap registered_tests_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 };
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
 // Skips to the first non-space char after the first comma in 'str';
 // returns NULL if no comma is found in 'str'.

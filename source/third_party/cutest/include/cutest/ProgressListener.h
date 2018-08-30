@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "CUTestDefine.h"
+#include "cutest/Define.h"
 
 // cppunit
 #include <cppunit/Test.h>

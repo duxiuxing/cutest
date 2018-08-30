@@ -13,6 +13,7 @@ public:
   EventImpl();
 
   virtual void wait();
+  virtual void wait(unsigned int timeout_ms);
   virtual void post();
   virtual void reset();
   virtual void destroy();

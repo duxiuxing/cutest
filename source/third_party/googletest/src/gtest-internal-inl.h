@@ -27,10 +27,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Utility functions and classes used by the Google C++ testing framework.
-//
-// Author: wan@google.com (Zhanyong Wan)
-//
+// Utility functions and classes used by the Google C++ testing framework.//
 // This file contains purely Google Test's internal implementation.  Please
 // DO NOT #INCLUDE IT IN A USER PROGRAM.
 
@@ -61,6 +58,9 @@
 
 #include "gtest/gtest.h"
 #include "gtest/gtest-spi.h"
+
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+/* class A needs to have dll-interface to be used by clients of class B */)
 
 namespace testing {
 
@@ -391,6 +391,8 @@ class GTEST_API_ UnitTestOptions {
   // name and the test name.
   static bool FilterMatchesTest(const std::string &test_case_name,
                                 const std::string &test_name);
+
+  static bool FilterMatchesTest(const std::string &full_name);
 
 #if GTEST_OS_WINDOWS
   // Function for supporting the gtest_catch_exception flag.
@@ -820,9 +822,6 @@ class GTEST_API_ UnitTestImpl {
   // executed.
   internal::FilePath original_working_dir_;
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   // The default test part result reporters.
   DefaultGlobalTestPartResultReporter default_global_test_part_result_reporter_;
   DefaultPerThreadTestPartResultReporter
@@ -855,9 +854,6 @@ class GTEST_API_ UnitTestImpl {
   // ParameterizedTestRegistry object used to register value-parameterized
   // tests.
   internal::ParameterizedTestCaseRegistry parameterized_test_registry_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   // Indicates whether RegisterParameterizedTests() has been called already.
   bool parameterized_tests_registered_;
@@ -913,10 +909,6 @@ class GTEST_API_ UnitTestImpl {
   // How long the test took to run, in milliseconds.
   TimeInMillis elapsed_time_;
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
-
 #if GTEST_HAS_DEATH_TEST
   // The decomposed components of the gtest_internal_run_death_test flag,
   // parsed when RUN_ALL_TESTS is called.
@@ -926,10 +918,6 @@ class GTEST_API_ UnitTestImpl {
 
   // A per-thread stack of traces created by the SCOPED_TRACE() macro.
   internal::ThreadLocal<std::vector<TraceInfo> > gtest_trace_stack_;
-
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   // The value of GTEST_FLAG(catch_exceptions) at the moment RunAllTests()
   // starts.
@@ -1008,7 +996,7 @@ bool ParseNaturalNumber(const ::std::string& str, Integer* number) {
 
   const bool parse_success = *end == '\0' && errno == 0;
 
-  // TODO(vladl@google.com): Convert this to compile time assertion when it is
+  // FIXME: Convert this to compile time assertion when it is
   // available.
   GTEST_CHECK_(sizeof(Integer) <= sizeof(parsed));
 
@@ -1195,5 +1183,7 @@ class StreamingListener : public EmptyTestEventListener {
 
 }  // namespace internal
 }  // namespace testing
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
 #endif  // GTEST_SRC_GTEST_INTERNAL_INL_H_

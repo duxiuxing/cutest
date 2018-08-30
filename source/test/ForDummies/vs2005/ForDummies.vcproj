@@ -175,7 +175,7 @@
 	</References>
 	<Files>
 		<Filter
-			Name="ForDummies"
+			Name="test"
 			>
 			<File
 				RelativePath="..\mock-turtle.h"

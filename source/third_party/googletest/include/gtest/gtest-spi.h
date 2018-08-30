@@ -26,8 +26,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// Author: wan@google.com (Zhanyong Wan)
+
 //
 // Utilities for testing Google Test itself and code that uses Google Test
 // (e.g. frameworks built on top of Google Test).
@@ -38,6 +37,9 @@
 #define GTEST_INCLUDE_GTEST_GTEST_SPI_H_
 
 #include "gtest/gtest.h"
+
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+/* class A needs to have dll-interface to be used by clients of class B */)
 
 namespace testing {
 
@@ -50,14 +52,8 @@ namespace testing {
 // generated in the same thread that created this object or it can intercept
 // all generated failures. The scope of this mock object can be controlled with
 // the second argument to the two arguments constructor.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4275)
-#endif
 class GTEST_API_ ScopedFakeTestPartResultReporter
     : public TestPartResultReporterInterface {
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
  public:
   // The two possible mocking modes of this object.
   enum InterceptMode {
@@ -110,14 +106,7 @@ class GTEST_API_ SingleFailureChecker {
  private:
   const TestPartResultArray* const results_;
   const TestPartResult::Type type_;
-
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   const std::string substr_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   GTEST_DISALLOW_COPY_AND_ASSIGN_(SingleFailureChecker);
 };
@@ -125,6 +114,8 @@ class GTEST_API_ SingleFailureChecker {
 }  // namespace internal
 
 }  // namespace testing
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
 // A set of macros for testing Google Test assertions or code that's expected
 // to generate Google Test fatal failures.  It verifies that the given

@@ -22,16 +22,19 @@ public:
   struct Settings
   {
     Settings()
-      : autorunOnStartup( false )
-      , alwaysCallTestOnMainThread( false )
+      : autorun_on_startup( false )
+      , always_call_test_on_main_thread( false )
+      , treat_timeout_as_error( false )
       , col_1( 0 )
       , col_2( 0 )
       , col_3( 0 )
       , col_4( 0 )
     {}
 
-    bool autorunOnStartup;
-    bool alwaysCallTestOnMainThread;
+    bool autorun_on_startup;
+    bool always_call_test_on_main_thread;
+    bool treat_timeout_as_error;
+
     int  col_1; // 1st column width in list view
     int  col_2; // 2nd column width in list view
     int  col_3; // 3rd column width in list view

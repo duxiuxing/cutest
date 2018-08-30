@@ -5,42 +5,15 @@
 
 #include "ProgressListener.h"
 
-#if (defined(_WIN32) || defined(_WIN64))
-
-  CUTEST_NS_BEGIN
-  typedef unsigned long thread_id;
-  CUTEST_NS_END
-
-#else
-
-  #include <pthread.h>
-  #include <unistd.h>
-  CUTEST_NS_BEGIN
-  typedef pid_t thread_id;
-  CUTEST_NS_END
-
-#endif
-
 CUTEST_NS_BEGIN
 
 class Event;
 class ExplicitEndTest;
 class Runnable;
 
-class CPPUNIT_API Runner
+class GTEST_API_ Runner
 {
 public:
-  static const char *version();
-  static thread_id currentThreadId();
-  static thread_id mainThreadId();
-
-  /*
-    返回当前系统的时间，单位为ms
-
-    主要使用场景：根据用例执行前后的系统时间差计算耗时
-  */
-  static unsigned long long tickCount();
-
   static Runner *instance();
 
 public: // Help接口族
@@ -66,12 +39,17 @@ public: // Help接口族
   virtual void setAlwaysCallTestOnMainThread( bool value ) = 0;
   virtual bool alwaysCallTestOnMainThread() = 0;
 
+  virtual void setTreatTimeoutAsError( bool value ) = 0;
+  virtual bool treatTimeoutAsError() = 0;
+
 public: // Runner接口族
   virtual void addListener( ProgressListener *listener ) = 0;
   virtual void removeListener( ProgressListener *listener ) = 0;
 
   virtual void start( CPPUNIT_NS::Test *test ) = 0;
   virtual void stop() = 0;
+
+  virtual void waitUntilAllTestEnd() = 0;
 
   virtual void addFailure( bool is_error, CPPUNIT_NS::Exception *exception ) = 0;
 

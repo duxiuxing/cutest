@@ -86,8 +86,9 @@ protected:
 
   BOOL m_bAutorunAtStartup;
   afx_msg void OnAutorunAtStartup();
-  BOOL m_bAlwaysCallTestOnMainThread;
+
   afx_msg void OnAlwaysCallTestOnMainThread();
+  afx_msg void OnTreatTimeoutAsError();
 
   enum ErrorTypeBitmaps
   {
@@ -110,8 +111,8 @@ protected:
   CFont m_fixedSizeFont;
   void displayFailureDetailsFor( unsigned int failureIndex );
 
-  unsigned __int64 m_testStartTime;
-  unsigned __int64 m_testEndTime;
+  unsigned long long m_testStartTime;
+  unsigned long long m_testEndTime;
   void UpdateUI_Time();
 
   enum UIState

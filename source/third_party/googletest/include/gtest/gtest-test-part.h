@@ -27,9 +27,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: mheule@google.com (Markus Heule)
-//
-
 // GOOGLETEST_CM0001 DO NOT DELETE
 
 #ifndef GTEST_INCLUDE_GTEST_GTEST_TEST_PART_H_
@@ -39,6 +36,9 @@
 #include <vector>
 #include "gtest/internal/gtest-internal.h"
 #include "gtest/internal/gtest-string.h"
+
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+/* class A needs to have dll-interface to be used by clients of class B */)
 
 namespace testing {
 
@@ -108,9 +108,6 @@ class GTEST_API_ TestPartResult {
   // trace in it.
   static std::string ExtractSummary(const char* message);
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   // The name of the source file where the test part took place, or
   // "" if the source file is unknown.
   std::string file_name_;
@@ -119,9 +116,6 @@ class GTEST_API_ TestPartResult {
   int line_number_;
   std::string summary_;  // The test failure summary.
   std::string message_;  // The test failure message.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 };
 
 // Prints a TestPartResult object.
@@ -144,20 +138,14 @@ class GTEST_API_ TestPartResultArray {
   // Returns the number of TestPartResult objects in the array.
   int size() const;
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
  private:
   std::vector<TestPartResult> array_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestPartResultArray);
 };
 
 // This interface knows how to report a test part result.
-class TestPartResultReporterInterface {
+class GTEST_API_ TestPartResultReporterInterface {
  public:
   virtual ~TestPartResultReporterInterface() {}
 
@@ -172,14 +160,8 @@ namespace internal {
 // reported, it only delegates the reporting to the former result reporter.
 // The original result reporter is restored in the destructor.
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4275)
-#endif
 class GTEST_API_ HasNewFatalFailureHelper
     : public TestPartResultReporterInterface {
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
  public:
   HasNewFatalFailureHelper();
   virtual ~HasNewFatalFailureHelper();
@@ -195,5 +177,7 @@ class GTEST_API_ HasNewFatalFailureHelper
 }  // namespace internal
 
 }  // namespace testing
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
 #endif  // GTEST_INCLUDE_GTEST_GTEST_TEST_PART_H_

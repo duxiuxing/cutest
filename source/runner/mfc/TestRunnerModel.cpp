@@ -62,17 +62,23 @@ TestRunnerModel::loadSettings( Settings &s )
   CWinApp *app = AfxGetApp();
   ASSERT( app != NULL );
 
-  int autorun = app->GetProfileInt(
-                  _T( "CppUnit" ),
-                  _T( "AutorunAtStartup" ),
-                  1 );
-  s.autorunOnStartup = ( autorun == 1 );
+  UINT value = app->GetProfileInt(
+                 _T( "CppUnit" ),
+                 _T( "AutorunAtStartup" ),
+                 1 );
+  s.autorun_on_startup = ( value == 1 );
 
-  int mainThread = app->GetProfileInt(
-                     _T( "CppUnit" ),
-                     _T( "AlwaysCallTestOnMainThread" ),
-                     0 );
-  s.alwaysCallTestOnMainThread = ( mainThread == 1 );
+  value = app->GetProfileInt(
+            _T( "CppUnit" ),
+            _T( "AlwaysCallTestOnMainThread" ),
+            0 );
+  s.always_call_test_on_main_thread = ( value == 1 );
+
+  value = app->GetProfileInt(
+            _T( "CppUnit" ),
+            _T( "TreatTimeoutAsError" ),
+            0 );
+  s.treat_timeout_as_error = ( value == 1 );
 
   s.col_1 = app->GetProfileInt( _T( "CppUnit" ), _T( "Col_1" ), 80 );
   s.col_2 = app->GetProfileInt( _T( "CppUnit" ), _T( "Col_2" ), 80 );
@@ -144,11 +150,14 @@ TestRunnerModel::saveSettings( const Settings &s )
   CWinApp *app = AfxGetApp();
   ASSERT( app != NULL );
 
-  int autorun = s.autorunOnStartup ? 1 : 0;
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "AutorunAtStartup" ), autorun );
+  int value = s.autorun_on_startup ? 1 : 0;
+  app->WriteProfileInt( _T( "CppUnit" ), _T( "AutorunAtStartup" ), value );
 
-  int mainThread = s.alwaysCallTestOnMainThread ? 1 : 0;
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "AlwaysCallTestOnMainThread" ), mainThread );
+  value = s.always_call_test_on_main_thread ? 1 : 0;
+  app->WriteProfileInt( _T( "CppUnit" ), _T( "AlwaysCallTestOnMainThread" ), value );
+
+  value = s.treat_timeout_as_error ? 1 : 0;
+  app->WriteProfileInt( _T( "CppUnit" ), _T( "TreatTimeoutAsError" ), value );
 
   app->WriteProfileInt( _T( "CppUnit" ), _T( "Col_1" ),  s.col_1 );
   app->WriteProfileInt( _T( "CppUnit" ), _T( "Col_2" ),  s.col_2 );

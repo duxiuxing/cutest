@@ -26,8 +26,7 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// Author: wan@google.com (Zhanyong Wan)
+
 //
 // The Google C++ Testing and Mocking Framework (Google Test)
 //
@@ -68,6 +67,9 @@
 #include "gtest/gtest-typed-test.h"
 
 #include "cutest/ExplicitEndTest.h"
+
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
+/* class A needs to have dll-interface to be used by clients of class B */)
 
 // Depending on the platform, different string classes are available.
 // On Linux, in addition to ::std::string, Google also makes use of
@@ -318,7 +320,7 @@ class GTEST_API_ AssertionResult {
   const char* message() const {
     return message_.get() != NULL ?  message_->c_str() : "";
   }
-  // TODO(vladl@google.com): Remove this after making sure no clients use it.
+  // FIXME: Remove this after making sure no clients use it.
   // Deprecated; please use message() instead.
   const char* failure_message() const { return message(); }
 
@@ -353,13 +355,7 @@ class GTEST_API_ AssertionResult {
   // construct is not satisfied with the predicate's outcome.
   // Referenced via a pointer to avoid taking too much stack frame space
   // with test assertions.
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   internal::scoped_ptr< ::std::string> message_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 };
 
 // Makes a successful assertion result.
@@ -488,13 +484,7 @@ class GTEST_API_ Test {
   // internal method to avoid clashing with names used in user TESTs.
   void DeleteSelf_() { delete this; }
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   const internal::scoped_ptr< GTEST_FLAG_SAVER_ > gtest_flag_saver_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   // Often a user misspells SetUp() as Setup() and spends a long time
   // wondering why it is never called by Google Test.  The declaration of
@@ -519,9 +509,9 @@ class GTEST_API_ Test {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(Test);
 };
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4275)
-#endif
+GTEST_DISABLE_MSC_WARNINGS_PUSH_(4275 \
+	/* class A needs to have dll-interface to be used by clients of class B */)
+
 class GTEST_API_ ExplicitEndTest
   : public Test
   , public CUTEST_NS::ExplicitEndTest {
@@ -531,9 +521,8 @@ class GTEST_API_ ExplicitEndTest
  private:
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ExplicitEndTest);
 };
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4275
 
 typedef internal::TimeInMillis TimeInMillis;
 
@@ -652,7 +641,7 @@ class GTEST_API_ TestResult {
 
   // Adds a failure if the key is a reserved attribute of Google Test
   // testcase tags.  Returns true if the property is valid.
-  // TODO(russr): Validate attribute names are legal and human readable.
+  // FIXME: Validate attribute names are legal and human readable.
   static bool ValidateTestProperty(const std::string& xml_element,
                                    const TestProperty& test_property);
 
@@ -675,9 +664,6 @@ class GTEST_API_ TestResult {
   // properties, whose values may be updated.
   internal::Mutex test_properites_mutex_;
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   // The vector of TestPartResults
   std::vector<TestPartResult> test_part_results_;
   // The vector of TestProperties
@@ -686,9 +672,6 @@ class GTEST_API_ TestResult {
   int death_test_count_;
   // The elapsed time, in milliseconds.
   TimeInMillis elapsed_time_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   // We disallow copying TestResult.
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestResult);
@@ -813,9 +796,6 @@ class GTEST_API_ TestInfo {
     test_info->result_.Clear();
   }
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   // These fields are immutable properties of the test.
   const std::string test_case_name_;     // Test case name
   const std::string name_;               // Test name
@@ -838,9 +818,6 @@ class GTEST_API_ TestInfo {
   // This field is mutable and needs to be reset before running the
   // test for the second time.
   TestResult result_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestInfo);
 };
@@ -1000,9 +977,6 @@ class GTEST_API_ TestCase {
   // Restores the test order to before the first shuffle.
   void UnshuffleTests();
 
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251)
-#endif
   // Name of the test case.
   std::string name_;
   // Name of the parameter type, or NULL if this is not a typed or a
@@ -1026,9 +1000,6 @@ class GTEST_API_ TestCase {
   // Holds test properties recorded during execution of SetUpTestCase and
   // TearDownTestCase.
   TestResult ad_hoc_test_result_;
-#if GTEST_NEED_DLL_DECL
-  GTEST_DISABLE_MSC_WARNINGS_POP_()
-#endif
 
   // We disallow copying TestCases.
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestCase);
@@ -2384,5 +2355,7 @@ int RUN_ALL_TESTS() GTEST_MUST_USE_RESULT_;
 inline int RUN_ALL_TESTS() {
   return ::testing::UnitTest::GetInstance()->Run();
 }
+
+GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
 
 #endif  // GTEST_INCLUDE_GTEST_GTEST_H_

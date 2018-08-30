@@ -66,7 +66,7 @@ public:
 
   void runTestOnMainThread()
   {
-    if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+    if ( CUTEST_NS::isOnMainThread() )
     {
       if ( m_result )
         m_result->protect( MethodFunctor( this, &ExplicitEndTestCaller::runTestImmediately ),
@@ -102,7 +102,7 @@ public:
 
   void setUpOnMainThread()
   {
-    if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+    if ( CUTEST_NS::isOnMainThread() )
     {
       if ( m_result )
       {
@@ -143,7 +143,7 @@ public:
 
   void tearDownOnMainThread()
   {
-    if ( CUTEST_NS::Runner::currentThreadId() == CUTEST_NS::Runner::mainThreadId() )
+    if ( CUTEST_NS::isOnMainThread() )
     {
       if ( m_result )
       {
@@ -169,6 +169,8 @@ public:
   void tearDownImmediately()
   {
     m_fixture->tearDown();
+    delete m_fixture;
+    m_fixture = NULL;
     m_event->post();
   }
 

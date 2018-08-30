@@ -1,12 +1,11 @@
 ﻿#include "RunnerImpl.h"
 
-#include "gmock/gmock.h"
 #include <set>
 
 CUTEST_NS_BEGIN
 
 unsigned long long
-Runner::tickCount()
+tickCount64()
 {
   static LARGE_INTEGER ticks_per_second = { 0 };
   LARGE_INTEGER tick;
@@ -22,13 +21,13 @@ Runner::tickCount()
 }
 
 thread_id
-Runner::currentThreadId()
+currentThreadId()
 {
   return ::GetCurrentThreadId();
 }
 
 thread_id
-Runner::mainThreadId()
+mainThreadId()
 {
   return RunnerImpl::main_thread_id;
 }
@@ -46,7 +45,7 @@ thread_id RunnerImpl::main_thread_id = 0;
 
 RunnerImpl::RunnerImpl()
 {
-  testing::InitGoogleMock( &__argc, __wargv );
+  RunnerBase::initGoogleMock();
   this->listener_manager.add( &this->test_progress_logger );
 
   // Register message window class.
@@ -60,17 +59,17 @@ RunnerImpl::RunnerImpl()
 
   // Create a message window.
   RunnerImpl::message_window = ::CreateWindow(
-      wcx.lpszClassName,  // name of window class
-      NULL,               // title-bar string
-      0,                  // top-level window
-      0,                  // default horizontal position
-      0,                  // default vertical position
-      0,                  // default width
-      0,                  // default height
-      HWND_MESSAGE,       // message window
-      NULL,               // use class menu
-      wcx.hInstance,      // handle to application instance
-      NULL );             // no window-creation data
+                                 wcx.lpszClassName,  // name of window class
+                                 NULL,               // title-bar string
+                                 0,                  // top-level window
+                                 0,                  // default horizontal position
+                                 0,                  // default vertical position
+                                 0,                  // default width
+                                 0,                  // default height
+                                 HWND_MESSAGE,       // message window
+                                 NULL,               // use class menu
+                                 wcx.hInstance,      // handle to application instance
+                                 NULL );             // no window-creation data
 
   // 通过这个异步方法给s_mainThreadId赋值
   asyncRunOnMainThread( this, false );
@@ -78,6 +77,8 @@ RunnerImpl::RunnerImpl()
 
 RunnerImpl::~RunnerImpl()
 {
+  waitUntilAllTestEnd();
+
   if ( RunnerImpl::message_window )
   {
     ::DestroyWindow( RunnerImpl::message_window );
@@ -170,7 +171,19 @@ RunnerImpl::onTimer4DelayRun( HWND wnd, UINT msg, UINT_PTR id_event, DWORD elaps
 void
 RunnerImpl::run()
 {
-  RunnerImpl::main_thread_id = Runner::currentThreadId();
+  RunnerImpl::main_thread_id = currentThreadId();
+}
+
+void
+RunnerImpl::waitUntilAllTestEnd()
+{
+  MSG msg = { 0 };
+  while ( STATE_NONE != this->state
+          && ::GetMessage( &msg, NULL, 0, 0 ) )
+  {
+    ::TranslateMessage( &msg );
+    ::DispatchMessage( &msg );
+  }
 }
 
 CUTEST_NS_END

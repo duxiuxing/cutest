@@ -35,7 +35,11 @@ TestNamer::getFixtureName() const
 std::string 
 TestNamer::getTestNameFor( const std::string &testMethodName ) const
 {
+#ifdef _CUTEST_IMPL
+  return getFixtureName() + "." + testMethodName;
+#else
   return getFixtureName() + "::" + testMethodName;
+#endif
 }
 
 

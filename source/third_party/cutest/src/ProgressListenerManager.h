@@ -7,8 +7,7 @@
 #include "cutest/ProgressListener.h"
 
 // std
-#include <list>
-#include <set>
+#include <cppunit/portability/CppUnitVector.h>
 #include <stack>
 #include <string>
 
@@ -23,32 +22,32 @@ public:
   void remove( ProgressListener *listener );
 
 protected:
-  typedef std::set<ProgressListener *> TestProgressListeners;
+  typedef CppUnitVector<ProgressListener *> TestProgressListeners;
   TestProgressListeners listeners;
 
 public:
   //////////////////////////////////////////////////////////////////////////
   // 重载TestListener的成员方法
   virtual void startTestRun( CPPUNIT_NS::Test *test, CPPUNIT_NS::TestResult * );
-  void startTestRunOnMainThread( CPPUNIT_NS::Test *test );
+  void startTestRunImmediately( CPPUNIT_NS::Test *test );
 
   virtual void endTestRun( CPPUNIT_NS::Test *test, CPPUNIT_NS::TestResult * );
-  void endTestRunOnMainThread( CPPUNIT_NS::Test *test );
+  void endTestRunImmediately( CPPUNIT_NS::Test *test );
 
   virtual void startSuite( CPPUNIT_NS::Test *suite );
-  void startSuiteOnMainThread( CPPUNIT_NS::Test *suite );
+  void startSuiteImmediately( CPPUNIT_NS::Test *suite );
 
   virtual void endSuite( CPPUNIT_NS::Test *suite );
-  void endSuiteOnMainThread( CPPUNIT_NS::Test *suite );
+  void endSuiteImmediately( CPPUNIT_NS::Test *suite );
 
   virtual void startTest( CPPUNIT_NS::Test *test );
-  void StartTestOnMainThread( CPPUNIT_NS::Test *test );
+  void StartTestImmediately( CPPUNIT_NS::Test *test );
 
   virtual void addFailure( const CPPUNIT_NS::TestFailure &failure );
-  void addFailureOnMainThread( const CPPUNIT_NS::TestFailure &failure );
+  void addFailureImmediately( const CPPUNIT_NS::TestFailure &failure );
 
   virtual void endTest( CPPUNIT_NS::Test *test );
-  void endTestOnMainThread( CPPUNIT_NS::Test *test, unsigned int elapsed_ms );
+  void endTestImmediately( CPPUNIT_NS::Test *test, unsigned int elapsed_ms );
 
   class TaskBase : public Runnable
   {
@@ -60,8 +59,7 @@ public:
     TaskBase( ProgressListenerManager *manager_in, Event *event_in )
       : manager( manager_in )
       , event( event_in )
-    {
-    }
+    {}
 
     virtual ~TaskBase()
     {

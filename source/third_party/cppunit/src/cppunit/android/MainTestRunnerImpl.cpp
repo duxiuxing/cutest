@@ -16,15 +16,21 @@ Runner::tickCount()
 }
 
 thread_id 
-Runner::currentThreadId()
+currentThreadId()
 {
   return ::gettid();
 }
 
 thread_id 
-Runner::mainThreadId()
+mainThreadId()
 {
   return MainTestRunnerImpl::main_thread_id;
+}
+
+bool
+isOnMainThread()
+{
+  return ( ::mainThreadId() == ::currentThreadId() );
 }
 
 MainTestRunner *
@@ -70,7 +76,7 @@ MainTestRunnerImpl::delayRunOnMainThread(
 void 
 MainTestRunnerImpl::run()
 {
-  MainTestRunnerImpl::main_thread_id = Runner::currentThreadId();
+  MainTestRunnerImpl::main_thread_id = ::currentThreadId();
 }
 
 CPPUNIT_NS_END

@@ -2,6 +2,10 @@
 #include <cppunit/TestSuite.h>
 #include <cppunit/TestResult.h>
 
+#ifdef _CUTEST_IMPL
+#include "src/gtest-internal-inl.h"
+#include "src/RunnerBase.h"
+#endif
 
 CPPUNIT_NS_BEGIN
 
@@ -10,6 +14,7 @@ CPPUNIT_NS_BEGIN
 TestSuite::TestSuite( std::string name )
     : TestComposite( name )
 {
+  CUTEST_NS::RunnerBase::initGoogleMock();
 }
 
 
@@ -35,8 +40,22 @@ TestSuite::deleteContents()
 /// Adds a test to the suite. 
 void 
 TestSuite::addTest( Test *test )
-{ 
-  m_tests.push_back( test ); 
+{
+  if ( 0 == test->getChildTestCount() )
+  {
+    if ( testing::internal::UnitTestOptions::FilterMatchesTest( test->getName() ) )
+    {
+      m_tests.push_back( test );
+    }
+    else
+    {
+      delete test;
+    }
+  }
+  else
+  {
+    m_tests.push_back( test );
+  }
 }
 
 
@@ -120,8 +139,8 @@ TestSuite::RegisterTearDownTestCase( std::string name, TestSuite::TearDownTestCa
 void 
 TestSuite::doStartSuite( TestResult *controller )
 {
-  TestComposite::doStartSuite( controller );
   TestCaseMethodList::instance()->RunSetUpTestCase( getName() );
+  TestComposite::doStartSuite( controller );
 }
 
 void 

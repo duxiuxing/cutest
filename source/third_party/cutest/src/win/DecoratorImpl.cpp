@@ -21,7 +21,6 @@ DecoratorImpl::DecoratorImpl( CPPUNIT_NS::Test *test )
   , test_result( new CPPUNIT_NS::SynchronizationObjectImpl(), new CPPUNIT_NS::SynchronizationObjectImpl() )
   , result_collector( new CPPUNIT_NS::SynchronizationObjectImpl() )
   , result_printer( NULL )
-  , state( STATE_NONE )
   , runing_test( NULL )
   , thread_handle( NULL )
 {
@@ -59,11 +58,6 @@ DecoratorImpl::addListener( CPPUNIT_NS::TestListener *listener )
 void
 DecoratorImpl::start()
 {
-  if ( STATE_RUNING == this->state )
-  {
-    return;
-  }
-
   // 根据参数构造TestResultXmlPrinter
   if ( testing::internal::UnitTestOptions::GetOutputFormat() == "xml" )
   {
@@ -73,22 +67,20 @@ DecoratorImpl::start()
     Runner::instance()->addListener( this->result_printer );
   }
 
-  this->state = STATE_RUNING;
-
   this->run_completed->reset();
 
   HANDLE source_handle = ( HANDLE )_beginthreadex( NULL, 0,
-      threadFunction, this, CREATE_SUSPENDED, NULL );
+                         threadFunction, this, CREATE_SUSPENDED, NULL );
 
   ::SetThreadPriority( source_handle, THREAD_PRIORITY_NORMAL );
 
   ::DuplicateHandle( ::GetCurrentProcess(),
-    source_handle,
-    ::GetCurrentProcess(),
-    &this->thread_handle,
-    0,
-    FALSE,
-    DUPLICATE_SAME_ACCESS );
+                     source_handle,
+                     ::GetCurrentProcess(),
+                     &this->thread_handle,
+                     0,
+                     FALSE,
+                     DUPLICATE_SAME_ACCESS );
 
   ::ResumeThread( source_handle );
 }
@@ -118,12 +110,6 @@ DecoratorImpl::runOnWorkerThread()
 void
 DecoratorImpl::stop()
 {
-  if ( STATE_NONE == this->state )
-  {
-    return;
-  }
-
-  this->state = STATE_NONE;
   test_result.stop();
 }
 

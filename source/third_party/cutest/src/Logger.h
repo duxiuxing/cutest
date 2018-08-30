@@ -31,6 +31,7 @@ public:
 
 protected:
   unsigned int passed_test_cases; // 通过的用例记个数就行
+  bool first_failure_of_a_test; // 是否为当前Test的首个失败信息
   std::list<std::string> failed_test_cases; // 不通过的要把名字记录下来
 };
 

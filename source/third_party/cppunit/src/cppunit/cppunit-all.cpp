@@ -17,7 +17,6 @@
 #include "TestComposite.cpp"
 #include "TestDecorator.cpp"
 #include "TestFactoryRegistry.cpp"
-#include "TestFactorySort.cpp"
 #include "TestFailure.cpp"
 #include "TestLeaf.cpp"
 #include "TestNamer.cpp"

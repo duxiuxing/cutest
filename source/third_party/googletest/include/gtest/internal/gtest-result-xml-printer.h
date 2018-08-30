@@ -70,7 +70,7 @@ class TestResultXmlPrinter
       }
 
       std::string wholeName = suite->getName();
-      std::string::size_type pos = wholeName.find("::");
+      std::string::size_type pos = wholeName.find(".");
       if (std::string::npos == pos) {
         suiteName = wholeName;
       } else {

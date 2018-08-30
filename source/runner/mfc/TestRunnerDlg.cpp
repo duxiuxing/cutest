@@ -7,6 +7,8 @@
 #include "TreeHierarchyDlg.h"
 
 #include <cppunit/TestFailure.h>
+
+#include "cutest/Helper.h"
 #include "cutest/Runner.h"
 
 #ifdef _DEBUG
@@ -29,7 +31,7 @@ CTestRunnerDlg::CTestRunnerDlg( CPPUNIT_NS::Test *rootTest, CWnd *pParent )
 
   m_bAutorunAtStartup = FALSE;
 
-  m_testStartTime = CUTEST_NS::Runner::tickCount();
+  m_testStartTime = CUTEST_NS::tickCount64();
   m_testEndTime = m_testStartTime;
 
   ModifyFlags( flSWPCopyBits, 0 );    // anti-flickering option for resizing
@@ -66,6 +68,7 @@ BEGIN_MESSAGE_MAP( CTestRunnerDlg, cdxCDynamicDialog )
   ON_WM_MENUSELECT()
   ON_COMMAND( ID_AUTORUN_AT_STARTUP, OnAutorunAtStartup )
   ON_COMMAND( ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, OnAlwaysCallTestOnMainThread )
+  ON_COMMAND( ID_TREAT_TIMEOUT_AS_ERROR, OnTreatTimeoutAsError )
 END_MESSAGE_MAP()
 
 // CTestRunnerDlg message handlers
@@ -84,7 +87,7 @@ CTestRunnerDlg::OnInitDialog()
     CString caption;
     GetWindowText( caption );
 
-    CString version( CUTEST_NS::Runner::version() );
+    CString version( CUTEST_NS::version() );
 
     CString text;
     text.Format( _T( "%s - %s v%s" ),
@@ -105,8 +108,9 @@ CTestRunnerDlg::OnInitDialog()
 
   m_testsProgress.Create( NULL, NULL, WS_CHILD | WS_VISIBLE, getItemClientRect( IDC_STATIC_PROGRESS_BAR ), this, 0 );
 
-  m_bAutorunAtStartup = m_settings.autorunOnStartup;
-  CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread( m_settings.alwaysCallTestOnMainThread );
+  m_bAutorunAtStartup = m_settings.autorun_on_startup;
+  CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread( m_settings.always_call_test_on_main_thread );
+  CUTEST_NS::Runner::instance()->setTreatTimeoutAsError( m_settings.treat_timeout_as_error );
 
   m_errorListBitmap.Create( IDB_ERROR_TYPE, 16, 1, RGB( 255, 0, 255 ) );
   m_listCtrl.SetImageList( &m_errorListBitmap, LVSIL_SMALL );
@@ -229,7 +233,7 @@ CTestRunnerDlg::OnRun()
 
   m_testsCount = selectedTest->countTestCases();
   m_testsProgress.start( m_testsCount );
-  m_testStartTime = CUTEST_NS::Runner::tickCount();
+  m_testStartTime = CUTEST_NS::tickCount64();
   runner->start( selectedTest );
 }
 
@@ -324,7 +328,7 @@ CTestRunnerDlg::onTestEnd(
   UpdateUI_Counts();
   m_testsProgress.step( m_failures == 0 && m_errors == 0 );
 
-  m_testEndTime = CUTEST_NS::Runner::tickCount();
+  m_testEndTime = CUTEST_NS::tickCount64();
   UpdateUI_Time();
 
   CWnd *runningTestCaseLabel = GetDlgItem( IDC_RUNNING_TEST_CASE_LABEL );
@@ -341,7 +345,8 @@ CTestRunnerDlg::onRunnerEnd( CPPUNIT_NS::Test *test, unsigned int elapsed_ms )
 {
   if ( UI_STATE_CLOSING == m_uiState )
   {
-    EndDialog( IDOK );
+    SetUIState( UI_STATE_NONE );
+    PostMessage( WM_CLOSE );
   }
   else
   {
@@ -460,8 +465,9 @@ CTestRunnerDlg::PreTranslateMessage( MSG *pMsg )
 void
 CTestRunnerDlg::saveSettings()
 {
-  m_settings.autorunOnStartup = ( m_bAutorunAtStartup != 0 );
-  m_settings.alwaysCallTestOnMainThread = CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread();
+  m_settings.autorun_on_startup = ( m_bAutorunAtStartup != 0 );
+  m_settings.always_call_test_on_main_thread = CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread();
+  m_settings.treat_timeout_as_error = CUTEST_NS::Runner::instance()->treatTimeoutAsError();
   StoreWindowPosition( TestRunnerModel::settingKey,
                        TestRunnerModel::settingMainDialogKey );
 
@@ -655,6 +661,10 @@ CTestRunnerDlg::OnMenuSelect( UINT nItemID, UINT nFlags, HMENU hSysMenu )
     check = CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread() ? MF_CHECKED : MF_UNCHECKED;
     mainMenu->CheckMenuItem( ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, MF_BYCOMMAND | check );
     mainMenu->EnableMenuItem( ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, MF_BYCOMMAND | enable );
+
+    check = CUTEST_NS::Runner::instance()->treatTimeoutAsError() ? MF_CHECKED : MF_UNCHECKED;
+    mainMenu->CheckMenuItem( ID_TREAT_TIMEOUT_AS_ERROR, MF_BYCOMMAND | check );
+    mainMenu->EnableMenuItem( ID_TREAT_TIMEOUT_AS_ERROR, MF_BYCOMMAND | enable );
   }
 }
 
@@ -670,6 +680,15 @@ CTestRunnerDlg::OnAlwaysCallTestOnMainThread()
 {
   CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread(
     !CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()
+  );
+  saveSettings();
+}
+
+void
+CTestRunnerDlg::OnTreatTimeoutAsError()
+{
+  CUTEST_NS::Runner::instance()->setTreatTimeoutAsError(
+    !CUTEST_NS::Runner::instance()->treatTimeoutAsError()
   );
   saveSettings();
 }

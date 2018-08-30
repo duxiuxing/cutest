@@ -9,6 +9,10 @@
 #include "ProtectorChain.h"
 #include "ProtectorContext.h"
 
+#ifdef _CUTEST_IMPL
+#include "src/gtest-internal-inl.h"
+#endif
+
 CPPUNIT_NS_BEGIN
 
 
@@ -145,7 +149,29 @@ void
 TestResult::runTest( Test *test )
 {
   startTestRun( test );
+
+#ifdef _CUTEST_IMPL
+  testing::internal::UnitTestImpl* impl = testing::internal::GetUnitTestImpl();
+  std::vector<testing::Environment *>& container = impl->environments();
+  std::vector<testing::Environment *>::iterator it = container.begin();
+  while ( it != container.end() )
+  {
+    ( *it )->SetUp();
+    ++it;
+  }
+#endif
+
   test->run( this );
+
+#ifdef _CUTEST_IMPL
+  it = container.begin();
+  while ( it != container.end() )
+  {
+    ( *it )->TearDown();
+    ++it;
+  }
+#endif
+
   endTestRun( test );
 }
 

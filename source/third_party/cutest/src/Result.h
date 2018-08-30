@@ -3,11 +3,11 @@
 #include <cppunit/SynchronizedObject.h>
 #include <cppunit/TestResult.h>
 
-#include "cutest/CUTestDefine.h"
+#include "cutest/Define.h"
 
 CUTEST_NS_BEGIN
 
-class CPPUNIT_API Result : public CPPUNIT_NS::TestResult
+class GTEST_API_ Result : public CPPUNIT_NS::TestResult
 {
 public:
   Result( CPPUNIT_NS::SynchronizedObject::SynchronizationObject *listener_lock, CPPUNIT_NS::SynchronizedObject::SynchronizationObject *stop_lock );

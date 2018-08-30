@@ -3,6 +3,8 @@
 #include "../Logger.h"
 #include "../RunnerBase.h"
 
+#include "cutest/Helper.h"
+
 #include <set>
 #include <wtypes.h>
 
@@ -13,6 +15,8 @@ class RunnerImpl
   , public Runnable
 {
   friend class Runner;
+  friend thread_id CUTEST_NS::mainThreadId();
+
 public:
   RunnerImpl();
   virtual ~RunnerImpl();
@@ -24,6 +28,8 @@ public:
   // Runner的接口实现
   virtual void asyncRunOnMainThread( Runnable *runnable, bool is_auto_delete );
   virtual void delayRunOnMainThread( unsigned int delay_ms, Runnable *runnable, bool is_auto_delete );
+
+  virtual void waitUntilAllTestEnd();
 
 protected:
   enum

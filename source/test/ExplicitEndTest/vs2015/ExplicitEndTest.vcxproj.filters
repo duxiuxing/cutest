@@ -4,10 +4,13 @@
     <Filter Include="Win32 DLL">
       <UniqueIdentifier>{604222d5-4c25-43af-965d-e4ea939466f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cppunit">
+    <Filter Include="Asynchronous Callback">
+      <UniqueIdentifier>{34914472-8aa3-4fe8-881e-458241f376c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asynchronous Callback\cppunit">
       <UniqueIdentifier>{ae5bba98-2b0a-4e3f-9116-39041ccf2529}</UniqueIdentifier>
     </Filter>
-    <Filter Include="googletest">
+    <Filter Include="Asynchronous Callback\googletest">
       <UniqueIdentifier>{b3b814bd-eba4-44c4-bb10-ec1185f0d3cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -19,10 +22,10 @@
       <Filter>Win32 DLL</Filter>
     </ClInclude>
     <ClInclude Include="..\CppUnitExplicitEndTest.h">
-      <Filter>cppunit</Filter>
+      <Filter>Asynchronous Callback\cppunit</Filter>
     </ClInclude>
-    <ClInclude Include="..\GTestExplicitEndTest.h">
-      <Filter>googletest</Filter>
+    <ClInclude Include="..\SimpleTimer.h">
+      <Filter>Asynchronous Callback</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -33,10 +36,16 @@
       <Filter>Win32 DLL</Filter>
     </ClCompile>
     <ClCompile Include="..\CppUnitExplicitEndTest.cpp">
-      <Filter>cppunit</Filter>
+      <Filter>Asynchronous Callback\cppunit</Filter>
     </ClCompile>
     <ClCompile Include="..\GTestExplicitEndTest.cpp">
-      <Filter>googletest</Filter>
+      <Filter>Asynchronous Callback\googletest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SimpleTimer.cpp">
+      <Filter>Asynchronous Callback</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GTestWaitAsynEndTest.cpp">
+      <Filter>Asynchronous Callback\googletest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

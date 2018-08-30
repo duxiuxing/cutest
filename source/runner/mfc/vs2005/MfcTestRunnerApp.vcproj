@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\third_party\cppunit\include;..\..\..\third_party\cutest\include"
+				AdditionalIncludeDirectories="..\..\..\third_party\cppunit\include;..\..\..\third_party\googletest\include;..\..\..\third_party\cutest\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;OEMRESOURCE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -129,7 +129,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
+				Optimization="2"
 				AdditionalIncludeDirectories="..\..\..\third_party\cutest\include"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;OEMRESOURCE"
 				MinimalRebuild="false"

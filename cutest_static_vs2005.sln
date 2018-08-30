@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample1_console", "source\test\sample1\vs2005\sample1_console.vcproj", "{009B80E2-0407-4C5E-9BFF-88166AB06327}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{3F388A95-21B6-471F-A31B-7983493ECBCD} = {3F388A95-21B6-471F-A31B-7983493ECBCD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutest_static", "source\third_party\cutest\vs2005\cutest_static.vcproj", "{3F388A95-21B6-471F-A31B-7983493ECBCD}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMockPlusStatic", "source\third_party\GMockPlus\vs2005\GMockPlusStatic.vcproj", "{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{3F388A95-21B6-471F-A31B-7983493ECBCD} = {3F388A95-21B6-471F-A31B-7983493ECBCD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProgressListenerTest", "source\test\ProgressListenerTest\vs2005\ProgressListenerTest.vcproj", "{6E595626-6DD1-495B-88FB-B45DDD272E43}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{3F388A95-21B6-471F-A31B-7983493ECBCD} = {3F388A95-21B6-471F-A31B-7983493ECBCD}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{009B80E2-0407-4C5E-9BFF-88166AB06327}.Debug|Win32.ActiveCfg = Debug|Win32
+		{009B80E2-0407-4C5E-9BFF-88166AB06327}.Debug|Win32.Build.0 = Debug|Win32
+		{009B80E2-0407-4C5E-9BFF-88166AB06327}.Release|Win32.ActiveCfg = Release|Win32
+		{009B80E2-0407-4C5E-9BFF-88166AB06327}.Release|Win32.Build.0 = Release|Win32
+		{3F388A95-21B6-471F-A31B-7983493ECBCD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3F388A95-21B6-471F-A31B-7983493ECBCD}.Debug|Win32.Build.0 = Debug|Win32
+		{3F388A95-21B6-471F-A31B-7983493ECBCD}.Release|Win32.ActiveCfg = Release|Win32
+		{3F388A95-21B6-471F-A31B-7983493ECBCD}.Release|Win32.Build.0 = Release|Win32
+		{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}.Debug|Win32.Build.0 = Debug|Win32
+		{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}.Release|Win32.ActiveCfg = Release|Win32
+		{B5150B2B-E7DF-4C58-8BAA-FDEDC0ABE0AE}.Release|Win32.Build.0 = Release|Win32
+		{6E595626-6DD1-495B-88FB-B45DDD272E43}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E595626-6DD1-495B-88FB-B45DDD272E43}.Debug|Win32.Build.0 = Debug|Win32
+		{6E595626-6DD1-495B-88FB-B45DDD272E43}.Release|Win32.ActiveCfg = Release|Win32
+		{6E595626-6DD1-495B-88FB-B45DDD272E43}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

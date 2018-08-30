@@ -19,32 +19,12 @@ TestConfig* TestConfig::GetInstance()
 TestConfigImpl::TestConfigImpl()
 {}
 
-BOOL TestConfigImpl::IsFileExist(CString& filePath)
-{
-	DWORD attributes = INVALID_FILE_ATTRIBUTES;
-
-	WIN32_FIND_DATA dataFind = {0};
-	HANDLE hFind = ::FindFirstFile(filePath, &dataFind);
-	if (hFind != INVALID_HANDLE_VALUE)
-	{
-		attributes = dataFind.dwFileAttributes;
-	}
-	::FindClose(hFind);
-
-	if (INVALID_FILE_ATTRIBUTES == attributes)
-	{
-		return FALSE;
-	}
-
-	return (attributes & FILE_ATTRIBUTE_DIRECTORY) ? FALSE : TRUE;
-}
-
-void TestConfigImpl::loadFailedMsgBox(LPTSTR libName)
+void TestConfigImpl::LoadFailedMsgBox(LPCTSTR libName)
 {
 	/*
-	  Retrieve the system error message for the last-error code
-	  See also：
-	  https://msdn.microsoft.com/en-us/library/windows/desktop/ms680582(v=vs.85).aspx
+	    Retrieve the system error message for the last-error code
+	    See also：
+	    https://msdn.microsoft.com/en-us/library/windows/desktop/ms680582(v=vs.85).aspx
 	*/
 
 	DWORD error = ::GetLastError();
@@ -62,11 +42,11 @@ void TestConfigImpl::loadFailedMsgBox(LPTSTR libName)
 
 	// Display the error message and exit the process
 	LPVOID textBuf = (LPVOID)::LocalAlloc(LMEM_ZEROINIT,
-			(lstrlen((LPCTSTR)msgBuf) + lstrlen((LPCTSTR)libName) + 40) * sizeof(TCHAR));
+										  (lstrlen((LPCTSTR)msgBuf) + lstrlen((LPCTSTR)libName) + 40) * sizeof(TCHAR));
 	::StringCchPrintf((LPTSTR)textBuf,
-		::LocalSize(textBuf) / sizeof(TCHAR),
-		_T("%s load failed!!!\r\ncode : %lu\r\ninfo : %s"),
-        libName, error, (LPTSTR)msgBuf);
+					  ::LocalSize(textBuf) / sizeof(TCHAR),
+					  _T("%s load failed!!!\r\ncode : %lu\r\ninfo : %s"),
+					  libName, error, (LPTSTR)msgBuf);
 
 	::MessageBox(AfxGetAppModuleState()->m_pCurrentWinApp->GetMainWnd()->GetSafeHwnd(), (LPCTSTR)textBuf, _T("Error"), MB_OK);
 
@@ -80,22 +60,26 @@ BOOL TestConfigImpl::Load()
 	::GetModuleFileName(NULL, exePath.GetBuffer(MAX_PATH), MAX_PATH);
 	exePath.ReleaseBuffer();
 
-	CString xmlPath, exeDirPath;
+	ATL::CPath xmlPath;
+	ATL::CPath dirPath(exePath);
+
 	{
 		// 优先加载exe所在文件夹的配置文件
-		ATL::CPath path(exePath);
-		exeDirPath = exePath.Left(path.FindFileName());
-		::PathCombine(xmlPath.GetBuffer(MAX_PATH), exeDirPath, TEST_CONFIG_FILE);
-		xmlPath.ReleaseBuffer();
+		dirPath.RemoveFileSpec();
+		xmlPath.Combine(dirPath, TEST_CONFIG_FILE);
 	}
 
-	if (!IsFileExist(xmlPath))
+	if (!xmlPath.FileExists())
 	{
 		// 再尝试加载上一级文件夹的配置文件
-		ATL::CPath path(exeDirPath);
-		CString parentDirPath = exePath.Left(path.FindFileName());
-		::PathCombine(xmlPath.GetBuffer(MAX_PATH), parentDirPath, TEST_CONFIG_FILE);
-		xmlPath.ReleaseBuffer();
+		if (dirPath.RemoveFileSpec())
+		{
+			xmlPath.Combine(dirPath, TEST_CONFIG_FILE);
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 	CComPtr<IXMLDOMDocument> xmlDoc;
@@ -113,7 +97,7 @@ BOOL TestConfigImpl::Load()
 		|| FAILED(xmlDoc->get_documentElement(&rootElem))
 		|| FAILED(rootElem->get_childNodes(&testList)))
 	{
-		return false;
+		return FALSE;
 	}
 
 	{
@@ -155,14 +139,14 @@ BOOL TestConfigImpl::Load()
 					attrNode->get_nodeValue(&libName);
 					if (!::CoLoadLibrary(libName.bstrVal, TRUE))
 					{
-						TestConfigImpl::loadFailedMsgBox(libName.bstrVal);
+						TestConfigImpl::LoadFailedMsgBox(libName.bstrVal);
 					}
 				}
 			}
 		}
 	}
 
-	return true;
+	return TRUE;
 }
 
 LPCTSTR TestConfigImpl::GetTitle()

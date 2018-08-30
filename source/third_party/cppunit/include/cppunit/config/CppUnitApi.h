@@ -3,7 +3,7 @@
 
 #undef CPPUNIT_API
 
-#ifdef WIN32
+#ifdef _MSC_VER
 
 // define CPPUNIT_DLL_BUILD when building CppUnit dll.
 #ifdef CPPUNIT_BUILD_DLL

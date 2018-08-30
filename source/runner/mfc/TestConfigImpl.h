@@ -11,8 +11,7 @@ public:
 	virtual LPCTSTR GetTitle();
 
 protected:
-	static BOOL IsFileExist(CString& filePath);
-	static void loadFailedMsgBox(LPTSTR libName);
+	static void LoadFailedMsgBox(LPCTSTR libName);
 
 protected:
 	CString m_title;

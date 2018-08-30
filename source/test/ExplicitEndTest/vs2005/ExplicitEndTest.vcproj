@@ -175,18 +175,6 @@
 	</References>
 	<Files>
 		<Filter
-			Name="cppunit"
-			>
-			<File
-				RelativePath="..\CppUnitExplicitEndTest.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\CppUnitExplicitEndTest.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="Win32 DLL"
 			>
 			<File
@@ -223,16 +211,40 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="googletest"
+			Name="Asynchronous Callback"
 			>
 			<File
-				RelativePath="..\GTestExplicitEndTest.cpp"
+				RelativePath="..\SimpleTimer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\GTestExplicitEndTest.h"
+				RelativePath="..\SimpleTimer.h"
 				>
 			</File>
+			<Filter
+				Name="googletest"
+				>
+				<File
+					RelativePath="..\GTestExplicitEndTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\GTestWaitAsynEndTest.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="cppunit"
+				>
+				<File
+					RelativePath="..\CppUnitExplicitEndTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\CppUnitExplicitEndTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<root title="CppUnitTest Sample" platform="windows">
-    <test brief="cppunit官方示例代码" libName="hierarchy.dll" />
-    <test brief="cppunit官方示例代码" libName="money.dll" />
-    <test brief="cppunit官方示例代码" libName="simple.dll" />
-    <!--test brief="cppunit官方示例代码" libName="cppunit_samples.dll" />
-    <test brief="cppunit mod示例代码" libName="cppunit_mod_samples.dll" /-->
-    <test brief="gtest官方示例代码1" libName="sample1.dll" />
-    <test brief="gtest官方示例代码2" libName="sample2.dll" />
-    <test brief="gtest官方示例代码3" libName="sample3.dll" />
-    <test brief="gtest官方示例代码4" libName="sample4.dll" />
-    <test brief="gtest官方示例代码5" libName="sample5.dll" />
-    <test brief="gmock官方文档ForDummies.md中的示例代码" libName="ForDummies.dll" />
-    <test brief="cutest示例代码" libName="ExplicitEndTest.dll" />
-    <!--test brief="cutest示例代码" libName="GMockPlusDemo.dll" /-->
+<root title="CppUnitTest Demos" platform="windows">
+  <test brief="cppunit官方示例代码" libName="hierarchy.dll" />
+  <test brief="cppunit官方示例代码" libName="money.dll" />
+  <test brief="cppunit官方示例代码" libName="simple.dll" />
+  <test brief="gtest官方示例代码1" libName="sample1.dll" />
+  <test brief="gtest官方示例代码2" libName="sample2.dll" />
+  <test brief="gtest官方示例代码3" libName="sample3.dll" />
+  <test brief="gtest官方示例代码4" libName="sample4.dll" />
+  <test brief="gtest官方示例代码5" libName="sample5.dll" />
+  <test brief="gmock官方文档ForDummies.md中的示例代码" libName="ForDummies.dll" />
+  <test brief="cutest示例代码" libName="ExplicitEndTest.dll" />
+  <!--test brief="GMockPlus示例代码" libName="GMockPlusDemo.dll" /-->
 </root>
