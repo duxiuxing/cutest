@@ -1,5 +1,5 @@
 ﻿#include "gtest/gtest.h"
-#include "CountDownLatch.h"
+#include "cutest/CountDownLatch.h"
 #include "SimpleTimer.h"
 
 class GTestWaitAsynEndTest

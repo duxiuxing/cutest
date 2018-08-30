@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "CountDownLatch.h"
+#include "cutest/CountDownLatch.h"
 #include "CountDownLatchImpl.h"
 
 CountDownLatch::CountDownLatch( int count )

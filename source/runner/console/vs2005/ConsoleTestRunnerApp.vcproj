@@ -223,6 +223,10 @@
 				RelativePath="..\stdafx.h"
 				>
 			</File>
+			<File
+				RelativePath="..\targetver.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
