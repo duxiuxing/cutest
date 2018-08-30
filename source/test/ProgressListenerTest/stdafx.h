@@ -13,13 +13,13 @@
 
 #ifdef _CONSOLE
 
-#include <stdio.h>
-#include <tchar.h>
+  #include <stdio.h>
+  #include <tchar.h>
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
+  #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS  // some CString constructors will be explicit
 
-#include <atlbase.h>
-#include <atlstr.h>
+  #include <atlbase.h>
+  #include <atlstr.h>
 
 #endif // #ifdef _CONSOLE
 

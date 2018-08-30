@@ -2,46 +2,39 @@
 
 CUTEST_NS_BEGIN
 
-Event *
-Event::createInstance()
-{
-  return new EventImpl;
+Event*
+Event::createInstance() {
+    return new EventImpl;
 }
 
-EventImpl::EventImpl() : event_handle( NULL )
-{
-  this->event_handle = ::CreateEvent( NULL, FALSE, FALSE, NULL );
-}
-
-void
-EventImpl::wait()
-{
-  ::WaitForSingleObjectEx( this->event_handle, INFINITE, FALSE );
+EventImpl::EventImpl() : event_handle(NULL) {
+    this->event_handle = ::CreateEvent(NULL, FALSE, FALSE, NULL);
 }
 
 void
-EventImpl::wait( unsigned int timeout_ms )
-{
-  ::WaitForSingleObjectEx( this->event_handle, timeout_ms, FALSE );
+EventImpl::wait() {
+    ::WaitForSingleObjectEx(this->event_handle, INFINITE, FALSE);
 }
 
 void
-EventImpl::reset()
-{
-  ::ResetEvent( this->event_handle );
+EventImpl::wait(unsigned int timeout_ms) {
+    ::WaitForSingleObjectEx(this->event_handle, timeout_ms, FALSE);
 }
 
 void
-EventImpl::post()
-{
-  ::SetEvent( this->event_handle );
+EventImpl::reset() {
+    ::ResetEvent(this->event_handle);
 }
 
 void
-EventImpl::destroy()
-{
-  ::CloseHandle( this->event_handle );
-  delete this;
+EventImpl::post() {
+    ::SetEvent(this->event_handle);
+}
+
+void
+EventImpl::destroy() {
+    ::CloseHandle(this->event_handle);
+    delete this;
 }
 
 CUTEST_NS_END

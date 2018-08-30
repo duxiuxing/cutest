@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\third_party\cppunit\include;..\..\..\third_party\googletest\include;..\..\..\third_party\cutest\include"
+				AdditionalIncludeDirectories="..\;..\..\..\third_party\cppunit\include;..\..\..\third_party\googletest\include;..\..\..\third_party\cutest\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -119,7 +119,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\third_party\cutest\include"
+				AdditionalIncludeDirectories="..\;..\..\..\third_party\cutest\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -179,6 +179,10 @@
 			Name="Generated Files"
 			>
 			<File
+				RelativePath="..\..\..\third_party\cutest\src\Main.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\stdafx.cpp"
 				>
 			</File>
@@ -186,14 +190,14 @@
 				RelativePath="..\stdafx.h"
 				>
 			</File>
+			<File
+				RelativePath="..\targetver.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="sample"
 			>
-			<File
-				RelativePath="..\console_main.cpp"
-				>
-			</File>
 			<File
 				RelativePath="..\..\..\third_party\googletest\samples\sample1.cc"
 				>
