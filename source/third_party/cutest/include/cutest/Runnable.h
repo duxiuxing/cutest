@@ -5,18 +5,17 @@
 CUTEST_NS_BEGIN
 
 /*
-  Runnable是一个抽象类
+    Runnable是一个抽象类
 
-  用法见：
-  - Runner::asyncRunOnMainThread()
-  - Runner::delayRunOnMainThread()
+    用法见：
+    - Runner::asyncRunOnMainThread()
+    - Runner::delayRunOnMainThread()
 */
-class Runnable
-{
+class Runnable {
 public:
-  virtual ~Runnable() {}
+    virtual ~Runnable() {}
 
-  virtual void run() = 0;
+    virtual void run() = 0;
 };
 
 CUTEST_NS_END

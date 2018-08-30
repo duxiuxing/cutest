@@ -26,16 +26,16 @@ CUTEST_NS_END
 
 #if (defined(_WIN32) || defined(_WIN64))
 
-  CUTEST_NS_BEGIN
-  typedef unsigned long thread_id;
-  CUTEST_NS_END
+    CUTEST_NS_BEGIN
+    typedef unsigned long thread_id;
+    CUTEST_NS_END
 
 #else
 
-  #include <pthread.h>
-  #include <unistd.h>
-  CUTEST_NS_BEGIN
-  typedef pid_t thread_id;
-  CUTEST_NS_END
+    #include <pthread.h>
+    #include <unistd.h>
+    CUTEST_NS_BEGIN
+    typedef pid_t thread_id;
+    CUTEST_NS_END
 
 #endif

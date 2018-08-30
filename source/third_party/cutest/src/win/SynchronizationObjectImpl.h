@@ -5,15 +5,14 @@
 
 CPPUNIT_NS_BEGIN
 
-class SynchronizationObjectImpl : public SynchronizedObject::SynchronizationObject
-{
-  CRITICAL_SECTION section;
+class SynchronizationObjectImpl : public SynchronizedObject::SynchronizationObject {
+    CRITICAL_SECTION section;
 public:
-  SynchronizationObjectImpl();
-  virtual ~SynchronizationObjectImpl();
+    SynchronizationObjectImpl();
+    virtual ~SynchronizationObjectImpl();
 
-  virtual void lock() override;
-  virtual void unlock() override;
+    virtual void lock() override;
+    virtual void unlock() override;
 };
 
 CPPUNIT_NS_END
