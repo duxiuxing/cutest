@@ -11,7 +11,7 @@ CUTEST_NS_BEGIN
 
 class Event;
 
-class CPPUNIT_API ExplicitEndTest
+class GTEST_API_ ExplicitEndTest
 {
 public:
   ExplicitEndTest();

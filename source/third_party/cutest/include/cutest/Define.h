@@ -1,6 +1,8 @@
 ﻿#pragma once
 
-#include <cppunit/config/CppUnitApi.h>
+#include "gtest/internal/gtest-port.h"
+
+#define CUTEST_API_ GTEST_API_
 
 #define CUTEST_NS_BEGIN namespace CUTest {
 #define CUTEST_NS_END }

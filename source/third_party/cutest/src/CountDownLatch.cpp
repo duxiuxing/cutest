@@ -3,6 +3,8 @@
 #include "cutest/CountDownLatch.h"
 #include "CountDownLatchImpl.h"
 
+CUTEST_NS_BEGIN
+
 CountDownLatch::CountDownLatch( int count )
 {
   m_impl = new CountDownLatchImpl( count );
@@ -36,3 +38,5 @@ CountDownLatch::getCount()
 {
   return m_impl->getCount();
 }
+
+CUTEST_NS_END

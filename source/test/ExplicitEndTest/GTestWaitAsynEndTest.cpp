@@ -14,14 +14,14 @@ class GTestWaitAsynEndTest
   // 实现SimpleTimer::Callback
   virtual void onTimeUp();
 
-  CountDownLatch* time_up;
+  CUTEST_NS::CountDownLatch* time_up;
 };
 
 GTestWaitAsynEndTest::GTestWaitAsynEndTest()
   : time_up(NULL) {}
 
 void GTestWaitAsynEndTest::SetUp() {
-  time_up = new CountDownLatch(1);
+  time_up = new CUTEST_NS::CountDownLatch(1);
 }
 
 void GTestWaitAsynEndTest::TearDown() {

@@ -1,10 +1,12 @@
 ﻿#pragma once
 
-#include "gtest/internal/gtest-port.h"
+#include "cutest/Define.h"
+
+CUTEST_NS_BEGIN
 
 class CountDownLatchImpl;
 
-class GTEST_API_ CountDownLatch
+class CUTEST_API_ CountDownLatch
 {
 public:
   // count表示countDown()需要被调用count次才会结束等待
@@ -36,3 +38,5 @@ public:
 protected:
   CountDownLatchImpl *m_impl;
 };
+
+CUTEST_NS_END

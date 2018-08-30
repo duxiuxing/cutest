@@ -9,7 +9,7 @@ class Event
 {
 public:
   // 外部要通过CreateInstance()来创建Event对象
-  CPPUNIT_API static Event *createInstance();
+  GTEST_API_ static Event *createInstance();
 
 protected:
   // 外部要通过Destroy()来销毁Event对象

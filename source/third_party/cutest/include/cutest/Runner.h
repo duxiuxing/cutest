@@ -11,7 +11,7 @@ class Event;
 class ExplicitEndTest;
 class Runnable;
 
-class CPPUNIT_API Runner
+class GTEST_API_ Runner
 {
 public:
   static Runner *instance();

@@ -2,6 +2,8 @@
 
 #include "cutest/Event.h"
 
+CUTEST_NS_BEGIN
+
 class CountDownLatchImpl
 {
 public:
@@ -36,7 +38,9 @@ protected:
   void awaitOnMainThread();
   bool awaitOnMainThread( unsigned int timeout_ms );
 
-  CUTEST_NS::Event *event; // 如果是在工作线程调用await()，需要通过事件来实现等待
+  Event *event; // 如果是在工作线程调用await()，需要通过事件来实现等待
   void awaitOnWorkerThread();
   bool awaitOnWorkerThread( unsigned int timeout_ms );
 };
+
+CUTEST_NS_END

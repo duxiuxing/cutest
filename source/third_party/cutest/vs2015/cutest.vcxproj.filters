@@ -105,10 +105,10 @@
     <ClInclude Include="..\include\cutest\Helper.h">
       <Filter>cutest\Helper</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\CountDownLatch.h">
+    <ClInclude Include="..\src\CountDownLatchImpl.h">
       <Filter>cutest\CountDownLatch</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\CountDownLatchImpl.h">
+    <ClInclude Include="..\include\cutest\CountDownLatch.h">
       <Filter>cutest\CountDownLatch</Filter>
     </ClInclude>
   </ItemGroup>

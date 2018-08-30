@@ -7,6 +7,8 @@
 
 #include <Windows.h>
 
+CUTEST_NS_BEGIN
+
 CountDownLatchImpl::CountDownLatchImpl( int count_in )
   : count( count_in )
   , event( NULL )
@@ -99,14 +101,16 @@ CountDownLatchImpl::awaitOnMainThread( unsigned int timeout_ms )
 void
 CountDownLatchImpl::awaitOnWorkerThread()
 {
-  this->event = CUTEST_NS::Event::createInstance();
+  this->event = Event::createInstance();
   this->event->wait();
 }
 
 bool
 CountDownLatchImpl::awaitOnWorkerThread( unsigned int timeout_ms )
 {
-  this->event = CUTEST_NS::Event::createInstance();
+  this->event = Event::createInstance();
   this->event->wait( timeout_ms );
   return ( this->count <= 0 );
 }
+
+CUTEST_NS_END

@@ -106,7 +106,7 @@ ECHO ========== copy header files done ==========
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\CountDownLatch.h" />
+    <ClInclude Include="..\include\cutest\CountDownLatch.h" />
     <ClInclude Include="..\include\cutest\Event.h" />
     <ClInclude Include="..\include\cutest\ExplicitEndTest.h" />
     <ClInclude Include="..\include\cutest\Helper.h" />
