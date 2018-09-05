@@ -16,10 +16,22 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="AboutDlg">
+      <UniqueIdentifier>{82603316-0713-4edd-8df4-d5276bcd398f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="基于cppunit的扩展">
+      <UniqueIdentifier>{434aedb3-8afb-4e91-adc3-fad08333d1c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\stdafx.cpp">
       <Filter>Generated Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\AboutDlg.cpp">
+      <Filter>AboutDlg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CppUnitMfcDialogTest.cpp">
+      <Filter>基于cppunit的扩展</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,18 +44,29 @@
     <ClInclude Include="..\targetver.h">
       <Filter>Generated Files\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\AboutDlg.h">
+      <Filter>AboutDlg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\MfcTestDialog.rc2">
+    <None Include="..\res\MfcDialogTest.rc2">
       <Filter>Generated Files\Resource Files</Filter>
     </None>
-    <None Include="..\MfcTestDialog.def">
+    <None Include="..\MfcDialogTest.def">
       <Filter>Generated Files\Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\MfcTestDialog.rc">
+    <ResourceCompile Include="..\MfcDialogTest.rc">
       <Filter>Generated Files\Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MfcDialogTest.ico">
+      <Filter>Generated Files\Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\MfcDialogTest.ico">
+      <Filter>Generated Files\Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <cppunit/Portability.h>
 #include "cutest/Define.h"
 #include "gtest/internal/gtest-port.h"
 
@@ -30,4 +29,4 @@ private:
 
 CUTEST_NS_END
 
-GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4275
+GTEST_DISABLE_MSC_WARNINGS_POP_() //  4275

@@ -49,6 +49,9 @@
     <Filter Include="cutest\CountDownLatch">
       <UniqueIdentifier>{c153517e-cf40-4c00-a16e-bf4e668671a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cutest\MfcDialogTest">
+      <UniqueIdentifier>{27d4ef7e-72af-440f-8c17-1c2f7663c0e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Logger.h">
@@ -111,6 +114,9 @@
     <ClInclude Include="..\include\cutest\CountDownLatch.h">
       <Filter>cutest\CountDownLatch</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\cutest\MfcDialogTest.h">
+      <Filter>cutest\MfcDialogTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
@@ -166,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="..\src\win\CountDownLatchImpl.cpp">
       <Filter>cutest\CountDownLatch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\win\MfcDialogTest.cpp">
+      <Filter>cutest\MfcDialogTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

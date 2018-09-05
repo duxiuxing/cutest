@@ -198,6 +198,7 @@ ECHO ========== copy header files done ==========</Command>
     <ClInclude Include="..\include\cutest\Event.h" />
     <ClInclude Include="..\include\cutest\ExplicitEndTest.h" />
     <ClInclude Include="..\include\cutest\Helper.h" />
+    <ClInclude Include="..\include\cutest\MfcDialogTest.h" />
     <ClInclude Include="..\include\cutest\ProgressListener.h" />
     <ClInclude Include="..\include\cutest\Runnable.h" />
     <ClInclude Include="..\include\cutest\Runner.h" />
@@ -230,6 +231,7 @@ ECHO ========== copy header files done ==========</Command>
     <ClCompile Include="..\src\win\DecoratorImpl.cpp" />
     <ClCompile Include="..\src\win\EventImpl.cpp" />
     <ClCompile Include="..\src\win\Logger.cpp" />
+    <ClCompile Include="..\src\win\MfcDialogTest.cpp" />
     <ClCompile Include="..\src\win\RunnerImpl.cpp" />
     <ClCompile Include="..\src\win\SynchronizationObjectImpl.cpp" />
     <ClCompile Include="..\src\win\dllmain.cpp">

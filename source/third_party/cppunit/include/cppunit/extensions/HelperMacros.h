@@ -7,6 +7,7 @@
 #define CPPUNIT_EXTENSIONS_HELPERMACROS_H
 
 #include <cppunit/ExplicitEndTestCaller.h>
+#include <cppunit/MfcTestDialogCaller.h>
 #include <cppunit/TestCaller.h>
 #include <cppunit/TestSuite.h>
 #include <cppunit/extensions/AutoRegisterSuite.h>
@@ -342,6 +343,16 @@
         (new CPPUNIT_NS::ExplicitEndTestCaller<TestFixtureType, timeoutMs>( \
             context.getTestNameFor(#testMethod), \
             &TestFixtureType::testMethod)))
+
+#define CPPUNIT_MFC_DIALOG_TEST(testMethod, dialogClass) \
+    CPPUNIT_TEST_SUITE_ADD_TEST( \
+        (new CPPUNIT_NS::MfcTestDialogCaller<TestFixtureType, dialogClass>( \
+            context.getTestNameFor(#testMethod))))
+
+#define CPPUNIT_MFC_DIALOG_TEST_WITH_TIMEOUT(testMethod, dialogClass, timeoutMs) \
+    CPPUNIT_TEST_SUITE_ADD_TEST( \
+        (new CPPUNIT_NS::MfcTestDialogCaller<TestFixtureType, dialogClass, timeoutMs>( \
+            context.getTestNameFor(#testMethod))))
 
 /*! \brief Adds a test case which is excepted to fail.
  *
