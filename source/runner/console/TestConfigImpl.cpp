@@ -69,7 +69,7 @@ BOOL TestConfigImpl::Load()
 		xmlPath.Combine(dirPath, TEST_CONFIG_FILE);
 	}
 
-	if (!xmlPath.FileExists())
+	while (!xmlPath.FileExists())
 	{
 		// 再尝试加载上一级文件夹的配置文件
 		if (dirPath.RemoveFileSpec())
