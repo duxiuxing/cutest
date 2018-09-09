@@ -3,8 +3,6 @@
 #include "afxdialogex.h"
 #include "resource.h"
 
-// CAboutDlg dialog
-
 class CAboutDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(CAboutDlg)
@@ -13,7 +11,7 @@ public:
 	CAboutDlg(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CAboutDlg();
 
-// Dialog Data
+	// Dialog Data
 	enum { IDD = IDD_ABOUT };
 
 protected:
@@ -21,5 +19,5 @@ protected:
 	virtual BOOL OnInitDialog();
 	DECLARE_MESSAGE_MAP()
 
-    virtual void OnOK() override;
+	virtual void OnOK() override;
 };

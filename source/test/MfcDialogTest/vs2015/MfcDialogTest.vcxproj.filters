@@ -16,11 +16,11 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="AboutDlg">
-      <UniqueIdentifier>{82603316-0713-4edd-8df4-d5276bcd398f}</UniqueIdentifier>
+    <Filter Include="MfcDialogTest">
+      <UniqueIdentifier>{78ba486c-25d8-4af2-b4ec-f7678a33eff0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="基于cppunit的扩展">
-      <UniqueIdentifier>{434aedb3-8afb-4e91-adc3-fad08333d1c7}</UniqueIdentifier>
+    <Filter Include="MfcDialogTest\AboutDlg">
+      <UniqueIdentifier>{82603316-0713-4edd-8df4-d5276bcd398f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -28,10 +28,13 @@
       <Filter>Generated Files\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\AboutDlg.cpp">
-      <Filter>AboutDlg</Filter>
+      <Filter>MfcDialogTest\AboutDlg</Filter>
     </ClCompile>
-    <ClCompile Include="..\CppUnitMfcDialogTest.cpp">
-      <Filter>基于cppunit的扩展</Filter>
+    <ClCompile Include="..\MfcDialogTestApp.cpp">
+      <Filter>Generated Files\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MfcDialogTest.cpp">
+      <Filter>MfcDialogTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,7 +48,10 @@
       <Filter>Generated Files\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\AboutDlg.h">
-      <Filter>AboutDlg</Filter>
+      <Filter>MfcDialogTest\AboutDlg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MfcDialogTestApp.h">
+      <Filter>Generated Files\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
