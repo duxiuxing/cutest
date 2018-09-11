@@ -191,15 +191,15 @@
 			Name="test"
 			>
 			<File
-				RelativePath="..\console_main.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\EventRecordingListener.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\EventRecordingListener.h"
+				>
+			</File>
+			<File
+				RelativePath="..\Main.cpp"
 				>
 			</File>
 			<File
