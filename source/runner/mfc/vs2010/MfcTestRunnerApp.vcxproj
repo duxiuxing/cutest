@@ -119,6 +119,7 @@
     <None Include="..\res\test_type.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicLayoutInfo.h" />
     <ClInclude Include="..\TestConfig.h" />
     <ClInclude Include="..\TestConfigImpl.h" />
     <ClInclude Include="..\TestRunnerApp.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="..\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\DynamicWindow\cdxCDynamicLayoutInfo.cpp" />
     <ClCompile Include="..\TestConfigImpl.cpp" />
     <ClCompile Include="..\TestRunnerApp.cpp" />
     <ClCompile Include="..\DynamicWindow\cdxCDynamicDialog.cpp" />

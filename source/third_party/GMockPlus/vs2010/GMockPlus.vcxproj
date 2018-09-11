@@ -65,7 +65,7 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>ECHO ------ clean GMockPlus.h in ...\source\third_party\cutest\include ------
+      <Command>ECHO ------ clean GMockPlus.h in $(SolutionDir)source\third_party\cutest\include ------
 DEL /F /A /Q "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
 ECHO ========== clean GMockPlus.h done ==========
 </Command>
@@ -93,7 +93,7 @@ ECHO ========== clean GMockPlus.h done ==========
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>ECHO ------ copy GMockPlus.h to ...\source\third_party\cutest\include ------
+      <Command>ECHO ------ copy GMockPlus.h to $(SolutionDir)source\third_party\cutest\include ------
 copy "$(SolutionDir)source\third_party\GMockPlus\src\GMockPlus.h" "$(SolutionDir)source\third_party\cutest\include\GMockPlus.h"
 ECHO ========== copy GMockPlus.h done ==========
 </Command>

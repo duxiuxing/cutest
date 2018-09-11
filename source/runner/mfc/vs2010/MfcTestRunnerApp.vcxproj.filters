@@ -101,6 +101,9 @@
     <ClInclude Include="..\TestConfigImpl.h">
       <Filter>TestConfig</Filter>
     </ClInclude>
+    <ClInclude Include="..\DynamicWindow\cdxCDynamicLayoutInfo.h">
+      <Filter>DynamicWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\stdafx.cpp">
@@ -144,6 +147,9 @@
     </ClCompile>
     <ClCompile Include="..\TestConfigImpl.cpp">
       <Filter>TestConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\DynamicWindow\cdxCDynamicLayoutInfo.cpp">
+      <Filter>DynamicWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

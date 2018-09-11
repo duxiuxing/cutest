@@ -130,7 +130,7 @@ ECHO ========== clean header files done ==========</Command>
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>ECHO ------ clean header files in ...\source\third_party\cutest\include ------
+      <Command>ECHO ------ clean header files in $(SolutionDir)source\third_party\cutest\include ------
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\cppunit"
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock\internal\custom"
 RMDIR /S /Q "$(SolutionDir)source\third_party\cutest\include\gmock\internal"
@@ -186,7 +186,7 @@ ECHO ========== copy header files done ==========</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>ECHO ------ copy header files to ...\source\third_party\cutest\include ------
+      <Command>ECHO ------ copy header files to $(SolutionDir)source\third_party\cutest\include ------
 xcopy "$(SolutionDir)source\third_party\cppunit\include\cppunit" "$(SolutionDir)source\third_party\cutest\include\cppunit" /y /i /e
 xcopy "$(SolutionDir)source\third_party\googlemock\include\gmock" "$(SolutionDir)source\third_party\cutest\include\gmock" /y /i /e
 xcopy "$(SolutionDir)source\third_party\googletest\include\gtest" "$(SolutionDir)source\third_party\cutest\include\gtest" /y /i /e
