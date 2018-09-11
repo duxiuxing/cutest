@@ -390,6 +390,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="MfcDialogTest"
+				>
+				<File
+					RelativePath="..\src\win\MfcDialogTest.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\include\cutest\MfcDialogTest.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="googletest"

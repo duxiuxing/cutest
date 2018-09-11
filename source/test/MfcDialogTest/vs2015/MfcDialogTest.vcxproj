@@ -216,7 +216,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\MfcDialogTest.ico" />
-    <Image Include="res\MfcDialogTest.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

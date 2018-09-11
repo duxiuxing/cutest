@@ -4,10 +4,10 @@
 // gtest
 #include "gtest/gtest.h"
 
-IMPLEMENT_DYNAMIC(CAboutDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CAboutDlg, CDialog)
 
 CAboutDlg::CAboutDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CAboutDlg::IDD, pParent)
+	: CDialog(CAboutDlg::IDD, pParent)
 {}
 
 CAboutDlg::~CAboutDlg()
@@ -15,15 +15,15 @@ CAboutDlg::~CAboutDlg()
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 BOOL CAboutDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CDialog::OnInitDialog();
 
 	GetDlgItem(IDOK)->SetFocus();
 	return FALSE;
@@ -32,5 +32,5 @@ BOOL CAboutDlg::OnInitDialog()
 void CAboutDlg::OnOK()
 {
 	EXPECT_FALSE(IsWindowVisible());
-	CDialogEx::OnOK();
+	CDialog::OnOK();
 }

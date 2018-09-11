@@ -1,9 +1,8 @@
 #pragma once
 
-#include "afxdialogex.h"
 #include "resource.h"
 
-class CAboutDlg : public CDialogEx
+class CAboutDlg : public CDialog
 {
 	DECLARE_DYNAMIC(CAboutDlg)
 

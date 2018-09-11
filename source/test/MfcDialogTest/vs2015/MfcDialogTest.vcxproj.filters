@@ -1,37 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{56a8e8d1-4d54-4b10-9f5a-d19c625c255b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Generated Files\Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Generated Files\Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Generated Files\Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="MfcDialogTest">
       <UniqueIdentifier>{78ba486c-25d8-4af2-b4ec-f7678a33eff0}</UniqueIdentifier>
     </Filter>
     <Filter Include="MfcDialogTest\AboutDlg">
       <UniqueIdentifier>{82603316-0713-4edd-8df4-d5276bcd398f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MFC DLL">
+      <UniqueIdentifier>{56a8e8d1-4d54-4b10-9f5a-d19c625c255b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MFC DLL\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="MFC DLL\Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="MFC DLL\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\stdafx.cpp">
-      <Filter>Generated Files\Source Files</Filter>
+      <Filter>MFC DLL\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\AboutDlg.cpp">
       <Filter>MfcDialogTest\AboutDlg</Filter>
     </ClCompile>
     <ClCompile Include="..\MfcDialogTestApp.cpp">
-      <Filter>Generated Files\Source Files</Filter>
+      <Filter>MFC DLL\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\MfcDialogTest.cpp">
       <Filter>MfcDialogTest</Filter>
@@ -39,40 +39,37 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stdafx.h">
-      <Filter>Generated Files\Header Files</Filter>
+      <Filter>MFC DLL\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\resource.h">
-      <Filter>Generated Files\Header Files</Filter>
+      <Filter>MFC DLL\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\targetver.h">
-      <Filter>Generated Files\Header Files</Filter>
+      <Filter>MFC DLL\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\AboutDlg.h">
       <Filter>MfcDialogTest\AboutDlg</Filter>
     </ClInclude>
     <ClInclude Include="..\MfcDialogTestApp.h">
-      <Filter>Generated Files\Header Files</Filter>
+      <Filter>MFC DLL\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\MfcDialogTest.rc2">
-      <Filter>Generated Files\Resource Files</Filter>
+      <Filter>MFC DLL\Resource Files</Filter>
     </None>
     <None Include="..\MfcDialogTest.def">
-      <Filter>Generated Files\Source Files</Filter>
+      <Filter>MFC DLL\Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\MfcDialogTest.rc">
-      <Filter>Generated Files\Resource Files</Filter>
+      <Filter>MFC DLL\Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\MfcDialogTest.ico">
-      <Filter>Generated Files\Resource Files</Filter>
-    </Image>
     <Image Include="..\res\MfcDialogTest.ico">
-      <Filter>Generated Files\Resource Files</Filter>
+      <Filter>MFC DLL\Resource Files</Filter>
     </Image>
   </ItemGroup>
 </Project>
