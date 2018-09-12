@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root platform="android">
+    <test brief="cppunit samples" libName="cppunit_samples" />
+    <test brief="gtest sample1" libName="sample1" />
+    <test brief="gtest sample2" libName="sample2" />
+</root>
