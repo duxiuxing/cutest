@@ -4,6 +4,8 @@
     <test libName="money" />
     <test libName="simple" />
     <test libName="ExplicitEndTest" />
+    <test libName="sample1" />
+    <test libName="sample2" />
     <!--test brief="gtest sample1" libName="sample1" />
     <test brief="gtest sample2" libName="sample2" /-->
 </root>
