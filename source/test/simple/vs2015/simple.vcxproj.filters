@@ -15,7 +15,9 @@
     <ClInclude Include="..\..\..\third_party\cppunit\examples\simple\ExampleTestCase.h">
       <Filter>simple</Filter>
     </ClInclude>
-    <ClInclude Include="..\stdafx.h" />
+    <ClInclude Include="..\stdafx.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\stdafx.cpp">

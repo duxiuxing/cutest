@@ -1,13 +1,9 @@
+package com.tencent.cutest;
 
-package com.tencent.cppunit;
-
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,157 +12,141 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TabHost;
-import android.widget.TabWidget;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
-        implements OnClickListener, TestProgressListener, OnItemClickListener {
-    FloatingActionButton mButtonRun;
-    long mTestStartTimeMs;
-    long mTestEndTimeMs;
+        implements OnClickListener, ProgressListener, OnItemClickListener {
+    FloatingActionButton button_run;
+    long test_start_ms;
+    long test_end_ms;
 
-    ProgressBar mTestsProgress;
-    int mTestsRun; // 记录已经执行的用例个数
-    int mTestsCount; // 记录用例的总数
-    int mErrors;
-    int mFailures;
+    ProgressBar progress_bar;
+    int count_tests_ran; // 记录已经执行的用例个数
+    int count_tests_total; // 记录用例的总数
+    int count_errors;
+    int count_failures;
 
-    ListView mListViewPassed;
-    TestProgressAdapter mListAdapterPassed;
+    ListView list_view_passed;
+    ProgressAdapter list_adapter_passed;
 
-    ListView mListViewFailed;
-    TestProgressAdapter mListAdapterFailed;
+    ListView list_view_failed;
+    ProgressAdapter list_adapter_failed;
 
     public MainActivity() {
-        mTestsRun = 0;
-        mTestsCount = 0;
-        mErrors = 0;
-        mFailures = 0;
+        this.count_tests_ran = 0;
+        this.count_tests_total = 0;
+        this.count_errors = 0;
+        this.count_failures = 0;
 
-        mTestStartTimeMs = System.currentTimeMillis();
-        mTestEndTimeMs = mTestStartTimeMs;
+        this.test_start_ms = System.currentTimeMillis();
+        this.test_end_ms = test_start_ms;
     }
 
     @Override
-    public void onStartTestRun(int all_test_count) {
-        mTestStartTimeMs = System.currentTimeMillis();
+    public void onRunnerStart(int all_test_count) {
+        this.test_start_ms = System.currentTimeMillis();
         updateTime();
 
-        mTestsRun = 0;
-        mTestsCount = all_test_count;
-        mTestsProgress.setMax(mTestsCount);
+        this.count_tests_ran = 0;
+        this.count_tests_total = all_test_count;
+        this.progress_bar.setMax(this.count_tests_total);
         updateTestsRun();
 
-        mErrors = 0;
+        this.count_errors = 0;
         updateErrors();
 
-        mFailures = 0;
+        this.count_failures = 0;
         updateFailures();
 
-        mListAdapterPassed.reset(all_test_count);
-        mListAdapterFailed.reset(all_test_count);
+        this.list_adapter_passed.reset(all_test_count);
+        this.list_adapter_failed.reset(all_test_count);
     }
 
     @Override
-    public void onEndTestRun(int elapsed_ms) {
+    public void onRunnerEnd(int elapsed_ms) {
         updateTime();
         updateTextProgress(this.getString(R.string.text_progress_none));
     }
 
     @Override
-    public void onStartTest(String test_name) {
+    public void onTestStart(String test_name) {
         updateTextProgress(test_name);
     }
 
     @Override
-    public void onAddFailure(int index, boolean is_error, String file_name, int line_number) {
+    public void onFailureAdd(int index, boolean is_error, String file_name, int line_number) {
         if (is_error) {
-            ++mErrors;
+            ++this.count_errors;
             updateErrors();
         } else {
-            ++mFailures;
+            ++this.count_failures;
             updateFailures();
         }
-        mListAdapterFailed.addFailure(index, is_error, file_name, line_number);
+        this.list_adapter_failed.addFailure(index, is_error, file_name, line_number);
     }
 
     @Override
-    public void onEndTest(String test_name, int error_count, int failure_count, int elapsed_ms) {
+    public void onTestEnd(String test_name, int error_count, int failure_count, int elapsed_ms) {
         updateTime();
 
-        ++mTestsRun;
+        ++this.count_tests_ran;
         updateTestsRun();
 
-        if ((0 == error_count) && (0 == failure_count))
-            mListAdapterPassed.endTestPassed(test_name, elapsed_ms);
-        else
-            mListAdapterFailed.endTestFailed(test_name, error_count, failure_count);
+        if ((0 == error_count) && (0 == failure_count)) {
+            this.list_adapter_passed.endTestPassed(test_name, elapsed_ms);
+        } else {
+            this.list_adapter_failed.endTestFailed(test_name, error_count, failure_count);
+        }
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // 竖屏设置
         setContentView(R.layout.activity_main);
 
         // ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        CharSequence subTitle = String.format(this.getString(R.string.sub_title_format),
-                MainTestRunner.version());
-        toolbar.setSubtitle(subTitle);
+        CharSequence sub_title = String.format(this.getString(R.string.sub_title_format),
+                Runner.version());
+        toolbar.setSubtitle(sub_title);
         setSupportActionBar(toolbar);
 
+        this.button_run = (FloatingActionButton) findViewById(R.id.button_run);
+        this.button_run.setOnClickListener(this);
 
-        mButtonRun = (FloatingActionButton) findViewById(R.id.button_run);
-        mButtonRun.setOnClickListener(this);
+        this.progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
 
-        mTestsProgress = (ProgressBar) findViewById(R.id.progress_bar);
-
-        TabHost tabHost = (TabHost) findViewById(R.id.tabhost);
-        tabHost.setup();
-        tabHost.addTab(tabHost.newTabSpec("tab_passed")
+        TabHost tab_host = (TabHost) findViewById(R.id.tabhost);
+        tab_host.setup();
+        tab_host.addTab(tab_host.newTabSpec("tab_passed")
                 .setIndicator(this.getString(R.string.tab_passed), null)
                 .setContent(R.id.list_view_passed));
-        tabHost.addTab(tabHost.newTabSpec("tab_failed")
+        tab_host.addTab(tab_host.newTabSpec("tab_failed")
                 .setIndicator(this.getString(R.string.tab_failed), null)
                 .setContent(R.id.list_view_failed));
+        this.list_adapter_passed = new ProgressAdapter(this);
+        this.list_view_passed = (ListView) findViewById(R.id.list_view_passed);
+        this.list_view_passed.setAdapter(this.list_adapter_passed);
 
-        // 让两个Tab上的文字居中显式，Android Studio版本使用compileSdkVersion 14，不需要这么设置
-        // TabWidget tabWidget = tabHost.getTabWidget();
-        // for (int i = 0; i < tabWidget.getChildCount(); ++i) {
-        //    View child = tabWidget.getChildAt(i);
+        this.list_adapter_failed = new ProgressAdapter(this);
+        this.list_view_failed = (ListView) findViewById(R.id.list_view_failed);
+        this.list_view_failed.setAdapter(this.list_adapter_failed);
+        this.list_view_failed.setOnItemClickListener(this);
 
-        //    TextView textView = (TextView) child.findViewById(android.R.id.title);
-        //    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) textView
-        //            .getLayoutParams();
-        //    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, 0);
-        //    params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-        // }
-
-        mListAdapterPassed = new TestProgressAdapter(this);
-        mListViewPassed = (ListView) findViewById(R.id.list_view_passed);
-        mListViewPassed.setAdapter(mListAdapterPassed);
-
-        mListAdapterFailed = new TestProgressAdapter(this);
-        mListViewFailed = (ListView) findViewById(R.id.list_view_failed);
-        mListViewFailed.setAdapter(mListAdapterFailed);
-        mListViewFailed.setOnItemClickListener(this);
-
-        MainTestRunner.loadTestConfig(this);
-        MainTestRunner.start(this);
+        Runner.loadTestConfig(this);
+        Runner.start(this);
     }
 
     void updateTime() {
-        mTestEndTimeMs = System.currentTimeMillis();
-        long elapsedMs = mTestEndTimeMs - mTestStartTimeMs;
+        this.test_end_ms = System.currentTimeMillis();
+        long elapsed_ms = this.test_end_ms - this.test_start_ms;
         String text = String.format(
                 this.getString(R.string.text_time_format),
-                Long.toString(elapsedMs));
+                Long.toString(elapsed_ms));
         TextView tv = (TextView) findViewById(R.id.text_time);
         tv.setText(text);
     }
@@ -177,23 +157,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     void updateTestsRun() {
-        mTestsProgress.setProgress(mTestsRun);
+        this.progress_bar.setProgress(this.count_tests_ran);
         String text = String.format(
                 this.getString(R.string.text_runs_format),
-                mTestsRun, mTestsCount);
+                this.count_tests_ran, this.count_tests_total);
         TextView tv = (TextView) findViewById(R.id.text_runs);
         tv.setText(text);
 
-        if (mTestsRun == mTestsCount)
-            mButtonRun.setEnabled(true);
+        if (this.count_tests_ran == this.count_tests_total) {
+            this.button_run.setEnabled(true);
+        }
     }
 
     void updateErrors() {
         TextView text = (TextView) findViewById(R.id.text_errors);
         TextView label = (TextView) findViewById(R.id.label_errors);
-        text.setText(Integer.toString(mErrors));
+        text.setText(Integer.toString(this.count_errors));
 
-        int color = (0 == mErrors) ? android.graphics.Color.WHITE : android.graphics.Color.RED;
+        int color = (0 == this.count_errors) ? android.graphics.Color.WHITE : android.graphics.Color.RED;
         text.setTextColor(color);
         label.setTextColor(color);
     }
@@ -201,22 +182,24 @@ public class MainActivity extends AppCompatActivity
     void updateFailures() {
         TextView text = (TextView) findViewById(R.id.text_failures);
         TextView label = (TextView) findViewById(R.id.label_failures);
-        text.setText(Integer.toString(mFailures));
+        text.setText(Integer.toString(this.count_failures));
 
-        int color = (0 == mFailures) ? android.graphics.Color.WHITE : android.graphics.Color.RED;
+        int color = (0 == this.count_failures)
+                ? android.graphics.Color.WHITE
+                : android.graphics.Color.RED;
         text.setTextColor(color);
         label.setTextColor(color);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (parent == mListViewFailed) {
-            TestProgressAdapter.ItemInfo info = (TestProgressAdapter.ItemInfo) mListAdapterFailed
-                    .getItem(position);
-            if (info.mIndex >= 0) {
+        if (parent == this.list_view_failed) {
+            ProgressAdapter.ItemInfo info =
+                    (ProgressAdapter.ItemInfo) this.list_adapter_failed.getItem(position);
+            if (info.index >= 0) {
                 new AlertDialog.Builder(this)
                         .setTitle(this.getString(R.string.title_details))
-                        .setMessage(MainTestRunner.failureDetails(info.mIndex))
+                        .setMessage(Runner.failureDetails(info.index))
                         .setPositiveButton(this.getString(R.string.button_close), null)
                         .show();
             }
@@ -227,8 +210,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick(View view) {
         if (R.id.button_run == view.getId()) {
-            MainTestRunner.start(this);
-            mButtonRun.setEnabled(false);
+            Runner.start(this);
+            this.button_run.setEnabled(false);
         }
     }
 

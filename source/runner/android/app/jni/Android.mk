@@ -1,11 +1,12 @@
 LOCAL_PATH := $(call my-dir)
 
-TESTS_DIR := $(LOCAL_PATH)/../../../../tests
+TEST_DIR := $(LOCAL_PATH)/../../../../test
 
-# 先编译libcutest.so
+# libcutest.so
 include $(LOCAL_PATH)/../../../../third_party/cutest/jni/Android.mk
 
-# 再编译测试用例的so
-# include $(TESTS_DIR)/cppunit/jni/cppunit_samples.mk
-# include $(TESTS_DIR)/gtest/sample1/jni/sample1.mk
-# include $(TESTS_DIR)/gtest/sample2/jni/sample2.mk
+# *.so
+# include $(TEST_DIR)/hierarchy/jni/Android.mk
+include $(TEST_DIR)/money/jni/money.mk
+include $(TEST_DIR)/simple/jni/simple.mk
+include $(TEST_DIR)/ExplicitEndTest/jni/ExplicitEndTest.mk

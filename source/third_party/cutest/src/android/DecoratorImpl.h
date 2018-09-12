@@ -20,12 +20,12 @@ public:
     // 故意跳过TestDecorator的析构函数
     ~DecoratorImpl();
 
-    virtual void destroy();
+    virtual void destroy() override;
 
-    virtual void addListener(CPPUNIT_NS::TestListener* listener);
+    virtual void addListener(CPPUNIT_NS::TestListener* listener) override;
 
-    virtual void start();
-    virtual void stop();
+    virtual void start() override;
+    virtual void stop() override;
 
 protected:
     static void* threadFunction(void* param);
@@ -34,8 +34,8 @@ protected:
     Event* run_completed; // 用于标志工作线程是否结束的事件
 
 public:
-    virtual void addFailure(bool is_error, CPPUNIT_NS::Exception* exception);
-    virtual const CPPUNIT_NS::TestResultCollector* testResultCollector();
+    virtual void addFailure(bool is_error, CPPUNIT_NS::Exception* exception) override;
+    virtual const CPPUNIT_NS::TestResultCollector* testResultCollector() override;
 
 protected:
     Result test_result;

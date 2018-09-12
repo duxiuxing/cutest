@@ -6,6 +6,8 @@ LOCAL_CFLAGS := \
     -D_CUTEST_IMPL
 
 LOCAL_CPPFLAGS += \
+    -std=c++11 \
+    -frtti \
     -fexceptions
 
 LOCAL_LDLIBS := -llog
@@ -54,8 +56,8 @@ LOCAL_SRC_FILES := \
     ./../src/android/EventImpl.cpp \
 	./../src/android/JClassManager.cpp \
 	./../src/android/JniEnv.cpp \
+	./../src/android/JniProgressListener.cpp \
 	./../src/android/Logger.cpp \
-	./../src/android/ProgressListenerJni.cpp \
 	./../src/android/RunnerImpl.cpp \
 	./../src/android/SynchronizationObjectImpl.cpp
 

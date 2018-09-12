@@ -10,10 +10,10 @@
 
 CUTEST_NS_BEGIN
 
-class ProgressListenerJni : public ProgressListener {
+class JniProgressListener : public ProgressListener {
 public:
-    ProgressListenerJni();
-    virtual ~ProgressListenerJni();
+    JniProgressListener();
+    virtual ~JniProgressListener();
 
     // 重载ProgressListener的成员方法
     virtual void onRunnerStart(CPPUNIT_NS::Test* test);

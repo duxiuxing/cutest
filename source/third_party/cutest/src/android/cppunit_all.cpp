@@ -14,5 +14,5 @@
 #include "MainTestRunnerImpl.cpp"
 #include "SynchronizationObjectImpl.cpp"
 #include "TestEventImpl.cpp"
-#include "TestProgressListenerJni.cpp"
-#include "TestProgressLogger.cpp"
+#include "JniProgressListener.cpp"
+#include "Logger.cpp"

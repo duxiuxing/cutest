@@ -10,7 +10,7 @@
 
 CUTEST_NS_BEGIN
 
-#define printString(...) __android_log_print(ANDROID_LOG_INFO, "cppunit", __VA_ARGS__)
+#define printString(...) __android_log_print(ANDROID_LOG_INFO, "cutest", __VA_ARGS__)
 
 Logger::Logger()
     : passed_test_cases(0)
