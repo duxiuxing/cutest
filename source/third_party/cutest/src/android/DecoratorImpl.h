@@ -1,58 +1,52 @@
 ﻿#pragma once
 
-#include "../MainTestDecorator.h" // 接口定义
-
 #include <cppunit/extensions/TestDecorator.h>
-#include <cppunit/Test.h>
-#include <cppunit/TestEvent.h>
-#include <cppunit/TestResult.h>
 #include <cppunit/TestResultCollector.h>
+#include <cppunit/Test.h>
 
-CPPUNIT_NS_BEGIN
+#include "../Decorator.h"
+#include "../Result.h"
+#include "cutest/Event.h"
 
-class MainTestDecoratorImpl
-    : public MainTestDecorator
-    , public TestDecorator
-    , public TestListener {
+CUTEST_NS_BEGIN
+
+class DecoratorImpl
+    : public Decorator
+    , public CPPUNIT_NS::TestDecorator
+    , public CPPUNIT_NS::TestListener {
 public:
-    MainTestDecoratorImpl(Test* test);
+    DecoratorImpl(CPPUNIT_NS::Test* test);
 
     // 故意跳过TestDecorator的析构函数
-    ~MainTestDecoratorImpl();
+    ~DecoratorImpl();
 
     virtual void destroy();
 
-    virtual void addListener(TestListener* listener);
+    virtual void addListener(CPPUNIT_NS::TestListener* listener);
 
     virtual void start();
     virtual void stop();
 
 protected:
-    static void* threadFunction(void* pThis);
+    static void* threadFunction(void* param);
     void runOnWorkerThread();
 
-    TestEvent* _runCompleted; // 用于标志工作线程是否结束的事件
+    Event* run_completed; // 用于标志工作线程是否结束的事件
 
 public:
-    virtual void addFailure(bool is_error, Exception* exception);
-    virtual const TestResultCollector* testResultCollector();
+    virtual void addFailure(bool is_error, CPPUNIT_NS::Exception* exception);
+    virtual const CPPUNIT_NS::TestResultCollector* testResultCollector();
 
 protected:
-    TestResult _testResult;
-    TestResultCollector _resultCollector;
-
-    enum State {
-        STATE_NONE = 0,
-        STATE_RUNING,
-    };
-    State _state;
+    Result test_result;
+    CPPUNIT_NS::TestResultCollector result_collector;
 
 public: // 重载TestListener的成员方法
-    virtual void startTest(Test* test);
-    virtual void endTest(Test* test);
+    virtual void startTest(CPPUNIT_NS::Test* test) override;
+    virtual void endTest(CPPUNIT_NS::Test* test) override;
 
 protected:
-    Test* _testRuning;
+    CPPUNIT_NS::Test* runing_test;
 };
 
-CPPUNIT_NS_END
+CUTEST_NS_END

@@ -30,7 +30,6 @@ public: // Runner接口族的实现
 protected:
     ProgressListenerManager listener_manager;
 
-
 public:
     virtual void start(CPPUNIT_NS::Test* test);
     virtual void stop();

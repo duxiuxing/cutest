@@ -46,7 +46,7 @@ DecoratorImpl::destroy() {
 
 void
 DecoratorImpl::addListener(CPPUNIT_NS::TestListener* listener) {
-    test_result.addListener(listener);
+    this->test_result.addListener(listener);
 }
 
 void
@@ -79,8 +79,8 @@ DecoratorImpl::start() {
 
 UINT
 __stdcall
-DecoratorImpl::threadFunction(LPVOID pThis) {
-    DecoratorImpl* decorator = (DecoratorImpl*)pThis;
+DecoratorImpl::threadFunction(LPVOID param) {
+    DecoratorImpl* decorator = (DecoratorImpl*)param;
 
     decorator->runOnWorkerThread();
 
@@ -89,7 +89,7 @@ DecoratorImpl::threadFunction(LPVOID pThis) {
 
 void
 DecoratorImpl::runOnWorkerThread() {
-    test_result.runTest(this);
+    this->test_result.runTest(this);
 
     ::CloseHandle(this->thread_handle);
     this->thread_handle = NULL;
@@ -99,7 +99,7 @@ DecoratorImpl::runOnWorkerThread() {
 
 void
 DecoratorImpl::stop() {
-    test_result.stop();
+    this->test_result.stop();
 }
 
 const CPPUNIT_NS::TestResultCollector*
@@ -120,9 +120,9 @@ DecoratorImpl::endTest(CPPUNIT_NS::Test* test) {
 void
 DecoratorImpl::addFailure(bool is_error, CPPUNIT_NS::Exception* exception) {
     if (is_error) {
-        test_result.addError(this->runing_test, exception);
+        this->test_result.addError(this->runing_test, exception);
     } else {
-        test_result.addFailure(this->runing_test, exception);
+        this->test_result.addFailure(this->runing_test, exception);
     }
 }
 

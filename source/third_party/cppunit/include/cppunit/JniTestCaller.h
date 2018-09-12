@@ -1,8 +1,10 @@
 ﻿#pragma once
 
-#include <cppunit/JClassManager.h>
-#include <cppunit/Portability.h>
+#include <cppunit/TestCase.h>
 #include <string>
+
+#include "cutest/JClassManager.h"
+#include "cutest/JniEnv.h"
 
 CPPUNIT_NS_BEGIN
 
@@ -25,11 +27,11 @@ public:
   }
 
   // 重载TestCase::runTest()
-  virtual void runTest()
+  virtual void runTest() override
   {
-    jclass cls = CJClassManager::instance()->findGlobalClass( Fixture::jclassName() );
+    jclass cls = CUTEST_NS::JClassManager::instance()->findGlobalClass( Fixture::jclassName() );
 
-    CJniEnv env;
+	CUTEST_NS::JniEnv env;
 
     jobject obj = NULL;
     // 创建Java对象
@@ -73,7 +75,7 @@ class AutoRegisterJavaClass
 public:
   AutoRegisterJavaClass()
   {
-    CJClassManager::instance()->registerGlobalClassName( TestCaseType::jclassName() );
+    CUTEST_NS::JClassManager::instance()->registerGlobalClassName( TestCaseType::jclassName() );
   }
 };
 

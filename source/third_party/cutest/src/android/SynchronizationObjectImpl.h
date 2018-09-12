@@ -6,14 +6,13 @@
 CPPUNIT_NS_BEGIN
 
 class SynchronizationObjectImpl : public SynchronizedObject::SynchronizationObject {
-    pthread_mutex_t _mutex;
+    pthread_mutex_t mutex;
 public:
     SynchronizationObjectImpl();
     virtual ~SynchronizationObjectImpl();
 
-    // 重载SynchronizationObject的成员方法
-    virtual void lock();
-    virtual void unlock();
+    virtual void lock() override;
+    virtual void unlock() override;
 };
 
 CPPUNIT_NS_END

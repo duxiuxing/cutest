@@ -12,7 +12,7 @@ public:
     Logger();
 
     //////////////////////////////////////////////////////////////////////////
-    // 重载TestProgressListener的成员方法
+    // 重载ProgressListener的成员方法
     virtual void onRunnerStart(CPPUNIT_NS::Test* test);
     virtual void onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int elapsed_ms);
 

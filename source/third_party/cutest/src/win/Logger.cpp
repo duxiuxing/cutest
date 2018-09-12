@@ -2,14 +2,12 @@
 
 #include <cppunit/Test.h>
 #include <cppunit/TestFailure.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <Windows.h>
 
 #include "cutest/Runner.h"
 #include "gtest/gtest-export.h"
-
-#include <stdarg.h>
-#include <stdio.h>
-
-#include <Windows.h>
 
 using namespace testing::internal;
 

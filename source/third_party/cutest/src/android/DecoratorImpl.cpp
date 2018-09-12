@@ -1,45 +1,43 @@
-﻿#include "MainTestDecoratorImpl.h"
+﻿#include "DecoratorImpl.h"
 #include "SynchronizationObjectImpl.h"
 
-CPPUNIT_NS_BEGIN
+CUTEST_NS_BEGIN
 
-MainTestDecorator* MainTestDecorator::createInstance(Test* test) {
-    return new MainTestDecoratorImpl(test);
+Decorator*
+Decorator::createInstance(CPPUNIT_NS::Test* test) {
+    return new DecoratorImpl(test);
 }
 
-MainTestDecoratorImpl::MainTestDecoratorImpl(Test* test)
+DecoratorImpl::DecoratorImpl(CPPUNIT_NS::Test* test)
     : TestDecorator(test)
-    , _testResult(new SynchronizationObjectImpl())
-    , _resultCollector(new SynchronizationObjectImpl())
-    , _state(STATE_NONE)
-    , _testRuning(NULL) {
-    _testResult.addListener(this);
-    _testResult.addListener(&_resultCollector);
+    , test_result(new CPPUNIT_NS::SynchronizationObjectImpl(), new CPPUNIT_NS::SynchronizationObjectImpl())
+    , result_collector(new CPPUNIT_NS::SynchronizationObjectImpl())
+    , runing_test(NULL) {
+    test_result.addListener(this);
+    test_result.addListener(&this->result_collector);
 
-    _runCompleted = TestEvent::createInstance();
+    this->run_completed = Event::createInstance();
 }
 
-MainTestDecoratorImpl::~MainTestDecoratorImpl() {
-    _runCompleted->wait();
-    _runCompleted->destroy();
-    m_test = NULL;
+DecoratorImpl::~DecoratorImpl() {
+    this->run_completed->wait();
+    this->run_completed->destroy();
+    CPPUNIT_NS::TestDecorator::m_test = NULL;
 }
 
-void MainTestDecoratorImpl::destroy() {
+void
+DecoratorImpl::destroy() {
     delete this;
 }
 
-void MainTestDecoratorImpl::addListener(TestListener* listener) {
-    _testResult.addListener(listener);
+void
+DecoratorImpl::addListener(CPPUNIT_NS::TestListener* listener) {
+    this->test_result.addListener(listener);
 }
 
-void MainTestDecoratorImpl::start() {
-    if (STATE_RUNING == _state)
-        return;
-
-    _state = STATE_RUNING;
-
-    _runCompleted->reset();
+void
+DecoratorImpl::start() {
+    this->run_completed->reset();
 
     pthread_attr_t attr;
     ::pthread_attr_init(&attr);
@@ -53,46 +51,49 @@ void MainTestDecoratorImpl::start() {
     ::pthread_create(&thread, &attr, threadFunction, this);
 }
 
-void* MainTestDecoratorImpl::threadFunction(void* pThis) {
-    MainTestDecoratorImpl* decorator = (MainTestDecoratorImpl*)pThis;
+void*
+DecoratorImpl::threadFunction(void* param) {
+    DecoratorImpl* decorator = (DecoratorImpl*)param;
 
     decorator->runOnWorkerThread();
 
-    return pThis;
+    return param;
 }
 
-void MainTestDecoratorImpl::runOnWorkerThread() {
-    if (STATE_RUNING == _state)
-        _testResult.runTest(this);
+void
+DecoratorImpl::runOnWorkerThread() {
+    this->test_result.runTest(this);
 
-    _runCompleted->post();
+    this->run_completed->post();
 }
 
-void MainTestDecoratorImpl::stop() {
-    if (STATE_NONE == _state)
-        return;
-
-    _state = STATE_NONE;
-    _testResult.stop();
+void
+DecoratorImpl::stop() {
+    this->test_result.stop();
 }
 
-const TestResultCollector* MainTestDecoratorImpl::testResultCollector() {
-    return &_resultCollector;
+const CPPUNIT_NS::TestResultCollector*
+DecoratorImpl::testResultCollector() {
+    return &this->result_collector;
 }
 
-void MainTestDecoratorImpl::startTest(Test* test) {
-    _testRuning = test;
+void
+DecoratorImpl::startTest(CPPUNIT_NS::Test* test) {
+    this->runing_test = test;
 }
 
-void MainTestDecoratorImpl::endTest(Test* test) {
-    _testRuning = NULL;
+void
+DecoratorImpl::endTest(CPPUNIT_NS::Test* test) {
+    this->runing_test = NULL;
 }
 
-void MainTestDecoratorImpl::addFailure(bool is_error, Exception* exception) {
-    if (is_error)
-        _testResult.addError(_testRuning, exception);
-    else
-        _testResult.addFailure(_testRuning, exception);
+void
+DecoratorImpl::addFailure(bool is_error, CPPUNIT_NS::Exception* exception) {
+    if (is_error) {
+        this->test_result.addError(this->runing_test, exception);
+    } else {
+        this->test_result.addFailure(this->runing_test, exception);
+    }
 }
 
-CPPUNIT_NS_END
+CUTEST_NS_END

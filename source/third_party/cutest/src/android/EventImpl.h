@@ -1,23 +1,24 @@
 ﻿#pragma once
 
-#include <cppunit/TestEvent.h>
+#include "cutest/Event.h"
 #include <pthread.h>
 
-CPPUNIT_NS_BEGIN
+CUTEST_NS_BEGIN
 
-class TestEventImpl : public TestEvent {
-    pthread_mutex_t _mutex;
-    pthread_cond_t _cond;
-    bool _manual;
-    bool _signaled;
+class EventImpl : public Event {
+    pthread_mutex_t mutex;
+    pthread_cond_t cond;
+    bool manual;
+    bool signaled;
 
 public:
-    TestEventImpl();
+    EventImpl();
 
     virtual void wait();
+    virtual void wait(unsigned int timeout_ms);
     virtual void post();
     virtual void reset();
     virtual void destroy();
 };
 
-CPPUNIT_NS_END
+CUTEST_NS_END

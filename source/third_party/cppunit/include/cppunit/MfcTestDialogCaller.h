@@ -5,6 +5,7 @@
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 
+#ifdef _MSC_VER
 CPPUNIT_NS_BEGIN
 
 /*
@@ -213,3 +214,4 @@ private:
 };
 
 CPPUNIT_NS_END
+#endif // #ifdef _MSC_VER

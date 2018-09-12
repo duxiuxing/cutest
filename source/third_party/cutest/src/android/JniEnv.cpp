@@ -1,29 +1,29 @@
-﻿#include "cppunit/JniEnv.h"
+﻿#include "cutest/JniEnv.h"
 
-#include <map>
+CUTEST_NS_BEGIN
 
-CPPUNIT_NS_BEGIN
+JavaVM* JniEnv::java_vm = NULL;
 
-JavaVM* CJniEnv::s_javaVM = NULL;
+JniEnv::JniEnv()
+    : call_detach(false)
+    , jni_env(NULL) {
+    JniEnv::java_vm->GetEnv((void**)&this->jni_env, JNI_VERSION_1_4);
 
-CJniEnv::CJniEnv()
-    : _callDetach(false)
-    , _env(NULL) {
-    s_javaVM->GetEnv((void**)&_env, JNI_VERSION_1_4);
-
-    if (!_env) {
+    if (!this->jni_env) {
         JavaVMAttachArgs args;
         args.version = JNI_VERSION_1_4;
         args.name = NULL;
         args.group = NULL;
-        if (JNI_OK == s_javaVM->AttachCurrentThread(&_env, &args))
-            _callDetach = true;
+        if (JNI_OK == JniEnv::java_vm->AttachCurrentThread(&this->jni_env, &args)) {
+            this->call_detach = true;
+        }
     }
 }
 
-CJniEnv::~CJniEnv() {
-    if (_callDetach)
-        s_javaVM->DetachCurrentThread();
+JniEnv::~JniEnv() {
+    if (this->call_detach) {
+        JniEnv::java_vm->DetachCurrentThread();
+    }
 }
 
-CPPUNIT_NS_END
+CUTEST_NS_END

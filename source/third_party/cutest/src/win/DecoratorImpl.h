@@ -5,7 +5,7 @@
 #include <cppunit/Test.h>
 #include <WTypes.h>
 
-#include "../Decorator.h" // 接口定义
+#include "../Decorator.h"
 #include "../Result.h"
 #include "gtest/internal/gtest-result-xml-printer.h"
 #include "cutest/Event.h"
@@ -30,7 +30,7 @@ public:
     virtual void stop();
 
 protected:
-    static UINT __stdcall threadFunction(LPVOID pThis);
+    static UINT __stdcall threadFunction(LPVOID param);
     void runOnWorkerThread();
 
     HANDLE thread_handle;

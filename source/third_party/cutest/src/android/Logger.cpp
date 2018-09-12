@@ -1,19 +1,20 @@
-﻿#include "../TestProgressLogger.h"
+﻿#include "../Logger.h"
 
 #include <android/log.h>
-
-#include <cppunit/JniHelp.h>
-#include <cppunit/MainTestRunner.h>
 #include <cppunit/Test.h>
 #include <cppunit/TestFailure.h>
 
-#include <gtest/gtest-export.h>
+#include "cutest/Helper.h"
+#include "cutest/Runner.h"
+#include "gtest/gtest-export.h"
 
-CPPUNIT_NS_BEGIN
+CUTEST_NS_BEGIN
 
 #define printString(...) __android_log_print(ANDROID_LOG_INFO, "cppunit", __VA_ARGS__)
 
-TestProgressLogger::TestProgressLogger() : _passedTestCases(0) {
+Logger::Logger()
+    : passed_test_cases(0)
+    , first_failure_of_a_test(true) {
 #if defined(__arm__)
 #if defined(__ARM_ARCH_7A__)
 #if defined(__ARM_NEON__)
@@ -45,87 +46,100 @@ TestProgressLogger::TestProgressLogger() : _passedTestCases(0) {
 #else
 #define ABI "unknown"
 #endif
-    printString("libcppunit.so is compiled at %s with API %d & ABI %s.", __TIME__, __ANDROID_API__, ABI);
+    printString("libcutest.so is compiled at %s with API %d & ABI %s.", __TIME__, __ANDROID_API__, ABI);
 }
 
-void TestProgressLogger::onRunnerStart(Test* test) {
-    _passedTestCases = 0;
-    _failedTestCases.clear();
+void
+Logger::onRunnerStart(CPPUNIT_NS::Test* test) {
+    this->passed_test_cases = 0;
+    this->failed_test_cases.clear();
 
     printString("[==========] Running %s from %s.",
-                   testing::FormatTestCount(test->countTestCases()).c_str(),
-                   test->getName().c_str());
+                testing::FormatTestCount(test->countTestCases()).c_str(),
+                test->getName().c_str());
 }
 
-void TestProgressLogger::onRunnerEnd(Test* test, unsigned int elapsed_ms) {
-    printString("[==========] %s from %s ran. (%u ms)",
-                   testing::FormatTestCount(test->countTestCases()).c_str(),
-                   test->getName().c_str(),
-                   elapsed_ms);
+void
+Logger::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int elapsed_ms) {
+    printString("[==========] %s from %s ran. (%u ms total)",
+                testing::FormatTestCount(test->countTestCases()).c_str(),
+                test->getName().c_str(),
+                elapsed_ms);
 
-    printString("[  PASSED  ] %s.", testing::FormatTestCount(_passedTestCases).c_str());
+    printString("[  PASSED  ] %s.", testing::FormatTestCount(this->passed_test_cases).c_str());
 
-    if (_failedTestCases.size()) {
-        printString("[  FAILED  ] %s, listed below:", testing::FormatTestCount((int)_failedTestCases.size()).c_str());
+    if (this->failed_test_cases.size()) {
+        printString("[  FAILED  ] %s, listed below:", testing::FormatTestCount((int)this->failed_test_cases.size()).c_str());
 
-        std::list<std::string>::iterator it = _failedTestCases.begin();
-        while (it != _failedTestCases.end()) {
+        std::list<std::string>::iterator it = this->failed_test_cases.begin();
+        while (it != this->failed_test_cases.end()) {
             printString("[  FAILED  ] %s", it->c_str());
             ++it;
         }
 
-        printString("\n%2d FAILED %s", (int)_failedTestCases.size(),
-                       _failedTestCases.size() == 1 ? "TEST" : "TESTS");
+        printString("\n%2d FAILED %s", (int)this->failed_test_cases.size(),
+                    this->failed_test_cases.size() == 1 ? "TEST" : "TESTS");
     }
 }
 
-void TestProgressLogger::onSuiteStart(Test* suite) {
+void
+Logger::onSuiteStart(CPPUNIT_NS::Test* suite) {
     printString("[----------] %s from %s",
-                   testing::FormatTestCount(suite->countTestCases()).c_str(),
-                   suite->getName().c_str());
+                testing::FormatTestCount(suite->countTestCases()).c_str(),
+                suite->getName().c_str());
 }
 
-void TestProgressLogger::onSuiteEnd(Test* suite, unsigned int elapsed_ms) {
-    printString("[----------] %s from %s (%u ms)\n",
-                   testing::FormatTestCount(suite->countTestCases()).c_str(),
-                   suite->getName().c_str(),
-                   elapsed_ms);
+void
+Logger::onSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int elapsed_ms) {
+    printString("[----------] %s from %s (%u ms total)\n",
+                testing::FormatTestCount(suite->countTestCases()).c_str(),
+                suite->getName().c_str(),
+                elapsed_ms);
 }
 
-void TestProgressLogger::onTestStart(Test* test) {
+void
+Logger::onTestStart(CPPUNIT_NS::Test* test) {
     printString("[ RUN      ] %s", test->getName().c_str());
+    this->first_failure_of_a_test = true;
 }
 
-void TestProgressLogger::onFailureAdd(unsigned int index, const TestFailure& failure) {
+void
+Logger::onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) {
+    if (this->first_failure_of_a_test) {
+        printString("");
+    }
+
     if (failure.isError()) {
         printString("%s(%u): error : %s",
-                       JniHelp::makeFilePathShorter(failure.sourceLine().fileName()).c_str(),
-                       failure.sourceLine().lineNumber(),
-                       failure.thrownException()->what());
+                    makeFilePathShorter(failure.sourceLine().fileName()).c_str(),
+                    failure.sourceLine().lineNumber(),
+                    failure.thrownException()->what());
     } else {
         printString("%s(%u): failure : %s",
-                       JniHelp::makeFilePathShorter(failure.sourceLine().fileName()).c_str(),
-                       failure.sourceLine().lineNumber(),
-                       failure.thrownException()->what());
+                    makeFilePathShorter(failure.sourceLine().fileName()).c_str(),
+                    failure.sourceLine().lineNumber(),
+                    failure.thrownException()->what());
     }
+    this->first_failure_of_a_test = false;
 }
 
-void TestProgressLogger::onTestEnd(
-    Test* test,
+void
+Logger::onTestEnd(
+    CPPUNIT_NS::Test* test,
     unsigned int error_count,
     unsigned int failure_count,
     unsigned int elapsed_ms) {
     if (0 == error_count && 0 == failure_count) {
         printString("[       OK ] %s (%u ms)",
-                       test->getName().c_str(),
-                       elapsed_ms);
-        ++_passedTestCases;
+                    test->getName().c_str(),
+                    elapsed_ms);
+        ++this->passed_test_cases;
     } else {
         printString("[  FAILED  ] %s (%u ms)",
-                       test->getName().c_str(),
-                       elapsed_ms);
-        _failedTestCases.push_back(test->getName());
+                    test->getName().c_str(),
+                    elapsed_ms);
+        this->failed_test_cases.push_back(test->getName());
     }
 }
 
-CPPUNIT_NS_END
+CUTEST_NS_END

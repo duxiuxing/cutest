@@ -1,57 +1,61 @@
-﻿#include "cppunit/JClassManager.h"
-#include "cppunit/JniEnv.h"
+﻿#include "cutest/JClassManager.h"
+#include "cutest/JniEnv.h"
 
 #include <map>
 
-CPPUNIT_NS_BEGIN
+CUTEST_NS_BEGIN
 
-CJClassManager* CJClassManager::instance() {
-    static CJClassManager s_jClassManager;
-    return &s_jClassManager;
+JClassManager* JClassManager::instance() {
+    static JClassManager jclass_manager;
+    return &jclass_manager;
 }
 
-CJClassManager::CJClassManager() {
+JClassManager::JClassManager() {
 }
 
-void CJClassManager::registerGlobalClassName(const char* class_name) {
-    _jClassMap[class_name] = NULL;
+void
+JClassManager::registerGlobalClassName(const char* class_name) {
+    this->jclass_map[class_name] = NULL;
 }
 
-void CJClassManager::newAllGlobalClassRef() {
-    CJniEnv env;
-    CJClassMap::iterator it = _jClassMap.begin();
-    while (it != _jClassMap.end()) {
+void
+JClassManager::newAllGlobalClassRef() {
+    JniEnv env;
+    JClassMap::iterator it = this->jclass_map.begin();
+    while (it != this->jclass_map.end()) {
         it->second = (jclass)env->NewGlobalRef(env->FindClass(it->first.c_str()));
         ++it;
     }
 }
 
-void CJClassManager::deleteAllGlobalClassRef() {
-    CJniEnv env;
-    CJClassMap::iterator it = _jClassMap.begin();
-    while (it != _jClassMap.end()) {
+void
+JClassManager::deleteAllGlobalClassRef() {
+    JniEnv env;
+    JClassMap::iterator it = this->jclass_map.begin();
+    while (it != this->jclass_map.end()) {
         env->DeleteGlobalRef(it->second);
         ++it;
     }
 }
 
-jclass CJClassManager::findGlobalClass(const char* class_name) {
-    CJClassMap::iterator it = _jClassMap.find(class_name);
-    if (it == _jClassMap.end())
+jclass JClassManager::findGlobalClass(const char* class_name) {
+    JClassMap::iterator it = this->jclass_map.find(class_name);
+    if (it == this->jclass_map.end()) {
         return NULL;
-    else
+    } else {
         return it->second;
+    }
 }
 
-CPPUNIT_NS_END
+CUTEST_NS_END
 
 extern "C" JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM* vm, void* reserved) {
-    CPPUNIT_NS::CJniEnv::s_javaVM = vm;
+    CUTEST_NS::JniEnv::java_vm = vm;
     return JNI_VERSION_1_4;
 }
 
 extern "C" JNIEXPORT void JNICALL
 JNI_OnUnload(JavaVM* vm, void* reserved) {
-    CPPUNIT_NS::CJClassManager::instance()->deleteAllGlobalClassRef();
+    CUTEST_NS::JClassManager::instance()->deleteAllGlobalClassRef();
 }

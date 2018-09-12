@@ -1,37 +1,41 @@
 ﻿#pragma once
 
-#include "../MainTestRunnerBase.h"
-#include "../TestProgressLogger.h"
+#include "../Logger.h"
+#include "../RunnerBase.h"
+
+#include "cutest/Helper.h"
 
 #include <cppunit/JniTestCaller.h>
-#include <cppunit/Runnable.h>
-
 #include <jni.h>
 
-CPPUNIT_NS_BEGIN
+CUTEST_NS_BEGIN
 
-class MainTestRunnerImpl
-    : public MainTestRunnerBase
+class RunnerImpl
+    : public RunnerBase
     , public Runnable {
-    friend class MainTestRunner;
-    DEFINE_JCLASS_NAME("com/tencent/cppunit/MainTestRunner");
+    friend class Runner;
+    friend thread_id CUTEST_NS::mainThreadId();
+
+    DEFINE_JCLASS_NAME("com/tencent/cutest/Runner");
 
 public:
-    MainTestRunnerImpl();
+    RunnerImpl();
 
 protected:
-    TestProgressLogger _testProgressLogger;
+    Logger test_progress_logger;
 
 public:
-    // MainTestRunner的接口实现
+    // Runner的接口实现
     virtual void asyncRunOnMainThread(Runnable* runnable, bool is_auto_delete);
     virtual void delayRunOnMainThread(unsigned int delay_ms, Runnable* runnable, bool is_auto_delete);
 
+    virtual void waitUntilAllTestEnd();
+
 protected:
-    static thread_id s_mainThreadId;
+    static thread_id main_thread_id;
 
     // 实现Runnable::run()
     virtual void run();
 };
 
-CPPUNIT_NS_END
+CUTEST_NS_END

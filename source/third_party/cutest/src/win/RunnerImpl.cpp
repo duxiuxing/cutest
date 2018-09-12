@@ -1,8 +1,18 @@
 ﻿#include "RunnerImpl.h"
 
 #include <set>
+#include "gmock/gmock.h"
 
 CUTEST_NS_BEGIN
+
+void
+RunnerBase::initGoogleMock() {
+	static bool init_once = true;
+	if (init_once) {
+		init_once = false;
+		testing::InitGoogleMock(&__argc, __wargv);
+	}
+}
 
 unsigned long long
 tickCount64() {
@@ -30,8 +40,8 @@ mainThreadId() {
 
 Runner*
 Runner::instance() {
-    static RunnerImpl main_test_runner;
-    return &main_test_runner;
+    static RunnerImpl runner_impl;
+    return &runner_impl;
 }
 
 HWND RunnerImpl::message_window = NULL;
@@ -39,7 +49,7 @@ std::set<Runnable*> RunnerImpl::auto_delete_runnables;
 thread_id RunnerImpl::main_thread_id = 0;
 
 RunnerImpl::RunnerImpl() {
-    RunnerBase::initGoogleMock();
+	testing::InitGoogleMock(&__argc, __wargv);
     this->listener_manager.add(&this->test_progress_logger);
 
     // Register message window class.
@@ -65,7 +75,7 @@ RunnerImpl::RunnerImpl() {
                                      wcx.hInstance,      // handle to application instance
                                      NULL);              // no window-creation data
 
-    // 通过这个异步方法给s_mainThreadId赋值
+    // 通过这个异步方法给main_thread_id赋值
     asyncRunOnMainThread(this, false);
 }
 

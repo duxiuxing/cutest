@@ -4,6 +4,7 @@
 #include <cppunit/TestCase.h>
 
 #include "cutest/Event.h"
+#include "cutest/Helper.h"
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 

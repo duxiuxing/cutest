@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "cutest/Define.h"
+#include <string>
 
 CUTEST_NS_BEGIN
 
@@ -17,5 +18,7 @@ GTEST_API_ bool isOnMainThread();
 
 // 返回当前系统的时间，单位为ms
 GTEST_API_ unsigned long long tickCount64();
+
+GTEST_API_ std::string makeFilePathShorter(std::string path);
 
 CUTEST_NS_END
