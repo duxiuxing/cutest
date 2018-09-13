@@ -107,9 +107,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // 竖屏设置
         setContentView(R.layout.activity_main);
+        TestConfig.getInstance().load(this);
 
         // ActionBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(TestConfig.getInstance().getTitle());
         CharSequence sub_title = String.format(this.getString(R.string.sub_title_format),
                 Runner.version());
         toolbar.setSubtitle(sub_title);
@@ -137,7 +139,6 @@ public class MainActivity extends AppCompatActivity
         this.list_view_failed.setAdapter(this.list_adapter_failed);
         this.list_view_failed.setOnItemClickListener(this);
 
-        Runner.loadTestConfig(this);
         Runner.start(this);
     }
 

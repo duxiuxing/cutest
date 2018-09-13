@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<root platform="android">
+<root title="CUTest Demos" platform="android">
     <!--test libName="hierarchy" /-->
     <test libName="ExplicitEndTest" />
     <test libName="money" />
