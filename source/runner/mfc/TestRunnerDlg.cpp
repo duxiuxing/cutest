@@ -87,11 +87,9 @@ CTestRunnerDlg::OnInitDialog()
     CString caption;
     GetWindowText( caption );
 
-    CString version( CUTEST_NS::version() );
-
     CString text;
-    text.Format( _T( "%s - %s v%s" ),
-                 caption, TestConfig::GetInstance()->GetTitle(), version );
+    text.Format( _T( "%s - %s" ),
+                 caption, TestConfig::GetInstance()->GetTitle() );
 
     SetWindowText( text );
   }
