@@ -22,4 +22,5 @@
     <string name="tab_failed">Failed</string>
     <string name="title_details">Details</string>
     <string name="button_close">Close</string>
+    <string formatted="false" name="load_so_error_format">Load lib%s.so error!</string>
 </resources>

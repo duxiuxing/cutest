@@ -1,7 +1,9 @@
 ﻿#pragma once
 
-#include "AutoEndTest.h"
+#include "cutest/Helper.h"
 #include "cutest/Runner.h"
+
+#include "AutoEndTest.h"
 #include "Decorator.h"
 #include "ProgressListenerManager.h"
 
@@ -9,10 +11,13 @@ CUTEST_NS_BEGIN
 
 class ExplicitEndTest;
 
-class RunnerBase : public Runner, public ProgressListener {
-public:
-    static void initGoogleMock();
+class RunnerBase
+    : public Runner
+    , public ProgressListener
+    , public Runnable {
+    friend thread_id CUTEST_NS::mainThreadId();
 
+public:
     RunnerBase();
     virtual ~RunnerBase();
 
@@ -44,7 +49,6 @@ public:
 protected:
     Decorator* test_decorator;
 
-
 public: // ExplicitEndTest相关的方法
     virtual void registerExplicitEndTest(ExplicitEndTest* test, unsigned int timeout_ms) override;
     virtual void unregisterExplicitEndTest(ExplicitEndTest* test) override;
@@ -62,6 +66,11 @@ protected:
     };
     State state;
     virtual void onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int elapsed_ms) override;
+
+    static thread_id main_thread_id;
+
+    // 实现Runnable::run()
+    virtual void run() override;
 };
 
 CUTEST_NS_END

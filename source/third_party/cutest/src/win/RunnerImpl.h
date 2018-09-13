@@ -3,19 +3,13 @@
 #include "../Logger.h"
 #include "../RunnerBase.h"
 
-#include "cutest/Helper.h"
-
 #include <set>
 #include <wtypes.h>
 
 CUTEST_NS_BEGIN
 
 class RunnerImpl
-    : public RunnerBase
-    , public Runnable {
-    friend class Runner;
-    friend thread_id CUTEST_NS::mainThreadId();
-
+    : public RunnerBase {
 public:
     RunnerImpl();
     virtual ~RunnerImpl();
@@ -43,10 +37,6 @@ protected:
     static VOID CALLBACK onTimer4DelayRun(HWND wnd, UINT uMsg, UINT_PTR id_event, DWORD elapse_ms);
 
     static std::set<Runnable*> auto_delete_runnables;  // 用于缓存delayRunOnMainThread()中尚未执行且需要auto delete的Runnable对象
-    static thread_id main_thread_id;
-
-    // 实现Runnable::run()
-    virtual void run();
 };
 
 CUTEST_NS_END

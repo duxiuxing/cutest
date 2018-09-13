@@ -21,4 +21,6 @@ GTEST_API_ unsigned long long tickCount64();
 
 GTEST_API_ std::string makeFilePathShorter(std::string path);
 
+GTEST_API_ void initGoogleMock();
+
 CUTEST_NS_END

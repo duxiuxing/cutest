@@ -1,7 +1,7 @@
 ﻿#include "cutest/Helper.h"
 #include "gtest/gtest-message.h"
 
-#include <list>
+#include <stack>
 
 const char*
 CUTEST_NS::version() {
@@ -37,28 +37,27 @@ CUTEST_NS::isOnMainThread() {
 std::string
 CUTEST_NS::makeFilePathShorter(std::string path) {
     std::string str = path;
-    std::list<std::string> strList;
+    std::stack<std::string> dir_stack;
     int index = str.find('/');
     while (index != -1) {
         int length = str.length();
         if (0 != index) {
             // 把'/'左边的截断出来放到strlist
-            std::string subStr = str.substr(0, index);
-            std::list<std::string>::reverse_iterator rit = strList.rbegin();
-            if (subStr == ".") {
-                if (rit == strList.rend()) {
-                    strList.push_back(subStr);
+            std::string dir = str.substr(0, index);
+            if (dir == ".") {
+                if (dir_stack.empty()) {
+                    dir_stack.push(dir);
                 }
-            } else if (subStr == "..") {
-                if (rit == strList.rend()) {
-                    strList.push_back(subStr);
-                } else if (*rit == "..") {
-                    strList.push_back(subStr);
+            } else if (dir == "..") {
+                if (dir_stack.empty()) {
+                    dir_stack.push(dir);
+                } else if (dir_stack.top() == "..") {
+                    dir_stack.push(dir);
                 } else {
-                    strList.pop_back();
+                    dir_stack.pop();
                 }
             } else {
-                strList.push_back(subStr);
+                dir_stack.push(dir);
             }
         } else {
             // 如果第一个字符就是'/'，则跳过
@@ -79,18 +78,17 @@ CUTEST_NS::makeFilePathShorter(std::string path) {
     }
 
     if (!str.empty()) {
-        strList.push_back(str);
+        dir_stack.push(str);
     }
 
     str.clear();
-    std::list<std::string>::iterator it = strList.begin();
-    while (it != strList.end()) {
+    while (!dir_stack.empty()) {
         if (!str.empty()) {
-            str += '/';
+            str = '/' + str;
         }
 
-        str += *it;
-        ++it;
+        str = dir_stack.top() + str;
+        dir_stack.pop();
     }
 
     return str;

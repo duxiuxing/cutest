@@ -11,11 +11,7 @@
 CUTEST_NS_BEGIN
 
 class RunnerImpl
-    : public RunnerBase
-    , public Runnable {
-    friend class Runner;
-    friend thread_id CUTEST_NS::mainThreadId();
-
+    : public RunnerBase {
     DEFINE_JCLASS_NAME("com/tencent/cutest/Runner");
 
 public:
@@ -30,12 +26,6 @@ public:
     virtual void delayRunOnMainThread(unsigned int delay_ms, Runnable* runnable, bool is_auto_delete);
 
     virtual void waitUntilAllTestEnd();
-
-protected:
-    static thread_id main_thread_id;
-
-    // 实现Runnable::run()
-    virtual void run();
 };
 
 CUTEST_NS_END

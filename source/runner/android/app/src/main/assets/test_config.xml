@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root platform="android">
     <!--test libName="hierarchy" /-->
-    <test libName="money" />
-    <test libName="simple" />
     <test libName="ExplicitEndTest" />
+    <test libName="money" />
     <test libName="sample1" />
     <test libName="sample2" />
+    <test libName="sample3" />
+    <test libName="sample4" />
+    <test libName="sample5" />
+    <test libName="simple" />
     <!--test brief="gtest sample1" libName="sample1" />
     <test brief="gtest sample2" libName="sample2" /-->
 </root>

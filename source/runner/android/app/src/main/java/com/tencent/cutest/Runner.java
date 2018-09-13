@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Xml;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -63,10 +64,10 @@ public class Runner {
 
     public static void loadTestConfig(Context context) {
         // 获得assets下test_config.xml的输入流
-        InputStream inputStream = null;
+        InputStream input_stream = null;
 
         try {
-            inputStream = context.getAssets().open("test_config.xml");
+            input_stream = context.getAssets().open("test_config.xml");
         } catch (IOException e) {
             // 对应this.getAssets().open()
             e.printStackTrace();
@@ -76,7 +77,7 @@ public class Runner {
         // 创建XmlPullParser对象来解析xml
         XmlPullParser parser = Xml.newPullParser();
         try {
-            parser.setInput(inputStream, "UTF-8");
+            parser.setInput(input_stream, "UTF-8");
         } catch (XmlPullParserException e) {
             // 对应parser.setInput()
             e.printStackTrace();
@@ -84,10 +85,10 @@ public class Runner {
         }
 
         try {
-            int eventType = parser.getEventType();
+            int event_type = parser.getEventType();
 
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_TAG) {
+            while (event_type != XmlPullParser.END_DOCUMENT) {
+                if (event_type == XmlPullParser.START_TAG) {
                     // 处理名为test的元素
                     if (parser.getName().equals("test")) {
                         int count = parser.getAttributeCount();
@@ -96,13 +97,20 @@ public class Runner {
                             if (attrName.equals("libName")) {
                                 // 根据libName的配置来加载so
                                 String libName = parser.getAttributeValue(i);
-                                System.loadLibrary(libName);
+                                try {
+                                    System.loadLibrary(libName);
+                                } catch (Throwable e) {
+                                    String text = String.format(
+                                            context.getString(R.string.load_so_error_format),
+                                            libName);
+                                    Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
                     }
                 }
 
-                eventType = parser.next();
+                event_type = parser.next();
             }
         } catch (XmlPullParserException e) {
             e.printStackTrace();
@@ -113,7 +121,7 @@ public class Runner {
         }
 
         try {
-            inputStream.close();
+            input_stream.close();
         } catch (IOException e) {
             e.printStackTrace();
             return;

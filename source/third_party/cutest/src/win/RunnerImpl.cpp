@@ -6,12 +6,12 @@
 CUTEST_NS_BEGIN
 
 void
-RunnerBase::initGoogleMock() {
-	static bool init_once = true;
-	if (init_once) {
-		init_once = false;
-		testing::InitGoogleMock(&__argc, __wargv);
-	}
+initGoogleMock() {
+    static bool init_once = true;
+    if (init_once) {
+        init_once = false;
+        testing::InitGoogleMock(&__argc, __wargv);
+    }
 }
 
 unsigned long long
@@ -33,11 +33,6 @@ currentThreadId() {
     return ::GetCurrentThreadId();
 }
 
-thread_id
-mainThreadId() {
-    return RunnerImpl::main_thread_id;
-}
-
 Runner*
 Runner::instance() {
     static RunnerImpl runner_impl;
@@ -46,10 +41,9 @@ Runner::instance() {
 
 HWND RunnerImpl::message_window = NULL;
 std::set<Runnable*> RunnerImpl::auto_delete_runnables;
-thread_id RunnerImpl::main_thread_id = 0;
 
 RunnerImpl::RunnerImpl() {
-	testing::InitGoogleMock(&__argc, __wargv);
+	initGoogleMock();
     this->listener_manager.add(&this->test_progress_logger);
 
     // Register message window class.
@@ -153,11 +147,6 @@ RunnerImpl::onTimer4DelayRun(HWND wnd, UINT msg, UINT_PTR id_event, DWORD elapse
 
     Runnable* runnable = (Runnable*)id_event;
     runnable->run();
-}
-
-void
-RunnerImpl::run() {
-    RunnerImpl::main_thread_id = currentThreadId();
 }
 
 void

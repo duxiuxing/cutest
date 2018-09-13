@@ -167,4 +167,16 @@ RunnerBase::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int elapsed_ms) {
     this->state = STATE_NONE;
 }
 
+thread_id RunnerBase::main_thread_id = 0;
+
+thread_id
+mainThreadId() {
+    return RunnerBase::main_thread_id;
+}
+
+void
+RunnerBase::run() {
+    RunnerBase::main_thread_id = currentThreadId();
+}
+
 CUTEST_NS_END

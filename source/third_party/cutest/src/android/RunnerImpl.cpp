@@ -8,7 +8,7 @@
 CUTEST_NS_BEGIN
 
 void
-RunnerBase::initGoogleMock() {
+initGoogleMock() {
 }
 
 unsigned long long
@@ -24,18 +24,11 @@ currentThreadId() {
     return ::gettid();
 }
 
-thread_id
-mainThreadId() {
-    return RunnerImpl::main_thread_id;
-}
-
 Runner*
 Runner::instance() {
     static RunnerImpl runner_impl;
     return &runner_impl;
 }
-
-thread_id RunnerImpl::main_thread_id = 0;
 
 RunnerImpl::RunnerImpl() {
     JClassManager::instance()->registerGlobalClassName(RunnerImpl::jclassName());
@@ -63,11 +56,6 @@ RunnerImpl::delayRunOnMainThread(
     JniEnv env;
     jmethodID id = env->GetStaticMethodID(cls, "delayRunOnMainThread", "(JJZ)V");
     env->CallStaticVoidMethod(cls, id, (jlong)delay_ms, (jlong)runnable, (jboolean)is_auto_delete);
-}
-
-void
-RunnerImpl::run() {
-    RunnerImpl::main_thread_id = currentThreadId();
 }
 
 void
