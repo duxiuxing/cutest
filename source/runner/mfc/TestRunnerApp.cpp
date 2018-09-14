@@ -10,12 +10,10 @@
 	#define new DEBUG_NEW
 #endif
 
-// CTestRunnerApp
 BEGIN_MESSAGE_MAP(CTestRunnerApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
-// CTestRunnerApp construction
 CTestRunnerApp::CTestRunnerApp()
 {
 	// support Restart Manager
@@ -26,11 +24,11 @@ CTestRunnerApp::CTestRunnerApp()
 
 CTestRunnerApp theApp;
 
-// CTestRunnerApp initialization
 BOOL CTestRunnerApp::InitInstance()
 {
-	_CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(4022);
+	// _CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
+	// _CrtSetBreakAlloc(4022);
+
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
 	// visual styles.  Otherwise, any window creation will fail.
