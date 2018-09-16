@@ -1,4 +1,5 @@
 *_manifest.rc
+*.aps
 *.embed.manifest
 *.idb
 *.intermediate.manifest

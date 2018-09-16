@@ -203,11 +203,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCDynamicLayoutInfo.cpp"
+				RelativePath="..\DynamicWindow\DynamicLayoutInfo.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCDynamicLayoutInfo.h"
+				RelativePath="..\DynamicWindow\DynamicLayoutInfo.h"
 				>
 			</File>
 			<File

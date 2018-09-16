@@ -33,32 +33,32 @@ static char THIS_FILE[]=__FILE__;
  * (it will be moved outside the client area).
  */
 
-void cdxCDynamicWnd::Position::Apply(HWND hwnd, CRect & rectNewPos, const cdxCDynamicLayoutInfo & li) const
+void cdxCDynamicWnd::Position::Apply(HWND hwnd, CRect & rectNewPos, const CDynamicLayoutInfo & li) const
 {
-	if(li.use_scroll_pos)
+	if(li.m_useScrollPos)
 	{
-		rectNewPos.left	=	left   - li.scroll_pos.x;
-		rectNewPos.right	=	right  - li.scroll_pos.x;
-		rectNewPos.top		=	top    - li.scroll_pos.y;
-		rectNewPos.bottom	=	bottom - li.scroll_pos.y;
+		rectNewPos.left	=	left   - li.m_scrollPos.x;
+		rectNewPos.right	=	right  - li.m_scrollPos.x;
+		rectNewPos.top		=	top    - li.m_scrollPos.y;
+		rectNewPos.bottom	=	bottom - li.m_scrollPos.y;
 
-		if(li.delta_size.cx >= 0)
+		if(li.m_deltaSize.cx >= 0)
 		{
-			rectNewPos.left	+=	(m_Bytes[X1] * li.delta_size.cx) / 100;
-			rectNewPos.right	+=	(m_Bytes[X2] * li.delta_size.cx) / 100;
+			rectNewPos.left	+=	(m_Bytes[X1] * li.m_deltaSize.cx) / 100;
+			rectNewPos.right	+=	(m_Bytes[X2] * li.m_deltaSize.cx) / 100;
 		}
-		if(li.delta_size.cy >= 0)
+		if(li.m_deltaSize.cy >= 0)
 		{
-			rectNewPos.top		+=	(m_Bytes[Y1] * li.delta_size.cy) / 100;
-			rectNewPos.bottom	+=	(m_Bytes[Y2] * li.delta_size.cy) / 100;
+			rectNewPos.top		+=	(m_Bytes[Y1] * li.m_deltaSize.cy) / 100;
+			rectNewPos.bottom	+=	(m_Bytes[Y2] * li.m_deltaSize.cy) / 100;
 		}
 	}
 	else
 	{
-		rectNewPos.left	=	left   + (m_Bytes[X1] * li.delta_size.cx) / 100;
-		rectNewPos.right	=	right  + (m_Bytes[X2] * li.delta_size.cx) / 100;
-		rectNewPos.top		=	top    + (m_Bytes[Y1] * li.delta_size.cy) / 100;
-		rectNewPos.bottom	=	bottom + (m_Bytes[Y2] * li.delta_size.cy) / 100;
+		rectNewPos.left	=	left   + (m_Bytes[X1] * li.m_deltaSize.cx) / 100;
+		rectNewPos.right	=	right  + (m_Bytes[X2] * li.m_deltaSize.cx) / 100;
+		rectNewPos.top		=	top    + (m_Bytes[Y1] * li.m_deltaSize.cy) / 100;
+		rectNewPos.bottom	=	bottom + (m_Bytes[Y2] * li.m_deltaSize.cy) / 100;
 	}
 
 	if(rectNewPos.left + m_szMin.cx >= rectNewPos.right)
@@ -231,7 +231,7 @@ bool cdxCDynamicWnd::UpdateControlPosition(HWND hwnd)
 		return false;
 	}
 
-	cdxCDynamicLayoutInfo* pli = NULL;
+	CDynamicLayoutInfo* pli = NULL;
     pli = DoCreateLayoutInfo();
 	ASSERT(pli != NULL);
 
@@ -295,7 +295,7 @@ void cdxCDynamicWnd::Layout()
 	
 	// resize stuff
 
-	cdxCDynamicLayoutInfo	*pli		=	DoCreateLayoutInfo();
+	CDynamicLayoutInfo	*pli		=	DoCreateLayoutInfo();
 
 	if(!pli)
 	{
@@ -305,7 +305,7 @@ void cdxCDynamicWnd::Layout()
 
 	try
 	{
-		HDWP							hdwp		=	::BeginDeferWindowPos(pli->control_count);
+		HDWP							hdwp		=	::BeginDeferWindowPos(pli->m_controlCount);
 		HWND							hwnd;
 		bool							bRepeat;
 		CRect							rectNew;
@@ -418,7 +418,7 @@ void cdxCDynamicWnd::Layout()
  *      that as little flickering as possible will occur.
  */
 
-bool cdxCDynamicWnd::DoMoveCtrl(HWND hwnd, UINT id, CRect & rectNewPos, const cdxCDynamicLayoutInfo & li)
+bool cdxCDynamicWnd::DoMoveCtrl(HWND hwnd, UINT id, CRect & rectNewPos, const CDynamicLayoutInfo & li)
 {
 	Position	pos;
 

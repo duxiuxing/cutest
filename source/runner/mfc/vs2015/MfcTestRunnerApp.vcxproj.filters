@@ -84,7 +84,7 @@
     <ClInclude Include="..\TreeHierarchyDlg.h">
       <Filter>TreeHierarchyDlg</Filter>
     </ClInclude>
-    <ClInclude Include="..\DynamicWindow\cdxCDynamicLayoutInfo.h">
+    <ClInclude Include="..\DynamicWindow\DynamicLayoutInfo.h">
       <Filter>DynamicWindow</Filter>
     </ClInclude>
   </ItemGroup>
@@ -131,7 +131,7 @@
     <ClCompile Include="..\TreeHierarchyDlg.cpp">
       <Filter>TreeHierarchyDlg</Filter>
     </ClCompile>
-    <ClCompile Include="..\DynamicWindow\cdxCDynamicLayoutInfo.cpp">
+    <ClCompile Include="..\DynamicWindow\DynamicLayoutInfo.cpp">
       <Filter>DynamicWindow</Filter>
     </ClCompile>
   </ItemGroup>

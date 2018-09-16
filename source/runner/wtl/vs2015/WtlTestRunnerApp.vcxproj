@@ -208,7 +208,7 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\DynamicWindow\cdxCDynamicLayoutInfo.cpp" />
+    <ClCompile Include="..\DynamicWindow\DynamicLayoutInfo.cpp" />
     <ClCompile Include="..\TestRunnerDlg.cpp" />
     <ClCompile Include="..\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -219,7 +219,7 @@
     <ClCompile Include="..\TestRunnerApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\DynamicWindow\cdxCDynamicLayoutInfo.h" />
+    <ClInclude Include="..\DynamicWindow\DynamicLayoutInfo.h" />
     <ClInclude Include="..\DynamicWindow\cdxCDynamicWnd.h" />
     <ClInclude Include="..\TestRunnerDlg.h" />
     <ClInclude Include="..\resource.h" />

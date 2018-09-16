@@ -3,7 +3,7 @@
 #include <afxwin.h>
 #include <afxtempl.h>
 
-#include "cdxCDynamicLayoutInfo.h"
+#include "DynamicLayoutInfo.h"
 
 class cdxCSizeIconCtrl;
 
@@ -100,7 +100,7 @@ public:
 		void operator=(const SBYTES & bytes) { for(int i=0; i<4; ++i) m_Bytes[i] = bytes[i]; }
 		void operator=(const CSize & szMin) { m_szMin = szMin; }
 
-		void Apply(HWND hwnd, CRect & rectNewPos, const cdxCDynamicLayoutInfo & li) const;
+		void Apply(HWND hwnd, CRect & rectNewPos, const CDynamicLayoutInfo & li) const;
 	};
 
 private:
@@ -230,13 +230,13 @@ protected:
 	//
 
 protected:
-	virtual bool DoMoveCtrl(HWND hwnd, UINT id, CRect & rectNewPos, const cdxCDynamicLayoutInfo & li);
+	virtual bool DoMoveCtrl(HWND hwnd, UINT id, CRect & rectNewPos, const CDynamicLayoutInfo & li);
 	virtual void DoDestroyCtrl(HWND hwnd);
 
 	virtual void OnInitialized() {}
 	virtual void OnDestroying() {}
 
-	virtual cdxCDynamicLayoutInfo *DoCreateLayoutInfo() { return new cdxCDynamicLayoutInfo(this); }
+	virtual CDynamicLayoutInfo *DoCreateLayoutInfo() { return new CDynamicLayoutInfo(this); }
 
 	//
 	// misc utility functions
