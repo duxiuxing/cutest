@@ -29,7 +29,7 @@ void GTestExplicitEndTest::onTimeUp() {
   endTest();
 }
 
-EXPLICIT_END_TEST_F(GTestExplicitEndTest, explicit_end_test_after_1s) {
+EXPLICIT_END_TEST_F(GTestExplicitEndTest, end_test_after_1s) {
   this->tick_count_start = CUTEST_NS::tickCount64();
   SimpleTimer::instance()->setCallback(1000, this);
 }
