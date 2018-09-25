@@ -118,10 +118,10 @@ endif()
 if (DEFINED CMAKE_VERSION AND NOT "${CMAKE_VERSION}" VERSION_LESS "2.8.11")
   target_include_directories(gmock SYSTEM INTERFACE
     "$<BUILD_INTERFACE:${gmock_build_include_dirs}>"
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
   target_include_directories(gmock_main SYSTEM INTERFACE
     "$<BUILD_INTERFACE:${gmock_build_include_dirs}>"
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
 endif()
 
 ########################################################################
@@ -157,6 +157,9 @@ if (gmock_build_tests)
   cxx_test(gmock-generated-matchers_test gmock_main)
   cxx_test(gmock-internal-utils_test gmock_main)
   cxx_test(gmock-matchers_test gmock_main)
+  if (MINGW)
+    target_compile_options(gmock-matchers_test PRIVATE "-Wa,-mbig-obj")
+  endif()
   cxx_test(gmock-more-actions_test gmock_main)
   cxx_test(gmock-nice-strict_test gmock_main)
   cxx_test(gmock-port_test gmock_main)

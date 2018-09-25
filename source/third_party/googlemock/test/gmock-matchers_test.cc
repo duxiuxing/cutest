@@ -1335,6 +1335,11 @@ TEST(StrEqTest, MatchesEqualString) {
   EXPECT_TRUE(m3.Matches(absl::string_view("Hello")));
   EXPECT_FALSE(m3.Matches(absl::string_view("hello")));
   EXPECT_FALSE(m3.Matches(absl::string_view()));
+
+  Matcher<const absl::string_view&> m_empty = StrEq("");
+  EXPECT_TRUE(m_empty.Matches(absl::string_view("")));
+  EXPECT_TRUE(m_empty.Matches(absl::string_view()));
+  EXPECT_FALSE(m_empty.Matches(absl::string_view("hello")));
 #endif  // GTEST_HAS_ABSL
 }
 
@@ -1459,6 +1464,10 @@ TEST(HasSubstrTest, WorksForStringClasses) {
   const Matcher<const std::string&> m2 = HasSubstr("foo");
   EXPECT_TRUE(m2.Matches(std::string("I love food.")));
   EXPECT_FALSE(m2.Matches(std::string("tofo")));
+
+  const Matcher<std::string> m_empty = HasSubstr("");
+  EXPECT_TRUE(m_empty.Matches(std::string()));
+  EXPECT_TRUE(m_empty.Matches(std::string("not empty")));
 }
 
 // Tests that HasSubstr() works for matching C-string-typed values.
@@ -1472,6 +1481,11 @@ TEST(HasSubstrTest, WorksForCStrings) {
   EXPECT_TRUE(m2.Matches("I love food."));
   EXPECT_FALSE(m2.Matches("tofo"));
   EXPECT_FALSE(m2.Matches(NULL));
+
+  const Matcher<const char*> m_empty = HasSubstr("");
+  EXPECT_TRUE(m_empty.Matches("not empty"));
+  EXPECT_TRUE(m_empty.Matches(""));
+  EXPECT_FALSE(m_empty.Matches(NULL));
 }
 
 #if GTEST_HAS_ABSL
@@ -1489,7 +1503,8 @@ TEST(HasSubstrTest, WorksForStringViewClasses) {
 
   const Matcher<const absl::string_view&> m3 = HasSubstr("");
   EXPECT_TRUE(m3.Matches(absl::string_view("foo")));
-  EXPECT_FALSE(m3.Matches(absl::string_view()));
+  EXPECT_TRUE(m3.Matches(absl::string_view("")));
+  EXPECT_TRUE(m3.Matches(absl::string_view()));
 }
 #endif  // GTEST_HAS_ABSL
 
@@ -1713,6 +1728,13 @@ TEST(StartsWithTest, MatchesStringWithGivenPrefix) {
   EXPECT_TRUE(m2.Matches("High"));
   EXPECT_FALSE(m2.Matches("H"));
   EXPECT_FALSE(m2.Matches(" Hi"));
+
+#if GTEST_HAS_ABSL
+  const Matcher<absl::string_view> m_empty = StartsWith("");
+  EXPECT_TRUE(m_empty.Matches(absl::string_view()));
+  EXPECT_TRUE(m_empty.Matches(absl::string_view("")));
+  EXPECT_TRUE(m_empty.Matches(absl::string_view("not empty")));
+#endif  // GTEST_HAS_ABSL
 }
 
 TEST(StartsWithTest, CanDescribeSelf) {
@@ -1748,9 +1770,8 @@ TEST(EndsWithTest, MatchesStringWithGivenSuffix) {
   const Matcher<const absl::string_view&> m4 = EndsWith("");
   EXPECT_TRUE(m4.Matches("Hi"));
   EXPECT_TRUE(m4.Matches(""));
-  // Default-constructed absl::string_view should not match anything, in order
-  // to distinguish it from an empty string.
-  EXPECT_FALSE(m4.Matches(absl::string_view()));
+  EXPECT_TRUE(m4.Matches(absl::string_view()));
+  EXPECT_TRUE(m4.Matches(absl::string_view("")));
 #endif  // GTEST_HAS_ABSL
 }
 
@@ -1777,11 +1798,10 @@ TEST(MatchesRegexTest, MatchesStringMatchingGivenRegex) {
   EXPECT_TRUE(m3.Matches(absl::string_view("az")));
   EXPECT_TRUE(m3.Matches(absl::string_view("abcz")));
   EXPECT_FALSE(m3.Matches(absl::string_view("1az")));
-  // Default-constructed absl::string_view should not match anything, in order
-  // to distinguish it from an empty string.
   EXPECT_FALSE(m3.Matches(absl::string_view()));
   const Matcher<const absl::string_view&> m4 = MatchesRegex("");
-  EXPECT_FALSE(m4.Matches(absl::string_view()));
+  EXPECT_TRUE(m4.Matches(absl::string_view("")));
+  EXPECT_TRUE(m4.Matches(absl::string_view()));
 #endif  // GTEST_HAS_ABSL
 }
 
@@ -1816,11 +1836,10 @@ TEST(ContainsRegexTest, MatchesStringContainingGivenRegex) {
   EXPECT_TRUE(m3.Matches(absl::string_view("azbz")));
   EXPECT_TRUE(m3.Matches(absl::string_view("az1")));
   EXPECT_FALSE(m3.Matches(absl::string_view("1a")));
-  // Default-constructed absl::string_view should not match anything, in order
-  // to distinguish it from an empty string.
   EXPECT_FALSE(m3.Matches(absl::string_view()));
   const Matcher<const absl::string_view&> m4 = ContainsRegex("");
-  EXPECT_FALSE(m4.Matches(absl::string_view()));
+  EXPECT_TRUE(m4.Matches(absl::string_view("")));
+  EXPECT_TRUE(m4.Matches(absl::string_view()));
 #endif  // GTEST_HAS_ABSL
 }
 
@@ -4597,6 +4616,7 @@ struct PolymorphicFunctor {
   typedef int result_type;
   int operator()(int n) { return n; }
   int operator()(const char* s) { return static_cast<int>(strlen(s)); }
+  std::string operator()(int *p) { return p ? "good ptr" : "null"; }
 };
 
 TEST(ResultOfTest, WorksForPolymorphicFunctors) {
@@ -4610,6 +4630,23 @@ TEST(ResultOfTest, WorksForPolymorphicFunctors) {
   EXPECT_TRUE(matcher_string.Matches("long string"));
   EXPECT_FALSE(matcher_string.Matches("shrt"));
 }
+
+#if GTEST_LANG_CXX11
+TEST(ResultOfTest, WorksForPolymorphicFunctorsIgnoringResultType) {
+  Matcher<int*> matcher = ResultOf(PolymorphicFunctor(), "good ptr");
+
+  int n = 0;
+  EXPECT_TRUE(matcher.Matches(&n));
+  EXPECT_FALSE(matcher.Matches(nullptr));
+}
+
+TEST(ResultOfTest, WorksForLambdas) {
+  Matcher<int> matcher =
+      ResultOf([](int str_len) { return std::string(str_len, 'x'); }, "xxx");
+  EXPECT_TRUE(matcher.Matches(3));
+  EXPECT_FALSE(matcher.Matches(1));
+}
+#endif
 
 const int* ReferencingFunction(const int& n) { return &n; }
 
