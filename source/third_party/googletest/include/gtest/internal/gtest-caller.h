@@ -51,7 +51,7 @@ class TestCaller
 
   // 重载TestCase::runTest()
   virtual void runTest() override {
-    if (CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()) {
+    if (CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread()) {
       runTestOnMainThread();
     } else {
       runTestImmediately();
@@ -83,7 +83,7 @@ class TestCaller
 
   // 重载TestFixture::setUp()
   virtual void setUp() override {
-    if (CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()) {
+    if (CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread()) {
       setUpOnMainThread();
     } else {
       setUpImmediately();
@@ -117,7 +117,7 @@ class TestCaller
 
   // 重载TestFixture::tearDown()
   virtual void tearDown() override {
-    if (CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()) {
+    if (CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread()) {
       tearDownOnMainThread();
     } else {
       tearDownImmediately();

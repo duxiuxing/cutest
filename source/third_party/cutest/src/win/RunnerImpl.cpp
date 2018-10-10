@@ -39,12 +39,12 @@ Runner::instance() {
     return &runner_impl;
 }
 
-HWND RunnerImpl::message_window = NULL;
-std::set<Runnable*> RunnerImpl::auto_delete_runnables;
+HWND RunnerImpl::hMessageWnd = NULL;
+std::set<Runnable*> RunnerImpl::autoDeleteRunnables;
 
 RunnerImpl::RunnerImpl() {
 	initGoogleMock();
-    this->listener_manager.add(&this->test_progress_logger);
+    this->listener_manager.add(&this->testProgressLogger);
 
     // Register message window class.
     WNDCLASSEX wcx;
@@ -56,7 +56,7 @@ RunnerImpl::RunnerImpl() {
     ::RegisterClassEx(&wcx);
 
     // Create a message window.
-    RunnerImpl::message_window = ::CreateWindow(
+    RunnerImpl::hMessageWnd = ::CreateWindow(
                                      wcx.lpszClassName,  // name of window class
                                      NULL,               // title-bar string
                                      0,                  // top-level window
@@ -76,29 +76,29 @@ RunnerImpl::RunnerImpl() {
 RunnerImpl::~RunnerImpl() {
     waitUntilAllTestEnd();
 
-    if (RunnerImpl::message_window) {
-        ::DestroyWindow(RunnerImpl::message_window);
-        RunnerImpl::message_window = NULL;
+    if (RunnerImpl::hMessageWnd) {
+        ::DestroyWindow(RunnerImpl::hMessageWnd);
+        RunnerImpl::hMessageWnd = NULL;
     }
 
-    std::set<Runnable*>::iterator it = RunnerImpl::auto_delete_runnables.begin();
-    while (it != RunnerImpl::auto_delete_runnables.end()) {
+    std::set<Runnable*>::iterator it = RunnerImpl::autoDeleteRunnables.begin();
+    while (it != RunnerImpl::autoDeleteRunnables.end()) {
         delete *it;
         ++it;
     }
 }
 
 void
-RunnerImpl::asyncRunOnMainThread(Runnable* runnable, bool is_auto_delete) {
-    ::PostMessage(RunnerImpl::message_window, WM_RUN, (WPARAM)runnable, is_auto_delete);
+RunnerImpl::asyncRunOnMainThread(Runnable* runnable, bool isAutoDelete) {
+    ::PostMessage(RunnerImpl::hMessageWnd, WM_RUN, (WPARAM)runnable, isAutoDelete);
 }
 
 void
-RunnerImpl::delayRunOnMainThread(unsigned int delay_ms, Runnable* runnable, bool is_auto_delete) {
-    if (is_auto_delete) {
-        ::PostMessage(RunnerImpl::message_window, WM_DELAY_RUN_AUTO_DELETE, (WPARAM)runnable, delay_ms);
+RunnerImpl::delayRunOnMainThread(unsigned int msDelay, Runnable* runnable, bool isAutoDelete) {
+    if (isAutoDelete) {
+        ::PostMessage(RunnerImpl::hMessageWnd, WM_DELAY_RUN_AUTO_DELETE, (WPARAM)runnable, msDelay);
     } else {
-        ::PostMessage(RunnerImpl::message_window, WM_DELAY_RUN, (WPARAM)runnable, delay_ms);
+        ::PostMessage(RunnerImpl::hMessageWnd, WM_DELAY_RUN, (WPARAM)runnable, msDelay);
     }
 }
 
@@ -115,12 +115,12 @@ RunnerImpl::messageWindowProc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam) 
         }
         break;
     case WM_DELAY_RUN_AUTO_DELETE: {
-            RunnerImpl::auto_delete_runnables.insert((Runnable*)wparam);
-            ::SetTimer(RunnerImpl::message_window, (UINT_PTR)wparam, (UINT)lparam, &RunnerImpl::onTimer4DelayRunAutoDelete);
+            RunnerImpl::autoDeleteRunnables.insert((Runnable*)wparam);
+            ::SetTimer(RunnerImpl::hMessageWnd, (UINT_PTR)wparam, (UINT)lparam, &RunnerImpl::onTimer4DelayRunAutoDelete);
         }
         break;
     case WM_DELAY_RUN: {
-            ::SetTimer(RunnerImpl::message_window, (UINT_PTR)wparam, (UINT)lparam, &RunnerImpl::onTimer4DelayRun);
+            ::SetTimer(RunnerImpl::hMessageWnd, (UINT_PTR)wparam, (UINT)lparam, &RunnerImpl::onTimer4DelayRun);
         }
         break;
     default: {
@@ -132,20 +132,20 @@ RunnerImpl::messageWindowProc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam) 
 }
 
 VOID CALLBACK
-RunnerImpl::onTimer4DelayRunAutoDelete(HWND wnd, UINT msg, UINT_PTR id_event, DWORD elapse_ms) {
-    ::KillTimer(wnd, id_event);
+RunnerImpl::onTimer4DelayRunAutoDelete(HWND wnd, UINT msg, UINT_PTR runnablePtr, DWORD msElapse) {
+    ::KillTimer(wnd, runnablePtr);
 
-    Runnable* runnable = (Runnable*)id_event;
-    RunnerImpl::auto_delete_runnables.erase(runnable);
+    Runnable* runnable = (Runnable*)runnablePtr;
+    RunnerImpl::autoDeleteRunnables.erase(runnable);
     runnable->run();
     delete runnable;
 }
 
 VOID CALLBACK
-RunnerImpl::onTimer4DelayRun(HWND wnd, UINT msg, UINT_PTR id_event, DWORD elapse_ms) {
-    ::KillTimer(wnd, id_event);
+RunnerImpl::onTimer4DelayRun(HWND wnd, UINT msg, UINT_PTR runnablePtr, DWORD msElapse) {
+    ::KillTimer(wnd, runnablePtr);
 
-    Runnable* runnable = (Runnable*)id_event;
+    Runnable* runnable = (Runnable*)runnablePtr;
     runnable->run();
 }
 

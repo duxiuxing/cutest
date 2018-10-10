@@ -37,34 +37,34 @@ CUTEST_NS::isOnMainThread() {
 std::string
 CUTEST_NS::makeFilePathShorter(std::string path) {
     std::string str = path;
-    std::stack<std::string> dir_stack;
-    int index = str.find('/');
+    std::stack<std::string> dirStack;
+	std::string::size_type index = str.find('/');
     while (index != -1) {
-        int length = str.length();
+        std::string::size_type length = str.length();
         if (0 != index) {
             // 把'/'左边的截断出来放到strlist
             std::string dir = str.substr(0, index);
             if (dir == ".") {
-                if (dir_stack.empty()) {
-                    dir_stack.push(dir);
+                if (dirStack.empty()) {
+                    dirStack.push(dir);
                 }
             } else if (dir == "..") {
-                if (dir_stack.empty()) {
-                    dir_stack.push(dir);
-                } else if (dir_stack.top() == "..") {
-                    dir_stack.push(dir);
+                if (dirStack.empty()) {
+                    dirStack.push(dir);
+                } else if (dirStack.top() == "..") {
+                    dirStack.push(dir);
                 } else {
-                    dir_stack.pop();
+                    dirStack.pop();
                 }
             } else {
-                dir_stack.push(dir);
+                dirStack.push(dir);
             }
         } else {
             // 如果第一个字符就是'/'，则跳过
         }
 
         // 计算'/'右边的字符串长度
-        int start = index + 1;
+        std::string::size_type start = index + 1;
         length -= start;
 
         // 然后把'/'右边的字符串赋给str
@@ -78,17 +78,17 @@ CUTEST_NS::makeFilePathShorter(std::string path) {
     }
 
     if (!str.empty()) {
-        dir_stack.push(str);
+        dirStack.push(str);
     }
 
     str.clear();
-    while (!dir_stack.empty()) {
+    while (!dirStack.empty()) {
         if (!str.empty()) {
             str = '/' + str;
         }
 
-        str = dir_stack.top() + str;
-        dir_stack.pop();
+        str = dirStack.top() + str;
+        dirStack.pop();
     }
 
     return str;

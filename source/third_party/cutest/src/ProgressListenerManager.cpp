@@ -11,7 +11,7 @@
 CUTEST_NS_BEGIN
 
 ProgressListenerManager::ProgressListenerManager()
-    : failure_index(0) {}
+    : failureIndex(0) {}
 
 void
 ProgressListenerManager::add(ProgressListener* listener) {
@@ -34,9 +34,9 @@ protected:
     CPPUNIT_NS::Test* test;
 
 public:
-    StartTestRunTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* test_in)
+    StartTestRunTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* testParam)
         : ProgressListenerManager::TaskBase(manager, event)
-        , test(test_in) {}
+        , test(testParam) {}
 
     virtual void run() {
         this->manager->startTestRunImmediately(this->test);
@@ -58,14 +58,14 @@ ProgressListenerManager::startTestRun(CPPUNIT_NS::Test* test, CPPUNIT_NS::TestRe
 
 void
 ProgressListenerManager::startTestRunImmediately(CPPUNIT_NS::Test* test) {
-    while (!this->test_record.empty()) {
-        this->test_record.pop();
+    while (!this->testRecords.empty()) {
+        this->testRecords.pop();
     }
-    this->failure_index = 0;
+    this->failureIndex = 0;
 
     TestRecord record;
-    record.start_ms = CUTEST_NS::tickCount64();
-    this->test_record.push(record);
+    record.msStart = CUTEST_NS::tickCount64();
+    this->testRecords.push(record);
 
     TestProgressListeners::iterator it = this->listeners.begin();
     while (it != this->listeners.end()) {
@@ -79,9 +79,9 @@ protected:
     CPPUNIT_NS::Test* test;
 
 public:
-    EndTestRunTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* test_in)
+    EndTestRunTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* testParam)
         : ProgressListenerManager::TaskBase(manager, event)
-        , test(test_in) {}
+        , test(testParam) {}
 
     virtual void run() {
         this->manager->endTestRunImmediately(this->test);
@@ -104,13 +104,13 @@ ProgressListenerManager::endTestRun(CPPUNIT_NS::Test* test, CPPUNIT_NS::TestResu
 
 void
 ProgressListenerManager::endTestRunImmediately(CPPUNIT_NS::Test* test) {
-    TestRecord& record = this->test_record.top();
-    unsigned int elapsed_ms = (unsigned int)(CUTEST_NS::tickCount64() - record.start_ms);
-    this->test_record.pop();
+    TestRecord& record = this->testRecords.top();
+    unsigned int msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - record.msStart);
+    this->testRecords.pop();
 
     TestProgressListeners::reverse_iterator it = this->listeners.rbegin();
     while (it != this->listeners.rend()) {
-        (*it)->onRunnerEnd(test, elapsed_ms);
+        (*it)->onRunnerEnd(test, msElapsed);
         ++it;
     }
 }
@@ -120,9 +120,9 @@ protected:
     CPPUNIT_NS::Test* suite;
 
 public:
-    StartSuiteTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* suite_in)
+    StartSuiteTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* suiteParam)
         : ProgressListenerManager::TaskBase(manager, event)
-        , suite(suite_in) {}
+        , suite(suiteParam) {}
 
     virtual void run() {
         this->manager->startSuiteImmediately(this->suite);
@@ -145,8 +145,8 @@ ProgressListenerManager::startSuite(CPPUNIT_NS::Test* suite) {
 void
 ProgressListenerManager::startSuiteImmediately(CPPUNIT_NS::Test* suite) {
     TestRecord record;
-    record.start_ms = CUTEST_NS::tickCount64();
-    this->test_record.push(record);
+    record.msStart = CUTEST_NS::tickCount64();
+    this->testRecords.push(record);
 
     TestProgressListeners::iterator it = this->listeners.begin();
     while (it != this->listeners.end()) {
@@ -160,9 +160,9 @@ protected:
     CPPUNIT_NS::Test* suite;
 
 public:
-    EndSuiteTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* suite_in)
+    EndSuiteTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* suiteParam)
         : ProgressListenerManager::TaskBase(manager, event)
-        , suite(suite_in) {}
+        , suite(suiteParam) {}
 
     virtual void run() {
         this->manager->endSuiteImmediately(this->suite);
@@ -185,13 +185,13 @@ ProgressListenerManager::endSuite(CPPUNIT_NS::Test* suite) {
 
 void
 ProgressListenerManager::endSuiteImmediately(CPPUNIT_NS::Test* suite) {
-    TestRecord& record = this->test_record.top();
-    unsigned int elapsed_ms = (unsigned int)(CUTEST_NS::tickCount64() - record.start_ms);
-    this->test_record.pop();
+    TestRecord& record = this->testRecords.top();
+    unsigned int msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - record.msStart);
+    this->testRecords.pop();
 
     TestProgressListeners::reverse_iterator it = this->listeners.rbegin();
     while (it != this->listeners.rend()) {
-        (*it)->onSuiteEnd(suite, elapsed_ms);
+        (*it)->onSuiteEnd(suite, msElapsed);
         ++it;
     }
 }
@@ -201,9 +201,9 @@ protected:
     CPPUNIT_NS::Test* test;
 
 public:
-    StartTestTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* test_in)
+    StartTestTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* testParam)
         : ProgressListenerManager::TaskBase(manager, event)
-        , test(test_in) {}
+        , test(testParam) {}
 
     virtual void run() {
         this->manager->StartTestImmediately(this->test);
@@ -223,8 +223,8 @@ ProgressListenerManager::startTest(CPPUNIT_NS::Test* test) {
     }
     // 在这记录开始时间，避免把线程切换的时间也计算在内
     TestRecord record;
-    record.start_ms = CUTEST_NS::tickCount64();
-    this->test_record.push(record);
+    record.msStart = CUTEST_NS::tickCount64();
+    this->testRecords.push(record);
 }
 
 void
@@ -241,10 +241,10 @@ protected:
     CPPUNIT_NS::TestFailure* failure;
 
 public:
-    AddFailureTask(ProgressListenerManager* manager_in, Event* event, const CPPUNIT_NS::TestFailure& failure_in)
-        : ProgressListenerManager::TaskBase(manager_in, event)
+    AddFailureTask(ProgressListenerManager* manager, Event* event, const CPPUNIT_NS::TestFailure& failureParam)
+        : ProgressListenerManager::TaskBase(manager, event)
         , failure(NULL) {
-        this->failure = failure_in.clone();
+        this->failure = failureParam.clone();
     }
 
     virtual ~AddFailureTask() {
@@ -271,38 +271,38 @@ ProgressListenerManager::addFailure(const CPPUNIT_NS::TestFailure& failure) {
 
 void
 ProgressListenerManager::addFailureImmediately(const CPPUNIT_NS::TestFailure& failure) {
-    if (!this->test_record.empty()) {
-        TestRecord& record = this->test_record.top();
+    if (!this->testRecords.empty()) {
+        TestRecord& record = this->testRecords.top();
 
         if (failure.isError()) {
-            record.errors++;
+            record.errorCount++;
         } else {
-            record.failures++;
+            record.failureCount++;
         }
     }
 
     TestProgressListeners::iterator it = this->listeners.begin();
     while (it != this->listeners.end()) {
-        (*it)->onFailureAdd(this->failure_index, failure);
+        (*it)->onFailureAdd(this->failureIndex, failure);
         ++it;
     }
 
-    ++this->failure_index;
+    ++this->failureIndex;
 }
 
 class EndTestTask : public ProgressListenerManager::TaskBase {
 protected:
     CPPUNIT_NS::Test* test;
-    unsigned int elapsed_ms;
+    unsigned int msElapsed;
 
 public:
-    EndTestTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* test_in, unsigned int elapsed_ms_in)
+    EndTestTask(ProgressListenerManager* manager, Event* event, CPPUNIT_NS::Test* testParam, unsigned int msElapsedParam)
         : ProgressListenerManager::TaskBase(manager, event)
-        , test(test_in)
-        , elapsed_ms(elapsed_ms_in) {}
+        , test(testParam)
+        , msElapsed(msElapsedParam) {}
 
     virtual void run() {
-        this->manager->endTestImmediately(this->test, this->elapsed_ms);
+        this->manager->endTestImmediately(this->test, this->msElapsed);
     }
 };
 
@@ -310,14 +310,14 @@ void
 ProgressListenerManager::endTest(CPPUNIT_NS::Test* test) {
     Runner* runner = Runner::instance();
     // 在这记录用例耗时，避免把线程切换的时间也计算在内
-    TestRecord& record = this->test_record.top();
-    unsigned int elapsed_ms = (unsigned int)(CUTEST_NS::tickCount64() - record.start_ms);
+    TestRecord& record = this->testRecords.top();
+    unsigned int msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - record.msStart);
 
     if (CUTEST_NS::isOnMainThread()) {
-        endTestImmediately(test, elapsed_ms);
+        endTestImmediately(test, msElapsed);
     } else {
         Event* event = Event::createInstance();
-        EndTestTask* task = new EndTestTask(this, event, test, elapsed_ms);
+        EndTestTask* task = new EndTestTask(this, event, test, msElapsed);
         runner->asyncRunOnMainThread(task, true);
         event->wait();
         event->destroy();
@@ -325,15 +325,15 @@ ProgressListenerManager::endTest(CPPUNIT_NS::Test* test) {
 }
 
 void
-ProgressListenerManager::endTestImmediately(CPPUNIT_NS::Test* test, unsigned int elapsed_ms) {
-    TestRecord& record = this->test_record.top();
+ProgressListenerManager::endTestImmediately(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
+    TestRecord& record = this->testRecords.top();
     TestProgressListeners::reverse_iterator it = this->listeners.rbegin();
     while (it != this->listeners.rend()) {
-        (*it)->onTestEnd(test, record.errors, record.failures, elapsed_ms);
+        (*it)->onTestEnd(test, record.errorCount, record.failureCount, msElapsed);
         ++it;
     }
 
-    this->test_record.pop();
+    this->testRecords.pop();
 }
 
 CUTEST_NS_END

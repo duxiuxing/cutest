@@ -33,24 +33,24 @@ protected:
     static UINT __stdcall threadFunction(LPVOID param);
     void runOnWorkerThread();
 
-    HANDLE thread_handle;
-    Event* run_completed; // 用于标志工作线程是否结束的事件
+    HANDLE hThread;
+    Event* runCompleted; // 用于标志工作线程是否结束的事件
 
 public:
-    virtual void addFailure(bool is_error, CPPUNIT_NS::Exception* exception);
+    virtual void addFailure(bool isError, CPPUNIT_NS::Exception* exception);
     virtual const CPPUNIT_NS::TestResultCollector* testResultCollector();
 
 protected:
-    Result test_result;
-    CPPUNIT_NS::TestResultCollector result_collector;
-    testing::internal::TestResultXmlPrinter* result_printer;
+    Result result;
+    CPPUNIT_NS::TestResultCollector resultCollector;
+    testing::internal::TestResultXmlPrinter* resultPrinter;
 
 public: // 重载TestListener的成员方法
     virtual void startTest(CPPUNIT_NS::Test* test) override;
     virtual void endTest(CPPUNIT_NS::Test* test) override;
 
 protected:
-    CPPUNIT_NS::Test* runing_test;
+    CPPUNIT_NS::Test* currentTest;
 };
 
 CUTEST_NS_END

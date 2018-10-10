@@ -6,13 +6,13 @@
 CUTEST_NS_BEGIN
 
 class EventImpl : public Event {
-    HANDLE event_handle;
+    HANDLE hEvent;
 
 public:
     EventImpl();
 
     virtual void wait();
-    virtual void wait(unsigned int timeout_ms);
+    virtual void wait(unsigned int msTimeout);
     virtual void post();
     virtual void reset();
     virtual void destroy();

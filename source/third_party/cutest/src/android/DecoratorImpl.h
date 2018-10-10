@@ -34,7 +34,7 @@ protected:
     Event* run_completed; // 用于标志工作线程是否结束的事件
 
 public:
-    virtual void addFailure(bool is_error, CPPUNIT_NS::Exception* exception) override;
+    virtual void addFailure(bool isError, CPPUNIT_NS::Exception* exception) override;
     virtual const CPPUNIT_NS::TestResultCollector* testResultCollector() override;
 
 protected:

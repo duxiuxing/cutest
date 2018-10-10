@@ -17,14 +17,14 @@ public:
 
 public:
     TestTimeoutCounter(ExplicitEndTest* test);
-    void start(unsigned int timeout_ms, Callback* callback);
+    void start(unsigned int msTimeout, Callback* callback);
     void addFailure();
 
 protected:
     ExplicitEndTest* test;
     Callback* callback;
-    unsigned int timeout_ms;     // 记录start()的入参，即ExplicitEndTest的超时时长
-    unsigned long long start_ms; // 记录调用start()的时刻，用于计算ExplicitEndTest的实际执行时长
+    unsigned int msTimeout;     // 记录start()的入参，即ExplicitEndTest的超时时长
+    unsigned long long msStart; // 记录调用start()的时刻，用于计算ExplicitEndTest的实际执行时长
 
 public:
     // Runnable::run()的实现
@@ -41,7 +41,7 @@ public:
 class AutoEndTest : public TestTimeoutCounter::Callback {
 public:
     AutoEndTest();
-    void check(ExplicitEndTest* test, unsigned int timeout_ms);
+    void check(ExplicitEndTest* test, unsigned int msTimeout);
     void cancel();
 
 protected:

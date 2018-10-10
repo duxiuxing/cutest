@@ -88,8 +88,8 @@ DecoratorImpl::endTest(CPPUNIT_NS::Test* test) {
 }
 
 void
-DecoratorImpl::addFailure(bool is_error, CPPUNIT_NS::Exception* exception) {
-    if (is_error) {
+DecoratorImpl::addFailure(bool isError, CPPUNIT_NS::Exception* exception) {
+    if (isError) {
         this->test_result.addError(this->runing_test, exception);
     } else {
         this->test_result.addFailure(this->runing_test, exception);

@@ -27,7 +27,7 @@ public:
     virtual void start() = 0;
     virtual void stop() = 0;
 
-    virtual void addFailure(bool is_error, CPPUNIT_NS::Exception* exception) = 0;
+    virtual void addFailure(bool isError, CPPUNIT_NS::Exception* exception) = 0;
     virtual const CPPUNIT_NS::TestResultCollector* testResultCollector() = 0;
 };
 

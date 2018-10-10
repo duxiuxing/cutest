@@ -8,19 +8,19 @@
 
 CUTEST_NS_BEGIN
 
-TestTimeoutCounter::TestTimeoutCounter(ExplicitEndTest* test)
-    : test(test)
+TestTimeoutCounter::TestTimeoutCounter(ExplicitEndTest* testParam)
+    : test(testParam)
     , callback(NULL)
-    , timeout_ms(0)
-    , start_ms(0) {}
+    , msTimeout(0)
+    , msStart(0) {}
 
 void
-TestTimeoutCounter::start(unsigned int timeout_ms_in, Callback* callback_in) {
-    if (timeout_ms_in) {
-        this->callback = callback_in;
-        this->timeout_ms = timeout_ms_in;
-        this->start_ms = CUTEST_NS::tickCount64();
-        Runner::instance()->delayRunOnMainThread(timeout_ms_in, this, false);
+TestTimeoutCounter::start(unsigned int msTimeoutParam, Callback* callbackParam) {
+    if (msTimeoutParam) {
+        this->callback = callbackParam;
+        this->msTimeout = msTimeoutParam;
+        this->msStart = CUTEST_NS::tickCount64();
+        Runner::instance()->delayRunOnMainThread(msTimeoutParam, this, false);
     } else {
         // 超时时间为0表示无限等待，这种Test不需要启动Timer
         delete this;
@@ -30,8 +30,8 @@ TestTimeoutCounter::start(unsigned int timeout_ms_in, Callback* callback_in) {
 void
 TestTimeoutCounter::run() {
     // 计算ExplicitEndTest当前的执行时长
-    unsigned int elapsed_ms = (unsigned int)(CUTEST_NS::tickCount64() - this->start_ms);
-    if (elapsed_ms < this->timeout_ms) {
+    unsigned int msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - this->msStart);
+    if (msElapsed < this->msTimeout) {
         /*
             超时补偿逻辑：
             Timer存在误差，比如Runner::instance()->delayRunOnMainThread(1000, ...)指定的是1000ms，
@@ -48,13 +48,13 @@ TestTimeoutCounter::run() {
 void
 TestTimeoutCounter::addFailure() {
     // 计算ExplicitEndTest当前的执行时长
-    unsigned int elapsed_ms = (unsigned int)(CUTEST_NS::tickCount64() - this->start_ms);
+    unsigned int msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - this->msStart);
 
-    if (elapsed_ms < this->timeout_ms) {
+    if (msElapsed < this->msTimeout) {
         // ExplicitEndTest还没超时就被自动结束了？需要Review AutoEndTest的设计。
-        EXPECT_GE(elapsed_ms, this->timeout_ms) << "AutoEndTest early end the TestCase!";
-    } else if (Runner::instance()->treatTimeoutAsError()) {
-        EXPECT_LE(elapsed_ms, this->timeout_ms) << "ExplicitEndTest Timeout!";
+        EXPECT_GE(msElapsed, this->msTimeout) << "AutoEndTest early end the TestCase!";
+    } else if (Runner::instance()->isTreatTimeoutAsError()) {
+        EXPECT_LE(msElapsed, this->msTimeout) << "ExplicitEndTest Timeout!";
     }
 }
 
@@ -63,11 +63,11 @@ AutoEndTest::AutoEndTest()
     , counter(NULL) {}
 
 void
-AutoEndTest::check(ExplicitEndTest* test, unsigned int timeout_ms) {
-    if (test && timeout_ms) {
-        this->test = test;
-        this->counter = new TestTimeoutCounter(test);
-        this->counter->start(timeout_ms, this);
+AutoEndTest::check(ExplicitEndTest* testParam, unsigned int msTimeout) {
+    if (testParam && msTimeout) {
+        this->test = testParam;
+        this->counter = new TestTimeoutCounter(testParam);
+        this->counter->start(msTimeout, this);
     } else {
         this->test = NULL;
         this->counter = NULL;
@@ -81,9 +81,9 @@ AutoEndTest::cancel() {
 }
 
 void
-AutoEndTest::onTimeout(ExplicitEndTest* test, TestTimeoutCounter* counter) {
-    if (this->test == test && this->counter == counter) {
-        counter->addFailure();
+AutoEndTest::onTimeout(ExplicitEndTest* testParam, TestTimeoutCounter* counterParam) {
+    if (this->test == testParam && this->counter == counterParam) {
+        this->counter->addFailure();
         this->test->endTest();
     }
 }

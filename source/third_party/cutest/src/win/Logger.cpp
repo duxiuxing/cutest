@@ -41,13 +41,13 @@ printString(const char* format, ...) {
 }
 
 Logger::Logger()
-    : passed_test_cases(0)
-    , first_failure_of_a_test(true) {}
+    : passedTestCaseCount(0)
+    , firstFailureOfCurrentTest(true) {}
 
 void
 Logger::onRunnerStart(CPPUNIT_NS::Test* test) {
-    this->passed_test_cases = 0;
-    this->failed_test_cases.clear();
+    this->passedTestCaseCount = 0;
+    this->failedTestCaseNames.clear();
 
     printColorString(COLOR_GREEN,  "[==========] ");
     printString("Running %s from %s.\n",
@@ -56,29 +56,29 @@ Logger::onRunnerStart(CPPUNIT_NS::Test* test) {
 }
 
 void
-Logger::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int elapsed_ms) {
+Logger::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
     printColorString(COLOR_GREEN,  "[==========] ");
     printString("%s from %s ran. (%u ms total)\n",
                 testing::FormatTestCount(test->countTestCases()).c_str(),
                 test->getName().c_str(),
-                elapsed_ms);
+                msElapsed);
 
     printColorString(COLOR_GREEN,  "[  PASSED  ] ");
-    printString("%s.\n", testing::FormatTestCount(this->passed_test_cases).c_str());
+    printString("%s.\n", testing::FormatTestCount(this->passedTestCaseCount).c_str());
 
-    if (this->failed_test_cases.size()) {
+    if (this->failedTestCaseNames.size()) {
         printColorString(COLOR_RED,  "[  FAILED  ] ");
-        printString("%s, listed below:\n", testing::FormatTestCount((int)this->failed_test_cases.size()).c_str());
+        printString("%s, listed below:\n", testing::FormatTestCount((int)this->failedTestCaseNames.size()).c_str());
 
-        std::list<std::string>::iterator it = this->failed_test_cases.begin();
-        while (it != this->failed_test_cases.end()) {
+        std::list<std::string>::iterator it = this->failedTestCaseNames.begin();
+        while (it != this->failedTestCaseNames.end()) {
             printColorString(COLOR_RED,  "[  FAILED  ] ");
             printString("%s\n", it->c_str());
             ++it;
         }
 
-        printString("\n%2d FAILED %s\n", this->failed_test_cases.size(),
-                    this->failed_test_cases.size() == 1 ? "TEST" : "TESTS");
+        printString("\n%2d FAILED %s\n", this->failedTestCaseNames.size(),
+                    this->failedTestCaseNames.size() == 1 ? "TEST" : "TESTS");
     }
 }
 
@@ -91,24 +91,24 @@ Logger::onSuiteStart(CPPUNIT_NS::Test* suite) {
 }
 
 void
-Logger::onSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int elapsed_ms) {
+Logger::onSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int msElapsed) {
     printColorString(COLOR_GREEN, "[----------] ");
     printString("%s from %s (%u ms total)\n\n",
                 testing::FormatTestCount(suite->countTestCases()).c_str(),
                 suite->getName().c_str(),
-                elapsed_ms);
+                msElapsed);
 }
 
 void
 Logger::onTestStart(CPPUNIT_NS::Test* test) {
     printColorString(COLOR_GREEN,  "[ RUN      ] ");
     printString("%s\n", test->getName().c_str());
-    this->first_failure_of_a_test = true;
+    this->firstFailureOfCurrentTest = true;
 }
 
 void
 Logger::onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) {
-    if (this->first_failure_of_a_test) {
+    if (this->firstFailureOfCurrentTest) {
         printString("\n");
     }
 
@@ -123,27 +123,27 @@ Logger::onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure)
                     failure.sourceLine().lineNumber(),
                     failure.thrownException()->what());
     }
-    this->first_failure_of_a_test = false;
+    this->firstFailureOfCurrentTest = false;
 }
 
 void
 Logger::onTestEnd(
     CPPUNIT_NS::Test* test,
-    unsigned int error_count,
-    unsigned int failure_count,
-    unsigned int elapsed_ms) {
-    if (0 == error_count && 0 == failure_count) {
+    unsigned int errorCount,
+    unsigned int failureCount,
+    unsigned int msElapsed) {
+    if (0 == errorCount && 0 == failureCount) {
         printColorString(COLOR_GREEN,  "[       OK ] ");
         printString("%s (%u ms)\n",
                     test->getName().c_str(),
-                    elapsed_ms);
-        ++this->passed_test_cases;
+                    msElapsed);
+        ++this->passedTestCaseCount;
     } else {
         printColorString(COLOR_RED,  "[  FAILED  ] ");
         printString("%s (%u ms)\n",
                     test->getName().c_str(),
-                    elapsed_ms);
-        this->failed_test_cases.push_back(test->getName());
+                    msElapsed);
+        this->failedTestCaseNames.push_back(test->getName());
     }
 }
 

@@ -9,8 +9,8 @@
 
 CUTEST_NS_BEGIN
 
-CountDownLatchImpl::CountDownLatchImpl(int count_in)
-    : count(count_in)
+CountDownLatchImpl::CountDownLatchImpl(int countParam)
+    : count(countParam)
     , event(NULL) {}
 
 CountDownLatchImpl::~CountDownLatchImpl() {
@@ -30,11 +30,11 @@ CountDownLatchImpl::await() {
 }
 
 bool
-CountDownLatchImpl::await(unsigned int timeout_ms) {
+CountDownLatchImpl::await(unsigned int msTimeout) {
     if (CUTEST_NS::isOnMainThread()) {
-        return awaitOnMainThread(timeout_ms);
+        return awaitOnMainThread(msTimeout);
     } else {
-        return awaitOnWorkerThread(timeout_ms);
+        return awaitOnWorkerThread(msTimeout);
     }
 }
 
@@ -62,7 +62,7 @@ CountDownLatchImpl::awaitOnMainThread() {
 }
 
 bool
-CountDownLatchImpl::awaitOnMainThread(unsigned int timeout_ms) {
+CountDownLatchImpl::awaitOnMainThread(unsigned int msTimeout) {
     unsigned long long start = CUTEST_NS::tickCount64();
 
     MSG msg = {0};
@@ -71,7 +71,7 @@ CountDownLatchImpl::awaitOnMainThread(unsigned int timeout_ms) {
         ::TranslateMessage(&msg);
         ::DispatchMessage(&msg);
 
-        if ((CUTEST_NS::tickCount64() - start) >= timeout_ms) {
+        if ((CUTEST_NS::tickCount64() - start) >= msTimeout) {
             return false;
         }
     }
@@ -86,9 +86,9 @@ CountDownLatchImpl::awaitOnWorkerThread() {
 }
 
 bool
-CountDownLatchImpl::awaitOnWorkerThread(unsigned int timeout_ms) {
+CountDownLatchImpl::awaitOnWorkerThread(unsigned int msTimeout) {
     this->event = Event::createInstance();
-    this->event->wait(timeout_ms);
+    this->event->wait(msTimeout);
     return (this->count <= 0);
 }
 

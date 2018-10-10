@@ -46,7 +46,7 @@ public:
     void addFailureImmediately(const CPPUNIT_NS::TestFailure& failure);
 
     virtual void endTest(CPPUNIT_NS::Test* test);
-    void endTestImmediately(CPPUNIT_NS::Test* test, unsigned int elapsed_ms);
+    void endTestImmediately(CPPUNIT_NS::Test* test, unsigned int msElapsed);
 
     class TaskBase : public Runnable {
     protected:
@@ -54,9 +54,9 @@ public:
         Event* event;
 
     public:
-        TaskBase(ProgressListenerManager* manager_in, Event* event_in)
-            : manager(manager_in)
-            , event(event_in) {}
+        TaskBase(ProgressListenerManager* managerParam, Event* eventParam)
+            : manager(managerParam)
+            , event(eventParam) {}
 
         virtual ~TaskBase() {
             if (this->event) {
@@ -68,18 +68,18 @@ public:
 protected:
     struct TestRecord {
         TestRecord()
-            : start_ms(0)
-            , errors(0)
-            , failures(0) {}
+            : msStart(0)
+            , errorCount(0)
+            , failureCount(0) {}
 
-        unsigned long long start_ms;
-        int errors;
-        int failures;
+        unsigned long long msStart;
+        int errorCount;
+        int failureCount;
     };
 
-    std::stack<TestRecord> test_record;
+    std::stack<TestRecord> testRecords;
 
-    unsigned int failure_index;
+    unsigned int failureIndex;
 };
 
 CUTEST_NS_END

@@ -464,8 +464,8 @@ void
 CTestRunnerDlg::saveSettings()
 {
   m_settings.autorun_on_startup = ( m_bAutorunAtStartup != 0 );
-  m_settings.always_call_test_on_main_thread = CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread();
-  m_settings.treat_timeout_as_error = CUTEST_NS::Runner::instance()->treatTimeoutAsError();
+  m_settings.always_call_test_on_main_thread = CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread();
+  m_settings.treat_timeout_as_error = CUTEST_NS::Runner::instance()->isTreatTimeoutAsError();
   StoreWindowPosition( TestRunnerModel::settingKey,
                        TestRunnerModel::settingMainDialogKey );
 
@@ -656,11 +656,11 @@ CTestRunnerDlg::OnMenuSelect( UINT nItemID, UINT nFlags, HMENU hSysMenu )
     UINT enable = ( m_uiState == UI_STATE_NONE ) ? MF_ENABLED : MF_GRAYED;
     mainMenu->EnableMenuItem( ID_AUTORUN_AT_STARTUP, MF_BYCOMMAND | enable );
 
-    check = CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread() ? MF_CHECKED : MF_UNCHECKED;
+    check = CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread() ? MF_CHECKED : MF_UNCHECKED;
     mainMenu->CheckMenuItem( ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, MF_BYCOMMAND | check );
     mainMenu->EnableMenuItem( ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, MF_BYCOMMAND | enable );
 
-    check = CUTEST_NS::Runner::instance()->treatTimeoutAsError() ? MF_CHECKED : MF_UNCHECKED;
+    check = CUTEST_NS::Runner::instance()->isTreatTimeoutAsError() ? MF_CHECKED : MF_UNCHECKED;
     mainMenu->CheckMenuItem( ID_TREAT_TIMEOUT_AS_ERROR, MF_BYCOMMAND | check );
     mainMenu->EnableMenuItem( ID_TREAT_TIMEOUT_AS_ERROR, MF_BYCOMMAND | enable );
   }
@@ -677,7 +677,7 @@ void
 CTestRunnerDlg::OnAlwaysCallTestOnMainThread()
 {
   CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread(
-    !CUTEST_NS::Runner::instance()->alwaysCallTestOnMainThread()
+    !CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread()
   );
   saveSettings();
 }
@@ -686,7 +686,7 @@ void
 CTestRunnerDlg::OnTreatTimeoutAsError()
 {
   CUTEST_NS::Runner::instance()->setTreatTimeoutAsError(
-    !CUTEST_NS::Runner::instance()->treatTimeoutAsError()
+    !CUTEST_NS::Runner::instance()->isTreatTimeoutAsError()
   );
   saveSettings();
 }

@@ -7,33 +7,33 @@ Event::createInstance() {
     return new EventImpl;
 }
 
-EventImpl::EventImpl() : event_handle(NULL) {
-    this->event_handle = ::CreateEvent(NULL, FALSE, FALSE, NULL);
+EventImpl::EventImpl() : hEvent(NULL) {
+    this->hEvent = ::CreateEvent(NULL, FALSE, FALSE, NULL);
 }
 
 void
 EventImpl::wait() {
-    ::WaitForSingleObjectEx(this->event_handle, INFINITE, FALSE);
+    ::WaitForSingleObjectEx(this->hEvent, INFINITE, FALSE);
 }
 
 void
-EventImpl::wait(unsigned int timeout_ms) {
-    ::WaitForSingleObjectEx(this->event_handle, timeout_ms, FALSE);
+EventImpl::wait(unsigned int msTimeout) {
+    ::WaitForSingleObjectEx(this->hEvent, msTimeout, FALSE);
 }
 
 void
 EventImpl::reset() {
-    ::ResetEvent(this->event_handle);
+    ::ResetEvent(this->hEvent);
 }
 
 void
 EventImpl::post() {
-    ::SetEvent(this->event_handle);
+    ::SetEvent(this->hEvent);
 }
 
 void
 EventImpl::destroy() {
-    ::CloseHandle(this->event_handle);
+    ::CloseHandle(this->hEvent);
     delete this;
 }
 

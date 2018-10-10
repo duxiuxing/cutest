@@ -8,10 +8,10 @@
 CUTEST_NS_BEGIN
 
 RunnerBase::RunnerBase()
-    : test_decorator(NULL)
-    , runing_test(NULL)
-    , always_call_test_on_main_thread(false)
-    , treat_timeout_as_error(false)
+    : testDecorator(NULL)
+    , currentTest(NULL)
+    , alwaysCallTestOnMainThread(false)
+    , treatTimeoutAsError(false)
     , state(STATE_NONE) {
     addListener(this);
 }
@@ -19,30 +19,30 @@ RunnerBase::RunnerBase()
 RunnerBase::~RunnerBase() {
     stop();
 
-    if (this->test_decorator) {
-        this->test_decorator->destroy();
-        this->test_decorator = NULL;
+    if (this->testDecorator) {
+        this->testDecorator->destroy();
+        this->testDecorator = NULL;
     }
 }
 
 void
 RunnerBase::setAlwaysCallTestOnMainThread(bool value) {
-    this->always_call_test_on_main_thread = value;
+    this->alwaysCallTestOnMainThread = value;
 }
 
 bool
-RunnerBase::alwaysCallTestOnMainThread() {
-    return this->always_call_test_on_main_thread;
+RunnerBase::isAlwaysCallTestOnMainThread() {
+    return this->alwaysCallTestOnMainThread;
 }
 
 void
 RunnerBase::setTreatTimeoutAsError(bool value) {
-    this->treat_timeout_as_error = value;
+    this->treatTimeoutAsError = value;
 }
 
 bool
-RunnerBase::treatTimeoutAsError() {
-    return this->treat_timeout_as_error;
+RunnerBase::isTreatTimeoutAsError() {
+    return this->treatTimeoutAsError;
 }
 
 void
@@ -69,14 +69,14 @@ RunnerBase::start(CPPUNIT_NS::Test* test) {
         return;
     }
 
-    if (this->test_decorator) {
-        this->test_decorator->destroy();
-        this->test_decorator = NULL;
+    if (this->testDecorator) {
+        this->testDecorator->destroy();
+        this->testDecorator = NULL;
     }
 
-    this->test_decorator = Decorator::createInstance(test);
-    this->test_decorator->addListener(&this->listener_manager);
-    this->test_decorator->start();
+    this->testDecorator = Decorator::createInstance(test);
+    this->testDecorator->addListener(&this->listener_manager);
+    this->testDecorator->start();
 }
 
 void
@@ -93,27 +93,27 @@ RunnerBase::stop() {
         return;
     }
 
-    if (this->test_decorator) {
-        this->test_decorator->stop();
+    if (this->testDecorator) {
+        this->testDecorator->stop();
 
-        if (this->runing_test) {
-            this->runing_test->endTest();
-            this->runing_test = NULL;
+        if (this->currentTest) {
+            this->currentTest->endTest();
+            this->currentTest = NULL;
         }
     }
 }
 
 void
-RunnerBase::addFailure(bool is_error, CPPUNIT_NS::Exception* exception) {
-    if (this->test_decorator) {
-        this->test_decorator->addFailure(is_error, exception);
+RunnerBase::addFailure(bool isError, CPPUNIT_NS::Exception* exception) {
+    if (this->testDecorator) {
+        this->testDecorator->addFailure(isError, exception);
     }
 }
 
 unsigned int
 RunnerBase::errorCount() const {
-    if (this->test_decorator) {
-        const CPPUNIT_NS::TestResultCollector* collector = this->test_decorator->testResultCollector();
+    if (this->testDecorator) {
+        const CPPUNIT_NS::TestResultCollector* collector = this->testDecorator->testResultCollector();
         return (unsigned int)collector->testErrors();
     }
     return 0;
@@ -121,8 +121,8 @@ RunnerBase::errorCount() const {
 
 unsigned int
 RunnerBase::failureCount() const {
-    if (this->test_decorator) {
-        const CPPUNIT_NS::TestResultCollector* collector = this->test_decorator->testResultCollector();
+    if (this->testDecorator) {
+        const CPPUNIT_NS::TestResultCollector* collector = this->testDecorator->testResultCollector();
         return (unsigned int)collector->testFailures();
     }
     return 0;
@@ -130,8 +130,8 @@ RunnerBase::failureCount() const {
 
 unsigned int
 RunnerBase::totalFailureCount() const {
-    if (this->test_decorator) {
-        const CPPUNIT_NS::TestResultCollector* collector = this->test_decorator->testResultCollector();
+    if (this->testDecorator) {
+        const CPPUNIT_NS::TestResultCollector* collector = this->testDecorator->testResultCollector();
         return (unsigned int)collector->testFailuresTotal();
     }
     return 0;
@@ -139,8 +139,8 @@ RunnerBase::totalFailureCount() const {
 
 const CPPUNIT_NS::TestFailure*
 RunnerBase::failureAt(unsigned int index) const {
-    if (this->test_decorator) {
-        const CPPUNIT_NS::TestResultCollector* collector = this->test_decorator->testResultCollector();
+    if (this->testDecorator) {
+        const CPPUNIT_NS::TestResultCollector* collector = this->testDecorator->testResultCollector();
         if (index < collector->failures().size()) {
             return collector->failures()[index];
         }
@@ -149,34 +149,34 @@ RunnerBase::failureAt(unsigned int index) const {
 }
 
 void
-RunnerBase::registerExplicitEndTest(ExplicitEndTest* test, unsigned int timeout_ms) {
-    this->runing_test = test;
-    this->auto_end_test.check(test, timeout_ms);
+RunnerBase::registerExplicitEndTest(ExplicitEndTest* test, unsigned int msTimeout) {
+    this->currentTest = test;
+    this->autoEndTest.check(test, msTimeout);
 }
 
 void
 RunnerBase::unregisterExplicitEndTest(ExplicitEndTest* test) {
-    if (this->runing_test == test) {
-        this->runing_test = NULL;
-        this->auto_end_test.cancel();
+    if (this->currentTest == test) {
+        this->currentTest = NULL;
+        this->autoEndTest.cancel();
     }
 }
 
 void
-RunnerBase::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int elapsed_ms) {
+RunnerBase::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
     this->state = STATE_NONE;
 }
 
-thread_id RunnerBase::main_thread_id = 0;
+thread_id RunnerBase::mainThreadId = 0;
 
 thread_id
 mainThreadId() {
-    return RunnerBase::main_thread_id;
+    return RunnerBase::mainThreadId;
 }
 
 void
 RunnerBase::run() {
-    RunnerBase::main_thread_id = currentThreadId();
+    RunnerBase::mainThreadId = currentThreadId();
 }
 
 CUTEST_NS_END

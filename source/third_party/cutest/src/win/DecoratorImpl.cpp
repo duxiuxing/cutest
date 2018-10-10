@@ -17,25 +17,25 @@ Decorator::createInstance(CPPUNIT_NS::Test* test) {
 
 DecoratorImpl::DecoratorImpl(CPPUNIT_NS::Test* test)
     : TestDecorator(test)
-    , test_result(new CPPUNIT_NS::SynchronizationObjectImpl(), new CPPUNIT_NS::SynchronizationObjectImpl())
-    , result_collector(new CPPUNIT_NS::SynchronizationObjectImpl())
-    , result_printer(NULL)
-    , runing_test(NULL)
-    , thread_handle(NULL) {
-    test_result.addListener(this);
-    test_result.addListener(&this->result_collector);
+    , result(new CPPUNIT_NS::SynchronizationObjectImpl(), new CPPUNIT_NS::SynchronizationObjectImpl())
+    , resultCollector(new CPPUNIT_NS::SynchronizationObjectImpl())
+    , resultPrinter(NULL)
+    , currentTest(NULL)
+    , hThread(NULL) {
+    result.addListener(this);
+    result.addListener(&this->resultCollector);
 
-    this->run_completed = Event::createInstance();
+    this->runCompleted = Event::createInstance();
 }
 
 DecoratorImpl::~DecoratorImpl() {
-    if (this->result_printer) {
-        Runner::instance()->removeListener(this->result_printer);
-        delete this->result_printer;
+    if (this->resultPrinter) {
+        Runner::instance()->removeListener(this->resultPrinter);
+        delete this->resultPrinter;
     }
 
-    this->run_completed->wait();
-    this->run_completed->destroy();
+    this->runCompleted->wait();
+    this->runCompleted->destroy();
     CPPUNIT_NS::TestDecorator::m_test = NULL;
 }
 
@@ -46,20 +46,20 @@ DecoratorImpl::destroy() {
 
 void
 DecoratorImpl::addListener(CPPUNIT_NS::TestListener* listener) {
-    this->test_result.addListener(listener);
+    this->result.addListener(listener);
 }
 
 void
 DecoratorImpl::start() {
     // 根据参数构造TestResultXmlPrinter
     if (testing::internal::UnitTestOptions::GetOutputFormat() == "xml") {
-        this->result_printer = new testing::internal::TestResultXmlPrinter(
+        this->resultPrinter = new testing::internal::TestResultXmlPrinter(
             testing::internal::UnitTestOptions::GetAbsolutePathToOutputFile().c_str());
 
-        Runner::instance()->addListener(this->result_printer);
+        Runner::instance()->addListener(this->resultPrinter);
     }
 
-    this->run_completed->reset();
+    this->runCompleted->reset();
 
     HANDLE source_handle = (HANDLE)_beginthreadex(NULL, 0,
                            threadFunction, this, CREATE_SUSPENDED, NULL);
@@ -69,7 +69,7 @@ DecoratorImpl::start() {
     ::DuplicateHandle(::GetCurrentProcess(),
                       source_handle,
                       ::GetCurrentProcess(),
-                      &this->thread_handle,
+                      &this->hThread,
                       0,
                       FALSE,
                       DUPLICATE_SAME_ACCESS);
@@ -89,40 +89,40 @@ DecoratorImpl::threadFunction(LPVOID param) {
 
 void
 DecoratorImpl::runOnWorkerThread() {
-    this->test_result.runTest(this);
+    this->result.runTest(this);
 
-    ::CloseHandle(this->thread_handle);
-    this->thread_handle = NULL;
+    ::CloseHandle(this->hThread);
+    this->hThread = NULL;
 
-    this->run_completed->post();
+    this->runCompleted->post();
 }
 
 void
 DecoratorImpl::stop() {
-    this->test_result.stop();
+    this->result.stop();
 }
 
 const CPPUNIT_NS::TestResultCollector*
 DecoratorImpl::testResultCollector() {
-    return &this->result_collector;
+    return &this->resultCollector;
 }
 
 void
 DecoratorImpl::startTest(CPPUNIT_NS::Test* test) {
-    this->runing_test = test;
+    this->currentTest = test;
 }
 
 void
 DecoratorImpl::endTest(CPPUNIT_NS::Test* test) {
-    this->runing_test = NULL;
+    this->currentTest = NULL;
 }
 
 void
-DecoratorImpl::addFailure(bool is_error, CPPUNIT_NS::Exception* exception) {
-    if (is_error) {
-        this->test_result.addError(this->runing_test, exception);
+DecoratorImpl::addFailure(bool isError, CPPUNIT_NS::Exception* exception) {
+    if (isError) {
+        this->result.addError(this->currentTest, exception);
     } else {
-        this->test_result.addFailure(this->runing_test, exception);
+        this->result.addFailure(this->currentTest, exception);
     }
 }
 
