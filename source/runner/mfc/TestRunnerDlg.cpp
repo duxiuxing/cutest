@@ -29,8 +29,6 @@ CTestRunnerDlg::CTestRunnerDlg( CPPUNIT_NS::Test *rootTest, CWnd *pParent )
   m_errors = 0;
   m_failures = 0;
 
-  m_bAutorunAtStartup = FALSE;
-
   m_testStartTime = CUTEST_NS::tickCount64();
   m_testEndTime = m_testStartTime;
 
@@ -94,8 +92,6 @@ CTestRunnerDlg::OnInitDialog()
     SetWindowText( text );
   }
 
-  m_model.loadSettings( m_settings );
-
   m_hAccelerator = ::LoadAccelerators( AfxGetResourceHandle(),
                                        MAKEINTRESOURCE( IDR_ACCELERATOR_TEST_RUNNER ) );
 
@@ -106,24 +102,23 @@ CTestRunnerDlg::OnInitDialog()
 
   m_testsProgress.Create( NULL, NULL, WS_CHILD | WS_VISIBLE, getItemClientRect( IDC_STATIC_PROGRESS_BAR ), this, 0 );
 
-  m_bAutorunAtStartup = m_settings.autorun_on_startup;
-  CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread( m_settings.always_call_test_on_main_thread );
-  CUTEST_NS::Runner::instance()->setTreatTimeoutAsError( m_settings.treat_timeout_as_error );
+  CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread( m_model.AlwaysCallTestOnMainThread );
+  CUTEST_NS::Runner::instance()->setTreatTimeoutAsError( m_model.TreatTimeoutAsError );
 
   m_errorListBitmap.Create( IDB_ERROR_TYPE, 16, 1, RGB( 255, 0, 255 ) );
   m_listCtrl.SetImageList( &m_errorListBitmap, LVSIL_SMALL );
   m_listCtrl.SetExtendedStyle( m_listCtrl.GetExtendedStyle() | LVS_EX_FULLROWSELECT );
-  int total_col_1_4 = m_settings.col_1 + m_settings.col_2 +
-                      m_settings.col_3 + m_settings.col_4;
+  int total_col_1_4 = m_model.TypeColumnWidth + m_model.NameColumnWidth +
+                      m_model.FailedConditionColumnWidth + m_model.LineNumberColumnWidth;
   CRect listBounds;
   m_listCtrl.GetClientRect( &listBounds );
   int col_5_width = listBounds.Width() - total_col_1_4; // 5th column = rest of listview space
   ListCtrlFormatter formatter( m_listCtrl );
-  formatter.AddColumn( IDS_ERRORLIST_TYPE, m_settings.col_1, LVCFMT_LEFT, 0 );
-  formatter.AddColumn( IDS_ERRORLIST_NAME, m_settings.col_2, LVCFMT_LEFT, 1 );
-  formatter.AddColumn( IDS_ERRORLIST_FAILED_CONDITION, m_settings.col_3, LVCFMT_LEFT, 2 );
+  formatter.AddColumn( IDS_ERRORLIST_TYPE, m_model.TypeColumnWidth, LVCFMT_LEFT, 0 );
+  formatter.AddColumn( IDS_ERRORLIST_NAME, m_model.NameColumnWidth, LVCFMT_LEFT, 1 );
+  formatter.AddColumn( IDS_ERRORLIST_FAILED_CONDITION, m_model.FailedConditionColumnWidth, LVCFMT_LEFT, 2 );
   m_listCtrl.setLineNumberSubItem( formatter.GetNextColumnIndex() );
-  formatter.AddColumn( IDS_ERRORLIST_LINE_NUMBER, m_settings.col_4, LVCFMT_LEFT, 3 );
+  formatter.AddColumn( IDS_ERRORLIST_LINE_NUMBER, m_model.LineNumberColumnWidth, LVCFMT_LEFT, 3 );
   m_listCtrl.setFileNameSubItem( formatter.GetNextColumnIndex() );
   formatter.AddColumn( IDS_ERRORLIST_FILE_NAME, col_5_width, LVCFMT_LEFT, 4 );
 
@@ -149,7 +144,7 @@ CTestRunnerDlg::OnInitDialog()
 
   updateListColumnSize();
 
-  if ( m_bAutorunAtStartup )
+  if ( m_model.AutorunOnStartup )
   {
     OnRun();
   }
@@ -202,7 +197,7 @@ CTestRunnerDlg::OnRun()
     return;
   }
 
-  CPPUNIT_NS::Test *selectedTest = m_model.selectedTest();
+  CPPUNIT_NS::Test *selectedTest = m_model.GetSelectedTest();
 
   if ( !selectedTest )
   {
@@ -396,15 +391,12 @@ CTestRunnerDlg::OnOK()
 void
 CTestRunnerDlg::OnSelectTestInHistoryCombo()
 {
-  unsigned int currentSelection = m_comboHistory.GetCurSel();
+  unsigned int index = m_comboHistory.GetCurSel();
 
-  if ( currentSelection >= 0  &&
-       currentSelection < m_model.history().size() )
+  if (m_model.SelectTest(index))
   {
-    CPPUNIT_NS::Test *selectedTest = m_model.history()[currentSelection];
-    m_model.selectHistoryTest( selectedTest );
     ResetHistoryCombo();
-    saveSettings();
+    m_model.SaveTestHistory();
   }
 }
 
@@ -415,8 +407,8 @@ CTestRunnerDlg::ResetHistoryCombo()
 
   m_comboHistory.ResetContent();
 
-  const TestRunnerModel::History &history = m_model.history();
-  for ( TestRunnerModel::History::const_iterator it = history.begin();
+  const TestHistory &history = m_model.GetTestHistory();
+  for ( TestHistory::const_iterator it = history.begin();
         it != history.end();
         ++it )
   {
@@ -438,12 +430,12 @@ void
 CTestRunnerDlg::OnBrowseTest()
 {
   TreeHierarchyDlg dlg;
-  dlg.setRootTest( m_model.rootTest() );
+  dlg.setRootTest( m_model.GetRootTest() );
   if ( dlg.DoModal() == IDOK )
   {
-    m_model.selectHistoryTest( dlg.getSelectedTest() );
+    m_model.SelectTest( dlg.getSelectedTest() );
     ResetHistoryCombo();
-    saveSettings();
+    m_model.SaveTestHistory();
   }
 }
 
@@ -457,21 +449,6 @@ CTestRunnerDlg::PreTranslateMessage( MSG *pMsg )
     return TRUE;
   }
   return cdxCDynamicDialog::PreTranslateMessage( pMsg );
-}
-
-void
-CTestRunnerDlg::saveSettings()
-{
-  m_settings.autorun_on_startup = ( m_bAutorunAtStartup != 0 );
-  m_settings.always_call_test_on_main_thread = CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread();
-  m_settings.treat_timeout_as_error = CUTEST_NS::Runner::instance()->isTreatTimeoutAsError();
-
-  m_settings.col_1 = m_listCtrl.GetColumnWidth( 0 );
-  m_settings.col_2 = m_listCtrl.GetColumnWidth( 1 );
-  m_settings.col_3 = m_listCtrl.GetColumnWidth( 2 );
-  m_settings.col_4 = m_listCtrl.GetColumnWidth( 3 );
-
-  m_model.saveSettings( m_settings );
 }
 
 void CTestRunnerDlg::OnQuitApplication()
@@ -576,7 +553,7 @@ CTestRunnerDlg::SetUIState( UIState state )
   {
   case UI_STATE_NONE:
     {
-      CPPUNIT_NS::Test *rootTest = m_model.rootTest();
+      CPPUNIT_NS::Test *rootTest = m_model.GetRootTest();
       if ( rootTest && rootTest->countTestCases() > 0 )
       {
         m_buttonBrowse.EnableWindow( TRUE );
@@ -621,7 +598,12 @@ CTestRunnerDlg::SetUIState( UIState state )
 void
 CTestRunnerDlg::SafeCloseDialog()
 {
-  saveSettings();
+	m_model.TypeColumnWidth = m_listCtrl.GetColumnWidth(0);
+	m_model.NameColumnWidth = m_listCtrl.GetColumnWidth(1);
+	m_model.FailedConditionColumnWidth = m_listCtrl.GetColumnWidth(2);
+	m_model.LineNumberColumnWidth = m_listCtrl.GetColumnWidth(3);
+	m_model.SaveSettings();
+
 
   switch ( m_uiState )
   {
@@ -648,7 +630,7 @@ CTestRunnerDlg::OnMenuSelect( UINT nItemID, UINT nFlags, HMENU hSysMenu )
   CMenu *mainMenu = GetMenu();
   if ( mainMenu && mainMenu->GetSafeHmenu() )
   {
-    UINT check = m_bAutorunAtStartup ? MF_CHECKED : MF_UNCHECKED;
+    UINT check = m_model.AutorunOnStartup ? MF_CHECKED : MF_UNCHECKED;
     mainMenu->CheckMenuItem( ID_AUTORUN_AT_STARTUP, MF_BYCOMMAND | check );
     UINT enable = ( m_uiState == UI_STATE_NONE ) ? MF_ENABLED : MF_GRAYED;
     mainMenu->EnableMenuItem( ID_AUTORUN_AT_STARTUP, MF_BYCOMMAND | enable );
@@ -666,24 +648,22 @@ CTestRunnerDlg::OnMenuSelect( UINT nItemID, UINT nFlags, HMENU hSysMenu )
 void
 CTestRunnerDlg::OnAutorunAtStartup()
 {
-  m_bAutorunAtStartup = !m_bAutorunAtStartup;
-  saveSettings();
+  m_model.AutorunOnStartup = !m_model.AutorunOnStartup;
+  m_model.SaveSettings();
 }
 
 void
 CTestRunnerDlg::OnAlwaysCallTestOnMainThread()
 {
-  CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread(
-    !CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread()
-  );
-  saveSettings();
+	m_model.AlwaysCallTestOnMainThread = !m_model.AlwaysCallTestOnMainThread;
+  CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread(m_model.AlwaysCallTestOnMainThread);
+  m_model.SaveSettings();
 }
 
 void
 CTestRunnerDlg::OnTreatTimeoutAsError()
 {
-  CUTEST_NS::Runner::instance()->setTreatTimeoutAsError(
-    !CUTEST_NS::Runner::instance()->isTreatTimeoutAsError()
-  );
-  saveSettings();
+	m_model.TreatTimeoutAsError = !m_model.TreatTimeoutAsError;
+  CUTEST_NS::Runner::instance()->setTreatTimeoutAsError(m_model.TreatTimeoutAsError);
+  m_model.SaveSettings();
 }

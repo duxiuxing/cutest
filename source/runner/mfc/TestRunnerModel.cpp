@@ -13,250 +13,273 @@
 #include <set>
 
 #ifdef _DEBUG
-  #define new DEBUG_NEW
-  #undef THIS_FILE
-  static char THIS_FILE[] = __FILE__;
+	#define new DEBUG_NEW
+	#undef THIS_FILE
+	static char THIS_FILE[] = __FILE__;
 #endif
 
-TestRunnerModel::TestRunnerModel( CPPUNIT_NS::Test *rootTest ) :
-  m_rootTest( rootTest )
-{}
+LPCTSTR TestRunnerModel::PROFILE_SECTION = _T("TestRunnerModel");
 
-TestRunnerModel::~TestRunnerModel()
-{}
+LPCTSTR TestRunnerModel::ENTRY_AUTORUN_AT_STARTUP = _T("AutorunAtStartup");
+LPCTSTR TestRunnerModel::ENTRY_ALWAYS_CALL_TEST_ON_MAIN_THREAD = _T("AlwaysCallTestOnMainThread");
+LPCTSTR TestRunnerModel::ENTRY_TREAT_TIMEOUT_AS_ERROR = _T("TreatTimeoutAsError");
+LPCTSTR TestRunnerModel::ENTRY_TYPE_COLUMN_WIDTH = _T("TypeColumnWidth");
+LPCTSTR TestRunnerModel::ENTRY_NAME_COLUMN_WIDTH = _T("NameColumnWidth");
+LPCTSTR TestRunnerModel::ENTRY_FAILED_CONDITION_COLUMN_WIDTH = _T("FailedConditionColumnWidth");
+LPCTSTR TestRunnerModel::ENTRY_LINE_NUMBER_COLUMN_WIDTH = _T("LineNumberColumnWidth");
 
-const TestRunnerModel::History &
-TestRunnerModel::history() const
+bool
+TestHistory::SetCurSel(int index)
 {
-  return m_history;
+	if (index < 0
+		|| index >= (int)size())
+	{
+		return false;
+	}
+
+	SetCurSel(at(index));
+	return true;
 }
 
 void
-TestRunnerModel::selectHistoryTest( CPPUNIT_NS::Test *test )
+TestHistory::SetCurSel(CPPUNIT_NS::Test* test)
 {
-  CPPUNIT_NS::removeFromSequence( m_history, test );
+	CPPUNIT_NS::removeFromSequence(*this, test);
 
-  if ( test != NULL )
-  {
-    m_history.push_front( test );
-  }
+	if (test != NULL)
+	{
+		push_front(test);
+	}
 }
 
-CPPUNIT_NS::Test *
-TestRunnerModel::selectedTest() const
+CPPUNIT_NS::Test*
+TestHistory::GetCurSel() const
 {
-  if ( m_history.size() > 0 )
-  {
-    return m_history[0];
-  }
-  return NULL;
-}
-
-void
-TestRunnerModel::loadSettings( Settings &s )
-{
-  CWinApp *app = AfxGetApp();
-  ASSERT( app != NULL );
-
-  UINT value = app->GetProfileInt(
-                 _T( "CppUnit" ),
-                 _T( "AutorunAtStartup" ),
-                 1 );
-  s.autorun_on_startup = ( value == 1 );
-
-  value = app->GetProfileInt(
-            _T( "CppUnit" ),
-            _T( "AlwaysCallTestOnMainThread" ),
-            0 );
-  s.always_call_test_on_main_thread = ( value == 1 );
-
-  value = app->GetProfileInt(
-            _T( "CppUnit" ),
-            _T( "TreatTimeoutAsError" ),
-            0 );
-  s.treat_timeout_as_error = ( value == 1 );
-
-  s.col_1 = app->GetProfileInt( _T( "CppUnit" ), _T( "Col_1" ), 80 );
-  s.col_2 = app->GetProfileInt( _T( "CppUnit" ), _T( "Col_2" ), 80 );
-  s.col_3 = app->GetProfileInt( _T( "CppUnit" ), _T( "Col_3" ), 80 );
-  s.col_4 = app->GetProfileInt( _T( "CppUnit" ), _T( "Col_4" ), 80 );
-
-  loadHistory();
-}
-
-void
-TestRunnerModel::loadHistory()
-{
-  m_history.clear();
-  int idx = 1;
-
-  // 用于去重
-  std::set<CString> names;
-
-  do
-  {
-    CString testName = loadHistoryEntry( idx++ );
-    if ( testName.IsEmpty() )
-    {
-      break;
-    }
-
-    // 去重逻辑
-    if ( names.find( testName ) == names.end() )
-    {
-      names.insert( testName );
-    }
-    else
-    {
-      continue;
-    }
-
-    try
-    {
-      m_history.push_back( m_rootTest->findTest( toAnsiString( testName ) ) );
-    }
-    catch ( std::invalid_argument & )
-    {}
-  } while ( true );
-
-  // 如果m_history则视为第一次运行，默认执行All Tests
-  if ( m_history.empty() )
-  {
-    try
-    {
-      m_history.push_back( m_rootTest->findTest( "All Tests" ) );
-    }
-    catch ( std::invalid_argument & )
-    {}
-  }
+	if (size() > 0)
+	{
+		return at(0);
+	}
+	return NULL;
 }
 
 CString
-TestRunnerModel::loadHistoryEntry( int idx )
+TestHistory::GetTestName(int index)
 {
-  CWinApp *app = AfxGetApp();
-  ASSERT( app != NULL );
+	CWinApp* app = AfxGetApp();
+	ASSERT(app != NULL);
 
-  return app->GetProfileString( _T( "CppUnit" ), getHistoryEntryName( idx ) );
+	return app->GetProfileString(TestRunnerModel::PROFILE_SECTION, TestHistory::GetEntryName(index));
 }
 
 void
-TestRunnerModel::saveSettings( const Settings &s )
+TestHistory::Save()
 {
-  CWinApp *app = AfxGetApp();
-  ASSERT( app != NULL );
-
-  int value = s.autorun_on_startup ? 1 : 0;
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "AutorunAtStartup" ), value );
-
-  value = s.always_call_test_on_main_thread ? 1 : 0;
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "AlwaysCallTestOnMainThread" ), value );
-
-  value = s.treat_timeout_as_error ? 1 : 0;
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "TreatTimeoutAsError" ), value );
-
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "Col_1" ),  s.col_1 );
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "Col_2" ),  s.col_2 );
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "Col_3" ),  s.col_3 );
-  app->WriteProfileInt( _T( "CppUnit" ), _T( "Col_4" ),  s.col_4 );
-
-  int idx = 1;
-  for ( History::const_iterator it = m_history.begin();
-        it != m_history.end();
-        ++it, ++idx )
-  {
-    CPPUNIT_NS::Test *test = *it;
-    saveHistoryEntry( idx, test->getName().c_str() );
-  }
+	int index = 1;
+	for (TestHistory::const_iterator it = begin();
+		 it != end();
+		 ++it, ++index)
+	{
+		CPPUNIT_NS::Test* test = *it;
+		SaveTestName(index, test->getName().c_str());
+	}
 }
 
 void
-TestRunnerModel::saveHistoryEntry( int idx,
-                                   CString testName )
+TestHistory::SaveTestName(int index, CString testName)
 {
-  CWinApp *app = AfxGetApp();
-  ASSERT( app != NULL );
+	CWinApp* app = AfxGetApp();
+	ASSERT(app != NULL);
 
-  app->WriteProfileString( _T( "CppUnit" ),
-                           getHistoryEntryName( idx ),
-                           testName );
+	app->WriteProfileString(TestRunnerModel::PROFILE_SECTION,
+							TestHistory::GetEntryName(index),
+							testName);
 }
 
 CString
-TestRunnerModel::getHistoryEntryName( int idx ) const
+TestHistory::GetEntryName(int index) const
 {
-  CString entry;
-  entry.Format( _T( "HistoryTest%d" ), idx );
-  return entry;
+	CString entry;
+	entry.Format(_T("HistoryTest%d"), index);
+	return entry;
 }
 
-CPPUNIT_NS::Test *
-TestRunnerModel::rootTest()
+TestRunnerModel::TestRunnerModel(CPPUNIT_NS::Test* rootTest)
+	: m_rootTest(rootTest)
 {
-  return m_rootTest;
+	LoadSettings();
+	LoadTestHistory();
+}
+
+CPPUNIT_NS::Test*
+TestRunnerModel::GetRootTest()
+{
+	return m_rootTest;
 }
 
 void
-TestRunnerModel::setRootTest( CPPUNIT_NS::Test *test )
+TestRunnerModel::SaveSettings()
 {
-  m_rootTest = test;
+	CWinApp* app = AfxGetApp();
+	ASSERT(app != NULL);
+
+	int value = this->AutorunOnStartup ? 1 : 0;
+	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_AUTORUN_AT_STARTUP, value);
+
+	value = this->AlwaysCallTestOnMainThread ? 1 : 0;
+	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_ALWAYS_CALL_TEST_ON_MAIN_THREAD, value);
+
+	value = this->TreatTimeoutAsError ? 1 : 0;
+	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_TREAT_TIMEOUT_AS_ERROR, value);
+
+	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_TYPE_COLUMN_WIDTH,  this->TypeColumnWidth);
+	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_NAME_COLUMN_WIDTH,  this->NameColumnWidth);
+	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_FAILED_CONDITION_COLUMN_WIDTH,  this->FailedConditionColumnWidth);
+	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_LINE_NUMBER_COLUMN_WIDTH,  this->LineNumberColumnWidth);
 }
 
-CPPUNIT_NS::Test *
-TestRunnerModel::findTestByName( CString name ) const
+void
+TestRunnerModel::LoadSettings()
 {
-  return findTestByNameFor( name, m_rootTest );
+	CWinApp* app = AfxGetApp();
+	ASSERT(app != NULL);
+
+	UINT value = app->GetProfileInt(
+					 TestRunnerModel::PROFILE_SECTION,
+					 TestRunnerModel::ENTRY_AUTORUN_AT_STARTUP,
+					 1);
+	this->AutorunOnStartup = (value == 1);
+
+	value = app->GetProfileInt(
+				TestRunnerModel::PROFILE_SECTION,
+				TestRunnerModel::ENTRY_ALWAYS_CALL_TEST_ON_MAIN_THREAD,
+				0);
+	this->AlwaysCallTestOnMainThread = (value == 1);
+
+	value = app->GetProfileInt(
+				TestRunnerModel::PROFILE_SECTION,
+				TestRunnerModel::ENTRY_TREAT_TIMEOUT_AS_ERROR,
+				0);
+	this->TreatTimeoutAsError = (value == 1);
+
+	this->TypeColumnWidth = app->GetProfileInt(
+								TestRunnerModel::PROFILE_SECTION,
+								TestRunnerModel::ENTRY_TYPE_COLUMN_WIDTH,
+								80);
+
+	this->NameColumnWidth = app->GetProfileInt(
+								TestRunnerModel::PROFILE_SECTION,
+								TestRunnerModel::ENTRY_NAME_COLUMN_WIDTH,
+								80);
+
+	this->FailedConditionColumnWidth = app->GetProfileInt(
+										   TestRunnerModel::PROFILE_SECTION,
+										   TestRunnerModel::ENTRY_FAILED_CONDITION_COLUMN_WIDTH,
+										   80);
+
+	this->LineNumberColumnWidth = app->GetProfileInt(
+									  TestRunnerModel::PROFILE_SECTION,
+									  TestRunnerModel::ENTRY_LINE_NUMBER_COLUMN_WIDTH,
+									  80);
 }
 
-CPPUNIT_NS::Test *
-TestRunnerModel::findTestByNameFor( const CString &name,
-                                    CPPUNIT_NS::Test *test ) const
+
+const TestHistory&
+TestRunnerModel::GetTestHistory() const
 {
-  if ( name == test->getName().c_str() )
-  {
-    return test;
-  }
+	return m_testHistory;
+}
 
-  CPPUNIT_NS::TestSuite *suite = dynamic_cast<CPPUNIT_NS::TestSuite *>( test );
-  if ( suite == NULL )
-  {
-    return NULL;
-  }
+bool
+TestRunnerModel::SelectTest(int index)
+{
+	return m_testHistory.SetCurSel(index);
+}
 
-  const std::vector<CPPUNIT_NS::Test *> &tests = suite->getTests();
-  for ( std::vector<CPPUNIT_NS::Test *>::const_iterator it = tests.begin();
-        it != tests.end();
-        ++it )
-  {
-    CPPUNIT_NS::Test *testFound = findTestByNameFor( name, *it );
-    if ( testFound != NULL )
-    {
-      return testFound;
-    }
-  }
-  return NULL;
+void
+TestRunnerModel::SelectTest(CPPUNIT_NS::Test* test)
+{
+	m_testHistory.SetCurSel(test);
+}
+
+CPPUNIT_NS::Test*
+TestRunnerModel::GetSelectedTest() const
+{
+	return m_testHistory.GetCurSel();
+}
+
+void
+TestRunnerModel::LoadTestHistory()
+{
+	m_testHistory.clear();
+	int index = 1;
+
+	// 用于去重
+	std::set<CString> names;
+
+	do
+	{
+		CString testName = m_testHistory.GetTestName(index++);
+		if (testName.IsEmpty())
+		{
+			break;
+		}
+
+		// 去重逻辑
+		if (names.find(testName) == names.end())
+		{
+			names.insert(testName);
+		}
+		else
+		{
+			continue;
+		}
+
+		try
+		{
+			m_testHistory.push_back(m_rootTest->findTest(ToAnsiString(testName)));
+		}
+		catch (std::invalid_argument&)
+		{}
+	} while (true);
+
+	// 如果为空则视为第一次运行，默认执行All Tests
+	if (m_testHistory.empty())
+	{
+		try
+		{
+			m_testHistory.push_back(m_rootTest->findTest("All Tests"));
+		}
+		catch (std::invalid_argument&)
+		{}
+	}
+}
+
+void
+TestRunnerModel::SaveTestHistory()
+{
+	m_testHistory.Save();
 }
 
 // Utility method, should be moved somewhere else...
 std::string
-TestRunnerModel::toAnsiString( const CString &text )
+TestRunnerModel::ToAnsiString(const CString& text)
 {
 #ifdef _UNICODE
-  int bufferLength = ::WideCharToMultiByte( CP_THREAD_ACP, 0,
-                     text, text.GetLength(),
-                     NULL, 0, NULL, NULL ) + 1;
-  char *ansiString = new char[bufferLength];
-  ::WideCharToMultiByte( CP_THREAD_ACP, 0,
-                         text, text.GetLength(),
-                         ansiString, bufferLength,
-                         NULL,
-                         NULL );
+	int bufferLength = ::WideCharToMultiByte(CP_THREAD_ACP, 0,
+					   text, text.GetLength(),
+					   NULL, 0, NULL, NULL) + 1;
+	char* ansiString = new char[bufferLength];
+	::WideCharToMultiByte(CP_THREAD_ACP, 0,
+						  text, text.GetLength(),
+						  ansiString, bufferLength,
+						  NULL,
+						  NULL);
 
-  std::string str( ansiString, bufferLength - 1 );
-  delete[] ansiString;
+	std::string str(ansiString, bufferLength - 1);
+	delete[] ansiString;
 
-  return str;
+	return str;
 #else
-  return std::string( ( LPCTSTR )text );
+	return std::string((LPCTSTR)text);
 #endif
 }

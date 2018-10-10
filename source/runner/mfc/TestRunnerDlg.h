@@ -84,7 +84,6 @@ protected:
   int m_failures;
   void UpdateUI_Counts();
 
-  BOOL m_bAutorunAtStartup;
   afx_msg void OnAutorunAtStartup();
 
   afx_msg void OnAlwaysCallTestOnMainThread();
@@ -130,6 +129,5 @@ protected:
 private:
   TestRunnerModel m_model;
 
-  TestRunnerModel::Settings m_settings;
   void saveSettings();
 };
