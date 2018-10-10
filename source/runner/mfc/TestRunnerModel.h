@@ -15,10 +15,6 @@
 class TestRunnerModel
 {
 public:
-  static const CString settingKey;
-  static const CString settingMainDialogKey;
-  static const CString settingBrowseDialogKey;
-
   struct Settings
   {
     Settings()

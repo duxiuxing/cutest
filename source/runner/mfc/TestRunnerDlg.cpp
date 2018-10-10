@@ -146,7 +146,6 @@ CTestRunnerDlg::OnInitDialog()
   AddSzYControl( IDC_STATIC_DETAILS, listGrowthRatio, listGrowthRatio );
   AddSzControl( IDC_DETAILS, 0, listGrowthRatio, 100, 100 );
   AddSzControl( IDC_EDIT_TIME, mdResize, mdRepos );
-  RestoreWindowPosition( TestRunnerModel::settingKey, TestRunnerModel::settingMainDialogKey );
 
   updateListColumnSize();
 
@@ -466,8 +465,6 @@ CTestRunnerDlg::saveSettings()
   m_settings.autorun_on_startup = ( m_bAutorunAtStartup != 0 );
   m_settings.always_call_test_on_main_thread = CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread();
   m_settings.treat_timeout_as_error = CUTEST_NS::Runner::instance()->isTreatTimeoutAsError();
-  StoreWindowPosition( TestRunnerModel::settingKey,
-                       TestRunnerModel::settingMainDialogKey );
 
   m_settings.col_1 = m_listCtrl.GetColumnWidth( 0 );
   m_settings.col_2 = m_listCtrl.GetColumnWidth( 1 );

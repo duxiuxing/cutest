@@ -39,13 +39,11 @@ protected:
   // Implementation
 protected:
   virtual void initializeLayout();
-  void storeDialogBounds();
 
   // Generated message map functions
   //{{AFX_MSG(TreeHierarchyDlg)
   virtual BOOL OnInitDialog();
-  virtual void OnOK( );
-  virtual void OnCancel();
+  virtual void OnOK();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP();
 

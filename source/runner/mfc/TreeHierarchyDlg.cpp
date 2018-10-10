@@ -53,8 +53,6 @@ TreeHierarchyDlg::OnInitDialog()
 
   fillTree();
   initializeLayout();
-  RestoreWindowPosition( TestRunnerModel::settingKey,
-                         TestRunnerModel::settingBrowseDialogKey );
 
   return TRUE;
 }
@@ -170,15 +168,7 @@ TreeHierarchyDlg::OnOK()
   }
 
   m_selectedTest = test;
-  storeDialogBounds();
   cdxCDynamicDialog::OnOK();
-}
-
-void
-TreeHierarchyDlg::OnCancel()
-{
-  storeDialogBounds();
-  cdxCDynamicDialog::OnCancel();
 }
 
 CPPUNIT_NS::Test *
@@ -198,11 +188,4 @@ CPPUNIT_NS::Test *
 TreeHierarchyDlg::getSelectedTest() const
 {
   return m_selectedTest;
-}
-
-void
-TreeHierarchyDlg::storeDialogBounds()
-{
-  StoreWindowPosition( TestRunnerModel::settingKey,
-                       TestRunnerModel::settingBrowseDialogKey );
 }

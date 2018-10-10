@@ -18,10 +18,6 @@
   static char THIS_FILE[] = __FILE__;
 #endif
 
-const CString TestRunnerModel::settingKey( _T( "CppUnit" ) );
-const CString TestRunnerModel::settingMainDialogKey( _T( "MainDialog" ) );
-const CString TestRunnerModel::settingBrowseDialogKey( _T( "BrowseDialog" ) );
-
 TestRunnerModel::TestRunnerModel( CPPUNIT_NS::Test *rootTest ) :
   m_rootTest( rootTest )
 {}
