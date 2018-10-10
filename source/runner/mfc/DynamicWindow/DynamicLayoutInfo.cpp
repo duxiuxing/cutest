@@ -3,13 +3,13 @@
 
 #include "cdxCDynamicWnd.h"
 
-CDynamicLayoutInfo::CDynamicLayoutInfo()
+DynamicLayoutInfo::DynamicLayoutInfo()
 	: m_controlCount(0)
 	, m_useScrollPos(false)
 	, m_scrollPos(0)
 {}
 
-CDynamicLayoutInfo::CDynamicLayoutInfo(cdxCDynamicWnd* wnd)
+DynamicLayoutInfo::DynamicLayoutInfo(cdxCDynamicWnd* wnd)
 	: m_controlCount(0)
 	, m_useScrollPos(false)
 	, m_scrollPos(0)
@@ -17,7 +17,7 @@ CDynamicLayoutInfo::CDynamicLayoutInfo(cdxCDynamicWnd* wnd)
 	operator=(wnd);
 }
 
-bool CDynamicLayoutInfo::operator=(cdxCDynamicWnd* wnd)
+bool DynamicLayoutInfo::operator=(cdxCDynamicWnd* wnd)
 {
 	if (!wnd || !wnd->IsUp())
 	{
@@ -38,7 +38,7 @@ bool CDynamicLayoutInfo::operator=(cdxCDynamicWnd* wnd)
 	return true;
 }
 
-bool CDynamicLayoutInfo::IsInitial() const
+bool DynamicLayoutInfo::IsInitial() const
 {
 	return !m_deltaSize.cx
 		   && !m_deltaSize.cy

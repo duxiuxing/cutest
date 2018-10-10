@@ -33,7 +33,7 @@ static char THIS_FILE[]=__FILE__;
  * (it will be moved outside the client area).
  */
 
-void cdxCDynamicWnd::Position::Apply(HWND hwnd, CRect & rectNewPos, const CDynamicLayoutInfo & li) const
+void cdxCDynamicWnd::Position::Apply(HWND hwnd, CRect & rectNewPos, const DynamicLayoutInfo & li) const
 {
 	if(li.m_useScrollPos)
 	{
@@ -231,7 +231,7 @@ bool cdxCDynamicWnd::UpdateControlPosition(HWND hwnd)
 		return false;
 	}
 
-	CDynamicLayoutInfo* pli = NULL;
+	DynamicLayoutInfo* pli = NULL;
     pli = DoCreateLayoutInfo();
 	ASSERT(pli != NULL);
 
@@ -295,7 +295,7 @@ void cdxCDynamicWnd::Layout()
 	
 	// resize stuff
 
-	CDynamicLayoutInfo	*pli		=	DoCreateLayoutInfo();
+	DynamicLayoutInfo	*pli		=	DoCreateLayoutInfo();
 
 	if(!pli)
 	{
@@ -418,7 +418,7 @@ void cdxCDynamicWnd::Layout()
  *      that as little flickering as possible will occur.
  */
 
-bool cdxCDynamicWnd::DoMoveCtrl(HWND hwnd, UINT id, CRect & rectNewPos, const CDynamicLayoutInfo & li)
+bool cdxCDynamicWnd::DoMoveCtrl(HWND hwnd, UINT id, CRect & rectNewPos, const DynamicLayoutInfo & li)
 {
 	Position	pos;
 

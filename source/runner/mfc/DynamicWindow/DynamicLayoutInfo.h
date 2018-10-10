@@ -2,7 +2,7 @@
 
 class cdxCDynamicWnd;
 
-class CDynamicLayoutInfo
+class DynamicLayoutInfo
 {
 public:
 	CSize m_currentSize;  // current client size
@@ -15,8 +15,8 @@ public:
 	CPoint m_scrollPos;   // current scrolling position
 
 public:
-	CDynamicLayoutInfo();
-	CDynamicLayoutInfo(cdxCDynamicWnd* wnd);
+	DynamicLayoutInfo();
+	DynamicLayoutInfo(cdxCDynamicWnd* wnd);
 
 	bool operator=(cdxCDynamicWnd* wnd);
 	bool IsInitial() const;
