@@ -9,8 +9,8 @@ class CppUnitExplicitEndTest
 {
   CPPUNIT_TEST_SUITE( CppUnitExplicitEndTest );
   {
-    CPPUNIT_EXPLICIT_END_TEST( end_test_after_1s );
-    CPPUNIT_EXPLICIT_END_TEST_WITH_TIMEOUT( auto_end_test_after_1s, 1000 );
+    CPPUNIT_EXPLICIT_END_TEST( endTestAfterOneSecond );
+    CPPUNIT_EXPLICIT_END_TEST_WITH_TIMEOUT( autoEndTestAfterOneSecond, 1000 );
   }
   CPPUNIT_TEST_SUITE_END();
 
@@ -22,10 +22,10 @@ public:
   // 实现SimpleTimer::Callback
   virtual void onTimeUp();
 
-  void end_test_after_1s();
-  void auto_end_test_after_1s();
+  void endTestAfterOneSecond();
+  void autoEndTestAfterOneSecond();
 
-  unsigned long long tick_count_start;
+  unsigned long long msStart;
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CppUnitExplicitEndTest );

@@ -14,33 +14,34 @@ class GTestWaitAsynEndTest
   // 实现SimpleTimer::Callback
   virtual void onTimeUp();
 
-  CUTEST_NS::CountDownLatch* time_up;
+  CUTEST_NS::CountDownLatch* countDownLatch;
 };
 
 GTestWaitAsynEndTest::GTestWaitAsynEndTest()
-  : time_up(NULL) {}
+  : countDownLatch(NULL) {}
 
 void GTestWaitAsynEndTest::SetUp() {
-  time_up = new CUTEST_NS::CountDownLatch(1);
+  this->countDownLatch = new CUTEST_NS::CountDownLatch(1);
 }
 
 void GTestWaitAsynEndTest::TearDown() {
   SimpleTimer::instance()->removeCallback(this);
-  delete time_up;
+  delete this->countDownLatch;
+  this->countDownLatch = NULL;
 }
 
 void GTestWaitAsynEndTest::onTimeUp() {
-  time_up->countDown();
+	this->countDownLatch->countDown();
 }
 
-TEST_F(GTestWaitAsynEndTest, end_test_after_1s) {
-  unsigned long long start = CUTEST_NS::tickCount64();
+TEST_F(GTestWaitAsynEndTest, EndTestAfterOneSecond) {
+  unsigned long long msStart = CUTEST_NS::tickCount64();
 
   SimpleTimer::instance()->setCallback(1000, this);
 
-  time_up->await();
+  countDownLatch->await();
 
-  unsigned long long ms = CUTEST_NS::tickCount64() - start;
+  unsigned long long ms = CUTEST_NS::tickCount64() - msStart;
   EXPECT_GT(ms, 950);
   EXPECT_LT(ms, 1200);
 }
