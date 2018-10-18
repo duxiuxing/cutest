@@ -16,15 +16,15 @@ initGoogleMock() {
 
 unsigned long long
 tickCount64() {
-    static LARGE_INTEGER ticks_per_second = { 0 };
+    static LARGE_INTEGER ticksPerSecond = {0};
     LARGE_INTEGER tick;
-    if (!ticks_per_second.QuadPart) {
-        ::QueryPerformanceFrequency(&ticks_per_second);
+    if (!ticksPerSecond.QuadPart) {
+        ::QueryPerformanceFrequency(&ticksPerSecond);
     }
     ::QueryPerformanceCounter(&tick);
-    LONGLONG seconds = tick.QuadPart / ticks_per_second.QuadPart;
-    LONGLONG leftPart = tick.QuadPart - (ticks_per_second.QuadPart * seconds);
-    LONGLONG millSeconds = leftPart * 1000 / ticks_per_second.QuadPart;
+    LONGLONG seconds = tick.QuadPart / ticksPerSecond.QuadPart;
+    LONGLONG leftPart = tick.QuadPart - (ticksPerSecond.QuadPart * seconds);
+    LONGLONG millSeconds = leftPart * 1000 / ticksPerSecond.QuadPart;
     return (unsigned long long)seconds * 1000 + millSeconds;
 }
 
@@ -35,16 +35,16 @@ currentThreadId() {
 
 Runner*
 Runner::instance() {
-    static RunnerImpl runner_impl;
-    return &runner_impl;
+    static RunnerImpl runnerImpl;
+    return &runnerImpl;
 }
 
 HWND RunnerImpl::hMessageWnd = NULL;
 std::set<Runnable*> RunnerImpl::autoDeleteRunnables;
 
 RunnerImpl::RunnerImpl() {
-	initGoogleMock();
-    this->listener_manager.add(&this->testProgressLogger);
+    initGoogleMock();
+    this->listenerManager.add(&this->testProgressLogger);
 
     // Register message window class.
     WNDCLASSEX wcx;
@@ -57,17 +57,17 @@ RunnerImpl::RunnerImpl() {
 
     // Create a message window.
     RunnerImpl::hMessageWnd = ::CreateWindow(
-                                     wcx.lpszClassName,  // name of window class
-                                     NULL,               // title-bar string
-                                     0,                  // top-level window
-                                     0,                  // default horizontal position
-                                     0,                  // default vertical position
-                                     0,                  // default width
-                                     0,                  // default height
-                                     HWND_MESSAGE,       // message window
-                                     NULL,               // use class menu
-                                     wcx.hInstance,      // handle to application instance
-                                     NULL);              // no window-creation data
+                                  wcx.lpszClassName,  // name of window class
+                                  NULL,               // title-bar string
+                                  0,                  // top-level window
+                                  0,                  // default horizontal position
+                                  0,                  // default vertical position
+                                  0,                  // default width
+                                  0,                  // default height
+                                  HWND_MESSAGE,       // message window
+                                  NULL,               // use class menu
+                                  wcx.hInstance,      // handle to application instance
+                                  NULL);              // no window-creation data
 
     // 通过这个异步方法给main_thread_id赋值
     asyncRunOnMainThread(this, false);
@@ -151,7 +151,7 @@ RunnerImpl::onTimer4DelayRun(HWND wnd, UINT msg, UINT_PTR runnablePtr, DWORD msE
 
 void
 RunnerImpl::waitUntilAllTestEnd() {
-    MSG msg = { 0 };
+    MSG msg = {0};
     while (STATE_NONE != this->state
            && ::GetMessage(&msg, NULL, 0, 0)) {
         ::TranslateMessage(&msg);

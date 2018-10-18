@@ -47,12 +47,12 @@ RunnerBase::isTreatTimeoutAsError() {
 
 void
 RunnerBase::addListener(ProgressListener* listener) {
-    this->listener_manager.add(listener);
+    this->listenerManager.add(listener);
 }
 
 void
 RunnerBase::removeListener(ProgressListener* listener) {
-    this->listener_manager.remove(listener);
+    this->listenerManager.remove(listener);
 }
 
 void
@@ -75,7 +75,7 @@ RunnerBase::start(CPPUNIT_NS::Test* test) {
     }
 
     this->testDecorator = Decorator::createInstance(test);
-    this->testDecorator->addListener(&this->listener_manager);
+    this->testDecorator->addListener(&this->listenerManager);
     this->testDecorator->start();
 }
 

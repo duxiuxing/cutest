@@ -33,7 +33,7 @@ public: // Runner接口族的实现
     virtual void removeListener(ProgressListener* listener) override;
 
 protected:
-    ProgressListenerManager listener_manager;
+    ProgressListenerManager listenerManager;
 
 public:
     virtual void start(CPPUNIT_NS::Test* test) override;
