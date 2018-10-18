@@ -19,7 +19,6 @@ class RunnerBase
 
 public:
     RunnerBase();
-    virtual ~RunnerBase();
 
 public:
     virtual void setAlwaysCallTestOnMainThread(bool value) override;
@@ -38,6 +37,8 @@ protected:
 public:
     virtual void start(CPPUNIT_NS::Test* test) override;
     virtual void stop() override;
+
+    virtual void waitUntilAllTestEnd() override;
 
     virtual void addFailure(bool isError, CPPUNIT_NS::Exception* exception) override;
 

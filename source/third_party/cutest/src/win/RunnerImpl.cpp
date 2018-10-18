@@ -74,8 +74,6 @@ RunnerImpl::RunnerImpl() {
 }
 
 RunnerImpl::~RunnerImpl() {
-    waitUntilAllTestEnd();
-
     if (RunnerImpl::hMessageWnd) {
         ::DestroyWindow(RunnerImpl::hMessageWnd);
         RunnerImpl::hMessageWnd = NULL;
@@ -157,6 +155,8 @@ RunnerImpl::waitUntilAllTestEnd() {
         ::TranslateMessage(&msg);
         ::DispatchMessage(&msg);
     }
+
+    RunnerBase::waitUntilAllTestEnd();
 }
 
 CUTEST_NS_END

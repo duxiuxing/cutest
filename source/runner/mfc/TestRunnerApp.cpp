@@ -3,6 +3,7 @@
 #include "TestRunnerDlg.h"
 
 #include <cppunit/extensions/TestFactoryRegistry.h>
+#include "cutest/Runner.h"
 
 #include "TestConfig.h"
 
@@ -59,6 +60,7 @@ BOOL CTestRunnerApp::InitInstance()
 	CTestRunnerDlg dlg(allTests);
 	m_pMainWnd = &dlg;
 	dlg.DoModal();
+	CUTEST_NS::Runner::instance()->waitUntilAllTestEnd();
 	delete allTests;
 #if _MSC_VER >= 1500
 	// Delete the shell manager created above.

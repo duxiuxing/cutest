@@ -16,15 +16,6 @@ RunnerBase::RunnerBase()
     addListener(this);
 }
 
-RunnerBase::~RunnerBase() {
-    stop();
-
-    if (this->testDecorator) {
-        this->testDecorator->destroy();
-        this->testDecorator = NULL;
-    }
-}
-
 void
 RunnerBase::setAlwaysCallTestOnMainThread(bool value) {
     this->alwaysCallTestOnMainThread = value;
@@ -100,6 +91,14 @@ RunnerBase::stop() {
             this->currentTest->endTest();
             this->currentTest = NULL;
         }
+    }
+}
+
+void
+RunnerBase::waitUntilAllTestEnd() {
+    if (this->testDecorator) {
+        this->testDecorator->destroy();
+        this->testDecorator = NULL;
     }
 }
 
