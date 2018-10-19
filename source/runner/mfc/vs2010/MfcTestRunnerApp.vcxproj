@@ -111,12 +111,12 @@
     <None Include="..\..\..\..\test_config.xml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="..\res\errortype.bmp" />
+    <None Include="..\res\error_icons.bmp" />
     <None Include="..\res\MfcTestRunnerApp.ico" />
     <None Include="..\res\MfcTestRunnerApp.rc2">
       <FileType>RC</FileType>
     </None>
-    <None Include="..\res\test_type.bmp" />
+    <None Include="..\res\test_icons.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\DynamicWindow\DynamicLayoutInfo.h" />

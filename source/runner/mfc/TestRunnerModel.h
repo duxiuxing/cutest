@@ -7,13 +7,13 @@ class Settings
 {
 public:
 	Settings()
-		: AutorunOnStartup(false)
+		: AutorunOnStartup(true)
 		, AlwaysCallTestOnMainThread(false)
 		, TreatTimeoutAsError(false)
-		, TypeColumnWidth(0)
-		, NameColumnWidth(0)
-		, FailedConditionColumnWidth(0)
-		, LineNumberColumnWidth(0)
+		, TypeColumnWidth(80)
+		, NameColumnWidth(80)
+		, FailedConditionColumnWidth(80)
+		, LineNumberColumnWidth(80)
 	{}
 
 	bool AutorunOnStartup;
@@ -75,6 +75,11 @@ public:
 	void SaveSettings();
 
 private:
+	void ReadBoolEntry(LPCTSTR szEntry, bool& bValue);
+	void WriteBoolEntry(LPCTSTR szEntry, bool bValue);
+
+	void ReadIntEntry(LPCTSTR szEntry, int& nValue);
+	void WriteIntEntry(LPCTSTR szEntry, int nValue);
 	void LoadSettings();
 
 

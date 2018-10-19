@@ -28,8 +28,7 @@ LPCTSTR TestRunnerModel::ENTRY_NAME_COLUMN_WIDTH = _T("NameColumnWidth");
 LPCTSTR TestRunnerModel::ENTRY_FAILED_CONDITION_COLUMN_WIDTH = _T("FailedConditionColumnWidth");
 LPCTSTR TestRunnerModel::ENTRY_LINE_NUMBER_COLUMN_WIDTH = _T("LineNumberColumnWidth");
 
-bool
-TestHistory::SetCurSel(int index)
+bool TestHistory::SetCurSel(int index)
 {
 	if (index < 0
 		|| index >= (int)size())
@@ -41,8 +40,7 @@ TestHistory::SetCurSel(int index)
 	return true;
 }
 
-void
-TestHistory::SetCurSel(CPPUNIT_NS::Test* test)
+void TestHistory::SetCurSel(CPPUNIT_NS::Test* test)
 {
 	CPPUNIT_NS::removeFromSequence(*this, test);
 
@@ -52,8 +50,7 @@ TestHistory::SetCurSel(CPPUNIT_NS::Test* test)
 	}
 }
 
-CPPUNIT_NS::Test*
-TestHistory::GetCurSel() const
+CPPUNIT_NS::Test* TestHistory::GetCurSel() const
 {
 	if (size() > 0)
 	{
@@ -62,8 +59,7 @@ TestHistory::GetCurSel() const
 	return NULL;
 }
 
-CString
-TestHistory::GetTestName(int index)
+CString TestHistory::GetTestName(int index)
 {
 	CWinApp* app = AfxGetApp();
 	ASSERT(app != NULL);
@@ -71,8 +67,7 @@ TestHistory::GetTestName(int index)
 	return app->GetProfileString(TestRunnerModel::PROFILE_SECTION, TestHistory::GetEntryName(index));
 }
 
-void
-TestHistory::Save()
+void TestHistory::Save()
 {
 	int index = 1;
 	for (TestHistory::const_iterator it = begin();
@@ -84,8 +79,7 @@ TestHistory::Save()
 	}
 }
 
-void
-TestHistory::SaveTestName(int index, CString testName)
+void TestHistory::SaveTestName(int index, CString testName)
 {
 	CWinApp* app = AfxGetApp();
 	ASSERT(app != NULL);
@@ -95,8 +89,7 @@ TestHistory::SaveTestName(int index, CString testName)
 							testName);
 }
 
-CString
-TestHistory::GetEntryName(int index) const
+CString TestHistory::GetEntryName(int index) const
 {
 	CString entry;
 	entry.Format(_T("HistoryTest%d"), index);
@@ -110,105 +103,80 @@ TestRunnerModel::TestRunnerModel(CPPUNIT_NS::Test* rootTest)
 	LoadTestHistory();
 }
 
-CPPUNIT_NS::Test*
-TestRunnerModel::GetRootTest()
+CPPUNIT_NS::Test* TestRunnerModel::GetRootTest()
 {
 	return m_rootTest;
 }
 
-void
-TestRunnerModel::SaveSettings()
+void TestRunnerModel::SaveSettings()
 {
-	CWinApp* app = AfxGetApp();
-	ASSERT(app != NULL);
+	WriteBoolEntry(TestRunnerModel::ENTRY_AUTORUN_AT_STARTUP, this->AutorunOnStartup);
+	WriteBoolEntry(TestRunnerModel::ENTRY_ALWAYS_CALL_TEST_ON_MAIN_THREAD, this->AlwaysCallTestOnMainThread);
+	WriteBoolEntry(TestRunnerModel::ENTRY_TREAT_TIMEOUT_AS_ERROR, this->TreatTimeoutAsError);
 
-	int value = this->AutorunOnStartup ? 1 : 0;
-	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_AUTORUN_AT_STARTUP, value);
-
-	value = this->AlwaysCallTestOnMainThread ? 1 : 0;
-	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_ALWAYS_CALL_TEST_ON_MAIN_THREAD, value);
-
-	value = this->TreatTimeoutAsError ? 1 : 0;
-	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_TREAT_TIMEOUT_AS_ERROR, value);
-
-	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_TYPE_COLUMN_WIDTH,  this->TypeColumnWidth);
-	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_NAME_COLUMN_WIDTH,  this->NameColumnWidth);
-	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_FAILED_CONDITION_COLUMN_WIDTH,  this->FailedConditionColumnWidth);
-	app->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, TestRunnerModel::ENTRY_LINE_NUMBER_COLUMN_WIDTH,  this->LineNumberColumnWidth);
+	WriteIntEntry(TestRunnerModel::ENTRY_TYPE_COLUMN_WIDTH,  this->TypeColumnWidth);
+	WriteIntEntry(TestRunnerModel::ENTRY_NAME_COLUMN_WIDTH,  this->NameColumnWidth);
+	WriteIntEntry(TestRunnerModel::ENTRY_FAILED_CONDITION_COLUMN_WIDTH,  this->FailedConditionColumnWidth);
+	WriteIntEntry(TestRunnerModel::ENTRY_LINE_NUMBER_COLUMN_WIDTH,  this->LineNumberColumnWidth);
 }
 
-void
-TestRunnerModel::LoadSettings()
+void TestRunnerModel::ReadBoolEntry(LPCTSTR szEntry, bool& bValue)
 {
-	CWinApp* app = AfxGetApp();
-	ASSERT(app != NULL);
+	int nValue = bValue ? 1 : 0;
+	ReadIntEntry(szEntry, nValue);
 
-	UINT value = app->GetProfileInt(
-					 TestRunnerModel::PROFILE_SECTION,
-					 TestRunnerModel::ENTRY_AUTORUN_AT_STARTUP,
-					 1);
-	this->AutorunOnStartup = (value == 1);
-
-	value = app->GetProfileInt(
-				TestRunnerModel::PROFILE_SECTION,
-				TestRunnerModel::ENTRY_ALWAYS_CALL_TEST_ON_MAIN_THREAD,
-				0);
-	this->AlwaysCallTestOnMainThread = (value == 1);
-
-	value = app->GetProfileInt(
-				TestRunnerModel::PROFILE_SECTION,
-				TestRunnerModel::ENTRY_TREAT_TIMEOUT_AS_ERROR,
-				0);
-	this->TreatTimeoutAsError = (value == 1);
-
-	this->TypeColumnWidth = app->GetProfileInt(
-								TestRunnerModel::PROFILE_SECTION,
-								TestRunnerModel::ENTRY_TYPE_COLUMN_WIDTH,
-								80);
-
-	this->NameColumnWidth = app->GetProfileInt(
-								TestRunnerModel::PROFILE_SECTION,
-								TestRunnerModel::ENTRY_NAME_COLUMN_WIDTH,
-								80);
-
-	this->FailedConditionColumnWidth = app->GetProfileInt(
-										   TestRunnerModel::PROFILE_SECTION,
-										   TestRunnerModel::ENTRY_FAILED_CONDITION_COLUMN_WIDTH,
-										   80);
-
-	this->LineNumberColumnWidth = app->GetProfileInt(
-									  TestRunnerModel::PROFILE_SECTION,
-									  TestRunnerModel::ENTRY_LINE_NUMBER_COLUMN_WIDTH,
-									  80);
+	bValue = (nValue == 1);
 }
 
+void TestRunnerModel::WriteBoolEntry(LPCTSTR szEntry, bool bValue)
+{
+	WriteIntEntry(szEntry, bValue ? 1 : 0);
+}
 
-const TestHistory&
-TestRunnerModel::GetTestHistory() const
+void TestRunnerModel::ReadIntEntry(LPCTSTR szEntry, int& nValue)
+{
+	nValue = (int)AfxGetApp()->GetProfileInt(
+				 TestRunnerModel::PROFILE_SECTION, szEntry, nValue);
+}
+
+void TestRunnerModel::WriteIntEntry(LPCTSTR szEntry, int nValue)
+{
+	AfxGetApp()->WriteProfileInt(TestRunnerModel::PROFILE_SECTION, szEntry, nValue);
+}
+
+void TestRunnerModel::LoadSettings()
+{
+	ReadBoolEntry(TestRunnerModel::ENTRY_AUTORUN_AT_STARTUP, this->AutorunOnStartup);
+	ReadBoolEntry(TestRunnerModel::ENTRY_ALWAYS_CALL_TEST_ON_MAIN_THREAD, this->AlwaysCallTestOnMainThread);
+	ReadBoolEntry(TestRunnerModel::ENTRY_TREAT_TIMEOUT_AS_ERROR, this->TreatTimeoutAsError);
+
+	ReadIntEntry(TestRunnerModel::ENTRY_TYPE_COLUMN_WIDTH, this->TypeColumnWidth);
+	ReadIntEntry(TestRunnerModel::ENTRY_NAME_COLUMN_WIDTH, this->NameColumnWidth);
+	ReadIntEntry(TestRunnerModel::ENTRY_FAILED_CONDITION_COLUMN_WIDTH, this->FailedConditionColumnWidth);
+	ReadIntEntry(TestRunnerModel::ENTRY_LINE_NUMBER_COLUMN_WIDTH, this->LineNumberColumnWidth);
+}
+
+const TestHistory& TestRunnerModel::GetTestHistory() const
 {
 	return m_testHistory;
 }
 
-bool
-TestRunnerModel::SelectTest(int index)
+bool TestRunnerModel::SelectTest(int index)
 {
 	return m_testHistory.SetCurSel(index);
 }
 
-void
-TestRunnerModel::SelectTest(CPPUNIT_NS::Test* test)
+void TestRunnerModel::SelectTest(CPPUNIT_NS::Test* test)
 {
 	m_testHistory.SetCurSel(test);
 }
 
-CPPUNIT_NS::Test*
-TestRunnerModel::GetSelectedTest() const
+CPPUNIT_NS::Test* TestRunnerModel::GetSelectedTest() const
 {
 	return m_testHistory.GetCurSel();
 }
 
-void
-TestRunnerModel::LoadTestHistory()
+void TestRunnerModel::LoadTestHistory()
 {
 	m_testHistory.clear();
 	int index = 1;
@@ -254,15 +222,13 @@ TestRunnerModel::LoadTestHistory()
 	}
 }
 
-void
-TestRunnerModel::SaveTestHistory()
+void TestRunnerModel::SaveTestHistory()
 {
 	m_testHistory.Save();
 }
 
 // Utility method, should be moved somewhere else...
-std::string
-TestRunnerModel::ToAnsiString(const CString& text)
+std::string TestRunnerModel::ToAnsiString(const CString& text)
 {
 #ifdef _UNICODE
 	int bufferLength = ::WideCharToMultiByte(CP_THREAD_ACP, 0,

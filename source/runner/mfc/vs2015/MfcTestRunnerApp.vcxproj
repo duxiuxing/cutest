@@ -239,7 +239,7 @@
     <ResourceCompile Include="..\MfcTestRunnerApp.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\errortype.bmp" />
+    <None Include="..\res\error_icons.bmp" />
     <None Include="..\res\MfcTestRunnerApp.rc2">
       <FileType>RC</FileType>
     </None>
@@ -248,7 +248,7 @@
     <None Include="..\res\MfcTestRunnerApp.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\test_type.bmp" />
+    <None Include="..\res\test_icons.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\..\..\..\test_config.xml" />

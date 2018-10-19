@@ -69,7 +69,7 @@ TreeHierarchyDlg::initializeLayout()
 void
 TreeHierarchyDlg::fillTree()
 {
-  VERIFY( m_imageList.Create( IDB_TEST_TYPE, 16, 1, RGB( 255, 0, 255 ) ) );
+  VERIFY( m_imageList.Create( IDB_TEST_ICONS, 16, 1, RGB( 255, 0, 255 ) ) );
 
   m_treeTests.SetImageList( &m_imageList, TVSIL_NORMAL );
 

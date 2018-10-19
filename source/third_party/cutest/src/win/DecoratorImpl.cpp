@@ -28,19 +28,20 @@ DecoratorImpl::DecoratorImpl(CPPUNIT_NS::Test* test)
     this->runCompleted = Event::createInstance();
 }
 
-DecoratorImpl::~DecoratorImpl() {
+void
+DecoratorImpl::destroy() {
     if (this->resultPrinter) {
         Runner::instance()->removeListener(this->resultPrinter);
         delete this->resultPrinter;
     }
 
-    this->runCompleted->wait();
-    this->runCompleted->destroy();
+    if (this->runCompleted) {
+        this->runCompleted->wait();
+        this->runCompleted->destroy();
+        this->runCompleted = NULL;
+    }
     CPPUNIT_NS::TestDecorator::m_test = NULL;
-}
 
-void
-DecoratorImpl::destroy() {
     delete this;
 }
 

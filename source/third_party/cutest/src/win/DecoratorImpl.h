@@ -19,8 +19,8 @@ class DecoratorImpl
 public:
     DecoratorImpl(CPPUNIT_NS::Test* test);
 
-    // 故意跳过TestDecorator的析构函数
-    ~DecoratorImpl();
+    // 跳过基类TestDecorator的析构函数
+    ~DecoratorImpl() {}
 
     virtual void destroy();
 

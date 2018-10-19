@@ -372,7 +372,7 @@
 				UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 				>
 				<File
-					RelativePath="..\res\errortype.bmp"
+					RelativePath="..\res\error_icons.bmp"
 					>
 				</File>
 				<File
@@ -388,7 +388,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\res\test_type.bmp"
+					RelativePath="..\res\test_icons.bmp"
 					>
 				</File>
 			</Filter>
