@@ -4,7 +4,7 @@
 #include "../AutoEndTest.cpp"
 #include "../MainTestRunnerBase.cpp"
 #include "../ManualEndTestCase.cpp"
-#include "../TestProgressListenerManager.cpp"
+#include "../ListenerManager.cpp"
 
 // Android实现的部分
 #include "JClassManager.cpp"
@@ -14,5 +14,5 @@
 #include "MainTestRunnerImpl.cpp"
 #include "SynchronizationObjectImpl.cpp"
 #include "TestEventImpl.cpp"
-#include "JniProgressListener.cpp"
+#include "JniListener.cpp"
 #include "Logger.cpp"

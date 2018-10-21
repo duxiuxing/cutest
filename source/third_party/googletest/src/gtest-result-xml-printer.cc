@@ -38,7 +38,7 @@ void TestResultXmlPrinter::onRunnerStart(CPPUNIT_NS::Test* test) {
 // Called after the unit test ends.
 void TestResultXmlPrinter::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
   if (this->testSuiteInfos.back()->suite == test) {
-    this->testSuiteInfos.back()->elapsedMs = msElapsed;
+    this->testSuiteInfos.back()->msElapsed = msElapsed;
   }
 
   FILE* xmlout = NULL;
@@ -68,7 +68,7 @@ void TestResultXmlPrinter::onSuiteStart(CPPUNIT_NS::Test* suite) {
 }
 
 void TestResultXmlPrinter::onSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int msElapsed) {
-  this->testSuiteInfos.back()->elapsedMs = msElapsed;
+  this->testSuiteInfos.back()->msElapsed = msElapsed;
 }
 
 void TestResultXmlPrinter::onTestStart(CPPUNIT_NS::Test* test) {
@@ -311,7 +311,7 @@ void TestResultXmlPrinter::outputXmlTestSuite(
 
   // 当前TestCase的总耗时，单位：秒
   outputXmlAttribute(stream, kTestsuite, "time",
-                     FormatTimeInMillisAsSeconds(testSuiteInfo->elapsedMs));
+                     FormatTimeInMillisAsSeconds(testSuiteInfo->msElapsed));
 
   // *stream << TestPropertiesAsXmlAttributes(test_case.ad_hoc_test_result());
   *stream << ">\n";

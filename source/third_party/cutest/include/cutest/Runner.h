@@ -3,7 +3,7 @@
 #include <cppunit/Exception.h>
 #include <cppunit/Test.h>
 
-#include "ProgressListener.h"
+#include "Listener.h"
 
 CUTEST_NS_BEGIN
 
@@ -42,8 +42,8 @@ public: // Help接口族
     virtual bool isTreatTimeoutAsError() = 0;
 
 public: // Runner接口族
-    virtual void addListener(ProgressListener* listener) = 0;
-    virtual void removeListener(ProgressListener* listener) = 0;
+    virtual void addListener(Listener* listener) = 0;
+    virtual void removeListener(Listener* listener) = 0;
 
     virtual void start(CPPUNIT_NS::Test* test) = 0;
     virtual void stop() = 0;

@@ -49,14 +49,14 @@ LOCAL_SRC_FILES := \
 	./../src/AutoEndTest.cpp \
 	./../src/ExplicitEndTest.cpp \
 	./../src/Helper.cpp \
-	./../src/ProgressListenerManager.cpp \
+	./../src/ListenerManager.cpp \
 	./../src/Result.cpp \
 	./../src/RunnerBase.cpp \
 	./../src/android/DecoratorImpl.cpp \
     ./../src/android/EventImpl.cpp \
 	./../src/android/JClassManager.cpp \
 	./../src/android/JniEnv.cpp \
-	./../src/android/JniProgressListener.cpp \
+	./../src/android/JniListener.cpp \
 	./../src/android/Logger.cpp \
 	./../src/android/RunnerImpl.cpp \
 	./../src/android/SynchronizationObjectImpl.cpp

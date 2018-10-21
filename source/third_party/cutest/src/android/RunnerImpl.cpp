@@ -1,5 +1,5 @@
 ﻿#include "RunnerImpl.h"
-#include "JniProgressListener.h"
+#include "JniListener.h"
 
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include "cutest/JClassManager.h"
@@ -70,15 +70,15 @@ Java_com_tencent_cutest_Runner_version(
     return env->NewStringUTF(CUTEST_NS::version());
 }
 
-CUTEST_NS::JniProgressListener progress_listener;
+CUTEST_NS::JniListener jniListener;
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_tencent_cutest_Runner_start(
     JNIEnv* env, jobject thiz, jobject listener) {
-    progress_listener.setJavaEntity(env, listener);
+    jniListener.setJavaEntity(env, listener);
 
     CUTEST_NS::Runner* runner = CUTEST_NS::Runner::instance();
-    runner->addListener(&progress_listener);
+    runner->addListener(&jniListener);
     runner->start(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
 }
 

@@ -57,10 +57,10 @@
     <ClInclude Include="..\src\Logger.h">
       <Filter>cutest\Logger</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\ProgressListener.h">
+    <ClInclude Include="..\include\cutest\Listener.h">
       <Filter>cutest\Progress</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ProgressListenerManager.h">
+    <ClInclude Include="..\src\ListenerManager.h">
       <Filter>cutest\Progress</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Result.h">
@@ -125,7 +125,7 @@
     <ClCompile Include="..\src\win\Logger.cpp">
       <Filter>cutest\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ProgressListenerManager.cpp">
+    <ClCompile Include="..\src\ListenerManager.cpp">
       <Filter>cutest\Progress</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Result.cpp">

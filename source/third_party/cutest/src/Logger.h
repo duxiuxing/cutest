@@ -3,16 +3,16 @@
 #include <list>
 #include <string>
 
-#include "cutest/ProgressListener.h"
+#include "cutest/Listener.h"
 
 CUTEST_NS_BEGIN
 
-class Logger : public ProgressListener {
+class Logger : public Listener {
 public:
     Logger();
 
     //////////////////////////////////////////////////////////////////////////
-    // 重载ProgressListener的成员方法
+    // 重载Listener的成员方法
     virtual void onRunnerStart(CPPUNIT_NS::Test* test);
     virtual void onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed);
 

@@ -258,15 +258,15 @@
 				Name="Progress"
 				>
 				<File
-					RelativePath="..\include\cutest\ProgressListener.h"
+					RelativePath="..\include\cutest\Listener.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\ProgressListenerManager.cpp"
+					RelativePath="..\src\ListenerManager.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\ProgressListenerManager.h"
+					RelativePath="..\src\ListenerManager.h"
 					>
 				</File>
 			</Filter>

@@ -2,7 +2,7 @@
 #include "../AutoEndTest.cpp"
 #include "../Result.cpp"
 #include "../RunnerBase.cpp"
-#include "../ProgressListenerManager.cpp"
+#include "../ListenerManager.cpp"
 
 // Windows实现的部分
 #include "DecoratorImpl.cpp"

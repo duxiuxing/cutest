@@ -51,7 +51,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\cutest\ProgressListener.h">
+    <ClInclude Include="..\include\cutest\Listener.h">
       <Filter>cutest\Progress</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cutest\Event.h">
@@ -66,7 +66,7 @@
     <ClInclude Include="..\src\win\EventImpl.h">
       <Filter>cutest\Thread\Event</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ProgressListenerManager.h">
+    <ClInclude Include="..\src\ListenerManager.h">
       <Filter>cutest\Progress</Filter>
     </ClInclude>
     <ClInclude Include="..\src\win\RunnerImpl.h">
@@ -125,7 +125,7 @@
     <ClCompile Include="..\src\win\EventImpl.cpp">
       <Filter>cutest\Thread\Event</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ProgressListenerManager.cpp">
+    <ClCompile Include="..\src\ListenerManager.cpp">
       <Filter>cutest\Progress</Filter>
     </ClCompile>
     <ClCompile Include="..\src\RunnerBase.cpp">

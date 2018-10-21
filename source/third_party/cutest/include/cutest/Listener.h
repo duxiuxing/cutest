@@ -13,9 +13,9 @@
 
 CUTEST_NS_BEGIN
 
-class ProgressListener {
+class Listener {
 public:
-    virtual ~ProgressListener() {}
+    virtual ~Listener() {}
 
     virtual void onRunnerStart(CPPUNIT_NS::Test* test) {}
     virtual void onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {}

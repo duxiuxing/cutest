@@ -7,17 +7,16 @@ CUTEST_NS_BEGIN
 
 class JniEnv {
 public:
-    static JavaVM* java_vm;
+    static JavaVM* javaVM;
     JniEnv();
     virtual ~JniEnv();
 
     JNIEnv* operator -> () {
-        return this->jni_env;
+        return this->jniEnv;
     }
 
 private:
-    bool call_detach;;
-    JNIEnv* jni_env;
+    JNIEnv* jniEnv;
 };
 
 CUTEST_NS_END

@@ -11,14 +11,14 @@
 #include <cppunit/Exception.h>
 #include <cppunit/TestResultCollector.h>
 
-#include "cutest/ProgressListener.h"
+#include "cutest/Listener.h"
 
 #include <afxwin.h>
 #include <vector>
 
 class CTestRunnerDlg
 	: public cdxCDynamicDialog
-	, public CUTEST_NS::ProgressListener
+	, public CUTEST_NS::Listener
 {
 	// Construction
 public:
@@ -50,7 +50,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
-public: // overrided from TestProgressListener
+public: // overrided from CUTEST_NS::Listener
 	virtual void onTestStart(CPPUNIT_NS::Test* test) override;
 	virtual void onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) override;
 	virtual void onTestEnd(

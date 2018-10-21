@@ -5,7 +5,7 @@
 
 #include "AutoEndTest.h"
 #include "Decorator.h"
-#include "ProgressListenerManager.h"
+#include "ListenerManager.h"
 
 CUTEST_NS_BEGIN
 
@@ -13,7 +13,7 @@ class ExplicitEndTest;
 
 class RunnerBase
     : public Runner
-    , public ProgressListener
+    , public Listener
     , public Runnable {
     friend thread_id CUTEST_NS::mainThreadId();
 
@@ -28,11 +28,11 @@ public:
     virtual bool isTreatTimeoutAsError() override;
 
 public: // Runner接口族的实现
-    virtual void addListener(ProgressListener* listener) override;
-    virtual void removeListener(ProgressListener* listener) override;
+    virtual void addListener(Listener* listener) override;
+    virtual void removeListener(Listener* listener) override;
 
 protected:
-    ProgressListenerManager listenerManager;
+    ListenerManager listenerManager;
 
 public:
     virtual void start(CPPUNIT_NS::Test* test) override;

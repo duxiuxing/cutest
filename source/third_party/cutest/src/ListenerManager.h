@@ -4,7 +4,7 @@
 
 #include "cutest/Event.h"
 #include "cutest/Runnable.h"
-#include "cutest/ProgressListener.h"
+#include "cutest/Listener.h"
 
 // std
 #include <cppunit/portability/CppUnitVector.h>
@@ -13,16 +13,16 @@
 
 CUTEST_NS_BEGIN
 
-class ProgressListenerManager : public CPPUNIT_NS::TestListener {
+class ListenerManager : public CPPUNIT_NS::TestListener {
 public:
-    ProgressListenerManager();
+    ListenerManager();
 
-    void add(ProgressListener* listener);
-    void remove(ProgressListener* listener);
+    void add(Listener* listener);
+    void remove(Listener* listener);
 
 protected:
-    typedef CppUnitVector<ProgressListener*> TestProgressListeners;
-    TestProgressListeners listeners;
+    typedef CppUnitVector<Listener*> Listeners;
+    Listeners listeners;
 
 public:
     //////////////////////////////////////////////////////////////////////////
@@ -50,11 +50,11 @@ public:
 
     class TaskBase : public Runnable {
     protected:
-        ProgressListenerManager* manager;
+        ListenerManager* manager;
         Event* event;
 
     public:
-        TaskBase(ProgressListenerManager* managerParam, Event* eventParam)
+        TaskBase(ListenerManager* managerParam, Event* eventParam)
             : manager(managerParam)
             , event(eventParam) {}
 

@@ -33,6 +33,7 @@ DecoratorImpl::destroy() {
     if (this->resultPrinter) {
         Runner::instance()->removeListener(this->resultPrinter);
         delete this->resultPrinter;
+        this->resultPrinter = NULL;
     }
 
     if (this->runCompleted) {

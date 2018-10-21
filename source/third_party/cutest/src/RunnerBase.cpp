@@ -37,12 +37,12 @@ RunnerBase::isTreatTimeoutAsError() {
 }
 
 void
-RunnerBase::addListener(ProgressListener* listener) {
+RunnerBase::addListener(Listener* listener) {
     this->listenerManager.add(listener);
 }
 
 void
-RunnerBase::removeListener(ProgressListener* listener) {
+RunnerBase::removeListener(Listener* listener) {
     this->listenerManager.remove(listener);
 }
 

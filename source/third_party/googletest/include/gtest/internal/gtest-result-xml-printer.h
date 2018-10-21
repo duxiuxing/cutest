@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "gtest/gtest-export.h"
-#include "cutest/ProgressListener.h"
+#include "cutest/Listener.h"
 
 #include <list>
 #include <string>
@@ -11,7 +11,7 @@ namespace testing {
 namespace internal {
 
 class TestResultXmlPrinter
-  : public CUTEST_NS::ProgressListener {
+  : public CUTEST_NS::Listener {
  public:
   TestResultXmlPrinter(const char* xmlFilePath);
   virtual ~TestResultXmlPrinter();
@@ -52,7 +52,7 @@ class TestResultXmlPrinter
   struct TestSuiteInfo {
     TestSuiteInfo()
       : suite(NULL)
-      , elapsedMs(0)
+      , msElapsed(0)
       , failedTestCases(0) {
     }
 
@@ -82,7 +82,7 @@ class TestResultXmlPrinter
 
     CPPUNIT_NS::Test* suite;
     std::string suiteName;
-    unsigned int elapsedMs;
+    unsigned int msElapsed;
     unsigned int failedTestCases;
     TestCaseInfoList testCaseInfos;
   };
