@@ -250,7 +250,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\include\cutest\ExplicitEndTest.h"
+					RelativePath="..\include\cutest\explicit_end_test.h"
 					>
 				</File>
 			</Filter>
@@ -258,7 +258,7 @@
 				Name="Progress"
 				>
 				<File
-					RelativePath="..\include\cutest\Listener.h"
+					RelativePath="..\include\cutest\listener.h"
 					>
 				</File>
 				<File
@@ -286,7 +286,7 @@
 				Name="Runner"
 				>
 				<File
-					RelativePath="..\include\cutest\Runner.h"
+					RelativePath="..\include\cutest\runner.h"
 					>
 				</File>
 				<File
@@ -310,7 +310,7 @@
 				Name="Thread"
 				>
 				<File
-					RelativePath="..\include\cutest\Runnable.h"
+					RelativePath="..\include\cutest\runnable.h"
 					>
 				</File>
 				<Filter
@@ -321,11 +321,11 @@
 						>
 					</File>
 					<File
-						RelativePath="..\src\win\DecoratorImpl.cpp"
+						RelativePath="..\src\win\decorator_impl.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\src\win\DecoratorImpl.h"
+						RelativePath="..\src\win\decorator_impl.h"
 						>
 					</File>
 				</Filter>
@@ -333,7 +333,7 @@
 					Name="Event"
 					>
 					<File
-						RelativePath="..\include\cutest\Event.h"
+						RelativePath="..\include\cutest\event.h"
 						>
 					</File>
 					<File
@@ -366,7 +366,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\include\cutest\Helper.h"
+					RelativePath="..\include\cutest\helper.h"
 					>
 				</File>
 			</Filter>
@@ -374,11 +374,11 @@
 				Name="CountDownLatch"
 				>
 				<File
-					RelativePath="..\src\CountDownLatch.cpp"
+					RelativePath="..\src\count_down_latch.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\include\cutest\CountDownLatch.h"
+					RelativePath="..\include\cutest\count_down_latch.h"
 					>
 				</File>
 				<File
@@ -398,7 +398,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\include\cutest\MfcDialogTest.h"
+					RelativePath="..\include\cutest\mfc_dialog_test.h"
 					>
 				</File>
 			</Filter>

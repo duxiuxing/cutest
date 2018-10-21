@@ -1,7 +1,7 @@
-﻿#include "DecoratorImpl.h"
+﻿#include "decoratorImpl.h"
 #include "SynchronizationObjectImpl.h"
 
-#include "cutest/Runner.h"
+#include "cutest/runner.h"
 #include <process.h>
 
 #define GTEST_IMPLEMENTATION_ 1

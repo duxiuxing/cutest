@@ -106,13 +106,13 @@ ECHO ========== copy header files done ==========
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\cutest\CountDownLatch.h" />
-    <ClInclude Include="..\include\cutest\Event.h" />
-    <ClInclude Include="..\include\cutest\ExplicitEndTest.h" />
-    <ClInclude Include="..\include\cutest\Helper.h" />
-    <ClInclude Include="..\include\cutest\Listener.h" />
-    <ClInclude Include="..\include\cutest\Runnable.h" />
-    <ClInclude Include="..\include\cutest\Runner.h" />
+    <ClInclude Include="..\include\cutest\count_down_latch.h" />
+    <ClInclude Include="..\include\cutest\event.h" />
+    <ClInclude Include="..\include\cutest\explicit_end_test.h" />
+    <ClInclude Include="..\include\cutest\helper.h" />
+    <ClInclude Include="..\include\cutest\listener.h" />
+    <ClInclude Include="..\include\cutest\runnable.h" />
+    <ClInclude Include="..\include\cutest\runner.h" />
     <ClInclude Include="..\src\AutoEndTest.h" />
     <ClInclude Include="..\src\CountDownLatchImpl.h" />
     <ClInclude Include="..\src\Decorator.h" />
@@ -139,7 +139,7 @@ ECHO ========== copy header files done ==========
     <ClCompile Include="..\src\Result.cpp" />
     <ClCompile Include="..\src\RunnerBase.cpp" />
     <ClCompile Include="..\src\win\CountDownLatchImpl.cpp" />
-    <ClCompile Include="..\src\win\DecoratorImpl.cpp" />
+    <ClCompile Include="..\src\win\decorator_impl.cpp" />
     <ClCompile Include="..\src\win\EventImpl.cpp" />
     <ClCompile Include="..\src\win\Logger.cpp" />
     <ClCompile Include="..\src\win\RunnerImpl.cpp" />

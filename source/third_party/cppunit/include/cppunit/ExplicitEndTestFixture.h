@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <cppunit/TestFixture.h>
-#include "cutest/ExplicitEndTest.h"
+#include "cutest/explicit_end_test.h"
 
 CPPUNIT_NS_BEGIN
 

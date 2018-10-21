@@ -52,7 +52,7 @@ LOCAL_SRC_FILES := \
 	./../src/ListenerManager.cpp \
 	./../src/Result.cpp \
 	./../src/RunnerBase.cpp \
-	./../src/android/DecoratorImpl.cpp \
+	./../src/android/decorator_impl.cpp \
     ./../src/android/EventImpl.cpp \
 	./../src/android/JClassManager.cpp \
 	./../src/android/JniEnv.cpp \

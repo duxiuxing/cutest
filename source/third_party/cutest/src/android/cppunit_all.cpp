@@ -10,7 +10,7 @@
 #include "JClassManager.cpp"
 #include "JniEnv.cpp"
 #include "JniHelp.cpp"
-#include "MainTestDecoratorImpl.cpp"
+#include "decorator_impl.cpp"
 #include "MainTestRunnerImpl.cpp"
 #include "SynchronizationObjectImpl.cpp"
 #include "TestEventImpl.cpp"

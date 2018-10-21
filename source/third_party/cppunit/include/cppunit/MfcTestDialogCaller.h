@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include "cutest/Event.h"
-#include "cutest/MfcTestDialog.h"
-#include "cutest/Runnable.h"
-#include "cutest/Runner.h"
+#include "cutest/event.h"
+#include "cutest/mfc_test_dialog.h"
+#include "cutest/runnable.h"
+#include "cutest/runner.h"
 
 #ifdef _MSC_VER
 CPPUNIT_NS_BEGIN

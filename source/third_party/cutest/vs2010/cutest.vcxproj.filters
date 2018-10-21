@@ -51,10 +51,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\cutest\Listener.h">
+    <ClInclude Include="..\include\cutest\listener.h">
       <Filter>cutest\Progress</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\Event.h">
+    <ClInclude Include="..\include\cutest\event.h">
       <Filter>cutest\Thread\Event</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Decorator.h">
@@ -84,13 +84,13 @@
     <ClInclude Include="..\src\Logger.h">
       <Filter>cutest\Logger</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\Runner.h">
+    <ClInclude Include="..\include\cutest\runner.h">
       <Filter>cutest\Runner</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\Runnable.h">
+    <ClInclude Include="..\include\cutest\runnable.h">
       <Filter>cutest\Thread</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\ExplicitEndTest.h">
+    <ClInclude Include="..\include\cutest\explicit_end_test.h">
       <Filter>cutest\ExplicitEndTest</Filter>
     </ClInclude>
     <ClInclude Include="..\src\AutoEndTest.h">
@@ -105,10 +105,10 @@
     <ClInclude Include="..\src\CountDownLatchImpl.h">
       <Filter>cutest\CountDownLatch</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\Helper.h">
+    <ClInclude Include="..\include\cutest\helper.h">
       <Filter>cutest\Helper</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\cutest\CountDownLatch.h">
+    <ClInclude Include="..\include\cutest\count_down_latch.h">
       <Filter>cutest\CountDownLatch</Filter>
     </ClInclude>
   </ItemGroup>
@@ -119,7 +119,7 @@
     <ClCompile Include="..\..\googletest\src\gtest-all.cc">
       <Filter>googletest</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\win\DecoratorImpl.cpp">
+    <ClCompile Include="..\src\win\decorator_impl.cpp">
       <Filter>cutest\Thread\Decorator</Filter>
     </ClCompile>
     <ClCompile Include="..\src\win\EventImpl.cpp">

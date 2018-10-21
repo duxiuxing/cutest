@@ -4,7 +4,7 @@
 
 #ifdef _MSC_VER
 
-#include "cutest/MfcDialogTest.h"
+#include "cutest/mfc_dialog_test.h"
 
 CPPUNIT_NS_BEGIN
 

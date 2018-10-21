@@ -66,7 +66,7 @@
 #include "gtest/gtest-test-part.h"
 #include "gtest/gtest-typed-test.h"
 
-#include "cutest/ExplicitEndTest.h"
+#include "cutest/explicit_end_test.h"
 
 GTEST_DISABLE_MSC_WARNINGS_PUSH_(4251 \
 /* class A needs to have dll-interface to be used by clients of class B */)
