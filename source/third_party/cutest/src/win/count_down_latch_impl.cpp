@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "../CountDownLatchImpl.h"
+#include "../count_down_latch_impl.h"
 
 #include "cutest/helper.h"
 #include "cutest/runner.h"

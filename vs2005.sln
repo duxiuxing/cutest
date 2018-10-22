@@ -27,7 +27,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple", "source\test\simpl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cutest samples", "cutest samples", "{42F5DBA7-DA4A-40BF-806E-392B2C07D8AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExplicitEndTest", "source\test\ExplicitEndTest\vs2005\ExplicitEndTest.vcproj", "{96450E17-BB80-4EF6-87AF-A95A65D21146}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "explicit_end_test", "source\test\explicit_end_test\vs2005\explicit_end_test.vcproj", "{96450E17-BB80-4EF6-87AF-A95A65D21146}"
 	ProjectSection(ProjectDependencies) = postProject
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
@@ -84,7 +84,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleTestRunnerApp", "sou
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runner", "runner", "{CA0EF0BA-902F-42F0-AF32-2DBFEC3C2589}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ProgressListenerTest", "source\test\ProgressListenerTest\vs2005\ProgressListenerTest.vcproj", "{6E595626-6DD1-495B-88FB-B45DDD272E43}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "listener_test", "source\test\listener_test\vs2005\listener_test.vcproj", "{6E595626-6DD1-495B-88FB-B45DDD272E43}"
 	ProjectSection(ProjectDependencies) = postProject
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection

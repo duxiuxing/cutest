@@ -3,9 +3,9 @@
 #include "cutest/helper.h"
 #include "cutest/runner.h"
 
-#include "AutoEndTest.h"
-#include "Decorator.h"
-#include "ListenerManager.h"
+#include "auto_end_test.h"
+#include "decorator.h"
+#include "listener_manager.h"
 
 CUTEST_NS_BEGIN
 

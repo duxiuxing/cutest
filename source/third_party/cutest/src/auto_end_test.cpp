@@ -1,4 +1,4 @@
-﻿#include "AutoEndTest.h"
+﻿#include "auto_end_test.h"
 
 #include "cutest/explicit_end_test.h"
 #include "cutest/helper.h"

@@ -11,7 +11,7 @@
 #include <cppunit/Exception.h>
 #include <cppunit/TestResultCollector.h>
 
-#include "cutest/Listener.h"
+#include "cutest/listener.h"
 
 #include <afxwin.h>
 #include <vector>

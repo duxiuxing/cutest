@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "cutest/count_down_latch.h"
-#include "CountDownLatchImpl.h"
+#include "count_down_latch_impl.h"
 
 CUTEST_NS_BEGIN
 

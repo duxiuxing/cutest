@@ -1,4 +1,4 @@
-﻿#include "Result.h"
+﻿#include "result.h"
 
 CUTEST_NS_BEGIN
 

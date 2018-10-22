@@ -1,5 +1,5 @@
 ﻿#include "decorator_impl.h"
-#include "SynchronizationObjectImpl.h"
+#include "synchronization_object_impl.h"
 
 CUTEST_NS_BEGIN
 

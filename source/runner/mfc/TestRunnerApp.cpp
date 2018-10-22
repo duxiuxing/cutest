@@ -3,7 +3,7 @@
 #include "TestRunnerDlg.h"
 
 #include <cppunit/extensions/TestFactoryRegistry.h>
-#include "cutest/Runner.h"
+#include "cutest/runner.h"
 
 #include "TestConfig.h"
 

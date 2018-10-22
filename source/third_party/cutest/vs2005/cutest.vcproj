@@ -226,11 +226,11 @@
 				Name="Logger"
 				>
 				<File
-					RelativePath="..\src\win\Logger.cpp"
+					RelativePath="..\src\win\logger.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Logger.h"
+					RelativePath="..\src\logger.h"
 					>
 				</File>
 			</Filter>
@@ -238,15 +238,15 @@
 				Name="ExplicitEndTest"
 				>
 				<File
-					RelativePath="..\src\AutoEndTest.cpp"
+					RelativePath="..\src\auto_end_test.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\AutoEndTest.h"
+					RelativePath="..\src\auto_end_test.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\ExplicitEndTest.cpp"
+					RelativePath="..\src\explicit_end_test.cpp"
 					>
 				</File>
 				<File
@@ -255,18 +255,18 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Progress"
+				Name="Listener"
 				>
 				<File
 					RelativePath="..\include\cutest\listener.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\ListenerManager.cpp"
+					RelativePath="..\src\listener_manager.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\ListenerManager.h"
+					RelativePath="..\src\listener_manager.h"
 					>
 				</File>
 			</Filter>
@@ -274,11 +274,11 @@
 				Name="Result"
 				>
 				<File
-					RelativePath="..\src\Result.cpp"
+					RelativePath="..\src\result.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\Result.h"
+					RelativePath="..\src\result.h"
 					>
 				</File>
 			</Filter>
@@ -290,19 +290,19 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\RunnerBase.cpp"
+					RelativePath="..\src\runner_base.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\RunnerBase.h"
+					RelativePath="..\src\runner_base.h"
 					>
 				</File>
 				<File
-					RelativePath="..\src\win\RunnerImpl.cpp"
+					RelativePath="..\src\win\runner_impl.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\win\RunnerImpl.h"
+					RelativePath="..\src\win\runner_impl.h"
 					>
 				</File>
 			</Filter>
@@ -317,7 +317,7 @@
 					Name="Decorator"
 					>
 					<File
-						RelativePath="..\src\Decorator.h"
+						RelativePath="..\src\decorator.h"
 						>
 					</File>
 					<File
@@ -337,11 +337,11 @@
 						>
 					</File>
 					<File
-						RelativePath="..\src\win\EventImpl.cpp"
+						RelativePath="..\src\win\event_impl.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\src\win\EventImpl.h"
+						RelativePath="..\src\win\event_impl.h"
 						>
 					</File>
 				</Filter>
@@ -349,11 +349,11 @@
 					Name="Lock"
 					>
 					<File
-						RelativePath="..\src\win\SynchronizationObjectImpl.cpp"
+						RelativePath="..\src\win\synchronization_object_impl.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\src\win\SynchronizationObjectImpl.h"
+						RelativePath="..\src\win\synchronization_object_impl.h"
 						>
 					</File>
 				</Filter>
@@ -362,7 +362,7 @@
 				Name="Helper"
 				>
 				<File
-					RelativePath="..\src\Helper.cpp"
+					RelativePath="..\src\helper.cpp"
 					>
 				</File>
 				<File
@@ -382,11 +382,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\src\win\CountDownLatchImpl.cpp"
+					RelativePath="..\src\win\count_down_latch_impl.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\src\CountDownLatchImpl.h"
+					RelativePath="..\src\count_down_latch_impl.h"
 					>
 				</File>
 			</Filter>
@@ -394,7 +394,7 @@
 				Name="MfcDialogTest"
 				>
 				<File
-					RelativePath="..\src\win\MfcDialogTest.cpp"
+					RelativePath="..\src\win\mfc_dialog_test.cpp"
 					>
 				</File>
 				<File

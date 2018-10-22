@@ -13,9 +13,6 @@
     <Filter Include="cutest\Logger">
       <UniqueIdentifier>{0e3d669a-a16e-4936-94a1-b72d9d007acb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cutest\Progress">
-      <UniqueIdentifier>{644ece67-6cac-4078-9cf9-bc0e95c07482}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cutest\Result">
       <UniqueIdentifier>{9cf4f505-29af-40b2-8666-0e162af8ccb7}</UniqueIdentifier>
     </Filter>
@@ -52,24 +49,27 @@
     <Filter Include="cutest\MfcDialogTest">
       <UniqueIdentifier>{27d4ef7e-72af-440f-8c17-1c2f7663c0e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cutest\Listener">
+      <UniqueIdentifier>{644ece67-6cac-4078-9cf9-bc0e95c07482}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\Logger.h">
+    <ClInclude Include="..\src\logger.h">
       <Filter>cutest\Logger</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cutest\listener.h">
-      <Filter>cutest\Progress</Filter>
+      <Filter>cutest\Listener</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ListenerManager.h">
-      <Filter>cutest\Progress</Filter>
+    <ClInclude Include="..\src\listener_manager.h">
+      <Filter>cutest\Listener</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Result.h">
+    <ClInclude Include="..\src\result.h">
       <Filter>cutest\Result</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\RunnerBase.h">
+    <ClInclude Include="..\src\runner_base.h">
       <Filter>cutest\Runner</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\win\RunnerImpl.h">
+    <ClInclude Include="..\src\win\runner_impl.h">
       <Filter>cutest\Runner</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cutest\runner.h">
@@ -78,19 +78,19 @@
     <ClInclude Include="..\src\Decorator.h">
       <Filter>cutest\Thread\Decorator</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\win\DecoratorImpl.h">
+    <ClInclude Include="..\src\win\decorator_impl.h">
       <Filter>cutest\Thread\Decorator</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\win\EventImpl.h">
+    <ClInclude Include="..\src\win\event_impl.h">
       <Filter>cutest\Thread\Event</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cutest\event.h">
       <Filter>cutest\Thread\Event</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\win\SynchronizationObjectImpl.h">
+    <ClInclude Include="..\src\win\synchronization_object_impl.h">
       <Filter>cutest\Thread\Lock</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AutoEndTest.h">
+    <ClInclude Include="..\src\auto_end_test.h">
       <Filter>cutest\ExplicitEndTest</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cutest\explicit_end_test.h">
@@ -108,7 +108,7 @@
     <ClInclude Include="..\include\cutest\helper.h">
       <Filter>cutest\Helper</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\CountDownLatchImpl.h">
+    <ClInclude Include="..\src\count_down_latch_impl.h">
       <Filter>cutest\CountDownLatch</Filter>
     </ClInclude>
     <ClInclude Include="..\include\cutest\count_down_latch.h">
@@ -122,37 +122,37 @@
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
       <Filter>cppunit</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\win\Logger.cpp">
+    <ClCompile Include="..\src\win\logger.cpp">
       <Filter>cutest\Logger</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ListenerManager.cpp">
-      <Filter>cutest\Progress</Filter>
+    <ClCompile Include="..\src\listener_manager.cpp">
+      <Filter>cutest\Listener</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Result.cpp">
+    <ClCompile Include="..\src\result.cpp">
       <Filter>cutest\Result</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\RunnerBase.cpp">
+    <ClCompile Include="..\src\runner_base.cpp">
       <Filter>cutest\Runner</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\win\RunnerImpl.cpp">
+    <ClCompile Include="..\src\win\runner_impl.cpp">
       <Filter>cutest\Runner</Filter>
     </ClCompile>
     <ClCompile Include="..\src\win\decorator_impl.cpp">
       <Filter>cutest\Thread\Decorator</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\win\EventImpl.cpp">
+    <ClCompile Include="..\src\win\event_impl.cpp">
       <Filter>cutest\Thread\Event</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\win\SynchronizationObjectImpl.cpp">
+    <ClCompile Include="..\src\win\synchronization_object_impl.cpp">
       <Filter>cutest\Thread\Lock</Filter>
     </ClCompile>
     <ClCompile Include="..\..\googletest\src\gtest-all.cc">
       <Filter>googletest</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AutoEndTest.cpp">
+    <ClCompile Include="..\src\auto_end_test.cpp">
       <Filter>cutest\ExplicitEndTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ExplicitEndTest.cpp">
+    <ClCompile Include="..\src\explicit_end_test.cpp">
       <Filter>cutest\ExplicitEndTest</Filter>
     </ClCompile>
     <ClCompile Include="..\src\win\dllmain.cpp">
@@ -164,16 +164,16 @@
     <ClCompile Include="..\..\googlemock\src\gmock-all.cc">
       <Filter>googlemock</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Helper.cpp">
+    <ClCompile Include="..\src\helper.cpp">
       <Filter>cutest\Helper</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\CountDownLatch.cpp">
+    <ClCompile Include="..\src\count_down_latch.cpp">
       <Filter>cutest\CountDownLatch</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\win\CountDownLatchImpl.cpp">
+    <ClCompile Include="..\src\win\count_down_latch_impl.cpp">
       <Filter>cutest\CountDownLatch</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\win\MfcDialogTest.cpp">
+    <ClCompile Include="..\src\win\mfc_dialog_test.cpp">
       <Filter>cutest\MfcDialogTest</Filter>
     </ClCompile>
   </ItemGroup>

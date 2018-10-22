@@ -56,7 +56,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simple", "source\test\simpl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cutest sample", "cutest sample", "{856CA41F-F788-4354-8B9A-706BA3A814BB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExplicitEndTest", "source\test\ExplicitEndTest\vs2015\ExplicitEndTest.vcxproj", "{3C942903-D4E0-427C-B4B3-AF42D322B9B2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "explicit_end_test", "source\test\explicit_end_test\vs2015\explicit_end_test.vcxproj", "{3C942903-D4E0-427C-B4B3-AF42D322B9B2}"
 	ProjectSection(ProjectDependencies) = postProject
 		{185FF715-C691-49B9-B83F-D54649575FD2} = {185FF715-C691-49B9-B83F-D54649575FD2}
 	EndProjectSection

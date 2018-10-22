@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "../Logger.h"
-#include "../RunnerBase.h"
+#include "../logger.h"
+#include "../runner_base.h"
 
 #include <set>
 #include <wtypes.h>

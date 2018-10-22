@@ -4,7 +4,7 @@
 
 #ifdef _CUTEST_IMPL
 #include "src/gtest-internal-inl.h"
-#include "src/RunnerBase.h"
+#include "src/runner_base.h"
 #endif
 
 CPPUNIT_NS_BEGIN

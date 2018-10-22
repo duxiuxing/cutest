@@ -1,4 +1,4 @@
-﻿#include "RunnerImpl.h"
+﻿#include "runner_impl.h"
 #include "JniListener.h"
 
 #include <cppunit/extensions/TestFactoryRegistry.h>

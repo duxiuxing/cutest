@@ -46,19 +46,19 @@ LOCAL_SRC_FILES := \
     ./../../cppunit/src/cppunit/cppunit-all.cpp \
     ./../../googletest/src/gtest-all.cc \
 	./../../googlemock/src/gmock-all.cc \
-	./../src/AutoEndTest.cpp \
-	./../src/ExplicitEndTest.cpp \
-	./../src/Helper.cpp \
-	./../src/ListenerManager.cpp \
-	./../src/Result.cpp \
-	./../src/RunnerBase.cpp \
+	./../src/runner_base.cpp \
 	./../src/android/decorator_impl.cpp \
-    ./../src/android/EventImpl.cpp \
+    ./../src/android/event_impl.cpp \
 	./../src/android/JClassManager.cpp \
 	./../src/android/JniEnv.cpp \
 	./../src/android/JniListener.cpp \
-	./../src/android/Logger.cpp \
-	./../src/android/RunnerImpl.cpp \
-	./../src/android/SynchronizationObjectImpl.cpp
+	./../src/android/logger.cpp \	
+	./../src/android/runner_impl.cpp \
+	./../src/android/synchronization_object_impl.cpp
+	./../src/auto_end_test.cpp \
+	./../src/explicit_end_test.cpp \
+	./../src/helper.cpp \
+	./../src/listener_manager.cpp \
+	./../src/result.cpp
 
 include $(BUILD_SHARED_LIBRARY)

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Win32 DLL">
+      <UniqueIdentifier>{604222d5-4c25-43af-965d-e4ea939466f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asynchronous Callback">
+      <UniqueIdentifier>{34914472-8aa3-4fe8-881e-458241f376c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asynchronous Callback\cppunit">
+      <UniqueIdentifier>{ae5bba98-2b0a-4e3f-9116-39041ccf2529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Asynchronous Callback\googletest">
+      <UniqueIdentifier>{b3b814bd-eba4-44c4-bb10-ec1185f0d3cc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\stdafx.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\targetver.h">
+      <Filter>Win32 DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cppunit_explicit_end_test.h">
+      <Filter>Asynchronous Callback\cppunit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simple_timer.h">
+      <Filter>Asynchronous Callback</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\stdafx.cpp">
+      <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dllmain.cpp">
+      <Filter>Win32 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cppunit_explicit_end_test.cpp">
+      <Filter>Asynchronous Callback\cppunit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gtest_explicit_end_test.cpp">
+      <Filter>Asynchronous Callback\googletest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\simple_timer.cpp">
+      <Filter>Asynchronous Callback</Filter>
+    </ClCompile>
+    <ClCompile Include="..\count_down_latch_test.cpp">
+      <Filter>Asynchronous Callback\googletest</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

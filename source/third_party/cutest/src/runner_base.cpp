@@ -1,4 +1,4 @@
-﻿#include "RunnerBase.h"
+﻿#include "runner_base.h"
 
 #include "cutest/explicit_end_test.h"
 #include "cutest/runnable.h"

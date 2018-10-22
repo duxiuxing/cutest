@@ -54,7 +54,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hierarchy", "source\test\hi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cutest sample", "cutest sample", "{732540B1-EBD3-4D5F-BDA1-12A2D5B720CD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExplicitEndTest", "source\test\ExplicitEndTest\vs2010\ExplicitEndTest.vcxproj", "{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "explicit_end_test", "source\test\explicit_end_test\vs2010\explicit_end_test.vcxproj", "{C7A14AB9-9CF4-40E1-BAAC-BD254BC02BA0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
 	EndProjectSection

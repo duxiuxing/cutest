@@ -8,8 +8,8 @@
 
 #include <cppunit/TestFailure.h>
 
-#include "cutest/Helper.h"
-#include "cutest/Runner.h"
+#include "cutest/helper.h"
+#include "cutest/runner.h"
 
 #ifdef _DEBUG
 	#define new DEBUG_NEW

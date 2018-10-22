@@ -5,10 +5,10 @@
 #include <cppunit/Test.h>
 #include <WTypes.h>
 
-#include "../Decorator.h"
-#include "../Result.h"
-#include "gtest/internal/gtest-result-xml-printer.h"
+#include "../decorator.h"
+#include "../result.h"
 #include "cutest/event.h"
+#include "gtest/internal/gtest-result-xml-printer.h"
 
 CUTEST_NS_BEGIN
 

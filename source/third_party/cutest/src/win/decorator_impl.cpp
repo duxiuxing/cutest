@@ -1,5 +1,5 @@
-﻿#include "DecoratorImpl.h"
-#include "SynchronizationObjectImpl.h"
+﻿#include "decorator_impl.h"
+#include "synchronization_object_impl.h"
 
 #include "cutest/runner.h"
 #include <process.h>
