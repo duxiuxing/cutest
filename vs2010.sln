@@ -61,7 +61,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "explicit_end_test", "source
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gmock test", "gmock test", "{2AE5BB7D-5361-4CF7-995E-A1CAEEAEE1E5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForDummies", "source\test\ForDummies\vs2010\ForDummies.vcxproj", "{005ECBFD-D7E5-44F3-A87C-094A74C19388}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForDummies", "source\test\for_dummies\vs2010\for_dummies.vcxproj", "{005ECBFD-D7E5-44F3-A87C-094A74C19388}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
 	EndProjectSection
