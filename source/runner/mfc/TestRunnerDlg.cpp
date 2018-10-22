@@ -78,7 +78,7 @@ BOOL CTestRunnerDlg::OnInitDialog()
 		GetWindowText(textOld);
 
 		CString textNew;
-		textNew.Format(_T("%s - %s"), textOld, TestConfig::GetInstance()->GetTitle());
+		textNew.Format(_T("%s - %s"), textOld, TestConfig::Instance()->Title());
 
 		SetWindowText(textNew);
 	}

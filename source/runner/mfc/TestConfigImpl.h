@@ -8,7 +8,7 @@ public:
 	TestConfigImpl();
 
 	virtual BOOL Load();
-	virtual LPCTSTR GetTitle();
+	virtual LPCTSTR Title();
 
 protected:
 	static void LoadFailedMsgBox(LPCTSTR libName);

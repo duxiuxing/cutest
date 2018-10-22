@@ -51,10 +51,10 @@ BOOL CTestRunnerApp::InitInstance()
 	CShellManager* pShellManager = new CShellManager;
 #endif
 
-	VERIFY(TestConfig::GetInstance()->Load());
+	VERIFY(TestConfig::Instance()->Load());
 
 	// HKEY_CURRENT_USER\Software\title
-	SetRegistryKey(TestConfig::GetInstance()->GetTitle());
+	SetRegistryKey(TestConfig::Instance()->Title());
 
 	CPPUNIT_NS::Test* allTests = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
 	CTestRunnerDlg dlg(allTests);
