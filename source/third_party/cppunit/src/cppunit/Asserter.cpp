@@ -20,7 +20,7 @@ Asserter::fail( const Message &message,
                 const SourceLine &sourceLine )
 {
   // throw Exception( message, sourceLine );
-  CUTEST_NS::Runner::instance()->addFailure( false, new Exception( message, sourceLine ) );
+  CUTEST_NS::Runner::Instance()->AddFailure( false, new Exception( message, sourceLine ) );
 }
 
 

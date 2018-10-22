@@ -12,23 +12,23 @@ class TestTimeoutCounter : public Runnable {
 public:
     class Callback {
     public:
-        virtual void onTimeout(ExplicitEndTest* test, TestTimeoutCounter* counter) = 0;
+        virtual void OnTimeout(ExplicitEndTest* test, TestTimeoutCounter* counter) = 0;
     };
 
 public:
     TestTimeoutCounter(ExplicitEndTest* test);
-    void start(unsigned int msTimeout, Callback* callback);
-    void addFailure();
+    void Start(unsigned int msTimeout, Callback* callback);
+    void AddFailure();
 
 protected:
-    ExplicitEndTest* test;
-    Callback* callback;
-    unsigned int msTimeout;     // 记录start()的入参，即ExplicitEndTest的超时时长
-    unsigned long long msStart; // 记录调用start()的时刻，用于计算ExplicitEndTest的实际执行时长
+    ExplicitEndTest* m_test;
+    Callback* m_callback;
+    unsigned int m_msTimeout;     // 记录Start()的入参，即ExplicitEndTest的超时时长
+    unsigned long long m_msStart; // 记录调用Start()的时刻，用于计算ExplicitEndTest的实际执行时长
 
 public:
-    // Runnable::run()的实现
-    virtual void run();
+    // Runnable::Run()的实现
+    virtual void Run();
 };
 
 /*
@@ -41,16 +41,16 @@ public:
 class AutoEndTest : public TestTimeoutCounter::Callback {
 public:
     AutoEndTest();
-    void check(ExplicitEndTest* test, unsigned int msTimeout);
-    void cancel();
+    void Check(ExplicitEndTest* test, unsigned int msTimeout);
+    void Cancel();
 
 protected:
-    ExplicitEndTest* test;
-    TestTimeoutCounter* counter;
+    ExplicitEndTest* m_test;
+    TestTimeoutCounter* m_counter;
 
 public:
     // TestTimeoutCounter::Callback::OnTimeout()的实现
-    virtual void onTimeout(ExplicitEndTest* test, TestTimeoutCounter* counter);
+    virtual void OnTimeout(ExplicitEndTest* test, TestTimeoutCounter* counter);
 };
 
 CUTEST_NS_END

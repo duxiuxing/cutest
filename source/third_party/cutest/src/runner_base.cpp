@@ -8,49 +8,42 @@
 CUTEST_NS_BEGIN
 
 RunnerBase::RunnerBase()
-    : testDecorator(NULL)
-    , currentTest(NULL)
-    , alwaysCallTestOnMainThread(false)
-    , treatTimeoutAsError(false)
-    , state(STATE_NONE) {
-    addListener(this);
+    : m_testDecorator(NULL)
+    , m_currentTest(NULL)
+    , m_isAlwaysCallTestOnMainThread(false)
+    , m_isTreatTimeoutAsError(false)
+    , m_state(STATE_NONE) {
+    AddListener(this);
 }
 
-void
-RunnerBase::setAlwaysCallTestOnMainThread(bool value) {
-    this->alwaysCallTestOnMainThread = value;
+void RunnerBase::SetAlwaysCallTestOnMainThread(bool value) {
+    m_isAlwaysCallTestOnMainThread = value;
 }
 
-bool
-RunnerBase::isAlwaysCallTestOnMainThread() {
-    return this->alwaysCallTestOnMainThread;
+bool RunnerBase::IsAlwaysCallTestOnMainThread() {
+    return m_isAlwaysCallTestOnMainThread;
 }
 
-void
-RunnerBase::setTreatTimeoutAsError(bool value) {
-    this->treatTimeoutAsError = value;
+void RunnerBase::SetTreatTimeoutAsError(bool value) {
+    m_isTreatTimeoutAsError = value;
 }
 
-bool
-RunnerBase::isTreatTimeoutAsError() {
-    return this->treatTimeoutAsError;
+bool RunnerBase::IsTreatTimeoutAsError() {
+    return m_isTreatTimeoutAsError;
 }
 
-void
-RunnerBase::addListener(Listener* listener) {
-    this->listenerManager.add(listener);
+void RunnerBase::AddListener(Listener* listener) {
+    m_listenerManager.Add(listener);
 }
 
-void
-RunnerBase::removeListener(Listener* listener) {
-    this->listenerManager.remove(listener);
+void RunnerBase::RemoveListener(Listener* listener) {
+    m_listenerManager.Remove(listener);
 }
 
-void
-RunnerBase::start(CPPUNIT_NS::Test* test) {
-    switch (this->state) {
+void RunnerBase::Start(CPPUNIT_NS::Test* test) {
+    switch (m_state) {
     case STATE_NONE:
-        this->state = STATE_RUNING;
+        m_state = STATE_RUNING;
         break;
     case STATE_RUNING:
         return;
@@ -60,23 +53,22 @@ RunnerBase::start(CPPUNIT_NS::Test* test) {
         return;
     }
 
-    if (this->testDecorator) {
-        this->testDecorator->destroy();
-        this->testDecorator = NULL;
+    if (m_testDecorator) {
+        m_testDecorator->Destroy();
+        m_testDecorator = NULL;
     }
 
-    this->testDecorator = Decorator::createInstance(test);
-    this->testDecorator->addListener(&this->listenerManager);
-    this->testDecorator->start();
+    m_testDecorator = Decorator::CreateInstance(test);
+    m_testDecorator->AddListener(&m_listenerManager);
+    m_testDecorator->Start();
 }
 
-void
-RunnerBase::stop() {
-    switch (this->state) {
+void RunnerBase::Stop() {
+    switch (m_state) {
     case STATE_NONE:
         return;
     case STATE_RUNING:
-        this->state = STATE_STOPPING;
+        m_state = STATE_STOPPING;
         break;
     case STATE_STOPPING:
         return;
@@ -84,62 +76,56 @@ RunnerBase::stop() {
         return;
     }
 
-    if (this->testDecorator) {
-        this->testDecorator->stop();
+    if (m_testDecorator) {
+        m_testDecorator->Stop();
 
-        if (this->currentTest) {
-            this->currentTest->endTest();
-            this->currentTest = NULL;
+        if (m_currentTest) {
+            m_currentTest->EndTest();
+            m_currentTest = NULL;
         }
     }
 }
 
-void
-RunnerBase::waitUntilAllTestEnd() {
-    if (this->testDecorator) {
-        this->testDecorator->destroy();
-        this->testDecorator = NULL;
+void RunnerBase::WaitUntilAllTestEnd() {
+    if (m_testDecorator) {
+        m_testDecorator->Destroy();
+        m_testDecorator = NULL;
     }
 }
 
-void
-RunnerBase::addFailure(bool isError, CPPUNIT_NS::Exception* exception) {
-    if (this->testDecorator) {
-        this->testDecorator->addFailure(isError, exception);
+void RunnerBase::AddFailure(bool isError, CPPUNIT_NS::Exception* exception) {
+    if (m_testDecorator) {
+        m_testDecorator->AddFailure(isError, exception);
     }
 }
 
-unsigned int
-RunnerBase::errorCount() const {
-    if (this->testDecorator) {
-        const CPPUNIT_NS::TestResultCollector* collector = this->testDecorator->testResultCollector();
+unsigned int RunnerBase::ErrorCount() const {
+    if (m_testDecorator) {
+        const CPPUNIT_NS::TestResultCollector* collector = m_testDecorator->TestResultCollector();
         return (unsigned int)collector->testErrors();
     }
     return 0;
 }
 
-unsigned int
-RunnerBase::failureCount() const {
-    if (this->testDecorator) {
-        const CPPUNIT_NS::TestResultCollector* collector = this->testDecorator->testResultCollector();
+unsigned int RunnerBase::FailureCount() const {
+    if (m_testDecorator) {
+        const CPPUNIT_NS::TestResultCollector* collector = m_testDecorator->TestResultCollector();
         return (unsigned int)collector->testFailures();
     }
     return 0;
 }
 
-unsigned int
-RunnerBase::totalFailureCount() const {
-    if (this->testDecorator) {
-        const CPPUNIT_NS::TestResultCollector* collector = this->testDecorator->testResultCollector();
+unsigned int RunnerBase::TotalFailureCount() const {
+    if (m_testDecorator) {
+        const CPPUNIT_NS::TestResultCollector* collector = m_testDecorator->TestResultCollector();
         return (unsigned int)collector->testFailuresTotal();
     }
     return 0;
 }
 
-const CPPUNIT_NS::TestFailure*
-RunnerBase::failureAt(unsigned int index) const {
-    if (this->testDecorator) {
-        const CPPUNIT_NS::TestResultCollector* collector = this->testDecorator->testResultCollector();
+const CPPUNIT_NS::TestFailure* RunnerBase::FailureAt(unsigned int index) const {
+    if (m_testDecorator) {
+        const CPPUNIT_NS::TestResultCollector* collector = m_testDecorator->TestResultCollector();
         if (index < collector->failures().size()) {
             return collector->failures()[index];
         }
@@ -147,35 +133,30 @@ RunnerBase::failureAt(unsigned int index) const {
     return NULL;
 }
 
-void
-RunnerBase::registerExplicitEndTest(ExplicitEndTest* test, unsigned int msTimeout) {
-    this->currentTest = test;
-    this->autoEndTest.check(test, msTimeout);
+void RunnerBase::RegisterExplicitEndTest(ExplicitEndTest* test, unsigned int msTimeout) {
+    m_currentTest = test;
+    m_autoEndTest.Check(test, msTimeout);
 }
 
-void
-RunnerBase::unregisterExplicitEndTest(ExplicitEndTest* test) {
-    if (this->currentTest == test) {
-        this->currentTest = NULL;
-        this->autoEndTest.cancel();
+void RunnerBase::UnregisterExplicitEndTest(ExplicitEndTest* test) {
+    if (m_currentTest == test) {
+        m_currentTest = NULL;
+        m_autoEndTest.Cancel();
     }
 }
 
-void
-RunnerBase::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
-    this->state = STATE_NONE;
+void RunnerBase::OnRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
+    m_state = STATE_NONE;
 }
 
-thread_id RunnerBase::mainThreadId = 0;
+thread_id RunnerBase::s_mainThreadId = 0;
 
-thread_id
-mainThreadId() {
-    return RunnerBase::mainThreadId;
+thread_id MainThreadId() {
+    return RunnerBase::s_mainThreadId;
 }
 
-void
-RunnerBase::run() {
-    RunnerBase::mainThreadId = currentThreadId();
+void RunnerBase::Run() {
+    RunnerBase::s_mainThreadId = CurrentThreadId();
 }
 
 CUTEST_NS_END

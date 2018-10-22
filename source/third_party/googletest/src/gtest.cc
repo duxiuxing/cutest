@@ -440,14 +440,14 @@ void AssertHelper::operator=(const Message& message) const {
     CPPUNIT_NS::Exception* exception = new CPPUNIT_NS::Exception(
       msg,
       CPPUNIT_NS::SourceLine(data_->file, data_->line));
-      CUTEST_NS::Runner::instance()->addFailure(false, exception);
+      CUTEST_NS::Runner::Instance()->AddFailure(false, exception);
     }
     break;
   case TestPartResult::kFatalFailure: { // Failed and the test should be terminated.
     CPPUNIT_NS::Exception* exception = new CPPUNIT_NS::Exception(
 	  msg,
       CPPUNIT_NS::SourceLine(data_->file, data_->line));
-      CUTEST_NS::Runner::instance()->addFailure(true, exception);
+      CUTEST_NS::Runner::Instance()->AddFailure(true, exception);
     }
     break;
   default:

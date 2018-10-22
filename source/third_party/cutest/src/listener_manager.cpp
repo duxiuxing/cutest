@@ -11,329 +11,313 @@
 CUTEST_NS_BEGIN
 
 ListenerManager::ListenerManager()
-    : failureIndex(0) {}
+    : m_failureIndex(0) {}
 
-void
-ListenerManager::add(Listener* listener) {
-    Listeners::iterator it = std::find(this->listeners.begin(), this->listeners.end(), listener);
-    if (it == this->listeners.end()) {
-        this->listeners.push_back(listener);
+void ListenerManager::Add(Listener* listener) {
+    Listeners::iterator it = std::find(m_listeners.begin(), m_listeners.end(), listener);
+    if (it == m_listeners.end()) {
+        m_listeners.push_back(listener);
     }
 }
 
-void
-ListenerManager::remove(Listener* listener) {
-    Listeners::iterator it = std::find(this->listeners.begin(), this->listeners.end(), listener);
-    if (it != this->listeners.end()) {
-        this->listeners.erase(it);
+void ListenerManager::Remove(Listener* listener) {
+    Listeners::iterator it = std::find(m_listeners.begin(), m_listeners.end(), listener);
+    if (it != m_listeners.end()) {
+        m_listeners.erase(it);
     }
 }
 
 class StartTestRunTask : public ListenerManager::TaskBase {
 protected:
-    CPPUNIT_NS::Test* test;
+    CPPUNIT_NS::Test* m_test;
 
 public:
-    StartTestRunTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* testParam)
+    StartTestRunTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* test)
         : ListenerManager::TaskBase(manager, event)
-        , test(testParam) {}
+        , m_test(test) {}
 
-    virtual void run() {
-        this->manager->startTestRunImmediately(this->test);
+    virtual void Run() {
+        m_manager->StartTestRunImmediately(m_test);
     }
 };
 
-void
-ListenerManager::startTestRun(CPPUNIT_NS::Test* test, CPPUNIT_NS::TestResult*) {
-    if (CUTEST_NS::isOnMainThread()) {
-        startTestRunImmediately(test);
+void ListenerManager::startTestRun(CPPUNIT_NS::Test* test, CPPUNIT_NS::TestResult*) {
+    if (CUTEST_NS::IsOnMainThread()) {
+        StartTestRunImmediately(test);
     } else {
-        Event* event = Event::createInstance();
+        Event* event = Event::CreateInstance();
         StartTestRunTask* task = new StartTestRunTask(this, event, test);
-        Runner::instance()->asyncRunOnMainThread(task, true);
-        event->wait();
-        event->destroy();
+        Runner::Instance()->AsyncRunOnMainThread(task, true);
+        event->Wait();
+        event->Destroy();
     }
 }
 
-void
-ListenerManager::startTestRunImmediately(CPPUNIT_NS::Test* test) {
-    while (!this->testRecords.empty()) {
-        this->testRecords.pop();
+void ListenerManager::StartTestRunImmediately(CPPUNIT_NS::Test* test) {
+    while (!m_testRecords.empty()) {
+        m_testRecords.pop();
     }
-    this->failureIndex = 0;
+    m_failureIndex = 0;
 
     TestRecord record;
-    record.msStart = CUTEST_NS::tickCount64();
-    this->testRecords.push(record);
+    record.MsStart = CUTEST_NS::TickCount64();
+    m_testRecords.push(record);
 
-    Listeners::iterator it = this->listeners.begin();
-    while (it != this->listeners.end()) {
-        (*it)->onRunnerStart(test);
+    Listeners::iterator it = m_listeners.begin();
+    while (it != m_listeners.end()) {
+        (*it)->OnRunnerStart(test);
         ++it;
     }
 }
 
 class EndTestRunTask : public ListenerManager::TaskBase {
 protected:
-    CPPUNIT_NS::Test* test;
+    CPPUNIT_NS::Test* m_test;
 
 public:
-    EndTestRunTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* testParam)
+    EndTestRunTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* test)
         : ListenerManager::TaskBase(manager, event)
-        , test(testParam) {}
+        , m_test(test) {}
 
-    virtual void run() {
-        this->manager->endTestRunImmediately(this->test);
+    virtual void Run() {
+        m_manager->EndTestRunImmediately(m_test);
     }
 };
 
-void
-ListenerManager::endTestRun(CPPUNIT_NS::Test* test, CPPUNIT_NS::TestResult*) {
-    if (CUTEST_NS::isOnMainThread()) {
-        endTestRunImmediately(test);
+void ListenerManager::endTestRun(CPPUNIT_NS::Test* test, CPPUNIT_NS::TestResult*) {
+    if (CUTEST_NS::IsOnMainThread()) {
+        EndTestRunImmediately(test);
     } else {
-        Event* event = Event::createInstance();
-        Runner* runner = Runner::instance();
+        Event* event = Event::CreateInstance();
+        Runner* runner = Runner::Instance();
         EndTestRunTask* task = new EndTestRunTask(this, event, test);
-        runner->asyncRunOnMainThread(task, true);
-        event->wait();
-        event->destroy();
+        runner->AsyncRunOnMainThread(task, true);
+        event->Wait();
+        event->Destroy();
     }
 }
 
-void
-ListenerManager::endTestRunImmediately(CPPUNIT_NS::Test* test) {
-    TestRecord& record = this->testRecords.top();
-    unsigned int msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - record.msStart);
-    this->testRecords.pop();
+void ListenerManager::EndTestRunImmediately(CPPUNIT_NS::Test* test) {
+    TestRecord& record = m_testRecords.top();
+    unsigned int msElapsed = (unsigned int)(CUTEST_NS::TickCount64() - record.MsStart);
+    m_testRecords.pop();
 
-    Listeners::reverse_iterator it = this->listeners.rbegin();
-    while (it != this->listeners.rend()) {
-        (*it)->onRunnerEnd(test, msElapsed);
+    Listeners::reverse_iterator it = m_listeners.rbegin();
+    while (it != m_listeners.rend()) {
+        (*it)->OnRunnerEnd(test, msElapsed);
         ++it;
     }
 }
 
 class StartSuiteTask : public ListenerManager::TaskBase {
 protected:
-    CPPUNIT_NS::Test* suite;
+    CPPUNIT_NS::Test* m_suite;
 
 public:
-    StartSuiteTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* suiteParam)
+    StartSuiteTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* suite)
         : ListenerManager::TaskBase(manager, event)
-        , suite(suiteParam) {}
+        , m_suite(suite) {}
 
-    virtual void run() {
-        this->manager->startSuiteImmediately(this->suite);
+    virtual void Run() {
+        m_manager->StartSuiteImmediately(m_suite);
     }
 };
 
-void
-ListenerManager::startSuite(CPPUNIT_NS::Test* suite) {
-    if (CUTEST_NS::isOnMainThread()) {
-        startSuiteImmediately(suite);
+void ListenerManager::startSuite(CPPUNIT_NS::Test* suite) {
+    if (CUTEST_NS::IsOnMainThread()) {
+        StartSuiteImmediately(suite);
     } else {
-        Event* event = Event::createInstance();
+        Event* event = Event::CreateInstance();
         StartSuiteTask* task = new StartSuiteTask(this, event, suite);
-        Runner::instance()->asyncRunOnMainThread(task, true);
-        event->wait();
-        event->destroy();
+        Runner::Instance()->AsyncRunOnMainThread(task, true);
+        event->Wait();
+        event->Destroy();
     }
 }
 
-void
-ListenerManager::startSuiteImmediately(CPPUNIT_NS::Test* suite) {
+void ListenerManager::StartSuiteImmediately(CPPUNIT_NS::Test* suite) {
     TestRecord record;
-    record.msStart = CUTEST_NS::tickCount64();
-    this->testRecords.push(record);
+    record.MsStart = CUTEST_NS::TickCount64();
+    m_testRecords.push(record);
 
-    Listeners::iterator it = this->listeners.begin();
-    while (it != this->listeners.end()) {
-        (*it)->onSuiteStart(suite);
+    Listeners::iterator it = m_listeners.begin();
+    while (it != m_listeners.end()) {
+        (*it)->OnSuiteStart(suite);
         ++it;
     }
 }
 
 class EndSuiteTask : public ListenerManager::TaskBase {
 protected:
-    CPPUNIT_NS::Test* suite;
+    CPPUNIT_NS::Test* m_suite;
 
 public:
-    EndSuiteTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* suiteParam)
+    EndSuiteTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* suite)
         : ListenerManager::TaskBase(manager, event)
-        , suite(suiteParam) {}
+        , m_suite(suite) {}
 
-    virtual void run() {
-        this->manager->endSuiteImmediately(this->suite);
+    virtual void Run() {
+        m_manager->EndSuiteImmediately(m_suite);
     }
 };
 
-void
-ListenerManager::endSuite(CPPUNIT_NS::Test* suite) {
-    if (CUTEST_NS::isOnMainThread()) {
-        endSuiteImmediately(suite);
+void ListenerManager::endSuite(CPPUNIT_NS::Test* suite) {
+    if (CUTEST_NS::IsOnMainThread()) {
+        EndSuiteImmediately(suite);
     } else {
-        Runner* runner = Runner::instance();
-        Event* event = Event::createInstance();
+        Runner* runner = Runner::Instance();
+        Event* event = Event::CreateInstance();
         EndSuiteTask* task = new EndSuiteTask(this, event, suite);
-        runner->asyncRunOnMainThread(task, true);
-        event->wait();
-        event->destroy();
+        runner->AsyncRunOnMainThread(task, true);
+        event->Wait();
+        event->Destroy();
     }
 }
 
-void
-ListenerManager::endSuiteImmediately(CPPUNIT_NS::Test* suite) {
-    TestRecord& record = this->testRecords.top();
-    unsigned int msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - record.msStart);
-    this->testRecords.pop();
+void ListenerManager::EndSuiteImmediately(CPPUNIT_NS::Test* suite) {
+    TestRecord& record = m_testRecords.top();
+    unsigned int msElapsed = (unsigned int)(CUTEST_NS::TickCount64() - record.MsStart);
+    m_testRecords.pop();
 
-    Listeners::reverse_iterator it = this->listeners.rbegin();
-    while (it != this->listeners.rend()) {
-        (*it)->onSuiteEnd(suite, msElapsed);
+    Listeners::reverse_iterator it = m_listeners.rbegin();
+    while (it != m_listeners.rend()) {
+        (*it)->OnSuiteEnd(suite, msElapsed);
         ++it;
     }
 }
 
 class StartTestTask : public ListenerManager::TaskBase {
 protected:
-    CPPUNIT_NS::Test* test;
+    CPPUNIT_NS::Test* m_test;
 
 public:
-    StartTestTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* testParam)
+    StartTestTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* test)
         : ListenerManager::TaskBase(manager, event)
-        , test(testParam) {}
+        , m_test(test) {}
 
-    virtual void run() {
-        this->manager->StartTestImmediately(this->test);
+    virtual void Run() {
+        m_manager->StartTestImmediately(m_test);
     }
 };
 
-void
-ListenerManager::startTest(CPPUNIT_NS::Test* test) {
-    if (CUTEST_NS::isOnMainThread()) {
+void ListenerManager::startTest(CPPUNIT_NS::Test* test) {
+    if (CUTEST_NS::IsOnMainThread()) {
         StartTestImmediately(test);
     } else {
-        Event* event = Event::createInstance();
+        Event* event = Event::CreateInstance();
         StartTestTask* task = new StartTestTask(this, event, test);
-        Runner::instance()->asyncRunOnMainThread(task, true);
-        event->wait();
-        event->destroy();
+        Runner::Instance()->AsyncRunOnMainThread(task, true);
+        event->Wait();
+        event->Destroy();
     }
     // 在这记录开始时间，避免把线程切换的时间也计算在内
     TestRecord record;
-    record.msStart = CUTEST_NS::tickCount64();
-    this->testRecords.push(record);
+    record.MsStart = CUTEST_NS::TickCount64();
+    m_testRecords.push(record);
 }
 
-void
-ListenerManager::StartTestImmediately(CPPUNIT_NS::Test* test) {
-    Listeners::iterator it = this->listeners.begin();
-    while (it != this->listeners.end()) {
-        (*it)->onTestStart(test);
+void ListenerManager::StartTestImmediately(CPPUNIT_NS::Test* test) {
+    Listeners::iterator it = m_listeners.begin();
+    while (it != m_listeners.end()) {
+        (*it)->OnTestStart(test);
         ++it;
     }
 }
 
 class AddFailureTask : public ListenerManager::TaskBase {
 protected:
-    CPPUNIT_NS::TestFailure* failure;
+    CPPUNIT_NS::TestFailure* m_failure;
 
 public:
-    AddFailureTask(ListenerManager* manager, Event* event, const CPPUNIT_NS::TestFailure& failureParam)
+    AddFailureTask(ListenerManager* manager, Event* event, const CPPUNIT_NS::TestFailure& failure)
         : ListenerManager::TaskBase(manager, event)
-        , failure(NULL) {
-        this->failure = failureParam.clone();
+        , m_failure(NULL) {
+        m_failure = failure.clone();
     }
 
     virtual ~AddFailureTask() {
-        delete this->failure;
+        delete m_failure;
     }
 
-    virtual void run() {
-        this->manager->addFailureImmediately(*this->failure);
+    virtual void Run() {
+        m_manager->AddFailureImmediately(*m_failure);
     }
 };
 
-void
-ListenerManager::addFailure(const CPPUNIT_NS::TestFailure& failure) {
-    if (CUTEST_NS::isOnMainThread()) {
-        addFailureImmediately(failure);
+void ListenerManager::addFailure(const CPPUNIT_NS::TestFailure& failure) {
+    if (CUTEST_NS::IsOnMainThread()) {
+        AddFailureImmediately(failure);
     } else {
-        Event* event = Event::createInstance();
+        Event* event = Event::CreateInstance();
         AddFailureTask* task = new AddFailureTask(this, event, failure);
-        Runner::instance()->asyncRunOnMainThread(task, true);
-        event->wait();
-        event->destroy();
+        Runner::Instance()->AsyncRunOnMainThread(task, true);
+        event->Wait();
+        event->Destroy();
     }
 }
 
-void
-ListenerManager::addFailureImmediately(const CPPUNIT_NS::TestFailure& failure) {
-    if (!this->testRecords.empty()) {
-        TestRecord& record = this->testRecords.top();
+void ListenerManager::AddFailureImmediately(const CPPUNIT_NS::TestFailure& failure) {
+    if (!m_testRecords.empty()) {
+        TestRecord& record = m_testRecords.top();
 
         if (failure.isError()) {
-            record.errorCount++;
+            ++record.ErrorCount;
         } else {
-            record.failureCount++;
+            ++record.FailureCount;
         }
     }
 
-    Listeners::iterator it = this->listeners.begin();
-    while (it != this->listeners.end()) {
-        (*it)->onFailureAdd(this->failureIndex, failure);
+    Listeners::iterator it = m_listeners.begin();
+    while (it != m_listeners.end()) {
+        (*it)->OnFailureAdd(m_failureIndex, failure);
         ++it;
     }
 
-    ++this->failureIndex;
+    ++m_failureIndex;
 }
 
 class EndTestTask : public ListenerManager::TaskBase {
 protected:
-    CPPUNIT_NS::Test* test;
-    unsigned int msElapsed;
+    CPPUNIT_NS::Test* m_test;
+    unsigned int m_msElapsed;
 
 public:
-    EndTestTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* testParam, unsigned int msElapsedParam)
+    EndTestTask(ListenerManager* manager, Event* event, CPPUNIT_NS::Test* test, unsigned int msElapsed)
         : ListenerManager::TaskBase(manager, event)
-        , test(testParam)
-        , msElapsed(msElapsedParam) {}
+        , m_test(test)
+        , m_msElapsed(msElapsed) {}
 
-    virtual void run() {
-        this->manager->endTestImmediately(this->test, this->msElapsed);
+    virtual void Run() {
+        m_manager->EndTestImmediately(m_test, m_msElapsed);
     }
 };
 
-void
-ListenerManager::endTest(CPPUNIT_NS::Test* test) {
-    Runner* runner = Runner::instance();
+void ListenerManager::endTest(CPPUNIT_NS::Test* test) {
+    Runner* runner = Runner::Instance();
     // 在这记录用例耗时，避免把线程切换的时间也计算在内
-    TestRecord& record = this->testRecords.top();
-    unsigned int msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - record.msStart);
+    TestRecord& record = m_testRecords.top();
+    unsigned int msElapsed = (unsigned int)(CUTEST_NS::TickCount64() - record.MsStart);
 
-    if (CUTEST_NS::isOnMainThread()) {
-        endTestImmediately(test, msElapsed);
+    if (CUTEST_NS::IsOnMainThread()) {
+        EndTestImmediately(test, msElapsed);
     } else {
-        Event* event = Event::createInstance();
+        Event* event = Event::CreateInstance();
         EndTestTask* task = new EndTestTask(this, event, test, msElapsed);
-        runner->asyncRunOnMainThread(task, true);
-        event->wait();
-        event->destroy();
+        runner->AsyncRunOnMainThread(task, true);
+        event->Wait();
+        event->Destroy();
     }
 }
 
-void
-ListenerManager::endTestImmediately(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
-    TestRecord& record = this->testRecords.top();
-    Listeners::reverse_iterator it = this->listeners.rbegin();
-    while (it != this->listeners.rend()) {
-        (*it)->onTestEnd(test, record.errorCount, record.failureCount, msElapsed);
+void ListenerManager::EndTestImmediately(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
+    TestRecord& record = m_testRecords.top();
+    Listeners::reverse_iterator it = m_listeners.rbegin();
+    while (it != m_listeners.rend()) {
+        (*it)->OnTestEnd(test, record.ErrorCount, record.FailureCount, msElapsed);
         ++it;
     }
 
-    this->testRecords.pop();
+    m_testRecords.pop();
 }
 
 CUTEST_NS_END

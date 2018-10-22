@@ -16,40 +16,37 @@ public:
     virtual void OnCancel() override;
 
 protected:
-	ExplicitEndTest* test;
+    ExplicitEndTest* m_test;
 };
 
 template<class T>
-CMfcTestDialog<T>::CMfcTestDialog(ExplicitEndTest* test_in)
- : T()
-, test(test_in) {
+CMfcTestDialog<T>::CMfcTestDialog(ExplicitEndTest* test)
+    : T()
+    , m_test(test) {
 }
 
 template<class T>
-void
-CMfcTestDialog<T>::PostNcDestroy() {
+void CMfcTestDialog<T>::PostNcDestroy() {
     T::PostNcDestroy();
 
-    if (this->test) {
-		this->test->endTest();
-		this->test = NULL;
+    if (m_test) {
+        m_test->EndTest();
+        m_test = NULL;
     }
 
     delete this;
 }
 
 template<class T>
-void
-CMfcTestDialog<T>::OnOK() {
+void CMfcTestDialog<T>::OnOK() {
     T::OnOK();
     T::DestroyWindow();
 }
 
 template<class T>
-void
-CMfcTestDialog<T>::OnCancel() {
+void CMfcTestDialog<T>::OnCancel() {
     T::OnCancel();
-	T::DestroyWindow();
+    T::DestroyWindow();
 }
 
 CUTEST_NS_END

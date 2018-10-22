@@ -14,7 +14,7 @@ CPPUNIT_NS_BEGIN
 TestSuite::TestSuite( std::string name )
     : TestComposite( name )
 {
-  CUTEST_NS::initGoogleMock();
+  CUTEST_NS::InitGoogleMock();
 }
 
 

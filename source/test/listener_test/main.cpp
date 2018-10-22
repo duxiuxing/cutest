@@ -55,21 +55,21 @@ int _tmain(int argc, _TCHAR* argv[]) {
     g_events = &events;
 
     EventRecordingListener listener1("1st");
-    CUTEST_NS::Runner::instance()->addListener(&listener1);
+    CUTEST_NS::Runner::Instance()->AddListener(&listener1);
 
     EventRecordingListener listener2("2nd");
-    CUTEST_NS::Runner::instance()->addListener(&listener2);
+    CUTEST_NS::Runner::Instance()->AddListener(&listener2);
 
     AddGlobalTestEnvironment(new EnvironmentInvocationCatcher);
 
     GTEST_CHECK_(events.size() == 0)
             << "AddGlobalTestEnvironment should not generate any events itself.";
 
-    CUTEST_NS::Runner::instance()->start(
+    CUTEST_NS::Runner::Instance()->Start(
         CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest()
     );
 
-    CUTEST_NS::Runner::instance()->waitUntilAllTestEnd();
+    CUTEST_NS::Runner::Instance()->WaitUntilAllTestEnd();
 
     std::vector<std::string>::iterator it = events.begin();
     while (it != events.end()) {

@@ -258,7 +258,7 @@ void TestResultXmlPrinter::outputXmlTestCase(
   int failures = 0;
   for (std::vector<unsigned int>::size_type i = 0; i < testCaseInfo->failureIndexs.size(); ++i) {
     const CPPUNIT_NS::TestFailure* testFailure =
-      CUTEST_NS::Runner::instance()->failureAt(testCaseInfo->failureIndexs[i]);
+      CUTEST_NS::Runner::Instance()->FailureAt(testCaseInfo->failureIndexs[i]);
 
     if (++failures == 1) {
       *stream << ">\n";

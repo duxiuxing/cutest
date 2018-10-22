@@ -41,11 +41,11 @@
     <ClCompile Include="..\gtest_explicit_end_test.cpp">
       <Filter>Asynchronous Callback\googletest</Filter>
     </ClCompile>
-    <ClCompile Include="..\simple_timer.cpp">
-      <Filter>Asynchronous Callback</Filter>
-    </ClCompile>
     <ClCompile Include="..\count_down_latch_test.cpp">
       <Filter>Asynchronous Callback\googletest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\simple_timer.cpp">
+      <Filter>Asynchronous Callback</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

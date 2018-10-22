@@ -6,31 +6,27 @@
 CUTEST_NS_BEGIN
 
 CountDownLatch::CountDownLatch(int count) {
-    this->impl = new CountDownLatchImpl(count);
+    m_impl = new CountDownLatchImpl(count);
 }
 
 CountDownLatch::~CountDownLatch() {
-    delete this->impl;
+    delete m_impl;
 }
 
-void
-CountDownLatch::await() {
-    this->impl->await();
+void CountDownLatch::Await() {
+    m_impl->Await();
 }
 
-bool
-CountDownLatch::await(unsigned int msTimeout) {
-    return this->impl->await(msTimeout);
+bool CountDownLatch::Await(unsigned int msTimeout) {
+    return m_impl->Await(msTimeout);
 }
 
-void
-CountDownLatch::countDown() {
-    this->impl->countDown();
+void CountDownLatch::CountDown() {
+    m_impl->CountDown();
 }
 
-int
-CountDownLatch::getCount() {
-    return this->impl->getCount();
+int CountDownLatch::Count() {
+    return m_impl->Count();
 }
 
 CUTEST_NS_END

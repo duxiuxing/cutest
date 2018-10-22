@@ -17,15 +17,15 @@ class Listener {
 public:
     virtual ~Listener() {}
 
-    virtual void onRunnerStart(CPPUNIT_NS::Test* test) {}
-    virtual void onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {}
+    virtual void OnRunnerStart(CPPUNIT_NS::Test* test) {}
+    virtual void OnRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {}
 
-    virtual void onSuiteStart(CPPUNIT_NS::Test* suite) {}
-    virtual void onSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int msElapsed) {}
+    virtual void OnSuiteStart(CPPUNIT_NS::Test* suite) {}
+    virtual void OnSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int msElapsed) {}
 
-    virtual void onTestStart(CPPUNIT_NS::Test* test) {}
-    virtual void onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) {}
-    virtual void onTestEnd(
+    virtual void OnTestStart(CPPUNIT_NS::Test* test) {}
+    virtual void OnFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) {}
+    virtual void OnTestEnd(
         CPPUNIT_NS::Test* test,
         unsigned int errorCount,
         unsigned int failureCount,

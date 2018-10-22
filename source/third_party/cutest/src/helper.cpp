@@ -3,8 +3,7 @@
 
 #include <stack>
 
-const char*
-CUTEST_NS::version() {
+const char* CUTEST_NS::Version() {
     static std::string version;
 
     if (version.empty()) {
@@ -29,13 +28,11 @@ CUTEST_NS::version() {
     return version.c_str();
 }
 
-bool
-CUTEST_NS::isOnMainThread() {
-    return (CUTEST_NS::mainThreadId() == CUTEST_NS::currentThreadId());
+bool CUTEST_NS::IsOnMainThread() {
+    return (CUTEST_NS::MainThreadId() == CUTEST_NS::CurrentThreadId());
 }
 
-std::string
-CUTEST_NS::makeFilePathShorter(std::string path) {
+std::string CUTEST_NS::MakeFilePathShorter(std::string path) {
     std::string str = path;
     std::stack<std::string> dirStack;
 	std::string::size_type index = str.find('/');

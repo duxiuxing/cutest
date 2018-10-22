@@ -55,12 +55,12 @@ CPPUNIT_NS_END
   - 调用test_class::test_method()方法；
   - 方法执行完则当前测试用例自动结束。
 */
-#define CPPUNIT_MAIN_THREAD_JNI_TEST(test_class, java_test_method) \
-    void java_test_method() { \
-        CUTEST_NS::Runner* runner = CUTEST_NS::Runner::instance(); \
-        CUTEST_NS::Event* event = CUTEST_NS::Event::createInstance(); \
-        CPPUNIT_NS::MainThreadTestJniCaller<test_class> caller(event, #java_test_method); \
-        caller.Hook_TestMethod(&test_class::run); \
-        runner->asyncRunOnMainThread(&caller, false); \
-        event->wait(); event->destroy(); \
+#define CPPUNIT_MAIN_THREAD_JNI_TEST(TestClass, JavaTestMethod) \
+    void JavaTestMethod() { \
+        CUTEST_NS::Runner* runner = CUTEST_NS::Runner::Instance(); \
+        CUTEST_NS::Event* event = CUTEST_NS::Event::CreateInstance(); \
+        CPPUNIT_NS::MainThreadTestJniCaller<TestClass> caller(event, #JavaTestMethod); \
+        caller.Hook_TestMethod(&TestClass::Run); \
+        runner->AsyncRunOnMainThread(&caller, false); \
+        event->Wait(); event->Destroy(); \
     }

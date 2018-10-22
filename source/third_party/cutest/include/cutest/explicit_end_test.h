@@ -15,12 +15,12 @@ public:
     ExplicitEndTest();
 
 public:
-    void setEvent(CUTEST_NS::Event* event);
-    virtual void endTest();
-    bool isTestEnd();
+    void SetEvent(CUTEST_NS::Event* event);
+    virtual void EndTest();
+    bool IsTestEnd();
 
 protected:
-    Event* event;
+    Event* m_event;
 
 private:
     ExplicitEndTest(const ExplicitEndTest& other);

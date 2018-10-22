@@ -51,18 +51,18 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public: // overrided from CUTEST_NS::Listener
-	virtual void onTestStart(CPPUNIT_NS::Test* test) override;
-	virtual void onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) override;
-	virtual void onTestEnd(
+	virtual void OnTestStart(CPPUNIT_NS::Test* test) override;
+	virtual void OnFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) override;
+	virtual void OnTestEnd(
 		CPPUNIT_NS::Test* test,
 		unsigned int errorCount,
 		unsigned int failureCount,
 		unsigned int msElapsed) override;
-	virtual void onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) override;
+	virtual void OnRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) override;
 
 protected: // Helper
-	CRect GetItemWindowRect(int nID);
-	CRect GetItemClientRect(int nID);
+	CRect GetItemWindowRect(int itemID);
+	CRect GetItemClientRect(int itemID);
 
 protected:
 	CComboBox m_historyCombo;
@@ -90,8 +90,8 @@ protected:
 
 	enum ErrorIconIndex
 	{
-		errorIconFailure = 0,
-		errorIconError
+		ERROR_ICON_FAILURE = 0,
+		ERROR_ICON_ERROR
 	};
 	CImageList m_errorIcons;
 	MsDevCallerListCtrl m_errorList;

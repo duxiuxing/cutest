@@ -15,63 +15,63 @@ class RunnerBase
     : public Runner
     , public Listener
     , public Runnable {
-    friend thread_id CUTEST_NS::mainThreadId();
+    friend thread_id CUTEST_NS::MainThreadId();
 
 public:
     RunnerBase();
 
 public:
-    virtual void setAlwaysCallTestOnMainThread(bool value) override;
-    virtual bool isAlwaysCallTestOnMainThread() override;
+    virtual void SetAlwaysCallTestOnMainThread(bool value) override;
+    virtual bool IsAlwaysCallTestOnMainThread() override;
 
-    virtual void setTreatTimeoutAsError(bool value) override;
-    virtual bool isTreatTimeoutAsError() override;
+    virtual void SetTreatTimeoutAsError(bool value) override;
+    virtual bool IsTreatTimeoutAsError() override;
 
 public: // Runner接口族的实现
-    virtual void addListener(Listener* listener) override;
-    virtual void removeListener(Listener* listener) override;
+    virtual void AddListener(Listener* listener) override;
+    virtual void RemoveListener(Listener* listener) override;
 
 protected:
-    ListenerManager listenerManager;
+    ListenerManager m_listenerManager;
 
 public:
-    virtual void start(CPPUNIT_NS::Test* test) override;
-    virtual void stop() override;
+    virtual void Start(CPPUNIT_NS::Test* test) override;
+    virtual void Stop() override;
 
-    virtual void waitUntilAllTestEnd() override;
+    virtual void WaitUntilAllTestEnd() override;
 
-    virtual void addFailure(bool isError, CPPUNIT_NS::Exception* exception) override;
+    virtual void AddFailure(bool isError, CPPUNIT_NS::Exception* exception) override;
 
-    virtual unsigned int errorCount() const override;
-    virtual unsigned int failureCount() const override;
-    virtual unsigned int totalFailureCount() const override;
-    virtual const CPPUNIT_NS::TestFailure* failureAt(unsigned int index) const override;
+    virtual unsigned int ErrorCount() const override;
+    virtual unsigned int FailureCount() const override;
+    virtual unsigned int TotalFailureCount() const override;
+    virtual const CPPUNIT_NS::TestFailure* FailureAt(unsigned int index) const override;
 
 protected:
-    Decorator* testDecorator;
+    Decorator* m_testDecorator;
 
 public: // ExplicitEndTest相关的方法
-    virtual void registerExplicitEndTest(ExplicitEndTest* test, unsigned int msTimeout) override;
-    virtual void unregisterExplicitEndTest(ExplicitEndTest* test) override;
+    virtual void RegisterExplicitEndTest(ExplicitEndTest* test, unsigned int msTimeout) override;
+    virtual void UnregisterExplicitEndTest(ExplicitEndTest* test) override;
 
 protected:
-    ExplicitEndTest* currentTest;
-    AutoEndTest autoEndTest;
-    bool alwaysCallTestOnMainThread;
-    bool treatTimeoutAsError;
+    ExplicitEndTest* m_currentTest;
+    AutoEndTest m_autoEndTest;
+    bool m_isAlwaysCallTestOnMainThread;
+    bool m_isTreatTimeoutAsError;
 
     enum State {
         STATE_NONE = 0,  // 空闲状态，上一状态为STATE_RUNING or STATE_STOPPING
-        STATE_RUNING,    // 调用了Runner::start()之后，上一状态为STATE_NONE
-        STATE_STOPPING,  // 调用了Runner::stop()之后，上一状态为STATE_RUNING
+        STATE_RUNING,    // 调用了Runner::Start()之后，上一状态为STATE_NONE
+        STATE_STOPPING,  // 调用了Runner::Stop()之后，上一状态为STATE_RUNING
     };
-    State state;
-    virtual void onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) override;
+    State m_state;
+    virtual void OnRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) override;
 
-    static thread_id mainThreadId;
+    static thread_id s_mainThreadId;
 
-    // 实现Runnable::run()
-    virtual void run() override;
+    // 实现Runnable::Run()
+    virtual void Run() override;
 };
 
 CUTEST_NS_END

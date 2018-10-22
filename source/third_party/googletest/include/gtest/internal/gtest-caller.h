@@ -51,122 +51,122 @@ class TestCaller
 
   // 重载TestCase::runTest()
   virtual void runTest() override {
-    if (CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread()) {
-      runTestOnMainThread();
+    if (CUTEST_NS::Runner::Instance()->IsAlwaysCallTestOnMainThread()) {
+      RunTestOnMainThread();
     } else {
-      runTestImmediately();
+      RunTestImmediately();
     }
   }
 
-  void runTestOnMainThread() {
-    if (CUTEST_NS::isOnMainThread()) {
+  void RunTestOnMainThread() {
+    if (CUTEST_NS::IsOnMainThread()) {
       if (m_result) {
         m_result->protect(
-          MethodFunctor(this, &TestCaller::runTestImmediately),
+          MethodFunctor(this, &TestCaller::RunTestImmediately),
           this);
       } else {
-        runTestImmediately();
+        RunTestImmediately();
       }
     } else {
       m_fixtureMethodId = FIXTURE_METHOD_ID_TEST;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread(this, false);
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
 
-  void runTestImmediately() {
+  void RunTestImmediately() {
     (m_fixture->*m_test)();
   }
 
   // 重载TestFixture::setUp()
   virtual void setUp() override {
-    if (CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread()) {
-      setUpOnMainThread();
+    if (CUTEST_NS::Runner::Instance()->IsAlwaysCallTestOnMainThread()) {
+      SetUpOnMainThread();
     } else {
-      setUpImmediately();
+      SetUpImmediately();
     }
   }
 
-  void setUpOnMainThread() {
-    if (CUTEST_NS::isOnMainThread()) {
+  void SetUpOnMainThread() {
+    if (CUTEST_NS::IsOnMainThread()) {
       if (m_result) {
         m_result->protect(
-          MethodFunctor(this, &TestCaller::setUpImmediately),
+          MethodFunctor(this, &TestCaller::SetUpImmediately),
           this,
           "setUp() failed");
       } else {
-        setUpImmediately();
+        SetUpImmediately();
       }
     } else {
       m_fixtureMethodId = FIXTURE_METHOD_ID_SET_UP;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread(this, false);
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
 
-  void setUpImmediately() {
+  void SetUpImmediately() {
     m_fixture = new Fixture;
     m_fixture->SetUp();
   }
 
   // 重载TestFixture::tearDown()
   virtual void tearDown() override {
-    if (CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread()) {
-      tearDownOnMainThread();
+    if (CUTEST_NS::Runner::Instance()->IsAlwaysCallTestOnMainThread()) {
+      TearDownOnMainThread();
     } else {
-      tearDownImmediately();
+      TearDownImmediately();
     }
   }
 
-  void tearDownOnMainThread() {
-    if (CUTEST_NS::isOnMainThread()) {
+  void TearDownOnMainThread() {
+    if (CUTEST_NS::IsOnMainThread()) {
       if (m_result) {
         m_result->protect(
-          MethodFunctor(this, &TestCaller::tearDownImmediately),
+          MethodFunctor(this, &TestCaller::TearDownImmediately),
           this,
           "tearDown() failed");
       } else {
-        tearDownImmediately();
+        TearDownImmediately();
       }
     } else {
       m_fixtureMethodId = FIXTURE_METHOD_ID_TEAR_DOWN;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread(this, false);
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread(this, false);
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
 
-  void tearDownImmediately() {
+  void TearDownImmediately() {
     m_fixture->TearDown();
     delete m_fixture;
     m_fixture = NULL;
   }
 
-  // 实现Runnable::run()
-  virtual void run() {
+  // 实现Runnable::Run()
+  virtual void Run() {
     switch (m_fixtureMethodId) {
     case FIXTURE_METHOD_ID_SET_UP:
-      setUpOnMainThread();
+      SetUpOnMainThread();
       break;
     case FIXTURE_METHOD_ID_TEAR_DOWN:
-      tearDownOnMainThread();
+      TearDownOnMainThread();
       break;
     case FIXTURE_METHOD_ID_TEST:
-      runTestOnMainThread();
+      RunTestOnMainThread();
       break;
     default:
       break;
     }
     if (m_event) {
-      m_event->post();
+      m_event->Post();
     }
   }
 

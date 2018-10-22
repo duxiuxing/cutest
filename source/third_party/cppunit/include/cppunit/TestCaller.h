@@ -258,7 +258,7 @@ public:
 
   virtual void runTest() override
   {
-    if ( CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread() )
+    if ( CUTEST_NS::Runner::Instance()->IsAlwaysCallTestOnMainThread() )
     {
       runTestOnMainThread();
     }
@@ -270,7 +270,7 @@ public:
 
   void runTestOnMainThread()
   {
-    if ( CUTEST_NS::isOnMainThread() )
+    if ( CUTEST_NS::IsOnMainThread() )
     {
       if ( m_result )
         m_result->protect( MethodFunctor( this, &TestCaller::runTestImmediately ),
@@ -283,10 +283,10 @@ public:
     else
     {
       m_fixtureMethodId = FIXTURE_METHOD_ID_TEST;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread( this, false );
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
@@ -298,7 +298,7 @@ public:
 
   virtual void setUp() override
   {
-    if ( CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread() )
+    if ( CUTEST_NS::Runner::Instance()->IsAlwaysCallTestOnMainThread() )
     {
       setUpOnMainThread();
     }
@@ -310,7 +310,7 @@ public:
 
   void setUpOnMainThread()
   {
-    if ( CUTEST_NS::isOnMainThread() )
+    if ( CUTEST_NS::IsOnMainThread() )
     {
       if ( m_result )
       {
@@ -325,10 +325,10 @@ public:
     else
     {
       m_fixtureMethodId = FIXTURE_METHOD_ID_SET_UP;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread( this, false );
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
@@ -344,7 +344,7 @@ public:
 
   virtual void tearDown() override
   {
-    if ( CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread() )
+    if ( CUTEST_NS::Runner::Instance()->IsAlwaysCallTestOnMainThread() )
     {
       tearDownOnMainThread();
     }
@@ -356,7 +356,7 @@ public:
 
   void tearDownOnMainThread()
   {
-    if ( CUTEST_NS::isOnMainThread() )
+    if ( CUTEST_NS::IsOnMainThread() )
     {
       if ( m_result )
       {
@@ -371,10 +371,10 @@ public:
     else
     {
       m_fixtureMethodId = FIXTURE_METHOD_ID_TEAR_DOWN;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread( this, false );
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
@@ -394,8 +394,8 @@ public:
     return "TestCaller " + getName();
   }
 
-  // 实现Runnable::run()
-  virtual void run()
+  // 实现Runnable::Run()
+  virtual void Run()
   {
     switch ( m_fixtureMethodId )
     {
@@ -413,7 +413,7 @@ public:
     }
     if ( m_event )
     {
-      m_event->post();
+      m_event->Post();
     }
   }
 

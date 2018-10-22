@@ -77,25 +77,25 @@ Java_com_tencent_cutest_Runner_start(
     JNIEnv* env, jobject thiz, jobject listener) {
     jniListener.setJavaEntity(env, listener);
 
-    CUTEST_NS::Runner* runner = CUTEST_NS::Runner::instance();
-    runner->addListener(&jniListener);
-    runner->start(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
+    CUTEST_NS::Runner* runner = CUTEST_NS::Runner::Instance();
+    runner->AddListener(&jniListener);
+    runner->Start(CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest());
 }
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_tencent_cppunit_Runner_stop(
     JNIEnv* env, jobject thiz) {
-    CUTEST_NS::Runner::instance()->stop();
+    CUTEST_NS::Runner::Instance()->Stop();
 }
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_tencent_cutest_Runner_internalRun(
     JNIEnv* env, jobject thiz,
-    jlong native_runnable,
-    jboolean is_auto_delete) {
-    CUTEST_NS::Runnable* runnable = (CUTEST_NS::Runnable*)native_runnable;
-    runnable->run();
-    if (is_auto_delete) {
+    jlong runnablePtr,
+    jboolean isAutoDelete) {
+    CUTEST_NS::Runnable* runnable = (CUTEST_NS::Runnable*)runnablePtr;
+    runnable->Run();
+    if (isAutoDelete) {
         delete runnable;
     }
 }
@@ -104,7 +104,7 @@ extern "C" JNIEXPORT jstring JNICALL
 Java_com_tencent_cutest_Runner_failureDetails(
     JNIEnv* env, jobject thiz, jint index) {
     const CPPUNIT_NS::TestFailure* failure =
-        CUTEST_NS::Runner::instance()->failureAt(index);
+        CUTEST_NS::Runner::Instance()->FailureAt(index);
 
     return env->NewStringUTF(failure->thrownException()->what());
 }

@@ -3,28 +3,25 @@
 CUTEST_NS_BEGIN
 
 MfcDialogTest::MfcDialogTest()
-    : dialog(NULL) {}
+    : m_dialog(NULL) {}
 
-void
-MfcDialogTest::endTest() {
-    if (this->dialog) {
-        HWND wnd = this->dialog;
-        detach();
+void MfcDialogTest::EndTest() {
+    if (m_dialog) {
+        HWND wnd = m_dialog;
+        Detach();
         ::DestroyWindow(wnd);
     }
 
-    ExplicitEndTest::endTest();
+    ExplicitEndTest::EndTest();
 }
 
-void
-MfcDialogTest::attach(HWND dialog) {
-    this->dialog = dialog;
+void MfcDialogTest::Attach(HWND dialog) {
+    m_dialog = dialog;
 }
 
-HWND
-MfcDialogTest::detach() {
-    HWND ret = this->dialog;
-    this->dialog = NULL;
+HWND MfcDialogTest::Detach() {
+    HWND ret = m_dialog;
+    m_dialog = NULL;
     return ret;
 }
 

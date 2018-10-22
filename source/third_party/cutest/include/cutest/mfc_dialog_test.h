@@ -12,13 +12,13 @@ class GTEST_API_ MfcDialogTest : public ExplicitEndTest {
 public:
     MfcDialogTest();
 
-    virtual void endTest() override;
+    virtual void EndTest() override;
 
-    void attach(HWND dialog);
-    HWND detach();
+    void Attach(HWND dialog);
+    HWND Detach();
 
 protected:
-    HWND dialog;
+    HWND m_dialog;
 
 private:
     MfcDialogTest(const MfcDialogTest& other);

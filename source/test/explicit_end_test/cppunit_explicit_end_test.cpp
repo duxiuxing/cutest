@@ -1,31 +1,27 @@
 ﻿#include "cppunit_explicit_end_test.h"
 
 CppUnitExplicitEndTest::CppUnitExplicitEndTest()
-  : msStart( 0 )
+  : m_msStart( 0 )
 {}
 
-void
-CppUnitExplicitEndTest::tearDown()
+void CppUnitExplicitEndTest::tearDown()
 {
-  SimpleTimer::instance()->removeCallback( this );
+  SimpleTimer::Instance()->RemoveCallback( this );
 }
 
-void
-CppUnitExplicitEndTest::endTestAfterOneSecond()
+void CppUnitExplicitEndTest::endTestAfterOneSecond()
 {
-  this->msStart = CUTEST_NS::tickCount64();
-  SimpleTimer::instance()->setCallback( 1000, this );
+  m_msStart = CUTEST_NS::TickCount64();
+  SimpleTimer::Instance()->SetCallback( 1000, this );
 }
 
-void
-CppUnitExplicitEndTest::onTimeUp()
+void CppUnitExplicitEndTest::OnTimeUp()
 {
-  unsigned long long ms = CUTEST_NS::tickCount64() - this->msStart;
+  unsigned long long ms = CUTEST_NS::TickCount64() - m_msStart;
   EXPECT_GT( ms, 950 );
   EXPECT_LT( ms, 1200 );
-  endTest();
+  EndTest();
 }
 
-void
-CppUnitExplicitEndTest::autoEndTestAfterOneSecond()
+void CppUnitExplicitEndTest::autoEndTestAfterOneSecond()
 {}

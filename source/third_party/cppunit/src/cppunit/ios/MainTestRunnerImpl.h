@@ -44,8 +44,8 @@ protected:
     MainTestRunLoop *run_loop;
     static thread_id main_thread_id;
 
-    // 实现Runnable::run()
-    virtual void run();
+    // 实现Runnable::Run()
+    virtual void Run();
 };
 
 CPPUNIT_NS_END

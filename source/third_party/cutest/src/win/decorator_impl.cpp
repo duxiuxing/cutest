@@ -10,68 +10,64 @@
 
 CUTEST_NS_BEGIN
 
-Decorator*
-Decorator::createInstance(CPPUNIT_NS::Test* test) {
+Decorator* Decorator::CreateInstance(CPPUNIT_NS::Test* test) {
     return new DecoratorImpl(test);
 }
 
 DecoratorImpl::DecoratorImpl(CPPUNIT_NS::Test* test)
     : TestDecorator(test)
-    , result(new CPPUNIT_NS::SynchronizationObjectImpl(), new CPPUNIT_NS::SynchronizationObjectImpl())
-    , resultCollector(new CPPUNIT_NS::SynchronizationObjectImpl())
-    , resultPrinter(NULL)
-    , currentTest(NULL)
-    , hThread(NULL) {
-    result.addListener(this);
-    result.addListener(&this->resultCollector);
+    , m_result(new CPPUNIT_NS::SynchronizationObjectImpl(), new CPPUNIT_NS::SynchronizationObjectImpl())
+    , m_resultCollector(new CPPUNIT_NS::SynchronizationObjectImpl())
+    , m_resultPrinter(NULL)
+    , m_currentTest(NULL)
+    , m_hThread(NULL) {
+    m_result.addListener(this);
+    m_result.addListener(&m_resultCollector);
 
-    this->runCompleted = Event::createInstance();
+    m_runCompleted = Event::CreateInstance();
 }
 
-void
-DecoratorImpl::destroy() {
-    if (this->resultPrinter) {
-        Runner::instance()->removeListener(this->resultPrinter);
-        delete this->resultPrinter;
-        this->resultPrinter = NULL;
+void DecoratorImpl::Destroy() {
+    if (m_resultPrinter) {
+        Runner::Instance()->RemoveListener(m_resultPrinter);
+        delete m_resultPrinter;
+        m_resultPrinter = NULL;
     }
 
-    if (this->runCompleted) {
-        this->runCompleted->wait();
-        this->runCompleted->destroy();
-        this->runCompleted = NULL;
+    if (m_runCompleted) {
+        m_runCompleted->Wait();
+        m_runCompleted->Destroy();
+        m_runCompleted = NULL;
     }
     CPPUNIT_NS::TestDecorator::m_test = NULL;
 
     delete this;
 }
 
-void
-DecoratorImpl::addListener(CPPUNIT_NS::TestListener* listener) {
-    this->result.addListener(listener);
+void DecoratorImpl::AddListener(CPPUNIT_NS::TestListener* listener) {
+    m_result.addListener(listener);
 }
 
-void
-DecoratorImpl::start() {
+void DecoratorImpl::Start() {
     // 根据参数构造TestResultXmlPrinter
     if (testing::internal::UnitTestOptions::GetOutputFormat() == "xml") {
-        this->resultPrinter = new testing::internal::TestResultXmlPrinter(
+        m_resultPrinter = new testing::internal::TestResultXmlPrinter(
             testing::internal::UnitTestOptions::GetAbsolutePathToOutputFile().c_str());
 
-        Runner::instance()->addListener(this->resultPrinter);
+        Runner::Instance()->AddListener(m_resultPrinter);
     }
 
-    this->runCompleted->reset();
+    m_runCompleted->Reset();
 
     HANDLE source_handle = (HANDLE)_beginthreadex(NULL, 0,
-                           threadFunction, this, CREATE_SUSPENDED, NULL);
+                           ThreadFunction, this, CREATE_SUSPENDED, NULL);
 
     ::SetThreadPriority(source_handle, THREAD_PRIORITY_NORMAL);
 
     ::DuplicateHandle(::GetCurrentProcess(),
                       source_handle,
                       ::GetCurrentProcess(),
-                      &this->hThread,
+                      &m_hThread,
                       0,
                       FALSE,
                       DUPLICATE_SAME_ACCESS);
@@ -79,52 +75,44 @@ DecoratorImpl::start() {
     ::ResumeThread(source_handle);
 }
 
-UINT
-__stdcall
-DecoratorImpl::threadFunction(LPVOID param) {
+UINT __stdcall DecoratorImpl::ThreadFunction(LPVOID param) {
     DecoratorImpl* decorator = (DecoratorImpl*)param;
 
-    decorator->runOnWorkerThread();
+    decorator->RunOnWorkerThread();
 
     return 0;
 }
 
-void
-DecoratorImpl::runOnWorkerThread() {
-    this->result.runTest(this);
+void DecoratorImpl::RunOnWorkerThread() {
+    m_result.runTest(this);
 
-    ::CloseHandle(this->hThread);
-    this->hThread = NULL;
+    ::CloseHandle(m_hThread);
+    m_hThread = NULL;
 
-    this->runCompleted->post();
+    m_runCompleted->Post();
 }
 
-void
-DecoratorImpl::stop() {
-    this->result.stop();
+void DecoratorImpl::Stop() {
+    m_result.stop();
 }
 
-const CPPUNIT_NS::TestResultCollector*
-DecoratorImpl::testResultCollector() {
-    return &this->resultCollector;
+const CPPUNIT_NS::TestResultCollector* DecoratorImpl::TestResultCollector() {
+    return &m_resultCollector;
 }
 
-void
-DecoratorImpl::startTest(CPPUNIT_NS::Test* test) {
-    this->currentTest = test;
+void DecoratorImpl::startTest(CPPUNIT_NS::Test* test) {
+    m_currentTest = test;
 }
 
-void
-DecoratorImpl::endTest(CPPUNIT_NS::Test* test) {
-    this->currentTest = NULL;
+void DecoratorImpl::endTest(CPPUNIT_NS::Test* test) {
+    m_currentTest = NULL;
 }
 
-void
-DecoratorImpl::addFailure(bool isError, CPPUNIT_NS::Exception* exception) {
+void DecoratorImpl::AddFailure(bool isError, CPPUNIT_NS::Exception* exception) {
     if (isError) {
-        this->result.addError(this->currentTest, exception);
+        m_result.addError(m_currentTest, exception);
     } else {
-        this->result.addFailure(this->currentTest, exception);
+        m_result.addFailure(m_currentTest, exception);
     }
 }
 

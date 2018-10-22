@@ -10,28 +10,28 @@ class GTestExplicitEndTest
   virtual void TearDown() override;
 
   // 实现SimpleTimer::Callback
-  virtual void onTimeUp();
+  virtual void OnTimeUp();
 
-  unsigned long long msStart;
+  unsigned long long m_msStart;
 };
 
 GTestExplicitEndTest::GTestExplicitEndTest()
-  : msStart(0) {}
+  : m_msStart(0) {}
 
 void GTestExplicitEndTest::TearDown() {
-  SimpleTimer::instance()->removeCallback(this);
+  SimpleTimer::Instance()->RemoveCallback(this);
 }
 
-void GTestExplicitEndTest::onTimeUp() {
-  unsigned long long ms = CUTEST_NS::tickCount64() - this->msStart;
+void GTestExplicitEndTest::OnTimeUp() {
+  unsigned long long ms = CUTEST_NS::TickCount64() - m_msStart;
   EXPECT_GT(ms, 950);
   EXPECT_LT(ms, 1200);
-  endTest();
+  EndTest();
 }
 
 EXPLICIT_END_TEST_F(GTestExplicitEndTest, EndTestAfterOneSecond) {
-  this->msStart = CUTEST_NS::tickCount64();
-  SimpleTimer::instance()->setCallback(1000, this);
+  m_msStart = CUTEST_NS::TickCount64();
+  SimpleTimer::Instance()->SetCallback(1000, this);
 }
 
 EXPLICIT_END_TEST_WITH_TIMEOUT_F(GTestExplicitEndTest, AutoEndTestAfterOneSecond, 1000) {}

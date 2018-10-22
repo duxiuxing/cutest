@@ -94,8 +94,8 @@ BOOL CTestRunnerDlg::OnInitDialog()
 	m_progressBar.Create(NULL, NULL, WS_CHILD | WS_VISIBLE,
 						 GetItemClientRect(IDC_STATIC_PROGRESS_BAR), this, 0);
 
-	CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread(m_model.AlwaysCallTestOnMainThread);
-	CUTEST_NS::Runner::instance()->setTreatTimeoutAsError(m_model.TreatTimeoutAsError);
+	CUTEST_NS::Runner::Instance()->SetAlwaysCallTestOnMainThread(m_model.AlwaysCallTestOnMainThread);
+	CUTEST_NS::Runner::Instance()->SetTreatTimeoutAsError(m_model.TreatTimeoutAsError);
 
 	m_errorIcons.Create(IDB_ERROR_ICONS, 16, 1, RGB(255, 0, 255));
 	m_errorList.SetImageList(&m_errorIcons, LVSIL_SMALL);
@@ -205,18 +205,18 @@ void CTestRunnerDlg::OnRunButton()
 
 	UpdateErrorDetailToUI(-1);
 
-	m_msRunnerStart = CUTEST_NS::tickCount64();
+	m_msRunnerStart = CUTEST_NS::TickCount64();
 	UpdateExecutionTimeToUI();
 
 	SetUIState(UI_STATE_RUNING);
 
-	CUTEST_NS::Runner* runner = CUTEST_NS::Runner::instance();
-	runner->addListener(this);
+	CUTEST_NS::Runner* runner = CUTEST_NS::Runner::Instance();
+	runner->AddListener(this);
 
 	m_testCountTotal = selectedTest->countTestCases();
 	m_progressBar.start(m_testCountTotal);
 
-	runner->start(selectedTest);
+	runner->Start(selectedTest);
 }
 
 void CTestRunnerDlg::AddItemToErrorList(const CPPUNIT_NS::TestFailure& failure)
@@ -228,11 +228,11 @@ void CTestRunnerDlg::AddItemToErrorList(const CPPUNIT_NS::TestFailure& failure)
 	setter.insertLine(currentEntry);
 	if (failure.isError())
 	{
-		setter.addSubItem(_T("Error"), errorIconError);
+		setter.addSubItem(_T("Error"), ERROR_ICON_ERROR);
 	}
 	else
 	{
-		setter.addSubItem(_T("Failure"), errorIconFailure);
+		setter.addSubItem(_T("Failure"), ERROR_ICON_FAILURE);
 	}
 
 	// Set test name
@@ -269,7 +269,7 @@ void CTestRunnerDlg::AddItemToErrorList(const CPPUNIT_NS::TestFailure& failure)
 	listCtrl->UpdateWindow();
 }
 
-void CTestRunnerDlg::onTestStart(CPPUNIT_NS::Test* test)
+void CTestRunnerDlg::OnTestStart(CPPUNIT_NS::Test* test)
 {
 	CWnd* dlgItem = GetDlgItem(IDC_RUNNING_TEST_NAME);
 	if (dlgItem)
@@ -278,7 +278,7 @@ void CTestRunnerDlg::onTestStart(CPPUNIT_NS::Test* test)
 	}
 }
 
-void CTestRunnerDlg::onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure)
+void CTestRunnerDlg::OnFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure)
 {
 	AddItemToErrorList(failure);
 	if (failure.isError())
@@ -293,7 +293,7 @@ void CTestRunnerDlg::onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFail
 	UpdateAllCountsToUI();
 }
 
-void CTestRunnerDlg::onTestEnd(
+void CTestRunnerDlg::OnTestEnd(
 	CPPUNIT_NS::Test* test,
 	unsigned int error_count,
 	unsigned int failure_count,
@@ -314,7 +314,7 @@ void CTestRunnerDlg::onTestEnd(
 	}
 }
 
-void CTestRunnerDlg::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed)
+void CTestRunnerDlg::OnRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed)
 {
 	if (UI_STATE_CLOSING == m_uiState)
 	{
@@ -346,7 +346,7 @@ void CTestRunnerDlg::UpdateExecutionTimeToUI()
 	unsigned int msElapsed = 0;
 	if (m_msRunnerStart)
 	{
-		msElapsed = (unsigned int)(CUTEST_NS::tickCount64() - m_msRunnerStart);
+		msElapsed = (unsigned int)(CUTEST_NS::TickCount64() - m_msRunnerStart);
 	}
 
 	CString text;
@@ -362,7 +362,7 @@ void CTestRunnerDlg::OnStopButton()
 	}
 
 	SetUIState(UI_STATE_STOPPING);
-	CUTEST_NS::Runner::instance()->stop();
+	CUTEST_NS::Runner::Instance()->Stop();
 }
 
 void CTestRunnerDlg::OnOK()
@@ -439,9 +439,9 @@ void CTestRunnerDlg::OnClose()
 	SafeCloseDialog();
 }
 
-CRect CTestRunnerDlg::GetItemWindowRect(int nID)
+CRect CTestRunnerDlg::GetItemWindowRect(int itemID)
 {
-	CWnd* pItem = GetDlgItem(nID);
+	CWnd* pItem = GetDlgItem(itemID);
 	CRect rect;
 	if (pItem)
 	{
@@ -450,9 +450,9 @@ CRect CTestRunnerDlg::GetItemWindowRect(int nID)
 	return rect;
 }
 
-CRect CTestRunnerDlg::GetItemClientRect(int nID)
+CRect CTestRunnerDlg::GetItemClientRect(int itemID)
 {
-	CRect rect = GetItemWindowRect(nID);
+	CRect rect = GetItemWindowRect(itemID);
 	if (!rect.IsRectNull())
 	{
 		CPoint clientTopLeft = rect.TopLeft();
@@ -503,7 +503,7 @@ void CTestRunnerDlg::OnSelectedItemChangeInErrorList(NMHDR* pNMHDR, LRESULT* pRe
 
 void CTestRunnerDlg::UpdateErrorDetailToUI(unsigned int failureIndex)
 {
-	const CPPUNIT_NS::TestFailure* failure = CUTEST_NS::Runner::instance()->failureAt(failureIndex);
+	const CPPUNIT_NS::TestFailure* failure = CUTEST_NS::Runner::Instance()->FailureAt(failureIndex);
 
 	CString text;
 	if (failure)
@@ -582,7 +582,7 @@ void CTestRunnerDlg::SafeCloseDialog()
 	case UI_STATE_RUNING:
 		{
 			SetUIState(UI_STATE_CLOSING);
-			CUTEST_NS::Runner::instance()->stop();
+			CUTEST_NS::Runner::Instance()->Stop();
 		}
 		break;
 	default:
@@ -603,11 +603,11 @@ void CTestRunnerDlg::OnMenuSelect(UINT nItemID, UINT nFlags, HMENU hSysMenu)
 		UINT enable = (m_uiState == UI_STATE_NONE) ? MF_ENABLED : MF_GRAYED;
 		mainMenu->EnableMenuItem(ID_AUTORUN_AT_STARTUP, MF_BYCOMMAND | enable);
 
-		check = CUTEST_NS::Runner::instance()->isAlwaysCallTestOnMainThread() ? MF_CHECKED : MF_UNCHECKED;
+		check = CUTEST_NS::Runner::Instance()->IsAlwaysCallTestOnMainThread() ? MF_CHECKED : MF_UNCHECKED;
 		mainMenu->CheckMenuItem(ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, MF_BYCOMMAND | check);
 		mainMenu->EnableMenuItem(ID_ALWAYS_CALL_TEST_ON_MAIN_THREAD, MF_BYCOMMAND | enable);
 
-		check = CUTEST_NS::Runner::instance()->isTreatTimeoutAsError() ? MF_CHECKED : MF_UNCHECKED;
+		check = CUTEST_NS::Runner::Instance()->IsTreatTimeoutAsError() ? MF_CHECKED : MF_UNCHECKED;
 		mainMenu->CheckMenuItem(ID_TREAT_TIMEOUT_AS_ERROR, MF_BYCOMMAND | check);
 		mainMenu->EnableMenuItem(ID_TREAT_TIMEOUT_AS_ERROR, MF_BYCOMMAND | enable);
 	}
@@ -622,13 +622,13 @@ void CTestRunnerDlg::OnAutorunAtStartup()
 void CTestRunnerDlg::OnAlwaysCallTestOnMainThread()
 {
 	m_model.AlwaysCallTestOnMainThread = !m_model.AlwaysCallTestOnMainThread;
-	CUTEST_NS::Runner::instance()->setAlwaysCallTestOnMainThread(m_model.AlwaysCallTestOnMainThread);
+	CUTEST_NS::Runner::Instance()->SetAlwaysCallTestOnMainThread(m_model.AlwaysCallTestOnMainThread);
 	m_model.SaveSettings();
 }
 
 void CTestRunnerDlg::OnTreatTimeoutAsError()
 {
 	m_model.TreatTimeoutAsError = !m_model.TreatTimeoutAsError;
-	CUTEST_NS::Runner::instance()->setTreatTimeoutAsError(m_model.TreatTimeoutAsError);
+	CUTEST_NS::Runner::Instance()->SetTreatTimeoutAsError(m_model.TreatTimeoutAsError);
 	m_model.SaveSettings();
 }

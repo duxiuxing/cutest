@@ -22,35 +22,35 @@ public:
     // 跳过基类TestDecorator的析构函数
     ~DecoratorImpl() {}
 
-    virtual void destroy();
+    virtual void Destroy();
 
-    virtual void addListener(CPPUNIT_NS::TestListener* listener);
+    virtual void AddListener(CPPUNIT_NS::TestListener* listener);
 
-    virtual void start();
-    virtual void stop();
+    virtual void Start();
+    virtual void Stop();
 
 protected:
-    static UINT __stdcall threadFunction(LPVOID param);
-    void runOnWorkerThread();
+    static UINT __stdcall ThreadFunction(LPVOID param);
+    void RunOnWorkerThread();
 
-    HANDLE hThread;
-    Event* runCompleted; // 用于标志工作线程是否结束的事件
+    HANDLE m_hThread;
+    Event* m_runCompleted; // 用于标志工作线程是否结束的事件
 
 public:
-    virtual void addFailure(bool isError, CPPUNIT_NS::Exception* exception);
-    virtual const CPPUNIT_NS::TestResultCollector* testResultCollector();
+    virtual void AddFailure(bool isError, CPPUNIT_NS::Exception* exception);
+    virtual const CPPUNIT_NS::TestResultCollector* TestResultCollector();
 
 protected:
-    Result result;
-    CPPUNIT_NS::TestResultCollector resultCollector;
-    testing::internal::TestResultXmlPrinter* resultPrinter;
+    Result m_result;
+    CPPUNIT_NS::TestResultCollector m_resultCollector;
+    testing::internal::TestResultXmlPrinter* m_resultPrinter;
 
 public: // 重载TestListener的成员方法
     virtual void startTest(CPPUNIT_NS::Test* test) override;
     virtual void endTest(CPPUNIT_NS::Test* test) override;
 
 protected:
-    CPPUNIT_NS::Test* currentTest;
+    CPPUNIT_NS::Test* m_currentTest;
 };
 
 CUTEST_NS_END

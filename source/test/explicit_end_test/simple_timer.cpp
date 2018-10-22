@@ -1,26 +1,26 @@
 ﻿#include "simple_timer.h"
 
-SimpleTimer* SimpleTimer::instance() {
-    static SimpleTimer simple_timer;
-    return &simple_timer;
+SimpleTimer* SimpleTimer::Instance() {
+    static SimpleTimer s_simpleTimer;
+    return &s_simpleTimer;
 }
 
 SimpleTimer::SimpleTimer()
-    : callback(NULL) {}
+    : m_callback(NULL) {}
 
-void SimpleTimer::setCallback(unsigned int elapse_ms, Callback* callback) {
-    this->callback = callback;
+void SimpleTimer::SetCallback(unsigned int msElapse, Callback* callback) {
+    m_callback = callback;
 
-    CUTEST_NS::Runner::instance()->delayRunOnMainThread(elapse_ms, this, false);
+    CUTEST_NS::Runner::Instance()->DelayRunOnMainThread(msElapse, this, false);
 }
 
-void SimpleTimer::removeCallback(Callback* callback) {
-    this->callback = NULL;
+void SimpleTimer::RemoveCallback(Callback* callback) {
+    m_callback = NULL;
 }
 
-void SimpleTimer::run() {
-    if (this->callback) {
-        this->callback->onTimeUp();
-        this->callback = NULL;
+void SimpleTimer::Run() {
+    if (m_callback) {
+        m_callback->OnTimeUp();
+        m_callback = NULL;
     }
 }

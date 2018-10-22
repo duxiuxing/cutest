@@ -9,69 +9,63 @@
 
 CUTEST_NS_BEGIN
 
-CountDownLatchImpl::CountDownLatchImpl(int countParam)
-    : count(countParam)
-    , event(NULL) {}
+CountDownLatchImpl::CountDownLatchImpl(int count)
+    : m_count(count)
+    , m_event(NULL) {}
 
 CountDownLatchImpl::~CountDownLatchImpl() {
-    if (this->event) {
-        this->event->destroy();
-        this->event = NULL;
+    if (m_event) {
+        m_event->Destroy();
+        m_event = NULL;
     }
 }
 
-void
-CountDownLatchImpl::await() {
-    if (CUTEST_NS::isOnMainThread()) {
-        awaitOnMainThread();
+void CountDownLatchImpl::Await() {
+    if (CUTEST_NS::IsOnMainThread()) {
+        AwaitOnMainThread();
     } else {
-        awaitOnWorkerThread();
+        AwaitOnWorkerThread();
     }
 }
 
-bool
-CountDownLatchImpl::await(unsigned int msTimeout) {
-    if (CUTEST_NS::isOnMainThread()) {
-        return awaitOnMainThread(msTimeout);
+bool CountDownLatchImpl::Await(unsigned int msTimeout) {
+    if (CUTEST_NS::IsOnMainThread()) {
+        return AwaitOnMainThread(msTimeout);
     } else {
-        return awaitOnWorkerThread(msTimeout);
+        return AwaitOnWorkerThread(msTimeout);
     }
 }
 
-void
-CountDownLatchImpl::countDown() {
-    if (InterlockedDecrement(reinterpret_cast<volatile LONG*>(&this->count)) <= 0
-        && this->event) {
-        this->event->post();
+void CountDownLatchImpl::CountDown() {
+    if (InterlockedDecrement(reinterpret_cast<volatile LONG*>(&m_count)) <= 0
+        && m_event) {
+        m_event->Post();
     }
 }
 
-int
-CountDownLatchImpl::getCount() {
-    return this->count;
+int CountDownLatchImpl::Count() {
+    return m_count;
 }
 
-void
-CountDownLatchImpl::awaitOnMainThread() {
+void CountDownLatchImpl::AwaitOnMainThread() {
     MSG msg = {0};
-    while (this->count > 0
+    while (m_count > 0
            && ::GetMessage(&msg, NULL, 0, 0)) {
         ::TranslateMessage(&msg);
         ::DispatchMessage(&msg);
     }
 }
 
-bool
-CountDownLatchImpl::awaitOnMainThread(unsigned int msTimeout) {
-    unsigned long long start = CUTEST_NS::tickCount64();
+bool CountDownLatchImpl::AwaitOnMainThread(unsigned int msTimeout) {
+    unsigned long long start = CUTEST_NS::TickCount64();
 
     MSG msg = {0};
-    while (this->count > 0
+    while (m_count > 0
            && ::GetMessage(&msg, NULL, 0, 0)) {
         ::TranslateMessage(&msg);
         ::DispatchMessage(&msg);
 
-        if ((CUTEST_NS::tickCount64() - start) >= msTimeout) {
+        if ((CUTEST_NS::TickCount64() - start) >= msTimeout) {
             return false;
         }
     }
@@ -79,17 +73,15 @@ CountDownLatchImpl::awaitOnMainThread(unsigned int msTimeout) {
     return true;
 }
 
-void
-CountDownLatchImpl::awaitOnWorkerThread() {
-    this->event = Event::createInstance();
-    this->event->wait();
+void CountDownLatchImpl::AwaitOnWorkerThread() {
+    m_event = Event::CreateInstance();
+    m_event->Wait();
 }
 
-bool
-CountDownLatchImpl::awaitOnWorkerThread(unsigned int msTimeout) {
-    this->event = Event::createInstance();
-    this->event->wait(msTimeout);
-    return (this->count <= 0);
+bool CountDownLatchImpl::AwaitOnWorkerThread(unsigned int msTimeout) {
+    m_event = Event::CreateInstance();
+    m_event->Wait(msTimeout);
+    return (m_count <= 0);
 }
 
 CUTEST_NS_END

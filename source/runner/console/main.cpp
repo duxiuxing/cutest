@@ -9,8 +9,8 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
     TestConfig::GetInstance()->Load();
     CPPUNIT_NS::Test* allTests = CPPUNIT_NS::TestFactoryRegistry::getRegistry().makeTest();
-    CUTEST_NS::Runner::instance()->start(allTests);
-    CUTEST_NS::Runner::instance()->waitUntilAllTestEnd();
+    CUTEST_NS::Runner::Instance()->Start(allTests);
+    CUTEST_NS::Runner::Instance()->WaitUntilAllTestEnd();
     delete allTests;
 
     return 0;

@@ -15,14 +15,14 @@ public:
     virtual ~RunnerImpl();
 
 protected:
-    Logger testProgressLogger;
+    Logger m_testProgressLogger;
 
 public:
     // Runner的接口实现
-    virtual void asyncRunOnMainThread(Runnable* runnable, bool isAutoDelete);
-    virtual void delayRunOnMainThread(unsigned int msDelay, Runnable* runnable, bool isAutoDelete);
+    virtual void AsyncRunOnMainThread(Runnable* runnable, bool isAutoDelete);
+    virtual void DelayRunOnMainThread(unsigned int msDelay, Runnable* runnable, bool isAutoDelete);
 
-    virtual void waitUntilAllTestEnd();
+    virtual void WaitUntilAllTestEnd();
 
 protected:
     enum {
@@ -30,13 +30,13 @@ protected:
         WM_DELAY_RUN_AUTO_DELETE,
         WM_DELAY_RUN,
     };
-    static HWND hMessageWnd;
-    static LRESULT CALLBACK messageWindowProc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam);
+    static HWND s_hMessageWnd;
+    static LRESULT CALLBACK MessageWindowProc(HWND wnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-    static VOID CALLBACK onTimer4DelayRunAutoDelete(HWND wnd, UINT msg, UINT_PTR runnablePtr, DWORD msElapse);
-    static VOID CALLBACK onTimer4DelayRun(HWND wnd, UINT uMsg, UINT_PTR runnablePtr, DWORD msElapse);
+    static VOID CALLBACK DelayRunAndDelete(HWND wnd, UINT msg, UINT_PTR runnablePtr, DWORD msElapse);
+    static VOID CALLBACK DelayRun(HWND wnd, UINT msg, UINT_PTR runnablePtr, DWORD msElapse);
 
-    static std::set<Runnable*> autoDeleteRunnables;  // 用于缓存delayRunOnMainThread()中尚未执行且需要auto delete的Runnable对象
+    static std::set<Runnable*> s_autoDeleteRunnables;  // 用于缓存DelayRunOnMainThread()中尚未执行且需要自动Delete的Runnable对象
 };
 
 CUTEST_NS_END

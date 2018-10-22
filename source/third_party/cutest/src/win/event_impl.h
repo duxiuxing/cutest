@@ -6,16 +6,16 @@
 CUTEST_NS_BEGIN
 
 class EventImpl : public Event {
-    HANDLE hEvent;
+    HANDLE m_hEvent;
 
 public:
     EventImpl();
 
-    virtual void wait();
-    virtual void wait(unsigned int msTimeout);
-    virtual void post();
-    virtual void reset();
-    virtual void destroy();
+    virtual void Wait();
+    virtual void Wait(unsigned int msTimeout);
+    virtual void Post();
+    virtual void Reset();
+    virtual void Destroy();
 };
 
 CUTEST_NS_END

@@ -12,36 +12,36 @@ class GTestWaitAsynEndTest
   virtual void TearDown() override;
 
   // 实现SimpleTimer::Callback
-  virtual void onTimeUp();
+  virtual void OnTimeUp();
 
-  CUTEST_NS::CountDownLatch* countDownLatch;
+  CUTEST_NS::CountDownLatch* m_countDownLatch;
 };
 
 GTestWaitAsynEndTest::GTestWaitAsynEndTest()
-  : countDownLatch(NULL) {}
+  : m_countDownLatch(NULL) {}
 
 void GTestWaitAsynEndTest::SetUp() {
-  this->countDownLatch = new CUTEST_NS::CountDownLatch(1);
+  m_countDownLatch = new CUTEST_NS::CountDownLatch(1);
 }
 
 void GTestWaitAsynEndTest::TearDown() {
-  SimpleTimer::instance()->removeCallback(this);
-  delete this->countDownLatch;
-  this->countDownLatch = NULL;
+  SimpleTimer::Instance()->RemoveCallback(this);
+  delete m_countDownLatch;
+  m_countDownLatch = NULL;
 }
 
-void GTestWaitAsynEndTest::onTimeUp() {
-	this->countDownLatch->countDown();
+void GTestWaitAsynEndTest::OnTimeUp() {
+	m_countDownLatch->CountDown();
 }
 
 TEST_F(GTestWaitAsynEndTest, EndTestAfterOneSecond) {
-  unsigned long long msStart = CUTEST_NS::tickCount64();
+  unsigned long long msStart = CUTEST_NS::TickCount64();
 
-  SimpleTimer::instance()->setCallback(1000, this);
+  SimpleTimer::Instance()->SetCallback(1000, this);
 
-  countDownLatch->await();
+  m_countDownLatch->Await();
 
-  unsigned long long ms = CUTEST_NS::tickCount64() - msStart;
+  unsigned long long ms = CUTEST_NS::TickCount64() - msStart;
   EXPECT_GT(ms, 950);
   EXPECT_LT(ms, 1200);
 }

@@ -9,11 +9,11 @@
 CPPUNIT_NS_BEGIN
 
 /*
-  timeout_ms 单位：毫秒，默认为0，表示永不超时；
-  用例启动之后，如果timeout_ms之后还没有结束，则视为超时，
-  此时CUTEST_NS::Runner会调用Fixture::endTest()来结束用例。
+  msTimeout 单位：毫秒，默认为0，表示永不超时；
+  用例启动之后，如果msTimeout之后还没有结束，则视为超时，
+  此时CUTEST_NS::Runner会调用Fixture::EndTest()来结束用例。
 */
-template<class Fixture, class DialogClass, unsigned int timeout_ms = 0>
+template<class Fixture, class DialogClass, unsigned int msTimeout = 0>
 class MfcTestDialogCaller
   : public CUTEST_NS::Runnable
   , public CPPUNIT_NS::TestCase
@@ -63,7 +63,7 @@ public:
 
   void runTestOnMainThread()
   {
-    if ( CUTEST_NS::isOnMainThread() )
+    if ( CUTEST_NS::IsOnMainThread() )
     {
       if ( m_result )
         m_result->protect( MethodFunctor( this, &MfcTestDialogCaller::runTestImmediately ),
@@ -76,23 +76,23 @@ public:
     else
     {
       m_fixtureMethodId = FIXTURE_METHOD_ID_TEST;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread( this, false );
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
 
   void runTestImmediately()
   {
-    m_fixture->setEvent( m_event );
-    CUTEST_NS::Runner::instance()->registerExplicitEndTest( m_fixture, timeout_ms );
+    m_fixture->SetEvent( m_event );
+    CUTEST_NS::Runner::Instance()->RegisterExplicitEndTest( m_fixture, msTimeout );
     AFX_MANAGE_STATE( AfxGetStaticModuleState() );
     CUTEST_NS::CMfcTestDialog<DialogClass> *testDlg = new CUTEST_NS::CMfcTestDialog<DialogClass>( m_fixture );
     testDlg->Create( DialogClass::IDD );
     testDlg->ShowWindow( SW_NORMAL );
-    m_fixture->attach( testDlg->GetSafeHwnd() );
+    m_fixture->Attach( testDlg->GetSafeHwnd() );
   }
 
   // 重载TestFixture::setUp()
@@ -103,7 +103,7 @@ public:
 
   void setUpOnMainThread()
   {
-    if ( CUTEST_NS::isOnMainThread() )
+    if ( CUTEST_NS::IsOnMainThread() )
     {
       if ( m_result )
       {
@@ -118,10 +118,10 @@ public:
     else
     {
       m_fixtureMethodId = FIXTURE_METHOD_ID_SET_UP;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread( this, false );
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
@@ -133,7 +133,7 @@ public:
       m_fixture = new Fixture;
     }
     m_fixture->setUp();
-    m_event->post();
+    m_event->Post();
   }
 
   // 重载TestFixture::tearDown()
@@ -144,7 +144,7 @@ public:
 
   void tearDownOnMainThread()
   {
-    if ( CUTEST_NS::isOnMainThread() )
+    if ( CUTEST_NS::IsOnMainThread() )
     {
       if ( m_result )
       {
@@ -159,10 +159,10 @@ public:
     else
     {
       m_fixtureMethodId = FIXTURE_METHOD_ID_TEAR_DOWN;
-      m_event = CUTEST_NS::Event::createInstance();
-      CUTEST_NS::Runner::instance()->asyncRunOnMainThread( this, false );
-      m_event->wait();
-      m_event->destroy();
+      m_event = CUTEST_NS::Event::CreateInstance();
+      CUTEST_NS::Runner::Instance()->AsyncRunOnMainThread( this, false );
+      m_event->Wait();
+      m_event->Destroy();
       m_event = NULL;
     }
   }
@@ -172,11 +172,11 @@ public:
     m_fixture->tearDown();
     delete m_fixture;
     m_fixture = NULL;
-    m_event->post();
+    m_event->Post();
   }
 
-  // 实现Runnable::run()
-  virtual void run()
+  // 实现Runnable::Run()
+  virtual void Run()
   {
     switch ( m_fixtureMethodId )
     {

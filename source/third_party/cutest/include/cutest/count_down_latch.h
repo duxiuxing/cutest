@@ -17,7 +17,7 @@ public:
         - 如果计数为0，则直接返回；
         - 如果计数比0大，会一直等待，直到计数变成0
     */
-    void await();
+    void Await();
 
     /*
         msTimeout表示最长等待时间，单位为毫秒。
@@ -26,16 +26,16 @@ public:
         - 如果计数比0大，会等待一段时间，等待时间内如果计数变成0，返回true；
         - 如果超出等待时间，计数还没有变成0，返回false；
     */
-    bool await(unsigned int msTimeout);
+    bool Await(unsigned int msTimeout);
 
     // 内部会对计数减1
-    void countDown();
+    void CountDown();
 
     // 返回当前计数的值
-    int getCount();
+    int Count();
 
 protected:
-    CountDownLatchImpl* impl;
+    CountDownLatchImpl* m_impl;
 };
 
 CUTEST_NS_END

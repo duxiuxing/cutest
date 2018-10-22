@@ -20,12 +20,12 @@ public:
   virtual void tearDown() override;
 
   // 实现SimpleTimer::Callback
-  virtual void onTimeUp();
+  virtual void OnTimeUp();
 
   void endTestAfterOneSecond();
   void autoEndTestAfterOneSecond();
 
-  unsigned long long msStart;
+  unsigned long long m_msStart;
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( CppUnitExplicitEndTest );
