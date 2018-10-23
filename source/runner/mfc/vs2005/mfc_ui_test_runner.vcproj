@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="MfcTestRunnerApp"
+	Name="MfcUiTestRunner"
 	ProjectGUID="{1C88A886-E073-4C6D-81E7-F5A0D34D717E}"
 	RootNamespace="MfcTestRunnerApp"
 	Keyword="MFCProj"
@@ -195,43 +195,43 @@
 			Name="DynamicWindow"
 			>
 			<File
-				RelativePath="..\DynamicWindow\cdxCDynamicDialog.cpp"
+				RelativePath="..\dynamic_window\cdxCDynamicDialog.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCDynamicDialog.h"
+				RelativePath="..\dynamic_window\cdxCDynamicDialog.h"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\DynamicLayoutInfo.cpp"
+				RelativePath="..\dynamic_window\cdxCDynamicWnd.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\DynamicLayoutInfo.h"
+				RelativePath="..\dynamic_window\cdxCDynamicWnd.h"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCDynamicWnd.cpp"
+				RelativePath="..\dynamic_window\cdxCDynamicWndEx.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCDynamicWnd.h"
+				RelativePath="..\dynamic_window\cdxCDynamicWndEx.h"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCDynamicWndEx.cpp"
+				RelativePath="..\dynamic_window\cdxCSizeIconCtrl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCDynamicWndEx.h"
+				RelativePath="..\dynamic_window\cdxCSizeIconCtrl.h"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCSizeIconCtrl.cpp"
+				RelativePath="..\dynamic_window\dynamic_layout_info.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\DynamicWindow\cdxCSizeIconCtrl.h"
+				RelativePath="..\dynamic_window\dynamic_layout_info.h"
 				>
 			</File>
 		</Filter>
@@ -239,19 +239,19 @@
 			Name="TestConfig"
 			>
 			<File
+				RelativePath="..\test_config.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\test_config.xml"
 				>
 			</File>
 			<File
-				RelativePath="..\TestConfig.h"
+				RelativePath="..\test_config_impl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TestConfigImpl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\TestConfigImpl.h"
+				RelativePath="..\test_config_impl.h"
 				>
 			</File>
 		</Filter>
@@ -259,11 +259,11 @@
 			Name="TestRunnerDlg"
 			>
 			<File
-				RelativePath="..\TestRunnerDlg.cpp"
+				RelativePath="..\test_runner_dlg.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TestRunnerDlg.h"
+				RelativePath="..\test_runner_dlg.h"
 				>
 			</File>
 			<Filter
@@ -310,11 +310,11 @@
 				Name="Settings"
 				>
 				<File
-					RelativePath="..\TestRunnerModel.cpp"
+					RelativePath="..\test_runner_model.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\TestRunnerModel.h"
+					RelativePath="..\test_runner_model.h"
 					>
 				</File>
 			</Filter>
@@ -325,6 +325,14 @@
 			<Filter
 				Name="Source Files"
 				>
+				<File
+					RelativePath="..\exe_app.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\exe_app.h"
+					>
+				</File>
 				<File
 					RelativePath="..\resource.h"
 					>
@@ -357,14 +365,6 @@
 					RelativePath="..\targetver.h"
 					>
 				</File>
-				<File
-					RelativePath="..\TestRunnerApp.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\TestRunnerApp.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Resource Files"
@@ -376,15 +376,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\res\MfcTestRunnerApp.ico"
+					RelativePath="..\res\mfc_ui_test_runner.ico"
 					>
 				</File>
 				<File
-					RelativePath="..\MfcTestRunnerApp.rc"
+					RelativePath="..\mfc_ui_test_runner.rc"
 					>
 				</File>
 				<File
-					RelativePath="..\res\MfcTestRunnerApp.rc2"
+					RelativePath="..\res\mfc_ui_test_runner.rc2"
 					>
 				</File>
 				<File

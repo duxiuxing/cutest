@@ -1,5 +1,5 @@
 ﻿#include "stdafx.h"
-#include "TestConfigImpl.h"
+#include "test_config_impl.h"
 
 #include <Shlwapi.h>
 

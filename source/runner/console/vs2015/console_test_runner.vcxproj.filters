@@ -15,10 +15,10 @@
     <ClInclude Include="..\targetver.h">
       <Filter>Win32 Console Application</Filter>
     </ClInclude>
-    <ClInclude Include="..\TestConfig.h">
+    <ClInclude Include="..\test_config.h">
       <Filter>TestConfig</Filter>
     </ClInclude>
-    <ClInclude Include="..\TestConfigImpl.h">
+    <ClInclude Include="..\test_config_impl.h">
       <Filter>TestConfig</Filter>
     </ClInclude>
   </ItemGroup>
@@ -26,11 +26,16 @@
     <ClCompile Include="..\stdafx.cpp">
       <Filter>Win32 Console Application</Filter>
     </ClCompile>
-    <ClCompile Include="..\TestConfigImpl.cpp">
+    <ClCompile Include="..\test_config_impl.cpp">
       <Filter>TestConfig</Filter>
     </ClCompile>
     <ClCompile Include="..\main.cpp">
       <Filter>Win32 Console Application</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\..\..\..\test_config.xml">
+      <Filter>TestConfig</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

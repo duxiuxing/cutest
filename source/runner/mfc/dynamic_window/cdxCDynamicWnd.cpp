@@ -35,30 +35,30 @@ static char THIS_FILE[]=__FILE__;
 
 void cdxCDynamicWnd::Position::Apply(HWND hwnd, CRect & rectNewPos, const DynamicLayoutInfo & li) const
 {
-	if(li.m_useScrollPos)
+	if(li.UseScrollPos)
 	{
-		rectNewPos.left	=	left   - li.m_scrollPos.x;
-		rectNewPos.right	=	right  - li.m_scrollPos.x;
-		rectNewPos.top		=	top    - li.m_scrollPos.y;
-		rectNewPos.bottom	=	bottom - li.m_scrollPos.y;
+		rectNewPos.left	=	left   - li.ScrollPos.x;
+		rectNewPos.right	=	right  - li.ScrollPos.x;
+		rectNewPos.top		=	top    - li.ScrollPos.y;
+		rectNewPos.bottom	=	bottom - li.ScrollPos.y;
 
-		if(li.m_deltaSize.cx >= 0)
+		if(li.DeltaSize.cx >= 0)
 		{
-			rectNewPos.left	+=	(m_Bytes[X1] * li.m_deltaSize.cx) / 100;
-			rectNewPos.right	+=	(m_Bytes[X2] * li.m_deltaSize.cx) / 100;
+			rectNewPos.left	+=	(m_Bytes[X1] * li.DeltaSize.cx) / 100;
+			rectNewPos.right	+=	(m_Bytes[X2] * li.DeltaSize.cx) / 100;
 		}
-		if(li.m_deltaSize.cy >= 0)
+		if(li.DeltaSize.cy >= 0)
 		{
-			rectNewPos.top		+=	(m_Bytes[Y1] * li.m_deltaSize.cy) / 100;
-			rectNewPos.bottom	+=	(m_Bytes[Y2] * li.m_deltaSize.cy) / 100;
+			rectNewPos.top		+=	(m_Bytes[Y1] * li.DeltaSize.cy) / 100;
+			rectNewPos.bottom	+=	(m_Bytes[Y2] * li.DeltaSize.cy) / 100;
 		}
 	}
 	else
 	{
-		rectNewPos.left	=	left   + (m_Bytes[X1] * li.m_deltaSize.cx) / 100;
-		rectNewPos.right	=	right  + (m_Bytes[X2] * li.m_deltaSize.cx) / 100;
-		rectNewPos.top		=	top    + (m_Bytes[Y1] * li.m_deltaSize.cy) / 100;
-		rectNewPos.bottom	=	bottom + (m_Bytes[Y2] * li.m_deltaSize.cy) / 100;
+		rectNewPos.left	=	left   + (m_Bytes[X1] * li.DeltaSize.cx) / 100;
+		rectNewPos.right	=	right  + (m_Bytes[X2] * li.DeltaSize.cx) / 100;
+		rectNewPos.top		=	top    + (m_Bytes[Y1] * li.DeltaSize.cy) / 100;
+		rectNewPos.bottom	=	bottom + (m_Bytes[Y2] * li.DeltaSize.cy) / 100;
 	}
 
 	if(rectNewPos.left + m_szMin.cx >= rectNewPos.right)
@@ -278,7 +278,7 @@ bool cdxCDynamicWnd::UpdateControlPosition(HWND hwnd)
  * This function is NOT virtual.
  * To implement your own layout algorithm, please
  * a) overwrite DoCreateLayoutInfo() to return an object of a class
- *    derived from cdxCDynamicLayoutInfo.
+ *    derived from DynamicLayoutInfo.
  *    You can put any user-data into your object; it will be passed
  *    on to the DoMoveCtrl() function.
  * b) overwrite DoMoveCtrl() and implement the layout logic.
@@ -305,7 +305,7 @@ void cdxCDynamicWnd::Layout()
 
 	try
 	{
-		HDWP							hdwp		=	::BeginDeferWindowPos(pli->m_controlCount);
+		HDWP							hdwp		=	::BeginDeferWindowPos(pli->ControlCount);
 		HWND							hwnd;
 		bool							bRepeat;
 		CRect							rectNew;

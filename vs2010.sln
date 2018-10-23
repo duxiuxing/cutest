@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcTestRunnerApp", "source\runner\mfc\vs2010\MfcTestRunnerApp.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcUiTestRunner", "source\runner\mfc\vs2010\mfc_ui_test_runner.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
 	EndProjectSection
@@ -79,7 +79,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMockPlus", "source\third_p
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runner", "runner", "{1380BB3D-FE99-46C7-AA9B-11E8C5F3EE48}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleTestRunnerApp", "source\runner\console\vs2010\ConsoleTestRunnerApp.vcxproj", "{CB784184-CF28-4314-9636-9F01728D4552}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleTestRunner", "source\runner\console\vs2010\console_test_runner.vcxproj", "{CB784184-CF28-4314-9636-9F01728D4552}"
 	ProjectSection(ProjectDependencies) = postProject
 		{32562F02-FC8D-4FB3-BF69-B57590B01B08} = {32562F02-FC8D-4FB3-BF69-B57590B01B08}
 	EndProjectSection

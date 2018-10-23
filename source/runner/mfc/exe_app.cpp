@@ -1,21 +1,21 @@
 ﻿#include "stdafx.h"
-#include "TestRunnerApp.h"
-#include "TestRunnerDlg.h"
+#include "exe_app.h"
+#include "test_runner_dlg.h"
 
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include "cutest/runner.h"
 
-#include "TestConfig.h"
+#include "test_config.h"
 
 #ifdef _DEBUG
 	#define new DEBUG_NEW
 #endif
 
-BEGIN_MESSAGE_MAP(CTestRunnerApp, CWinApp)
+BEGIN_MESSAGE_MAP(CExeApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
-CTestRunnerApp::CTestRunnerApp()
+CExeApp::CExeApp()
 {
 	// support Restart Manager
 #if _MSC_VER >= 1500
@@ -23,9 +23,9 @@ CTestRunnerApp::CTestRunnerApp()
 #endif
 }
 
-CTestRunnerApp theApp;
+CExeApp theApp;
 
-BOOL CTestRunnerApp::InitInstance()
+BOOL CExeApp::InitInstance()
 {
 	// _CrtSetDbgFlag(_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) | _CRTDBG_LEAK_CHECK_DF);
 	// _CrtSetBreakAlloc(4022);
@@ -73,7 +73,7 @@ BOOL CTestRunnerApp::InitInstance()
 	return FALSE;
 }
 
-int CTestRunnerApp::ExitInstance()
+int CExeApp::ExitInstance()
 {
 	::CoUninitialize();
 	return CWinApp::ExitInstance();

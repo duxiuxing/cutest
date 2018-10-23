@@ -1,11 +1,11 @@
 ﻿#pragma once
 
 // local
-#include "DynamicWindow/cdxCDynamicDialog.h"
+#include "dynamic_window/cdxCDynamicDialog.h"
 #include "MsDevCallerListCtrl.h"
 #include "ProgressBar.h"
 #include "resource.h"
-#include "TestRunnerModel.h"
+#include "test_runner_model.h"
 
 #include <cppunit/TestSuite.h>
 #include <cppunit/Exception.h>

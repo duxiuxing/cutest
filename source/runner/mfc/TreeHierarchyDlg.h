@@ -8,7 +8,7 @@
 //
 #include <cppunit/Test.h>
 #include <vector>
-#include "DynamicWindow/cdxCDynamicDialog.h"
+#include "dynamic_window/cdxCDynamicDialog.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // TreeHierarchyDlg dialog

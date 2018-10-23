@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "resource.h"
 #include "TreeHierarchyDlg.h"
-#include "TestRunnerModel.h"
+#include "test_runner_model.h"
 #include <algorithm>
 
 #ifdef _DEBUG
@@ -60,7 +60,7 @@ TreeHierarchyDlg::OnInitDialog()
 void
 TreeHierarchyDlg::initializeLayout()
 {
-  // see DynamicWindow/doc for documentation
+  // see dynamic_window/doc for documentation
   AddSzControl( IDC_TREE_TEST, mdResize, mdResize );
   AddSzControl( IDOK, mdRepos, mdNone );
   AddSzControl( IDCANCEL, mdRepos, mdNone );

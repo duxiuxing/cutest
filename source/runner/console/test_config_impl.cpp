@@ -1,5 +1,5 @@
 ﻿#include "stdafx.h"
-#include "TestConfigImpl.h"
+#include "test_config_impl.h"
 
 #include <Shlwapi.h>
 
@@ -10,7 +10,7 @@
 	#define new DEBUG_NEW
 #endif
 
-TestConfig* TestConfig::GetInstance()
+TestConfig* TestConfig::Instance()
 {
 	static TestConfigImpl s_testConfig;
 	return &s_testConfig;
@@ -149,7 +149,7 @@ BOOL TestConfigImpl::Load()
 	return TRUE;
 }
 
-LPCTSTR TestConfigImpl::GetTitle()
+LPCTSTR TestConfigImpl::Title()
 {
 	return m_title;
 }

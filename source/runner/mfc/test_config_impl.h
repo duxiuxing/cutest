@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "TestConfig.h"
+#include "test_config.h"
 
 class TestConfigImpl : public TestConfig
 {

@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="ConsoleTestRunnerApp"
+	Name="ConsoleTestRunner"
 	ProjectGUID="{554A7628-C55E-490C-98B8-0BA1E7CE1A84}"
 	RootNamespace="ConsoleTestRunnerApp"
 	Keyword="Win32Proj"
@@ -180,15 +180,15 @@
 			Name="TestConfig"
 			>
 			<File
-				RelativePath="..\TestConfig.h"
+				RelativePath="..\test_config.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TestConfigImpl.cpp"
+				RelativePath="..\test_config_impl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TestConfigImpl.h"
+				RelativePath="..\test_config_impl.h"
 				>
 			</File>
 		</Filter>

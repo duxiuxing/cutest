@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="DynamicWindow">
-      <UniqueIdentifier>{eed364b8-3875-423c-8e56-311ad4bea394}</UniqueIdentifier>
-    </Filter>
     <Filter Include="TreeHierarchyDlg">
       <UniqueIdentifier>{788a0840-cbc5-449e-923c-2467d94f148d}</UniqueIdentifier>
     </Filter>
@@ -31,15 +28,18 @@
     <Filter Include="MFC Application Dialog based\Resource Files">
       <UniqueIdentifier>{8e468dff-aeb8-48b3-aed1-1aab8365add4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DynamicWindow">
+      <UniqueIdentifier>{eed364b8-3875-423c-8e56-311ad4bea394}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\error_icons.bmp">
       <Filter>MFC Application Dialog based\Resource Files</Filter>
     </None>
-    <None Include="..\res\MfcTestRunnerApp.ico">
+    <None Include="..\res\mfc_ui_test_runner.ico">
       <Filter>MFC Application Dialog based\Resource Files</Filter>
     </None>
-    <None Include="..\res\MfcTestRunnerApp.rc2">
+    <None Include="..\res\mfc_ui_test_runner.rc2">
       <Filter>MFC Application Dialog based\Resource Files</Filter>
     </None>
     <None Include="..\res\test_icons.bmp">
@@ -56,16 +56,16 @@
     <ClInclude Include="..\targetver.h">
       <Filter>MFC Application Dialog based\Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\DynamicWindow\cdxCDynamicDialog.h">
+    <ClInclude Include="..\dynamic_window\cdxCDynamicDialog.h">
       <Filter>DynamicWindow</Filter>
     </ClInclude>
-    <ClInclude Include="..\DynamicWindow\cdxCDynamicWnd.h">
+    <ClInclude Include="..\dynamic_window\cdxCDynamicWnd.h">
       <Filter>DynamicWindow</Filter>
     </ClInclude>
-    <ClInclude Include="..\DynamicWindow\cdxCDynamicWndEx.h">
+    <ClInclude Include="..\dynamic_window\cdxCDynamicWndEx.h">
       <Filter>DynamicWindow</Filter>
     </ClInclude>
-    <ClInclude Include="..\DynamicWindow\cdxCSizeIconCtrl.h">
+    <ClInclude Include="..\dynamic_window\cdxCSizeIconCtrl.h">
       <Filter>DynamicWindow</Filter>
     </ClInclude>
     <ClInclude Include="..\resource.h">
@@ -77,7 +77,7 @@
     <ClInclude Include="..\ProgressBar.h">
       <Filter>TestRunnerDlg\ProgressBar</Filter>
     </ClInclude>
-    <ClInclude Include="..\TestRunnerModel.h">
+    <ClInclude Include="..\test_runner_model.h">
       <Filter>TestRunnerDlg\Settings</Filter>
     </ClInclude>
     <ClInclude Include="..\ListCtrlSetter.h">
@@ -89,36 +89,36 @@
     <ClInclude Include="..\MsDevCallerListCtrl.h">
       <Filter>TestRunnerDlg\ListCtrl</Filter>
     </ClInclude>
-    <ClInclude Include="..\TestRunnerApp.h">
+    <ClInclude Include="..\exe_app.h">
       <Filter>MFC Application Dialog based\Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\TestRunnerDlg.h">
-      <Filter>TestRunnerDlg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TestConfig.h">
+    <ClInclude Include="..\test_config.h">
       <Filter>TestConfig</Filter>
     </ClInclude>
-    <ClInclude Include="..\TestConfigImpl.h">
+    <ClInclude Include="..\test_config_impl.h">
       <Filter>TestConfig</Filter>
     </ClInclude>
-    <ClInclude Include="..\DynamicWindow\DynamicLayoutInfo.h">
+    <ClInclude Include="..\dynamic_window\dynamic_layout_info.h">
       <Filter>DynamicWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\test_runner_dlg.h">
+      <Filter>TestRunnerDlg</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\stdafx.cpp">
       <Filter>MFC Application Dialog based\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\DynamicWindow\cdxCDynamicDialog.cpp">
+    <ClCompile Include="..\dynamic_window\cdxCDynamicDialog.cpp">
       <Filter>DynamicWindow</Filter>
     </ClCompile>
-    <ClCompile Include="..\DynamicWindow\cdxCDynamicWnd.cpp">
+    <ClCompile Include="..\dynamic_window\cdxCDynamicWnd.cpp">
       <Filter>DynamicWindow</Filter>
     </ClCompile>
-    <ClCompile Include="..\DynamicWindow\cdxCDynamicWndEx.cpp">
+    <ClCompile Include="..\dynamic_window\cdxCDynamicWndEx.cpp">
       <Filter>DynamicWindow</Filter>
     </ClCompile>
-    <ClCompile Include="..\DynamicWindow\cdxCSizeIconCtrl.cpp">
+    <ClCompile Include="..\dynamic_window\cdxCSizeIconCtrl.cpp">
       <Filter>DynamicWindow</Filter>
     </ClCompile>
     <ClCompile Include="..\TreeHierarchyDlg.cpp">
@@ -127,7 +127,7 @@
     <ClCompile Include="..\ProgressBar.cpp">
       <Filter>TestRunnerDlg\ProgressBar</Filter>
     </ClCompile>
-    <ClCompile Include="..\TestRunnerModel.cpp">
+    <ClCompile Include="..\test_runner_model.cpp">
       <Filter>TestRunnerDlg\Settings</Filter>
     </ClCompile>
     <ClCompile Include="..\ListCtrlFormatter.cpp">
@@ -139,21 +139,21 @@
     <ClCompile Include="..\MsDevCallerListCtrl.cpp">
       <Filter>TestRunnerDlg\ListCtrl</Filter>
     </ClCompile>
-    <ClCompile Include="..\TestRunnerApp.cpp">
+    <ClCompile Include="..\exe_app.cpp">
       <Filter>MFC Application Dialog based\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\TestRunnerDlg.cpp">
+    <ClCompile Include="..\test_runner_dlg.cpp">
       <Filter>TestRunnerDlg</Filter>
     </ClCompile>
-    <ClCompile Include="..\TestConfigImpl.cpp">
+    <ClCompile Include="..\test_config_impl.cpp">
       <Filter>TestConfig</Filter>
     </ClCompile>
-    <ClCompile Include="..\DynamicWindow\DynamicLayoutInfo.cpp">
+    <ClCompile Include="..\dynamic_window\dynamic_layout_info.cpp">
       <Filter>DynamicWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\MfcTestRunnerApp.rc">
+    <ResourceCompile Include="..\mfc_ui_test_runner.rc">
       <Filter>MFC Application Dialog based\Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

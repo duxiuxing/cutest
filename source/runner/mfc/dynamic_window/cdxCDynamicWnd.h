@@ -3,7 +3,7 @@
 #include <afxwin.h>
 #include <afxtempl.h>
 
-#include "DynamicLayoutInfo.h"
+#include "dynamic_layout_info.h"
 
 class cdxCSizeIconCtrl;
 

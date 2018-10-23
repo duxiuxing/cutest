@@ -23,6 +23,7 @@
     <RootNamespace>MfcTestRunnerApp</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <Keyword>MFCProj</Keyword>
+    <ProjectName>MfcUiTestRunner</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -194,40 +195,40 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\DynamicWindow\cdxCDynamicDialog.h" />
-    <ClInclude Include="..\DynamicWindow\DynamicLayoutInfo.h" />
-    <ClInclude Include="..\DynamicWindow\cdxCDynamicWnd.h" />
-    <ClInclude Include="..\DynamicWindow\cdxCDynamicWndEx.h" />
-    <ClInclude Include="..\DynamicWindow\cdxCSizeIconCtrl.h" />
+    <ClInclude Include="..\dynamic_window\cdxCDynamicDialog.h" />
+    <ClInclude Include="..\dynamic_window\dynamic_layout_info.h" />
+    <ClInclude Include="..\dynamic_window\cdxCDynamicWnd.h" />
+    <ClInclude Include="..\dynamic_window\cdxCDynamicWndEx.h" />
+    <ClInclude Include="..\dynamic_window\cdxCSizeIconCtrl.h" />
     <ClInclude Include="..\ListCtrlFormatter.h" />
     <ClInclude Include="..\ListCtrlSetter.h" />
     <ClInclude Include="..\MsDevCallerListCtrl.h" />
     <ClInclude Include="..\ProgressBar.h" />
     <ClInclude Include="..\resource.h" />
-    <ClInclude Include="..\TestConfig.h" />
-    <ClInclude Include="..\TestConfigImpl.h" />
-    <ClInclude Include="..\TestRunnerDlg.h" />
-    <ClInclude Include="..\TestRunnerModel.h" />
+    <ClInclude Include="..\test_config.h" />
+    <ClInclude Include="..\test_config_impl.h" />
+    <ClInclude Include="..\test_runner_dlg.h" />
+    <ClInclude Include="..\test_runner_model.h" />
     <ClInclude Include="..\TreeHierarchyDlg.h" />
-    <ClInclude Include="..\TestRunnerApp.h" />
+    <ClInclude Include="..\exe_app.h" />
     <ClInclude Include="..\stdafx.h" />
     <ClInclude Include="..\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\DynamicWindow\cdxCDynamicDialog.cpp" />
-    <ClCompile Include="..\DynamicWindow\DynamicLayoutInfo.cpp" />
-    <ClCompile Include="..\DynamicWindow\cdxCDynamicWnd.cpp" />
-    <ClCompile Include="..\DynamicWindow\cdxCDynamicWndEx.cpp" />
-    <ClCompile Include="..\DynamicWindow\cdxCSizeIconCtrl.cpp" />
+    <ClCompile Include="..\dynamic_window\cdxCDynamicDialog.cpp" />
+    <ClCompile Include="..\dynamic_window\dynamic_layout_info.cpp" />
+    <ClCompile Include="..\dynamic_window\cdxCDynamicWnd.cpp" />
+    <ClCompile Include="..\dynamic_window\cdxCDynamicWndEx.cpp" />
+    <ClCompile Include="..\dynamic_window\cdxCSizeIconCtrl.cpp" />
     <ClCompile Include="..\ListCtrlFormatter.cpp" />
     <ClCompile Include="..\ListCtrlSetter.cpp" />
     <ClCompile Include="..\MsDevCallerListCtrl.cpp" />
     <ClCompile Include="..\ProgressBar.cpp" />
-    <ClCompile Include="..\TestConfigImpl.cpp" />
-    <ClCompile Include="..\TestRunnerDlg.cpp" />
-    <ClCompile Include="..\TestRunnerModel.cpp" />
+    <ClCompile Include="..\test_config_impl.cpp" />
+    <ClCompile Include="..\test_runner_dlg.cpp" />
+    <ClCompile Include="..\test_runner_model.cpp" />
     <ClCompile Include="..\TreeHierarchyDlg.cpp" />
-    <ClCompile Include="..\TestRunnerApp.cpp" />
+    <ClCompile Include="..\exe_app.cpp" />
     <ClCompile Include="..\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -236,16 +237,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\MfcTestRunnerApp.rc" />
+    <ResourceCompile Include="..\mfc_ui_test_runner.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\error_icons.bmp" />
-    <None Include="..\res\MfcTestRunnerApp.rc2">
+    <None Include="..\res\mfc_ui_test_runner.rc2">
       <FileType>RC</FileType>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\MfcTestRunnerApp.ico" />
+    <None Include="..\res\mfc_ui_test_runner.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\test_icons.bmp" />

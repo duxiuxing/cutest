@@ -1,9 +1,9 @@
 ﻿#include "stdafx.h"
-#include "TestRunnerDlg.h"
+#include "test_runner_dlg.h"
 
 #include "ListCtrlFormatter.h"
 #include "ListCtrlSetter.h"
-#include "TestConfig.h"
+#include "test_config.h"
 #include "TreeHierarchyDlg.h"
 
 #include <cppunit/TestFailure.h>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcTestRunnerApp", "source\runner\mfc\vs2015\MfcTestRunnerApp.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcUiTestRunner", "source\runner\mfc\vs2015\mfc_ui_test_runner.vcxproj", "{AABD35C3-3F4F-4CCC-AFF9-201605302224}"
 	ProjectSection(ProjectDependencies) = postProject
 		{185FF715-C691-49B9-B83F-D54649575FD2} = {185FF715-C691-49B9-B83F-D54649575FD2}
 	EndProjectSection
@@ -83,7 +83,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GMockPlusDemo", "source\tes
 		{E681DEF8-DB9B-4C46-B658-8A7C3FC62AA2} = {E681DEF8-DB9B-4C46-B658-8A7C3FC62AA2}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleTestRunnerApp", "source\runner\console\vs2015\ConsoleTestRunnerApp.vcxproj", "{8456CB77-72B0-454A-B20A-180759EBCE5E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleTestRunner", "source\runner\console\vs2015\console_test_runner.vcxproj", "{8456CB77-72B0-454A-B20A-180759EBCE5E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{185FF715-C691-49B9-B83F-D54649575FD2} = {185FF715-C691-49B9-B83F-D54649575FD2}
 	EndProjectSection

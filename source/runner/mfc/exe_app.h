@@ -6,18 +6,18 @@
 
 #include "resource.h"
 
-class CTestRunnerApp : public CWinApp
+class CExeApp : public CWinApp
 {
 public:
-	CTestRunnerApp();
+	CExeApp();
 
 	// Overrides
-	virtual BOOL InitInstance();
-	virtual int ExitInstance();
+	virtual BOOL InitInstance() override;
+	virtual int ExitInstance() override;
 
 	// Implementation
 
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CTestRunnerApp theApp;
+extern CExeApp theApp;

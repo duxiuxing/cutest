@@ -23,6 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ConsoleTestRunnerApp</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>ConsoleTestRunner</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -152,8 +153,8 @@
   <ItemGroup>
     <ClInclude Include="..\stdafx.h" />
     <ClInclude Include="..\targetver.h" />
-    <ClInclude Include="..\TestConfig.h" />
-    <ClInclude Include="..\TestConfigImpl.h" />
+    <ClInclude Include="..\test_config.h" />
+    <ClInclude Include="..\test_config_impl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\main.cpp" />
@@ -163,7 +164,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\TestConfigImpl.cpp" />
+    <ClCompile Include="..\test_config_impl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\..\..\..\test_config.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

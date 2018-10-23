@@ -1,11 +1,11 @@
 ﻿// //////////////////////////////////////////////////////////////////////////
-// Implementation file TestRunnerModel.cpp for class TestRunnerModel
+// Implementation file test_runner_model.cpp for class TestRunnerModel
 // (c)Copyright 2000, Baptiste Lepilleur.
 // Created: 2001/04/26
 // //////////////////////////////////////////////////////////////////////////
 
-#include "StdAfx.h"
-#include "TestRunnerModel.h"
+#include "stdafx.h"
+#include "test_runner_model.h"
 #include <cppunit/tools/Algorithm.h>
 #include <algorithm>
 #include <stdexcept>
