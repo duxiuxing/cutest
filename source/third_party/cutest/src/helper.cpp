@@ -35,9 +35,9 @@ bool CUTEST_NS::IsOnMainThread() {
 std::string CUTEST_NS::MakeFilePathShorter(std::string path) {
     std::string str = path;
     std::stack<std::string> dirStack;
-	std::string::size_type index = str.find('/');
+	size_t index = str.find('/');
     while (index != -1) {
-        std::string::size_type length = str.length();
+        size_t length = str.length();
         if (0 != index) {
             // 把'/'左边的截断出来放到strlist
             std::string dir = str.substr(0, index);
@@ -61,7 +61,7 @@ std::string CUTEST_NS::MakeFilePathShorter(std::string path) {
         }
 
         // 计算'/'右边的字符串长度
-        std::string::size_type start = index + 1;
+        size_t start = index + 1;
         length -= start;
 
         // 然后把'/'右边的字符串赋给str

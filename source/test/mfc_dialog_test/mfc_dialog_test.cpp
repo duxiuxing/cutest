@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include <cppunit/cppunit.h>
-#include "AboutDlg.h"
+#include "about_dlg.h"
 
 class MfcDialogTest
 	: public CPPUNIT_NS::MfcDialogTestFixture

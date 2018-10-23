@@ -6,10 +6,10 @@
 
 #include "resource.h"       // main symbols
 
-class CMfcDialogTestApp : public CWinApp
+class CDllApp : public CWinApp
 {
 public:
-	CMfcDialogTestApp();
+	CDllApp();
 
 	// Overrides
 public:

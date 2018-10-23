@@ -69,7 +69,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
-				ModuleDefinitionFile="..\MfcDialogTest.def"
+				ModuleDefinitionFile="..\mfc_dialog_test.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -151,7 +151,7 @@
 				Name="VCLinkerTool"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
-				ModuleDefinitionFile="..\MfcDialogTest.def"
+				ModuleDefinitionFile="..\mfc_dialog_test.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -196,7 +196,7 @@
 				UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 				>
 				<File
-					RelativePath="..\MfcDialogTestApp.h"
+					RelativePath="..\dll_app.h"
 					>
 				</File>
 				<File
@@ -214,15 +214,15 @@
 				UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 				>
 				<File
-					RelativePath="..\MfcDialogTest.rc"
+					RelativePath="..\mfc_dialog_test.rc"
 					>
 				</File>
 				<File
-					RelativePath="..\res\MfcDialogTest.rc2"
+					RelativePath="..\res\mfc_dialog_test.rc2"
 					>
 				</File>
 				<File
-					RelativePath="..\res\MfcDialogTest.ico"
+					RelativePath="..\res\mfc_dialog_test.ico"
 					>
 				</File>
 			</Filter>
@@ -232,11 +232,11 @@
 				UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 				>
 				<File
-					RelativePath="..\MfcDialogTest.def"
+					RelativePath="..\mfc_dialog_test.def"
 					>
 				</File>
 				<File
-					RelativePath="..\MfcDialogTestApp.cpp"
+					RelativePath="..\dll_app.cpp"
 					>
 				</File>
 				<File
@@ -265,15 +265,15 @@
 			Name="MfcDialogTest"
 			>
 			<File
-				RelativePath="..\AboutDlg.cpp"
+				RelativePath="..\about_dlg.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\AboutDlg.h"
+				RelativePath="..\about_dlg.h"
 				>
 			</File>
 			<File
-				RelativePath="..\MfcDialogTest.cpp"
+				RelativePath="..\mfc_dialog_test.cpp"
 				>
 			</File>
 		</Filter>

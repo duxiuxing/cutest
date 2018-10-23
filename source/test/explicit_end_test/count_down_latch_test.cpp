@@ -2,11 +2,11 @@
 #include "cutest/count_down_latch.h"
 #include "simple_timer.h"
 
-class GTestWaitAsynEndTest
+class CountDownLatchTest
   : public testing::Test
   , public SimpleTimer::Callback {
  public:
-  GTestWaitAsynEndTest();
+  CountDownLatchTest();
 
   virtual void SetUp() override;
   virtual void TearDown() override;
@@ -17,24 +17,24 @@ class GTestWaitAsynEndTest
   CUTEST_NS::CountDownLatch* m_countDownLatch;
 };
 
-GTestWaitAsynEndTest::GTestWaitAsynEndTest()
+CountDownLatchTest::CountDownLatchTest()
   : m_countDownLatch(NULL) {}
 
-void GTestWaitAsynEndTest::SetUp() {
+void CountDownLatchTest::SetUp() {
   m_countDownLatch = new CUTEST_NS::CountDownLatch(1);
 }
 
-void GTestWaitAsynEndTest::TearDown() {
+void CountDownLatchTest::TearDown() {
   SimpleTimer::Instance()->RemoveCallback(this);
   delete m_countDownLatch;
   m_countDownLatch = NULL;
 }
 
-void GTestWaitAsynEndTest::OnTimeUp() {
+void CountDownLatchTest::OnTimeUp() {
 	m_countDownLatch->CountDown();
 }
 
-TEST_F(GTestWaitAsynEndTest, EndTestAfterOneSecond) {
+TEST_F(CountDownLatchTest, EndTestAfterOneSecond) {
   unsigned long long msStart = CUTEST_NS::TickCount64();
 
   SimpleTimer::Instance()->SetCallback(1000, this);

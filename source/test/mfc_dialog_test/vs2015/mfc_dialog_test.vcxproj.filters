@@ -27,13 +27,13 @@
     <ClCompile Include="..\stdafx.cpp">
       <Filter>MFC DLL\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\AboutDlg.cpp">
+    <ClCompile Include="..\about_dlg.cpp">
       <Filter>MfcDialogTest\AboutDlg</Filter>
     </ClCompile>
-    <ClCompile Include="..\MfcDialogTestApp.cpp">
+    <ClCompile Include="..\dll_app.cpp">
       <Filter>MFC DLL\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\MfcDialogTest.cpp">
+    <ClCompile Include="..\mfc_dialog_test.cpp">
       <Filter>MfcDialogTest</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,28 +47,28 @@
     <ClInclude Include="..\targetver.h">
       <Filter>MFC DLL\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\AboutDlg.h">
+    <ClInclude Include="..\about_dlg.h">
       <Filter>MfcDialogTest\AboutDlg</Filter>
     </ClInclude>
-    <ClInclude Include="..\MfcDialogTestApp.h">
+    <ClInclude Include="..\dll_app.h">
       <Filter>MFC DLL\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\MfcDialogTest.rc2">
+    <None Include="..\res\mfc_dialog_test.rc2">
       <Filter>MFC DLL\Resource Files</Filter>
     </None>
-    <None Include="..\MfcDialogTest.def">
+    <None Include="..\mfc_dialog_test.def">
       <Filter>MFC DLL\Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\MfcDialogTest.rc">
+    <ResourceCompile Include="..\mfc_dialog_test.rc">
       <Filter>MFC DLL\Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\res\MfcDialogTest.ico">
+    <Image Include="..\res\mfc_dialog_test.ico">
       <Filter>MFC DLL\Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -89,7 +89,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "listener_test", "source\tes
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcDialogTest", "source\test\MfcDialogTest\vs2005\MfcDialogTest.vcproj", "{D18A63FA-AF71-43EB-81FB-FDE3D20B1529}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MfcDialogTest", "source\test\mfc_dialog_test\vs2005\mfc_dialog_test.vcproj", "{D18A63FA-AF71-43EB-81FB-FDE3D20B1529}"
 	ProjectSection(ProjectDependencies) = postProject
 		{178C4522-EF70-4DC3-8CEC-2BF14AD7230C} = {178C4522-EF70-4DC3-8CEC-2BF14AD7230C}
 	EndProjectSection

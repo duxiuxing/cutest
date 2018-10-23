@@ -7,11 +7,11 @@ namespace testing {
 namespace internal {
 
 // Creates a new TestResultXmlPrinter.
-TestResultXmlPrinter::TestResultXmlPrinter(const char* xmlFilePathParam)
-  : msStartTestRun(0)
-  , failedTestCaseCount(0)
-  , xmlFilePath(xmlFilePathParam) {
-  if (this->xmlFilePath.c_str() == NULL || this->xmlFilePath.empty()) {
+TestResultXmlPrinter::TestResultXmlPrinter(const char* xmlFilePath)
+  : m_msStartTestRun(0)
+  , m_failedTestCaseCount(0)
+  , m_xmlFilePath(xmlFilePath) {
+  if (m_xmlFilePath.c_str() == NULL || m_xmlFilePath.empty()) {
     fprintf(stderr, "XML output file may not be null\n");
     fflush(stderr);
     exit(EXIT_FAILURE);
@@ -19,79 +19,79 @@ TestResultXmlPrinter::TestResultXmlPrinter(const char* xmlFilePathParam)
 }
 
 TestResultXmlPrinter::~TestResultXmlPrinter() {
-  TestSuiteInfoList::iterator it = this->testSuiteInfos.begin();
-  while (it != this->testSuiteInfos.end()) {
+  TestSuiteInfoList::iterator it = m_testSuiteInfos.begin();
+  while (it != m_testSuiteInfos.end()) {
     delete (*it);
     ++it;
   }
 }
 
-void TestResultXmlPrinter::onRunnerStart(CPPUNIT_NS::Test* test) {
-  this->msStartTestRun = GetTimeInMillis();
-  this->failedTestCaseCount = 0;
+void TestResultXmlPrinter::OnRunnerStart(CPPUNIT_NS::Test* test) {
+  m_msStartTestRun = GetTimeInMillis();
+  m_failedTestCaseCount = 0;
 
   TestSuiteInfo* info = new TestSuiteInfo;
-  info->suite = test;
-  this->testSuiteInfos.push_back(info);
+  info->Suite = test;
+  m_testSuiteInfos.push_back(info);
 }
 
 // Called after the unit test ends.
-void TestResultXmlPrinter::onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
-  if (this->testSuiteInfos.back()->suite == test) {
-    this->testSuiteInfos.back()->msElapsed = msElapsed;
+void TestResultXmlPrinter::OnRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) {
+  if (m_testSuiteInfos.back()->Suite == test) {
+    m_testSuiteInfos.back()->MsElapsed = msElapsed;
   }
 
   FILE* xmlout = NULL;
-  FilePath filePath(this->xmlFilePath);
+  FilePath filePath(m_xmlFilePath);
   FilePath dirPath(filePath.RemoveFileName());
 
   if (dirPath.CreateDirectoriesRecursively()) {
-    xmlout = posix::FOpen(this->xmlFilePath.c_str(), "w");
+    xmlout = posix::FOpen(m_xmlFilePath.c_str(), "w");
   }
   if (xmlout == NULL) {
     fprintf(stderr,
             "Unable to open file \"%s\"\n",
-		    this->xmlFilePath.c_str());
+		    m_xmlFilePath.c_str());
     fflush(stderr);
     exit(EXIT_FAILURE);
   }
   std::stringstream stream;
-  printXmlTestSuites(&stream, test, msElapsed);
+  PrintXmlTestSuites(&stream, test, msElapsed);
   fprintf(xmlout, "%s", StringStreamToString(&stream).c_str());
   fclose(xmlout);
 }
 
-void TestResultXmlPrinter::onSuiteStart(CPPUNIT_NS::Test* suite) {
+void TestResultXmlPrinter::OnSuiteStart(CPPUNIT_NS::Test* suite) {
   TestSuiteInfo* info = new TestSuiteInfo;
-  info->suite = suite;
-  this->testSuiteInfos.push_back(info);
+  info->Suite = suite;
+  m_testSuiteInfos.push_back(info);
 }
 
-void TestResultXmlPrinter::onSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int msElapsed) {
-  this->testSuiteInfos.back()->msElapsed = msElapsed;
+void TestResultXmlPrinter::OnSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int msElapsed) {
+  m_testSuiteInfos.back()->MsElapsed = msElapsed;
 }
 
-void TestResultXmlPrinter::onTestStart(CPPUNIT_NS::Test* test) {
+void TestResultXmlPrinter::OnTestStart(CPPUNIT_NS::Test* test) {
   TestCaseInfo* info = new TestCaseInfo;
-  info->test = test;
-  this->testSuiteInfos.back()->testCaseInfos.push_back(info);
+  info->Test = test;
+  m_testSuiteInfos.back()->TestCaseInfos.push_back(info);
 }
 
-void TestResultXmlPrinter::onFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) {
+void TestResultXmlPrinter::OnFailureAdd(unsigned int index, const CPPUNIT_NS::TestFailure& failure) {
   // 记录每个TestFailure的index
-  this->testSuiteInfos.back()->testCaseInfos.back()->failureIndexs.push_back(index);
+  m_testSuiteInfos.back()->TestCaseInfos.back()->FailureIndexs.push_back(index);
 }
 
-void TestResultXmlPrinter::onTestEnd(
+void TestResultXmlPrinter::OnTestEnd(
   CPPUNIT_NS::Test* test,
   unsigned int errorCount,
   unsigned int failureCount,
   unsigned int msElapsed) {
   if (errorCount || failureCount) {
-    ++this->failedTestCaseCount; // 所有失败的用例数
-    this->testSuiteInfos.back()->failedTestCases += 1; // 当前Suite的失败的用例数
+    ++m_failedTestCaseCount; // 所有失败的用例数
+    m_testSuiteInfos.back()->FailedTestCaseCount += 1; // 当前Suite的失败的用例数
   }
-  this->testSuiteInfos.back()->testCaseInfos.back()->msElapsed = msElapsed;
+  m_testSuiteInfos.back()->TestCaseInfos.back()->MsElapsed = msElapsed;
 }
 
 // Returns an XML-escaped copy of the input string str.  If isAttribute
@@ -106,7 +106,7 @@ void TestResultXmlPrinter::onTestEnd(
 // most invalid characters can be retained using character references.
 // TODO(wan): It might be nice to have a minimally invasive, human-readable
 // escaping scheme for invalid characters, rather than dropping them.
-std::string TestResultXmlPrinter::escapeXml(
+std::string TestResultXmlPrinter::EscapeXml(
   const std::string& str, bool isAttribute) {
   Message m;
 
@@ -137,8 +137,8 @@ std::string TestResultXmlPrinter::escapeXml(
       }
       break;
     default:
-      if (isValidXmlCharacter(ch)) {
-        if (isAttribute && isNormalizableWhitespace(ch))
+      if (IsValidXmlCharacter(ch)) {
+        if (isAttribute && IsNormalizableWhitespace(ch))
           m << "&#x" << String::FormatByte(static_cast<unsigned char>(ch))
             << ";";
         else {
@@ -155,12 +155,12 @@ std::string TestResultXmlPrinter::escapeXml(
 // Returns the given string with all characters invalid in XML removed.
 // Currently invalid characters are dropped from the string. An
 // alternative is to replace them with certain characters such as . or ?.
-std::string TestResultXmlPrinter::removeInvalidXmlCharacters(
+std::string TestResultXmlPrinter::RemoveInvalidXmlCharacters(
   const std::string& str) {
   std::string output;
   output.reserve(str.size());
   for (std::string::const_iterator it = str.begin(); it != str.end(); ++it)
-    if (isValidXmlCharacter(*it)) {
+    if (IsValidXmlCharacter(*it)) {
       output.push_back(*it);
     }
 
@@ -184,7 +184,7 @@ std::string TestResultXmlPrinter::removeInvalidXmlCharacters(
 // </testsuites>
 
 // Streams an XML CDATA section, escaping invalid CDATA sequences as needed.
-void TestResultXmlPrinter::outputXmlCDataSection(::std::ostream* stream,
+void TestResultXmlPrinter::OutputXmlCDataSection(::std::ostream* stream,
     const char* data) {
   const char* segment = data;
   *stream << "<![CDATA[";
@@ -203,25 +203,25 @@ void TestResultXmlPrinter::outputXmlCDataSection(::std::ostream* stream,
   *stream << "]]>";
 }
 
-void TestResultXmlPrinter::outputXmlAttribute(
+void TestResultXmlPrinter::OutputXmlAttribute(
   std::ostream* stream,
-  const std::string& element_name,
+  const std::string& elementName,
   const std::string& name,
   const std::string& value) {
-  const std::vector<std::string>& allowed_names =
-    GetReservedAttributesForElement(element_name);
+  const std::vector<std::string>& allowedNames =
+    GetReservedAttributesForElement(elementName);
 
-  GTEST_CHECK_(std::find(allowed_names.begin(), allowed_names.end(), name) !=
-               allowed_names.end())
-      << "Attribute " << name << " is not allowed for element <" << element_name
+  GTEST_CHECK_(std::find(allowedNames.begin(), allowedNames.end(), name) !=
+               allowedNames.end())
+      << "Attribute " << name << " is not allowed for element <" << elementName
       << ">.";
 
-  *stream << " " << name << "=\"" << escapeXmlAttribute(value) << "\"";
+  *stream << " " << name << "=\"" << EscapeXmlAttribute(value) << "\"";
 }
 
 // Prints an XML representation of a TestInfo object.
 // TODO(wan): There is also value in printing properties with the plain printer.
-void TestResultXmlPrinter::outputXmlTestCase(
+void TestResultXmlPrinter::OutputXmlTestCase(
   ::std::ostream* stream,
   const char* testCaseName,
   TestCaseInfo* testCaseInfo) {
@@ -229,7 +229,7 @@ void TestResultXmlPrinter::outputXmlTestCase(
 
   // Test方法的名称
   *stream << "    <testcase";
-  std::string name = testCaseInfo->test->getName();
+  std::string name = testCaseInfo->Test->getName();
   // 将Test名字中Suite.的部分精简掉
   // 比如："ExampleTestCase.testAdd"精简为"testAdd"
   std::string prefix = testCaseName;
@@ -238,7 +238,7 @@ void TestResultXmlPrinter::outputXmlTestCase(
   if (pos != std::string::npos) {
     name.replace(pos, prefix.size(), "");
   }
-  outputXmlAttribute(stream, kTestcase, "name", name);
+  OutputXmlAttribute(stream, kTestcase, "name", name);
 
   // if (test_info.value_param() != NULL) {
   //    OutputXmlAttribute(stream, kTestcase, "value_param",
@@ -247,18 +247,18 @@ void TestResultXmlPrinter::outputXmlTestCase(
   // if (test_info.type_param() != NULL)
   //    OutputXmlAttribute(stream, kTestcase, "type_param", test_info.type_param());
 
-  outputXmlAttribute(stream, kTestcase, "status", "run");
+  OutputXmlAttribute(stream, kTestcase, "status", "run");
 
-  outputXmlAttribute(stream, kTestcase, "time",
-                     FormatTimeInMillisAsSeconds(testCaseInfo->msElapsed));
+  OutputXmlAttribute(stream, kTestcase, "time",
+                     FormatTimeInMillisAsSeconds(testCaseInfo->MsElapsed));
 
-  outputXmlAttribute(stream, kTestcase, "classname", testCaseName);
+  OutputXmlAttribute(stream, kTestcase, "classname", testCaseName);
   // *stream << TestPropertiesAsXmlAttributes(result);
 
   int failures = 0;
-  for (std::vector<unsigned int>::size_type i = 0; i < testCaseInfo->failureIndexs.size(); ++i) {
+  for (size_t i = 0; i < testCaseInfo->FailureIndexs.size(); ++i) {
     const CPPUNIT_NS::TestFailure* testFailure =
-      CUTEST_NS::Runner::Instance()->FailureAt(testCaseInfo->failureIndexs[i]);
+      CUTEST_NS::Runner::Instance()->FailureAt(testCaseInfo->FailureIndexs[(unsigned int)i]);
 
     if (++failures == 1) {
       *stream << ">\n";
@@ -269,10 +269,10 @@ void TestResultXmlPrinter::outputXmlTestCase(
                               testFailure->sourceLine().lineNumber());
     const string summary = location + "\n" + testFailure->thrownException()->what();
     *stream << "      <failure message=\""
-            << escapeXmlAttribute(summary.c_str())
+            << EscapeXmlAttribute(summary.c_str())
             << "\" type=\"\">";
     const string detail = location + "\n" + testFailure->thrownException()->what();
-    outputXmlCDataSection(stream, removeInvalidXmlCharacters(detail).c_str());
+    OutputXmlCDataSection(stream, RemoveInvalidXmlCharacters(detail).c_str());
     *stream << "</failure>\n";
   }
 
@@ -284,41 +284,41 @@ void TestResultXmlPrinter::outputXmlTestCase(
 }
 
 // Prints an XML representation of a TestSuiteInfo object
-void TestResultXmlPrinter::outputXmlTestSuite(
+void TestResultXmlPrinter::OutputXmlTestSuite(
   std::ostream* stream,
   TestSuiteInfo* testSuiteInfo) {
   const std::string kTestsuite = "testsuite";
   *stream << "  <" << kTestsuite;
 
   // TestCase的名称
-  outputXmlAttribute(stream, kTestsuite, "name", testSuiteInfo->name());
+  OutputXmlAttribute(stream, kTestsuite, "name", testSuiteInfo->Name());
 
   // TestCase下的用例数
-  outputXmlAttribute(stream, kTestsuite, "tests",
-                     StreamableToString(testSuiteInfo->suite->countTestCases()));
+  OutputXmlAttribute(stream, kTestsuite, "tests",
+                     StreamableToString(testSuiteInfo->Suite->countTestCases()));
 
   // TestCase下失败的用例数
-  outputXmlAttribute(stream, kTestsuite, "failures",
-                     StreamableToString(testSuiteInfo->failedTestCases));
+  OutputXmlAttribute(stream, kTestsuite, "failures",
+                     StreamableToString(testSuiteInfo->FailedTestCaseCount));
 
   // 预留字段，目前总是填0
-  outputXmlAttribute(
+  OutputXmlAttribute(
     stream, kTestsuite, "disabled",
     StreamableToString(0));
 
   // 预留字段，目前总是填0
-  outputXmlAttribute(stream, kTestsuite, "errors", "0");
+  OutputXmlAttribute(stream, kTestsuite, "errors", "0");
 
   // 当前TestCase的总耗时，单位：秒
-  outputXmlAttribute(stream, kTestsuite, "time",
-                     FormatTimeInMillisAsSeconds(testSuiteInfo->msElapsed));
+  OutputXmlAttribute(stream, kTestsuite, "time",
+                     FormatTimeInMillisAsSeconds(testSuiteInfo->MsElapsed));
 
   // *stream << TestPropertiesAsXmlAttributes(test_case.ad_hoc_test_result());
   *stream << ">\n";
 
-  TestCaseInfoList::iterator it = testSuiteInfo->testCaseInfos.begin();
-  while (it != testSuiteInfo->testCaseInfos.end()) {
-    outputXmlTestCase(stream, testSuiteInfo->name().c_str(), *it);
+  TestCaseInfoList::iterator it = testSuiteInfo->TestCaseInfos.begin();
+  while (it != testSuiteInfo->TestCaseInfos.end()) {
+    OutputXmlTestCase(stream, testSuiteInfo->Name().c_str(), *it);
     ++it;
   }
 
@@ -326,7 +326,7 @@ void TestResultXmlPrinter::outputXmlTestSuite(
 }
 
 // Prints an XML summary of unit_test to output stream out.
-void TestResultXmlPrinter::printXmlTestSuites(
+void TestResultXmlPrinter::PrintXmlTestSuites(
   std::ostream* stream,
   CPPUNIT_NS::Test* test,
   unsigned int msElapsed) {
@@ -336,29 +336,29 @@ void TestResultXmlPrinter::printXmlTestSuites(
   *stream << "<" << kTestsuites;
 
   // 总的测试用例数
-  outputXmlAttribute(stream, kTestsuites, "tests",
+  OutputXmlAttribute(stream, kTestsuites, "tests",
                      StreamableToString(test->countTestCases()));
 
 
   // 失败的测试用例数
-  outputXmlAttribute(stream, kTestsuites, "failures",
-                     StreamableToString(this->failedTestCaseCount));
+  OutputXmlAttribute(stream, kTestsuites, "failures",
+                     StreamableToString(m_failedTestCaseCount));
 
   // 预留字段，目前总是填0
-  outputXmlAttribute(
+  OutputXmlAttribute(
     stream, kTestsuites, "disabled",
     StreamableToString(0));
 
   // 预留字段，目前总是填0
-  outputXmlAttribute(stream, kTestsuites, "errors", "0");
+  OutputXmlAttribute(stream, kTestsuites, "errors", "0");
 
   // 启动本次测试的时刻
-  outputXmlAttribute(
+  OutputXmlAttribute(
     stream, kTestsuites, "timestamp",
-    FormatEpochTimeInMillisAsIso8601(this->msStartTestRun));
+    FormatEpochTimeInMillisAsIso8601(m_msStartTestRun));
 
   // 所有测试的总耗时，单位：秒
-  outputXmlAttribute(stream, kTestsuites, "time",
+  OutputXmlAttribute(stream, kTestsuites, "time",
                      FormatTimeInMillisAsSeconds(msElapsed));
 
   // if (GTEST_FLAG(shuffle)) {
@@ -368,13 +368,13 @@ void TestResultXmlPrinter::printXmlTestSuites(
 
   // *stream << TestPropertiesAsXmlAttributes(unit_test.ad_hoc_test_result());
 
-  outputXmlAttribute(stream, kTestsuites, "name", test->getName());
+  OutputXmlAttribute(stream, kTestsuites, "name", test->getName());
   *stream << ">\n";
 
-  TestSuiteInfoList::iterator it = this->testSuiteInfos.begin();
-  while (it != this->testSuiteInfos.end()) {
-    if ((*it)->testCaseInfos.size()) {
-      outputXmlTestSuite(stream, *it);
+  TestSuiteInfoList::iterator it = m_testSuiteInfos.begin();
+  while (it != m_testSuiteInfos.end()) {
+    if ((*it)->TestCaseInfos.size()) {
+      OutputXmlTestSuite(stream, *it);
     }
     ++it;
   }

@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "AboutDlg.h"
+#include "about_dlg.h"
 
 // gtest
 #include "gtest/gtest.h"

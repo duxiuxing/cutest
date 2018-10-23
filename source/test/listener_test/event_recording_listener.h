@@ -7,8 +7,8 @@ public:
     EventRecordingListener(const char* prefix);
 
 protected:
-    virtual void onRunnerStart(CPPUNIT_NS::Test* test) override;
-    virtual void onRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) override;
+    virtual void OnRunnerStart(CPPUNIT_NS::Test* test) override;
+    virtual void OnRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msElapsed) override;
 
     //virtual void OnTestIterationStart(const UnitTest& /*unit_test*/,
     //                                  int iteration) {
@@ -26,12 +26,12 @@ protected:
     //  g_events->push_back(GetFullMethodName("OnEnvironmentsSetUpEnd"));
     //}
 
-    virtual void onSuiteStart(CPPUNIT_NS::Test* suite) override;
-    virtual void onSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int msElapsed) override;
+    virtual void OnSuiteStart(CPPUNIT_NS::Test* suite) override;
+    virtual void OnSuiteEnd(CPPUNIT_NS::Test* suite, unsigned int msElapsed) override;
 
-    virtual void onTestStart(CPPUNIT_NS::Test* test) override;
+    virtual void OnTestStart(CPPUNIT_NS::Test* test) override;
 
-    virtual void onTestEnd(
+    virtual void OnTestEnd(
         CPPUNIT_NS::Test* test,
         unsigned int errorCount,
         unsigned int failureCount,
@@ -60,5 +60,5 @@ protected:
 private:
     std::string GetFullMethodName(CPPUNIT_NS::Test* test, const char* name);
 
-    std::string prefix;
+    std::string m_prefix;
 };
