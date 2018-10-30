@@ -1,5 +1,5 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
+// Copyright 2008 Google Inc.
+// All Rights Reserved.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -27,17 +27,29 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-// Author: wan@google.com (Zhanyong Wan)
+// Author: arseny.aprelev@gmail.com (Arseny Aprelev)
+//
 
 #include "gtest/gtest.h"
 
-TEST(DummyTest, Dummy) {
-  // This test doesn't verify anything.  We just need it to create a
-  // realistic stage for testing the behavior of Google Test when
-  // RUN_ALL_TESTS() is called without
-  // testing::InitGoogleTest() being called first.
+using ::testing::Test;
+
+TEST(SkipTest, DoesSkip) {
+  GTEST_SKIP();
+  EXPECT_EQ(0, 1);
 }
 
-int main() {
-  return RUN_ALL_TESTS();
+class Fixture : public Test {
+ protected:
+  void SetUp() override {
+    GTEST_SKIP() << "skipping all tests for this fixture";
+  }
+};
+
+TEST_F(Fixture, SkipsOneTest) {
+  EXPECT_EQ(5, 7);
+}
+
+TEST_F(Fixture, SkipsAnotherTest) {
+  EXPECT_EQ(99, 100);
 }
