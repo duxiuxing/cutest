@@ -9,13 +9,6 @@ static std::vector<std::string> GetReservedAttributesForElement(const std::strin
 
 namespace internal {
 
-enum GTestColor {
-  COLOR_DEFAULT,
-  COLOR_RED,
-  COLOR_GREEN,
-  COLOR_YELLOW
-};
-
 GTEST_API_ void ColoredPrintf(GTestColor color, const char* fmt, ...);
 
 } // namespace internal
