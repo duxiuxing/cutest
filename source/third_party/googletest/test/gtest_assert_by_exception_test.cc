@@ -80,7 +80,8 @@ TEST(Test, Test) {
   try {
     AssertFalse();
   } catch(const testing::AssertionException& e) {
-    if (strstr(e.what(), "Expected failure") != nullptr) throw;
+    if (strstr(e.what(), "Expected failure") != NULL)
+      throw;
 
     printf("%s",
            "A failed assertion did throw an exception of the right type, "

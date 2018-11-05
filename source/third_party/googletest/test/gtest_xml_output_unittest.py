@@ -266,8 +266,7 @@ class GTestXMLOutputUnitTest(gtest_xml_test_utils.GTestXMLTestCase):
         'gtest_no_test_unittest')
     try:
       os.remove(output_file)
-    except OSError:
-      e = sys.exc_info()[1]
+    except OSError, e:
       if e.errno != errno.ENOENT:
         raise
 

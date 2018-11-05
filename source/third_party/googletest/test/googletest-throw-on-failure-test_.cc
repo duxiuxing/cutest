@@ -45,7 +45,7 @@
 // ones.
 void TerminateHandler() {
   fprintf(stderr, "%s\n", "Unhandled C++ exception terminating the program.");
-  fflush(nullptr);
+  fflush(NULL);
   exit(1);
 }
 
