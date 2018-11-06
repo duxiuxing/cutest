@@ -85,7 +85,7 @@ TEST(MessageTest, StreamsPointer) {
 
 // Tests streaming a NULL non-char pointer.
 TEST(MessageTest, StreamsNullPointer) {
-  int* p = nullptr;
+  int* p = NULL;
   EXPECT_EQ("(null)", (Message() << p).GetString());
 }
 
@@ -96,7 +96,7 @@ TEST(MessageTest, StreamsCString) {
 
 // Tests streaming a NULL C string.
 TEST(MessageTest, StreamsNullCString) {
-  char* p = nullptr;
+  char* p = NULL;
   EXPECT_EQ("(null)", (Message() << p).GetString());
 }
 

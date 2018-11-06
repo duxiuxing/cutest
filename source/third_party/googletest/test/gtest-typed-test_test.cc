@@ -55,7 +55,7 @@ class CommonTest : public Test {
 
   static void TearDownTestCase() {
     delete shared_;
-    shared_ = nullptr;
+    shared_ = NULL;
   }
 
   // This 'protected:' is optional.  There's no harm in making all
@@ -85,7 +85,7 @@ class CommonTest : public Test {
 };
 
 template <typename T>
-T* CommonTest<T>::shared_ = nullptr;
+T* CommonTest<T>::shared_ = NULL;
 
 // This #ifdef block tests typed tests.
 #if GTEST_HAS_TYPED_TEST
@@ -121,7 +121,7 @@ TYPED_TEST(CommonTest, ValuesAreCorrect) {
 TYPED_TEST(CommonTest, ValuesAreStillCorrect) {
   // Static members of the fixture class template can also be visited
   // via 'this'.
-  ASSERT_TRUE(this->shared_ != nullptr);
+  ASSERT_TRUE(this->shared_ != NULL);
   EXPECT_EQ(5, *this->shared_);
 
   // TypeParam can be used to refer to the type parameter.
@@ -292,7 +292,7 @@ TYPED_TEST_P(DerivedTest, ValuesAreCorrect) {
 TYPED_TEST_P(DerivedTest, ValuesAreStillCorrect) {
   // Static members of the fixture class template can also be visited
   // via 'this'.
-  ASSERT_TRUE(this->shared_ != nullptr);
+  ASSERT_TRUE(this->shared_ != NULL);
   EXPECT_EQ(5, *this->shared_);
   EXPECT_EQ(2, this->value_);
 }

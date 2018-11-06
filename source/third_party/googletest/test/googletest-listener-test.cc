@@ -47,7 +47,7 @@ using ::testing::TestPartResult;
 using ::testing::UnitTest;
 
 // Used by tests to register their events.
-std::vector<std::string>* g_events = nullptr;
+std::vector<std::string>* g_events = NULL;
 
 namespace testing {
 namespace internal {

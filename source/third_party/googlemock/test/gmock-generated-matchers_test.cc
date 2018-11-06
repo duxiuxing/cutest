@@ -62,6 +62,9 @@ using std::pair;
 using std::set;
 using std::stringstream;
 using std::vector;
+using testing::get;
+using testing::make_tuple;
+using testing::tuple;
 using testing::_;
 using testing::AllOf;
 using testing::AnyOf;
@@ -115,20 +118,20 @@ std::string Explain(const MatcherType& m, const Value& x) {
 // Tests Args<k0, ..., kn>(m).
 
 TEST(ArgsTest, AcceptsZeroTemplateArg) {
-  const std::tuple<int, bool> t(5, true);
-  EXPECT_THAT(t, Args<>(Eq(std::tuple<>())));
-  EXPECT_THAT(t, Not(Args<>(Ne(std::tuple<>()))));
+  const tuple<int, bool> t(5, true);
+  EXPECT_THAT(t, Args<>(Eq(tuple<>())));
+  EXPECT_THAT(t, Not(Args<>(Ne(tuple<>()))));
 }
 
 TEST(ArgsTest, AcceptsOneTemplateArg) {
-  const std::tuple<int, bool> t(5, true);
-  EXPECT_THAT(t, Args<0>(Eq(std::make_tuple(5))));
-  EXPECT_THAT(t, Args<1>(Eq(std::make_tuple(true))));
-  EXPECT_THAT(t, Not(Args<1>(Eq(std::make_tuple(false)))));
+  const tuple<int, bool> t(5, true);
+  EXPECT_THAT(t, Args<0>(Eq(make_tuple(5))));
+  EXPECT_THAT(t, Args<1>(Eq(make_tuple(true))));
+  EXPECT_THAT(t, Not(Args<1>(Eq(make_tuple(false)))));
 }
 
 TEST(ArgsTest, AcceptsTwoTemplateArgs) {
-  const std::tuple<short, int, long> t(4, 5, 6L);  // NOLINT
+  const tuple<short, int, long> t(4, 5, 6L);  // NOLINT
 
   EXPECT_THAT(t, (Args<0, 1>(Lt())));
   EXPECT_THAT(t, (Args<1, 2>(Lt())));
@@ -136,13 +139,13 @@ TEST(ArgsTest, AcceptsTwoTemplateArgs) {
 }
 
 TEST(ArgsTest, AcceptsRepeatedTemplateArgs) {
-  const std::tuple<short, int, long> t(4, 5, 6L);  // NOLINT
+  const tuple<short, int, long> t(4, 5, 6L);  // NOLINT
   EXPECT_THAT(t, (Args<0, 0>(Eq())));
   EXPECT_THAT(t, Not(Args<1, 1>(Ne())));
 }
 
 TEST(ArgsTest, AcceptsDecreasingTemplateArgs) {
-  const std::tuple<short, int, long> t(4, 5, 6L);  // NOLINT
+  const tuple<short, int, long> t(4, 5, 6L);  // NOLINT
   EXPECT_THAT(t, (Args<2, 0>(Gt())));
   EXPECT_THAT(t, Not(Args<2, 1>(Lt())));
 }
@@ -158,29 +161,29 @@ TEST(ArgsTest, AcceptsDecreasingTemplateArgs) {
 #endif
 
 MATCHER(SumIsZero, "") {
-  return std::get<0>(arg) + std::get<1>(arg) + std::get<2>(arg) == 0;
+  return get<0>(arg) + get<1>(arg) + get<2>(arg) == 0;
 }
 
 TEST(ArgsTest, AcceptsMoreTemplateArgsThanArityOfOriginalTuple) {
-  EXPECT_THAT(std::make_tuple(-1, 2), (Args<0, 0, 1>(SumIsZero())));
-  EXPECT_THAT(std::make_tuple(1, 2), Not(Args<0, 0, 1>(SumIsZero())));
+  EXPECT_THAT(make_tuple(-1, 2), (Args<0, 0, 1>(SumIsZero())));
+  EXPECT_THAT(make_tuple(1, 2), Not(Args<0, 0, 1>(SumIsZero())));
 }
 
 TEST(ArgsTest, CanBeNested) {
-  const std::tuple<short, int, long, int> t(4, 5, 6L, 6);  // NOLINT
+  const tuple<short, int, long, int> t(4, 5, 6L, 6);  // NOLINT
   EXPECT_THAT(t, (Args<1, 2, 3>(Args<1, 2>(Eq()))));
   EXPECT_THAT(t, (Args<0, 1, 3>(Args<0, 2>(Lt()))));
 }
 
 TEST(ArgsTest, CanMatchTupleByValue) {
-  typedef std::tuple<char, int, int> Tuple3;
+  typedef tuple<char, int, int> Tuple3;
   const Matcher<Tuple3> m = Args<1, 2>(Lt());
   EXPECT_TRUE(m.Matches(Tuple3('a', 1, 2)));
   EXPECT_FALSE(m.Matches(Tuple3('b', 2, 2)));
 }
 
 TEST(ArgsTest, CanMatchTupleByReference) {
-  typedef std::tuple<char, char, int> Tuple3;
+  typedef tuple<char, char, int> Tuple3;
   const Matcher<const Tuple3&> m = Args<0, 1>(Lt());
   EXPECT_TRUE(m.Matches(Tuple3('a', 'b', 2)));
   EXPECT_FALSE(m.Matches(Tuple3('b', 'b', 2)));
@@ -192,23 +195,23 @@ MATCHER_P(PrintsAs, str, "") {
 }
 
 TEST(ArgsTest, AcceptsTenTemplateArgs) {
-  EXPECT_THAT(std::make_tuple(0, 1L, 2, 3L, 4, 5, 6, 7, 8, 9),
+  EXPECT_THAT(make_tuple(0, 1L, 2, 3L, 4, 5, 6, 7, 8, 9),
               (Args<9, 8, 7, 6, 5, 4, 3, 2, 1, 0>(
                   PrintsAs("(9, 8, 7, 6, 5, 4, 3, 2, 1, 0)"))));
-  EXPECT_THAT(std::make_tuple(0, 1L, 2, 3L, 4, 5, 6, 7, 8, 9),
+  EXPECT_THAT(make_tuple(0, 1L, 2, 3L, 4, 5, 6, 7, 8, 9),
               Not(Args<9, 8, 7, 6, 5, 4, 3, 2, 1, 0>(
-                  PrintsAs("(0, 8, 7, 6, 5, 4, 3, 2, 1, 0)"))));
+                      PrintsAs("(0, 8, 7, 6, 5, 4, 3, 2, 1, 0)"))));
 }
 
 TEST(ArgsTest, DescirbesSelfCorrectly) {
-  const Matcher<std::tuple<int, bool, char> > m = Args<2, 0>(Lt());
+  const Matcher<tuple<int, bool, char> > m = Args<2, 0>(Lt());
   EXPECT_EQ("are a tuple whose fields (#2, #0) are a pair where "
             "the first < the second",
             Describe(m));
 }
 
 TEST(ArgsTest, DescirbesNestedArgsCorrectly) {
-  const Matcher<const std::tuple<int, bool, char, int>&> m =
+  const Matcher<const tuple<int, bool, char, int>&> m =
       Args<0, 2, 3>(Args<2, 0>(Lt()));
   EXPECT_EQ("are a tuple whose fields (#0, #2, #3) are a tuple "
             "whose fields (#2, #0) are a pair where the first < the second",
@@ -216,28 +219,28 @@ TEST(ArgsTest, DescirbesNestedArgsCorrectly) {
 }
 
 TEST(ArgsTest, DescribesNegationCorrectly) {
-  const Matcher<std::tuple<int, char> > m = Args<1, 0>(Gt());
+  const Matcher<tuple<int, char> > m = Args<1, 0>(Gt());
   EXPECT_EQ("are a tuple whose fields (#1, #0) aren't a pair "
             "where the first > the second",
             DescribeNegation(m));
 }
 
 TEST(ArgsTest, ExplainsMatchResultWithoutInnerExplanation) {
-  const Matcher<std::tuple<bool, int, int> > m = Args<1, 2>(Eq());
+  const Matcher<tuple<bool, int, int> > m = Args<1, 2>(Eq());
   EXPECT_EQ("whose fields (#1, #2) are (42, 42)",
-            Explain(m, std::make_tuple(false, 42, 42)));
+            Explain(m, make_tuple(false, 42, 42)));
   EXPECT_EQ("whose fields (#1, #2) are (42, 43)",
-            Explain(m, std::make_tuple(false, 42, 43)));
+            Explain(m, make_tuple(false, 42, 43)));
 }
 
 // For testing Args<>'s explanation.
-class LessThanMatcher : public MatcherInterface<std::tuple<char, int> > {
+class LessThanMatcher : public MatcherInterface<tuple<char, int> > {
  public:
   virtual void DescribeTo(::std::ostream* os) const {}
 
-  virtual bool MatchAndExplain(std::tuple<char, int> value,
+  virtual bool MatchAndExplain(tuple<char, int> value,
                                MatchResultListener* listener) const {
-    const int diff = std::get<0>(value) - std::get<1>(value);
+    const int diff = get<0>(value) - get<1>(value);
     if (diff > 0) {
       *listener << "where the first value is " << diff
                 << " more than the second";
@@ -246,18 +249,17 @@ class LessThanMatcher : public MatcherInterface<std::tuple<char, int> > {
   }
 };
 
-Matcher<std::tuple<char, int> > LessThan() {
+Matcher<tuple<char, int> > LessThan() {
   return MakeMatcher(new LessThanMatcher);
 }
 
 TEST(ArgsTest, ExplainsMatchResultWithInnerExplanation) {
-  const Matcher<std::tuple<char, int, int> > m = Args<0, 2>(LessThan());
-  EXPECT_EQ(
-      "whose fields (#0, #2) are ('a' (97, 0x61), 42), "
-      "where the first value is 55 more than the second",
-      Explain(m, std::make_tuple('a', 42, 42)));
+  const Matcher<tuple<char, int, int> > m = Args<0, 2>(LessThan());
+  EXPECT_EQ("whose fields (#0, #2) are ('a' (97, 0x61), 42), "
+            "where the first value is 55 more than the second",
+            Explain(m, make_tuple('a', 42, 42)));
   EXPECT_EQ("whose fields (#0, #2) are ('\\0', 43)",
-            Explain(m, std::make_tuple('\0', 42, 43)));
+            Explain(m, make_tuple('\0', 42, 43)));
 }
 
 // For testing ExplainMatchResultTo().
@@ -515,7 +517,7 @@ class NativeArrayPassedAsPointerAndSize {
 
 TEST(ElementsAreTest, WorksWithNativeArrayPassedAsPointerAndSize) {
   int array[] = { 0, 1 };
-  ::std::tuple<int*, size_t> array_as_tuple(array, 2);
+  ::testing::tuple<int*, size_t> array_as_tuple(array, 2);
   EXPECT_THAT(array_as_tuple, ElementsAre(0, 1));
   EXPECT_THAT(array_as_tuple, Not(ElementsAre(0)));
 
@@ -569,8 +571,8 @@ TEST(ElementsAreTest, MakesCopyOfArguments) {
   int x = 1;
   int y = 2;
   // This should make a copy of x and y.
-  ::testing::internal::ElementsAreMatcher<std::tuple<int, int> >
-      polymorphic_matcher = ElementsAre(x, y);
+  ::testing::internal::ElementsAreMatcher<testing::tuple<int, int> >
+          polymorphic_matcher = ElementsAre(x, y);
   // Changing x and y now shouldn't affect the meaning of the above matcher.
   x = y = 0;
   const int array1[] = { 1, 2 };
@@ -695,7 +697,7 @@ TEST(ElementsAreArrayTest, CanBeCreatedWithIteratorRange) {
   // Pointers are iterators, too.
   EXPECT_THAT(test_vector, ElementsAreArray(a, a + GTEST_ARRAY_SIZE_(a)));
   // The empty range of NULL pointers should also be okay.
-  int* const null_int = nullptr;
+  int* const null_int = NULL;
   EXPECT_THAT(test_vector, Not(ElementsAreArray(null_int, null_int)));
   EXPECT_THAT((vector<int>()), ElementsAreArray(null_int, null_int));
 }
@@ -768,7 +770,7 @@ MATCHER_P2(EqSumOf, x, y, std::string(negation ? "doesn't equal" : "equals") +
   } else {
     // Verifies that we can stream to the underlying stream of
     // result_listener.
-    if (result_listener->stream() != nullptr) {
+    if (result_listener->stream() != NULL) {
       *result_listener->stream() << "diff == " << (x + y - arg);
     }
     return false;
@@ -1233,8 +1235,8 @@ TEST(ContainsTest, AcceptsMatcher) {
 TEST(ContainsTest, WorksForNativeArrayAsTuple) {
   const int a[] = { 1, 2 };
   const int* const pointer = a;
-  EXPECT_THAT(std::make_tuple(pointer, 2), Contains(1));
-  EXPECT_THAT(std::make_tuple(pointer, 2), Not(Contains(Gt(3))));
+  EXPECT_THAT(make_tuple(pointer, 2), Contains(1));
+  EXPECT_THAT(make_tuple(pointer, 2), Not(Contains(Gt(3))));
 }
 
 TEST(ContainsTest, WorksForTwoDimensionalNativeArray) {

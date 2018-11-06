@@ -51,7 +51,7 @@ void TestResultXmlPrinter::OnRunnerEnd(CPPUNIT_NS::Test* test, unsigned int msEl
   if (xmlout == NULL) {
     fprintf(stderr,
             "Unable to open file \"%s\"\n",
-		    m_xmlFilePath.c_str());
+            m_xmlFilePath.c_str());
     fflush(stderr);
     exit(EXIT_FAILURE);
   }
@@ -256,9 +256,10 @@ void TestResultXmlPrinter::OutputXmlTestCase(
   // *stream << TestPropertiesAsXmlAttributes(result);
 
   int failures = 0;
-  for (size_t i = 0; i < testCaseInfo->FailureIndexs.size(); ++i) {
+  std::vector<unsigned int>::iterator it = testCaseInfo->FailureIndexs.begin();
+  while (it != testCaseInfo->FailureIndexs.end()) {
     const CPPUNIT_NS::TestFailure* testFailure =
-      CUTEST_NS::Runner::Instance()->FailureAt(testCaseInfo->FailureIndexs[(unsigned int)i]);
+      CUTEST_NS::Runner::Instance()->FailureAt(static_cast<unsigned int>(*it));
 
     if (++failures == 1) {
       *stream << ">\n";
@@ -274,6 +275,8 @@ void TestResultXmlPrinter::OutputXmlTestCase(
     const string detail = location + "\n" + testFailure->thrownException()->what();
     OutputXmlCDataSection(stream, RemoveInvalidXmlCharacters(detail).c_str());
     *stream << "</failure>\n";
+
+    ++it;
   }
 
   if (failures == 0) {

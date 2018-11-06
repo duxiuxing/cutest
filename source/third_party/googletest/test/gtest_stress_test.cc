@@ -163,7 +163,7 @@ void FailingThread(bool is_fatal) {
 }
 
 void GenerateFatalFailureInAnotherThread(bool is_fatal) {
-  ThreadWithParam<bool> thread(&FailingThread, is_fatal, nullptr);
+  ThreadWithParam<bool> thread(&FailingThread, is_fatal, NULL);
   thread.Join();
 }
 
