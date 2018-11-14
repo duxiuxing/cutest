@@ -2,7 +2,7 @@
 
 #include <cppunit/TestFixture.h>
 
-#ifdef _MSC_VER
+#ifdef _MSC_VER // _CUTEST_IMPL
 
 #include "cutest/mfc_dialog_test.h"
 
@@ -23,4 +23,4 @@ private:
 
 CPPUNIT_NS_END
 
-#endif // #ifdef _MSC_VER
+#endif // #ifdef _MSC_VER // _CUTEST_IMPL

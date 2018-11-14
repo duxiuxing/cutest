@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace testing {
+namespace testing { // _CUTEST_IMPL
 namespace internal {
 
 class TestResultXmlPrinter
@@ -84,7 +84,7 @@ class TestResultXmlPrinter
     unsigned int MsElapsed;
     unsigned int FailedTestCaseCount;
     TestCaseInfoList TestCaseInfos;
-  protected:
+   protected:
     std::string m_name;
   };
   typedef std::list<TestSuiteInfo*> TestSuiteInfoList;
@@ -145,4 +145,4 @@ class TestResultXmlPrinter
 };
 
 } // namespace internal
-} // namespace testing
+} // namespace testing // _CUTEST_IMPL

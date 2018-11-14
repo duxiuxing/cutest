@@ -218,6 +218,26 @@
 				RelativePath="..\..\cppunit\src\cppunit\cppunit-all.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\cppunit\include\cppunit\ExplicitEndTestCaller.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cppunit\include\cppunit\ExplicitEndTestFixture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cppunit\include\cppunit\MfcDialogTestFixture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cppunit\include\cppunit\MfcTestDialogCaller.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\cppunit\include\cppunit\TestCaller.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="cutest"
@@ -408,6 +428,18 @@
 			>
 			<File
 				RelativePath="..\..\googletest\src\gtest-all.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\googletest\include\gtest\internal\gtest-caller.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\googletest\include\gtest\internal\gtest-explicit-end-caller.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\googletest\include\gtest\internal\gtest-result-xml-printer.h"
 				>
 			</File>
 		</Filter>

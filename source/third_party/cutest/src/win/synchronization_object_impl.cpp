@@ -4,21 +4,21 @@
 CPPUNIT_NS_BEGIN
 
 SynchronizationObjectImpl::SynchronizationObjectImpl() {
-    ::InitializeCriticalSectionAndSpinCount(&this->section, 0);
+    ::InitializeCriticalSectionAndSpinCount(&m_section, 0);
 }
 
 SynchronizationObjectImpl::~SynchronizationObjectImpl() {
-    ::DeleteCriticalSection(&this->section);
+    ::DeleteCriticalSection(&m_section);
 }
 
 void
 SynchronizationObjectImpl::lock() {
-    ::EnterCriticalSection(&this->section);
+    ::EnterCriticalSection(&m_section);
 }
 
 void
 SynchronizationObjectImpl::unlock() {
-    ::LeaveCriticalSection(&this->section);
+    ::LeaveCriticalSection(&m_section);
 }
 
 CPPUNIT_NS_END

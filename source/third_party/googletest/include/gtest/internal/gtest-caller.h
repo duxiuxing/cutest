@@ -8,7 +8,7 @@
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 
-namespace testing {
+namespace testing { // _CUTEST_IMPL
 
 template <class Fixture>
 class TestCaller
@@ -189,4 +189,4 @@ class TestCaller
   CUTEST_NS::Event* m_event;
 };
 
-} // namespace testing {
+} // namespace testing { // _CUTEST_IMPL

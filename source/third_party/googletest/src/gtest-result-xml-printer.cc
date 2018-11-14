@@ -3,7 +3,7 @@
 #include <cppunit/TestFailure.h>
 #include "cutest/Runner.h"
 
-namespace testing {
+namespace testing { // _CUTEST_IMPL
 namespace internal {
 
 // Creates a new TestResultXmlPrinter.
@@ -386,4 +386,4 @@ void TestResultXmlPrinter::PrintXmlTestSuites(
 }
 
 } // namespace internal
-} // namespace testing
+} // namespace testing // _CUTEST_IMPL

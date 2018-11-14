@@ -35,7 +35,7 @@ bool CUTEST_NS::IsOnMainThread() {
 std::string CUTEST_NS::MakeFilePathShorter(std::string path) {
     std::string str = path;
     std::stack<std::string> dirStack;
-	size_t index = str.find('/');
+    size_t index = str.find('/');
     while (index != -1) {
         size_t length = str.length();
         if (0 != index) {

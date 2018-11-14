@@ -25,7 +25,7 @@ void ExplicitEndTest::EndTest() {
 }
 
 bool ExplicitEndTest::IsTestEnd() {
-    return (m_event == NULL) ? true : false;
+    return (m_event == NULL);
 }
 
 CUTEST_NS_END

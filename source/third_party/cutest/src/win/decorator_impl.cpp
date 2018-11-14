@@ -59,20 +59,20 @@ void DecoratorImpl::Start() {
 
     m_runCompleted->Reset();
 
-    HANDLE source_handle = (HANDLE)_beginthreadex(NULL, 0,
-                           ThreadFunction, this, CREATE_SUSPENDED, NULL);
+    HANDLE sourceHandle = (HANDLE)_beginthreadex(NULL, 0,
+                          ThreadFunction, this, CREATE_SUSPENDED, NULL);
 
-    ::SetThreadPriority(source_handle, THREAD_PRIORITY_NORMAL);
+    ::SetThreadPriority(sourceHandle, THREAD_PRIORITY_NORMAL);
 
     ::DuplicateHandle(::GetCurrentProcess(),
-                      source_handle,
+                      sourceHandle,
                       ::GetCurrentProcess(),
                       &m_hThread,
                       0,
                       FALSE,
                       DUPLICATE_SAME_ACCESS);
 
-    ::ResumeThread(source_handle);
+    ::ResumeThread(sourceHandle);
 }
 
 UINT __stdcall DecoratorImpl::ThreadFunction(LPVOID param) {

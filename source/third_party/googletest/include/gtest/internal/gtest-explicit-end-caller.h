@@ -8,7 +8,7 @@
 #include "cutest/Runnable.h"
 #include "cutest/Runner.h"
 
-namespace testing {
+namespace testing { // _CUTEST_IMPL
 
 /*
   msTimeout 单位：毫秒，默认为0，表示永不超时；
@@ -180,4 +180,4 @@ class ExplicitEndTestCaller
   CUTEST_NS::Event* m_event;
 };
 
-} // namespace testing {
+} // namespace testing { // _CUTEST_IMPL

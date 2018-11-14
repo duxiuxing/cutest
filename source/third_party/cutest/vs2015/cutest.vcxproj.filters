@@ -117,6 +117,30 @@
     <ClInclude Include="..\include\cutest\mfc_dialog_test.h">
       <Filter>cutest\MfcDialogTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\cppunit\include\cppunit\MfcTestDialogCaller.h">
+      <Filter>cppunit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cppunit\include\cppunit\MfcDialogTestFixture.h">
+      <Filter>cppunit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cppunit\include\cppunit\TestCaller.h">
+      <Filter>cppunit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\googletest\include\gtest\internal\gtest-caller.h">
+      <Filter>googletest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cppunit\include\cppunit\ExplicitEndTestCaller.h">
+      <Filter>cppunit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\cppunit\include\cppunit\ExplicitEndTestFixture.h">
+      <Filter>cppunit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\googletest\include\gtest\internal\gtest-explicit-end-caller.h">
+      <Filter>googletest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\googletest\include\gtest\internal\gtest-result-xml-printer.h">
+      <Filter>googletest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\cppunit\src\cppunit\cppunit-all.cpp">
