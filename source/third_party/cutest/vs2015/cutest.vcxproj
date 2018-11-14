@@ -194,6 +194,14 @@ ECHO ========== copy header files done ==========</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\cppunit\include\cppunit\ExplicitEndTestCaller.h" />
+    <ClInclude Include="..\..\cppunit\include\cppunit\ExplicitEndTestFixture.h" />
+    <ClInclude Include="..\..\cppunit\include\cppunit\MfcDialogTestFixture.h" />
+    <ClInclude Include="..\..\cppunit\include\cppunit\MfcTestDialogCaller.h" />
+    <ClInclude Include="..\..\cppunit\include\cppunit\TestCaller.h" />
+    <ClInclude Include="..\..\googletest\include\gtest\internal\gtest-caller.h" />
+    <ClInclude Include="..\..\googletest\include\gtest\internal\gtest-explicit-end-caller.h" />
+    <ClInclude Include="..\..\googletest\include\gtest\internal\gtest-result-xml-printer.h" />
     <ClInclude Include="..\include\cutest\count_down_latch.h" />
     <ClInclude Include="..\include\cutest\event.h" />
     <ClInclude Include="..\include\cutest\explicit_end_test.h" />

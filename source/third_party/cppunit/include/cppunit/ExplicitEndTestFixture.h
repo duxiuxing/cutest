@@ -3,7 +3,7 @@
 #include <cppunit/TestFixture.h>
 #include "cutest/explicit_end_test.h"
 
-CPPUNIT_NS_BEGIN
+CPPUNIT_NS_BEGIN // _CUTEST_IMPL
 
 class ExplicitEndTestFixture
   : public TestFixture

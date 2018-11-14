@@ -8,7 +8,7 @@
 #include "cutest/runnable.h"
 #include "cutest/runner.h"
 
-CPPUNIT_NS_BEGIN
+CPPUNIT_NS_BEGIN // _CUTEST_IMPL
 
 /*
   msTimeout 单位：毫秒，默认为0，表示永不超时；

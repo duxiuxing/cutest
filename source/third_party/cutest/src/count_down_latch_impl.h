@@ -6,7 +6,7 @@ CUTEST_NS_BEGIN
 
 class CountDownLatchImpl {
 public:
-	// count用于指定计数的初值
+    // count用于指定计数的初值
     CountDownLatchImpl(int count);
     virtual ~CountDownLatchImpl();
 
